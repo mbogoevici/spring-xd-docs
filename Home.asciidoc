@@ -1,0 +1,20 @@
+The Spring XD project's goal is to tackle big data complexity.  To build real-world big data applications many disparate systems need to be integrated.  The common big data use-cases encountered are
+
+* High throughput distributed data ingestion from a variety of input sources into big data store such as HDFS or Splunk
+* Real-time analytics at ingestion time, e.g. gathering metrics and counting values.
+* Workflow management via batch jobs.  The jobs combine interactions with standard enterprise systems (e.g. RDBMS) as well as Hadoop operations (e.g. MapReduce, HDFS, Pig, Hive or Cascading).
+* High throughput data export, e.g. from HDFS to a RDBMS or NoSQL database.
+
+The Spring ecosystem of projects provides an excellent foundation for building big data applications.  The key projects that lay this foundation are
+
+* http://www.springsource.org/spring-integration[Spring Integration] provides a proven model, inspired by the well-established http://enterpriseintegrationpatterns.com/[Enterprise Integration Patterns], for managing event-driven data ingestion streams
+* http://www.springsource.org/spring-batch[Spring Batch] is a powerful solution for managing workflows, with robust support for the most important requirements such as job state management and retry/restart capabilities, and is the basis for http://jcp.org/en/jsr/detail?id=352[JSR-352].
+* The Spring Data family of projects provides support for NoSQL datastores (e.g. Redis, Gemfire, SqlFire, MongoDB, Neo4j) as well as simplifying the development experience with the http://www.springsource.org/spring-data/hadoop[Spring for Apache Hadoop]
+
+The Spring XD project aims to build upon this foundation.  Our first high level goals are to create an out-of-the-box server that provides a consistent configuration model spanning the four use-case categories listed above, a extensible module system, and a means to distributing data collection instances on or off a Hadoop cluster.  The general idea is for you not to be concerned about which projects can best be fit together to create as solutions, but instead to present a high level configuration DSL (not XML!) that will allow you to 'hit your head against the keyboard' and get started quickly.
+
+The project is just getting started now, but we have been doing a lot of prototyping over the past year so we expect to deliver significant functionality by our first milestone release scheduled for late May.
+
+Spring XD Documentation
+~~~~~~~~~~~~~~~~~
+WIP
