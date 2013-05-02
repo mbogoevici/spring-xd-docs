@@ -16,5 +16,5 @@ The Spring XD project aims to build upon this foundation.  Our first high level 
 The project is just getting started now, but we have been doing a lot of prototyping over the past year so we expect to deliver significant functionality by our first milestone release scheduled for late May.
 
 Spring XD Documentation
-~~~~~~~~~~~~~~~~~
+-----------------------
 WIP
