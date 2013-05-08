@@ -21,5 +21,5 @@ curl -X POST -d "source | sink" http://localhost:8080/streams/example
 If a module configuration file contains property placeholders (e.g. value="${paramName}"), those values can be provided in the stream definition as --paramName=paramValue, e.g.
 
 ````
-curl -X POST -d "twittersearch --query=spring | hdfs --directory=/tweets/" http://localhost:8080/streams/example
+curl -X POST -d "twittersearch --query=spring | hdfs --directory=/tweets/" http://localhost:8080/streams/springtweets
 ````
