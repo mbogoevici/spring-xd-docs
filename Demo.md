@@ -30,7 +30,7 @@ A _tap_ acts like a source in that it occurs as the first module within a stream
 curl -X POST -d "tap @ springtweets | counter --name=tweetcount" http://localhost:8080/streams/tweettap
 ````
 
-The counter module increments a counter (currently in Redis - but an in-memory implementation exists and GemFire/MongoDB implementations are on the roadmap) with the provided name. To view the count use the redis-cli:
+The counter module increments a counter with the provided name, currently in Redis (an in-memory implementation of the CounterService also exists and GemFire/MongoDB implementations are on the roadmap). To view the count use the redis-cli:
 
 ````
 redis 127.0.0.1:6379> get counts.tweetcount
