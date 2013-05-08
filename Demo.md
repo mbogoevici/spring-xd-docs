@@ -23,3 +23,9 @@ If a module configuration file contains property placeholders (e.g. value="${par
 ````
 curl -X POST -d "twittersearch --query=spring | hdfs --directory=/tweets/" http://localhost:8080/streams/springtweets
 ````
+
+A _tap_ acts like a source in that it occurs as the first module within a stream and can pipe its output to a sink (and/or one or more processors added to a chain before the ultimate sink), but for a tap the messages are actually those being produced by some other source. The basic idea is to add a "tee" stream so that realtime analytics may be performed at the same time as data is being ingested via its primary stream. Typically a counter or gauge would follow the pipe after a tap. Here's an example:
+
+````
+curl -X POST -d "tap @ springtweets | counter"
+````
