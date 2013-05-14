@@ -15,7 +15,7 @@ That will start an instance of the StreamServer, which is a very basic REST API 
 If you look within the modules/source and modules/sink directories you will see what modules are currently available. A stream can be POSTed to the StreamServer via the url localhost:8080/streams/{streamName} as follows:
 
 ````
-curl -X POST -d "source | sink" http://localhost:8080/streams/example
+curl -X POST -d "testsource | testsink" http://localhost:8080/streams/example
 ````
 
 If a module configuration file contains property placeholders (e.g. value="${paramName}"), those values can be provided in the stream definition as --paramName=paramValue, e.g.
@@ -33,6 +33,6 @@ curl -X POST -d "tap @ springtweets | counter --name=tweetcount" http://localhos
 The counter module increments a counter with the provided name, currently in Redis (an in-memory implementation of the CounterService also exists and GemFire/MongoDB implementations are on the roadmap). To view the count use the redis-cli:
 
 ````
-redis 127.0.0.1:6379> get counts.tweetcount
+redis 127.0.0.1:6379> get counters.tweetcount
 "3623"
 ````
