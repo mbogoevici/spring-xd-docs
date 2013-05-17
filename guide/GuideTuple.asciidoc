@@ -4,11 +4,11 @@
 
 The Tuple class is a central data structure in Spring XD.  It is an ordered list of values that can be retrieved by name or by index.  Tuples are created by a TupleBuilder and are immutable.  The values that are stored can be of any type and null values are allowed.  
 
-There are accessor methods that perform type conversion to the basic primitive types as well as BigDecimal and Date.  This avoid you having to cast the values to specific types and rely on the Tuple's type conversion infastructure to perform the conversion.   
+There are accessor methods that perform type conversion to the basic primitive types as well as BigDecimal and Date.  This avoids you from having to cast the values to specific types.  Insteam you can rely on the Tuple's type conversion infastructure to perform the conversion.   
 
 The Tuple's types conversion is performed by Spring's http://static.springsource.org/spring/docs/3.0.x/reference/validation.html#core-convert[Type Conversion Infrastructure] which supports commonly encountered type conversions and is extensible.  
 
-There are several overloads for getters that let you provide default values for primitive types, Date formats, and Locale aware NumberFormat conversion.  A best effort has been made to preserve the functionality available in Spring Batch's FieldSet class that has been extensively used for parsing String based data in files.
+There are several overloads for getters that let you provide default values for primitive types should the field you are looking for not be found.  Date format patterns and Locale aware NumberFormat conversion are also supported.  A best effort has been made to preserve the functionality available in Spring Batch's http://static.springsource.org/spring-batch/2.1.x/apidocs/org/springframework/batch/item/file/transform/FieldSet.html[`FieldSet`] class that has been extensively used for parsing String based data in files.
 
 == Creating a Tuple
 
@@ -54,7 +54,7 @@ To customize the underlying type conversion system you can specify the `DateForm
 
 You can also create a Tuple from a list of `String` field names and a List of `Object` values.
 
-[source,java
+[source,java]
 ----
 Object[] tokens = new String[] { "TestString", "true", "C", "10", "-472", "354224", "543", "124.3", "424.3", "1,3245",
 				null, "2007-10-12", "12-10-2007", "" };
@@ -80,7 +80,7 @@ There are getters for all the primitive types and also for BigDecimal and Date. 
 * `Short`
 * `String`
 
- Each getter has an overload for providing a default value.  You can access the values either by field name or by index.
+Each getter has an overload for providing a default value.  You can access the values either by field name or by index.
 
 The overloaded methods for asking for a value to be converted into an integer are
 
@@ -134,6 +134,7 @@ Tuple tuple = tuple().put("red", "rot")
 		     .put("yellow", "gelb")
 		     .put("beige", "beige")
 		     .build();
+
 Tuple selectedTuple = tuple.select("?[key.startsWith('b')]");
 assertThat(selectedTuple.size(), equalTo(3));
 ----
@@ -142,6 +143,7 @@ To select the first match use the `^` operator
 
 ----
 selectedTuple = tuple.select("^[key.startsWith('b')]");
+
 assertThat(selectedTuple.size(), equalTo(1));
 assertThat(selectedTuple.getFieldNames().get(0), equalTo("brown"));
 assertThat(selectedTuple.getString(0), equalTo("braun"));
