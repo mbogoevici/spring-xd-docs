@@ -2,22 +2,51 @@ This page describes how to setup and run a GemFire continuous query (CQ) in in S
 
 The demo uses GemFire's JSON Support, introduced in 7.0. This allows JSON content to be cached using a GemFire proprietary format that supports OQL queries and other operations on cached JSON content. OQL also works against POJOs however JSON was chosen for it's simplicity and interoperability with XD modules.
 
-The demo implements a stock price use case. The client creates a continuous query against prices posted for a specific stock. 
+The demo implements a stock price use case using the XD Stream server as described in the https://github.com/SpringSource/spring-xd/wiki/demo [Demo] page.
 
-https://github.com/SpringSource/spring-xd/wiki/demo
+This demo requires two streams:
+* gemfire-cq | file
+* file | gemfire-json-server 
 
-Mes are posted manually via XD using a gemfire-json-server sink. This publishes JSON messages to a remote GemFire server, first converting a JSON string to GemFire's JSON type. Note, Continuous Query requires a client-server configuration in GemFire.
+The first stream uses the source module gemfire-cq and a file sink. This will output any CQ events to a file. The latter reads JSON from a file and writes it to a GemFire region.
+
+Note that CQ requires a client-server configuration for GemFire. In this case, the client is running within the XD Stream server and the server is a remote process (in this case another JVM on the local machine).
 
 Launch the GemFire Demo Server
 
-This demo requires a remote GemFire cache server. The "Demo Server" is a cache server specifically configured for this demo, included in Kodiak extensions. There is nothing unusual about this configuration; it is configured with a Stocks region, a cache server that runs on localhost:40404 and a logging cache listener that logs events for the region.
+This demo requires a remote GemFire cache server. The "Demo Server" is a cache server running a specific configuration for this demo. There is nothing unusual about this configuration; it is configured with a region named Stocks, a cache server running on localhost:40404 and a cache listener that logs events for the region. The Spring configuration for the cache is https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[here]
 
-To start the server execute /extensions/launchgf.sh from the command line. The output is directed to /extensions/gemfire.out. Monitor this file to ensure the cache server starts normally. Also, tail this file during the demo to see entries being created or updated in the Stocks region.
+To start the cache server:
 
-IMPORTANT. The GemFire server must be started before the kodiak container. I'm still investigating why this is, but I have found that if I don't, I get errors with a message like "unkown pdx type=1" (paraphrasing). So if the container is already running, kill it and restart it after launching GemFire
+cd spring-xd-gemfire-server and execute:
 
-Configuring Streams
+    ./gradlew launch -Pconfig=config/cq-demo.xml
 
-Two streams are required for the demo. The first is used to publish stock prices to GemFire in a region named Stocks. This region is configured on the demo GemFire server so must be used. A second stream uses the gemfire-cq source and is triggered whenever a message is posted to the first stream.
+Next start the Stream server as instructed in the https://github.com/SpringSource/spring-xd/wiki/demo [Demo] page.
 
-First create a stream called 'stocks' to publish stock prices. Select the default source and the gemfire-json-server sink. Configure the sink with the default GemfireHost and GemfirePort. Set the regionName to Stocks and set keyExpression to payload.getField('symbol'). Here the payload is a GemFire JSON object. This expression configures the GemFire Outbound Adapter to cache this message using the ticker symbol for the key.
+Creating the streams
+
+The CQ stream requires a a query parameter. 'host' and 'port' are optional and default to localhost and 40404, respectively. 
+   
+     curl -X POST -d "gemfire-cq --query=Select * from /Stocks where symbol='VMW' | file"    http://localhost:8080/streams/cqtest
+
+The stream to put data into the cache requires a region to use and a keyExpression which is the value of the cache key used to write the data. In this case, the key is hard coded. 
+
+*NOTE: This is not technically pretty crude, as we really want to use the value of any stock symbol contained in the input. Since the file input is interpreted as a string, it is necessary to parse the string to obtain this value. A better way is to add a processor to convert the payload to JSON. We will add that at some point. 
+
+     curl -X POST -d "file | gemfire-json-server --regionName=Stocks --keyExpression='VMW'" http://localhost:8080/streams/stocks
+
+The stocks stream expects the input file in /tmp/xd/input/stocks. CD to that directory (it should be created for you) and type something like
+
+     echo \{symbol:\"VMW\",price:78\} > stock.dat
+     echo \{symbol:\"VMW\",price:79\} > stock1.dat
+     echo \{symbol:\"VMW\",price:80\} > stock2.dat
+
+These will update the cache entry and, voila, you should see something like
+
+    cat /tmp/xd/output/cqtest
+
+    CqEvent [CqName=GfCq1; base operation=CREATE; cq operation=CREATE; key=VMW; value=PDX[1,__GEMFIRE_JSON]{price=78, symbol=VMW}]
+    CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[1,__GEMFIRE_JSON]{price=79, symbol=VMW}]
+    CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[2,__GEMFIRE_JSON]{price=80, symbol=VMW}]
+    
