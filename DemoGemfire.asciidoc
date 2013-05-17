@@ -1,0 +1,23 @@
+This page describes how to setup and run a GemFire continuous query (CQ) in in Spring XD. CQ allows client applications to create a query written in Object Query Language(OQL). A CQ listener is an object providing a method that is invoked every time the query 's result set changes. Spring Integration provides a GemFire CQ Inbound adapter that is backed by a listener to produce a message.
+
+The demo uses GemFire's JSON Support, introduced in 7.0. This allows JSON content to be cached using a GemFire proprietary format that supports OQL queries and other operations on cached JSON content. OQL also works against POJOs however JSON was chosen for it's simplicity and interoperability with XD modules.
+
+The demo implements a stock price use case. The client creates a continuous query against prices posted for a specific stock. 
+
+https://github.com/SpringSource/spring-xd/wiki/demo
+
+Mes are posted manually via XD using a gemfire-json-server sink. This publishes JSON messages to a remote GemFire server, first converting a JSON string to GemFire's JSON type. Note, Continuous Query requires a client-server configuration in GemFire.
+
+Launch the GemFire Demo Server
+
+This demo requires a remote GemFire cache server. The "Demo Server" is a cache server specifically configured for this demo, included in Kodiak extensions. There is nothing unusual about this configuration; it is configured with a Stocks region, a cache server that runs on localhost:40404 and a logging cache listener that logs events for the region.
+
+To start the server execute /extensions/launchgf.sh from the command line. The output is directed to /extensions/gemfire.out. Monitor this file to ensure the cache server starts normally. Also, tail this file during the demo to see entries being created or updated in the Stocks region.
+
+IMPORTANT. The GemFire server must be started before the kodiak container. I'm still investigating why this is, but I have found that if I don't, I get errors with a message like "unkown pdx type=1" (paraphrasing). So if the container is already running, kill it and restart it after launching GemFire
+
+Configuring Streams
+
+Two streams are required for the demo. The first is used to publish stock prices to GemFire in a region named Stocks. This region is configured on the demo GemFire server so must be used. A second stream uses the gemfire-cq source and is triggered whenever a message is posted to the first stream.
+
+First create a stream called 'stocks' to publish stock prices. Select the default source and the gemfire-json-server sink. Configure the sink with the default GemfireHost and GemfirePort. Set the regionName to Stocks and set keyExpression to payload.getField('symbol'). Here the payload is a GemFire JSON object. This expression configures the GemFire Outbound Adapter to cache this message using the ticker symbol for the key.
