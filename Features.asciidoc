@@ -1,0 +1,36 @@
+= High Level Feature tour
+
+We are aiming to have three milestone releases and then an RC1 release.  Tentative dates are
+
+* M1 - May 23
+* M2 - July 13
+* M3 - August 29
+* RC1 - September 13
+
+You can find details of what is in those release on our https://jira.springsource.org/browse/XD[issue tracker] but here is a high level summary
+
+Note, this is a work in progress.
+
+== Milestone 1
+
+* A Dirt Simple Runtime aka DIRT.  This is a server that allows you to control the lifecycle of Spring multiple application contexts. 
+* High Level Configuration DSL - See https://github.com/SpringSource/spring-xd/issues/1[Github Issue #1] to join in the discussion
+* Key abstraction of user defined processing streams, composed of modules.
+* Pluggable module system
+* Key abstraction of user define batch jobs, composed of steps
+* Metrics such as Counters, Gauges, Moving Averages, FieldValue Counters, Aggregate Counters that are populated from data in streams and jobs
+* Ingestion of data into HDFS from multiple sources (file, jdbc, http, syslog) to multiple sinks (hdfs, gemfire)
+* Export of data from HDFS to multiple sinks (local file, jdbc)
+
+
+== Milestone 2
+
+* Command line interface
+* HTTP based cluster monitoring
+* DIRT Runtime on EC2
+* Execution against Hadoop installation on EMR/EC2
+* Export of data from HDFS to MongoDB
+
+== Milestone 3
+
+

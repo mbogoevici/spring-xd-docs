@@ -1,0 +1,7 @@
+== Related Spring Ecosystem projects
+
+The key Spring projects that lay the foundation for Spring XD are
+
+* http://www.springsource.org/spring-integration[Spring Integration] provides a proven model, inspired by the well-established http://enterpriseintegrationpatterns.com/[Enterprise Integration Patterns], for managing event-driven data ingestion streams
+* http://www.springsource.org/spring-batch[Spring Batch] is a powerful solution for managing workflows, with robust support for the most important requirements such as job state management and retry/restart capabilities, and is the basis for http://jcp.org/en/jsr/detail?id=352[JSR-352].
+* The Spring Data family of projects provides support for NoSQL datastores (e.g. Redis, Gemfire, SqlFire, MongoDB, Neo4j) as well as simplifying the development experience with the http://www.springsource.org/spring-data/hadoop[Spring for Apache Hadoop]

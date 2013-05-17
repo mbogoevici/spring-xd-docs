@@ -1,0 +1,8 @@
+== Guide
+
+This is the top level document for the Spring XD guide. A work in progress.
+
+= AsciiDoc
+
+The guide is written in http://asciidoc.org/[AsciiDoc].  A good introduction to using the markdown syntax is from the http://asciidoctor.org/docs/asciidoc-writers-guide/[AsciiDoctor Writers Guide].  AsciiDoctor is the Asciidoc engine that github uses on project wiki pages.
+
