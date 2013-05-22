@@ -10,9 +10,11 @@ The `StreamServer` is a prototype implementation for managing streams footnote:[
 
   $ curl -X POST -d "testsource | testsink" http://localhost:8080/streams/mystream
 
-The DSL uses the "pipe" symbol `|`, to connect a source to a stream. The stream server finds the `testsource` and `testsink` definitions in the modules directory and uses them to setup the stream footnote:[The definitions are just standard Spring configuration files].
+The DSL uses the "pipe" symbol `|`, to connect a source to a stream. The stream server finds the `testsource` and `testsink` definitions in the modules directory and uses them to setup the stream footnote:[The definitions are just standard Spring configuration files]. In this simple example, the testsource simply sends a single "hello" message, and the testsink outputs it using the logging framework.
 
-TODO: Can't get logging to work with StreamServer, so no output.
+  $ processing module 'Module [name=testsink, type=sink]' from group 'example' with index: 1
+  $ processing module 'Module [name=testsource, type=source]' from group 'example' with index: 0
+  $ 16:11:50,542  WARN ThreadPoolTaskScheduler-1 handler.LoggingHandler:141 - hello
 
 Other Source and Sink Types
 ----------------------------
@@ -22,7 +24,7 @@ Other Source and Sink Types
 
 DSL Syntax
 ----------
-In the example above, we connected a source directly to a sink. It is also possible to interperse "processors" between the two. TODO: Example ???
+In the example above, we connected a source directly to a sink. It is also possible to interperse "processors" between the two. TODO: Example ??? Mark P. says use taps instead.
 
 
 
