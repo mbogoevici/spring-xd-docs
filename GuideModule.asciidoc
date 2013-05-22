@@ -1,5 +1,6 @@
 = Modules
 == Introduction
+
 The XD runtime environment (DIRT) supports data ingestion by allowing users to define link:Streams[streams]. Streams are composed of _modules_ which encapsulate a unit of work into a reusable component. A module has the following required attributes:
 
 * name - the name of the component, normally a single word representing the purpose of the module. Examples are _file_, _http_, _syslog_.
