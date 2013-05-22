@@ -12,19 +12,22 @@ The tail source has 3 options:
 - lines: the number of lines from the end of an existing file to tail (default: 0)
 - delay: on platforms that don't wait for a missing file to appear, how often (ms) to look for the file (default: 5000)
 
+
+== Run the Demo
+
      curl -X POST -d "tail | file" http://localhost:8080/streams/tailtest
 
-    echo blah >> /tmp/xd/input/tailtest
+     echo blah >> /tmp/xd/input/tailtest
 
-    cat /tmp/xd/output/tailtest
+     cat /tmp/xd/output/tailtest
 
 or
 
      curl -X POST -d "tail --name=/tmp/foo --lines=5 | file --name=bar" http://localhost:8080/streams/tailtest
 
-    echo blah >> /tmp/foo
+     echo blah >> /tmp/foo
 
-    cat /tmp/xd/output/bar
+     cat /tmp/xd/output/bar
 
 
 == Status Events
