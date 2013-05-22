@@ -1,0 +1,31 @@
+This page describes how to setup and run a stream that tails a file. Spring Integration provides a File Tailing Inbound adapter.
+
+== Start the XD stream server
+
+as instructed in the link:wiki/demo[Demo] page.
+
+== Create the streams
+
+The tail source has 3 options:
+
+- name: the absolute path to the file to tail (default: `/tmp/xd/input/<streamName>`)
+- lines: the number of lines from the end of an existing file to tail (default: 0)
+- delay: on platforms that don't wait for a missing file to appear, how often (ms) to look for the file (default: 5000)
+   
+     curl -X POST -d "tail --name=/tmp/foo --lines=5 | file --name=bar" http://localhost:8080/streams/tailtest
+
+== Run the demo
+
+    echo blah >> /tmp/foo
+
+    cat /tmp/xd/output/bar
+
+
+== Status Events
+
+Some platforms, such as linux, send status messages to `stderr`. The tail module sends these events to a logging adapter, at WARN level; for example...
+
+----
+[message=tail: cannot open `/tmp/xd/input/tailtest' for reading: No such file or directory, file=/tmp/xd/input/tailtest]
+[message=tail: `/tmp/xd/input/tailtest' has become accessible, file=/tmp/xd/input/tailtest]
+----
