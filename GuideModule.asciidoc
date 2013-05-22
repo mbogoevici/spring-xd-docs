@@ -16,12 +16,22 @@ However, if you are interested in extending XD with your own modules, some knowl
 == Modules and Spring
 At the core, a module is any component that may be implemented using a Spring application context. In this respect, the concept may be extended for purposes other than data ingestion. The types mentioned above (source, processor,sink) are specific to XD and constructing streams. But other module types are envisioned. 
 
-A (https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/Module.java)[Module] is typically configured using property placeholders. In addition to properties, modules may reference Spring beans which are defined externally such that each module instance may inject a different implementation of a bean. In addition, modules may define Spring environment profiles which may be activated by each module instance. This type of configuration is only possible if each module is created in its own application context.  
-
- 
+A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/Module.java[Module] is typically configured using property placeholders. In addition to properties, modules may reference Spring beans which are defined externally such that each module instance may inject a different implementation of a bean. A Module may also define Spring environment profiles which may be activated by each module instance. The ability to create module instances each configured differently is only possible if each module is created in its own application context. The module may be configured with a parent context, but this should be done with care. In the simplest case, the module context is completely separate. This results in some very useful features, such as being able to create multiple bean instances with the same id, possibly with different configurations. More generally, this allows modules to adhere to the KISS principle.    
 
 == Integration Modules
+Modules of type source, processor, and sink are built with Spring Integration and are typically very fine-grained. For example, take a look at the https://github.com/SpringSource/spring-xd/blob/master/modules/source/file.xml[file source] which simply polls a directory using a file inbound adapter and https://github.com/SpringSource/spring-xd/blob/master/modules/sink/file.xml[file sink] which appends incoming message payloads to a file using a file outbound adapter. One the surface, there is nothing special about these components. They are plain old Spring Integration bean definition files. Upon closer inspection, modules adhere to some important conventions. For one thing, note the channel names _input_ and _output_, in keeping with the KISS principle (let us know if you come up with some simpler names). These names are a convention that DIRT uses to discover a module's input and/or output channels which are chained together to compose streams. Another thing you might readily observe is the use of property placeholders with sensible defaults.  For example, the file source requires a directory. An appropriate strategy is to define a common root path for XD input files (At the time of this writing it is /tmp/xd/input/. This is subject to change, but illustrates the point). An instance of this module may specify the directory by providing _name_ property. If not provided, it will default to the stream name, which is contained in the _xd.stream.name_ property defined by the XD runtime. By convention, XD defined properties are prefixed with _xd._ 
 
+    directory="/tmp/xd/input/${name:${xd.stream.name}}"
 
 == Creating a Module
+In Spring Integration terms, 
+
+* A _source_ is a valid message flow that contains a direct channel named _output_ which is fed by an inbound adapter, either configured with a poller, or triggered by an event. 
+
+* A _processor_ is a valid message flow that contains a direct channel named _input_ and a subscribable channel named _output_ (direct or publish subscribe). It should perform some type of transformation on the message. (TBD: Describe multiple outputs, routing, etc.)
+
+* A _sink_ is a valid message flow that contains a direct channel named _input_ and an outbound adapter, or service activator used to consume a message payload.
+
+Because it is a plain old Spring Integration flow, a module can be independently deployed and tested in any JVM environment, such as Junit. A module has no inherent dependency on XD other than naming conventions.
+ 
 == Registering a Module
