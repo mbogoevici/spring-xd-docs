@@ -54,14 +54,14 @@ Spring XD consists of two servers
 * XDContainer - execute modules
 
 
-The most simple deployment is to lauch an XD Container with an embedded XDAdmin from the <xd-install-dir>/xd/bin directory
+The most simple deployment is to lauch an XD Container with an embedded XDAdmin from the +<xd-install-dir>/xd/bin+ directory
 
 [source,sh]
 ----
 xd/bin>$ ./xd-admin --embeddedContainer
 ----
 
-You can start the XDContainer and XDAdmin servers individually
+You can start the +xd-container+ and +xd-admin+ servers individually
 
 [source,sh]
 ----
@@ -69,14 +69,14 @@ xd/bin>$ ./xd-admin
 xd/bin>$ ./xd-container 
 ----
 
-There is an additional configuration option to specify the location of the SpringXD install (Note, this will not be necessary when XD_HOME environment variable is supported)
+There is an additional configuration option to specify the location of the SpringXD install 
 
 [source,sh]
 ----
 xd/bin>$ ./xd-container --xdHomeDir <xd-install-directory>
 ----
 
-Pass in the --help option to see additional configuration properties
+Pass in the +--help+ option to see additional configuration properties.
 
 
 
