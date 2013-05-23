@@ -1,20 +1,14 @@
-.   _Sidebar.asciidoc      379  Fundamental	  /data/projects/spring-xd.wiki/guide/_Sidebar.asciidoc
-    Guide.adoc             150  Fundamental	  /data/projects/spring-xd.wiki/guide/Guide.adoc
-    pom.xml<2>            7439  XML		  /data/projects/s-ramp.wiki/pom.xml
-    build.gradle           546  Fundamental	  /data/projects/spring-xd.wiki/build.gradle
-    gen-docs.sh            126  Shell-script[sh]  /data/projects/spring-xd.wiki/gen-docs.sh
-    build.gradle<2>       8496  Fundamental	  /data/projects/spring-xd/build.gradle
-  * Guide.asciidoc<2>     1344  Fundamental	  /data/projects/pressgang-tools.wiki/Guide/en-US/Guide.asciidoc
-    GuideIntroduction:<2> 1040  Fundamental	  /data/projects/spring-xd.wiki/guide/GuideIntroduction.asciidoc
-    GuideModule.ascii:<2> 6846  Fundamental	  /data/projects/spring-xd.wiki/guide/GuideModule.asciidoc
-    GuideGettingStarted.a: 229  Fundamental	  /data/projects/spring-xd.wiki/guide/GuideGettingStarted.asciidoc
-    GuideExampleChapter.a: 297  Fundamental	  /data/projects/pressgang-tools.wiki/Guide/en-US/GuideExampleChapter.asciidoc
-    Guide.asciidoc<3>     1564  Fundamental	  /data/projects/s-ramp.wiki/guide/en-US/Guide.asciidoc
-    pom.xml               7749  XML		  /data/projects/pressgang-tools.wiki/pom.xml
-    GuideHttp2Gemfire.as: 3582  Fundamental	  /data/projects/spring-xd.wiki/guide/GuideHttp2Gemfire.asciidoc
-    GuideModule.asciidoc  6842  Fundamental	  /data/projects/spring-xd.wiki/GuideModule.asciidoc
-  * asdf                    35  Fundamental
- %  *GNU Emacs*            817  Fundamental
-    *scratch*              191  Lisp Interaction
-  * *Messages*            4655  Fundamental
- %  *Completions*          292  Completion List
+.Contents
+// The space with a plus symbol is markdown for a hard line break
+****
+link:GuideIntroduction[Introduction] +
+link:GuideGettingStarted[Getting Started] +
+link:Architecture[Architecture] +
+link:Streams[Steams] +
+link:Modules[Modules] +
+link:Sources[Sources] +
+link:Sinks[Sinks] +
+link:Taps[Taps] +
+link:Analytics[Analytics] +
+link:GuideTuple[Tuple Data Structure] +
+****
