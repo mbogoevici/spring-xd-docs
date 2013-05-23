@@ -6,7 +6,7 @@ In Spring XD, a basic stream defines the ingestion of data from a _source_ to a 
 The `StreamServer`
 ------------------
 
-The `StreamServer` is a prototype implementation for managing streams. TODO: XD-Server + other functionality. You can start it by running `./gradlew launch` from the root directory. It exposes a REST API (at the `/streams`) endpoint to which you can post stream definition commands to define new streams. The stream definitions are built from a simple DSL. For example, let's walk through what happens if we execute the following request
+The `StreamServer` is a prototype implementation for managing streams. TODO: XD-Server + other functionality. It uses Redis for TODO brief list???, so make sure Redis is running. You can then run `./gradlew launch` from the root directory to start the server. It exposes a REST API (at the `/streams`) endpoint to which you can post stream definition commands to define new streams. The stream definitions are built from a simple DSL. For example, let's walk through what happens if we execute the following request
 
   $ curl -X POST -d "testsource | testsink" http://localhost:8080/streams/myteststream
 
@@ -51,7 +51,7 @@ In the examples above, we connected a source to a sink using the pipe symbol `|`
 
 If you know a bit about Spring configuration files, you can inspect the module definition to see which properties it exposes. Alternatively, you can read more in the module documentation TODO: Link to source and sink docs???.
 
-Questions I Would Have as a Beginner
+TODO: Questions I Would Have as a Beginner
 -------------------------------------
 
 What does REDIS do in all this?
