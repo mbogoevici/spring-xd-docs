@@ -14,7 +14,7 @@ apply plugin: 'asciidoctor'
 asciidoctor {
   // Can't specify a single file for the gradle task
   // See https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/15
-  sourceDir = file("guide/Guide.adoc")
+  sourceDir = file("guide/FullGuide.adoc")
   outputDir = new File("$buildDir/docs")
   options = [
     attributes: [

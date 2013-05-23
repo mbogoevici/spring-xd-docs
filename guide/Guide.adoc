@@ -1,11 +1,17 @@
-= Spring XD Guide
-:doctype: book
+= The Spring XD Guide
 
-include::GuideIntroduction.asciidoc[]
+Spring XD in an open source http://www.apache.org/licenses/LICENSE-2.0[Apache 2 License] licenced project whose goal is to tackle big data complexity. 
 
-include::GuideGettingStarted.asciidoc[]
+It build upon various Spring ecosystem project to provide a one stop shop solution for uses-cases such as 
 
-include::GuideModule.asciidoc[]
+* High throughput distributed data ingestion from a variety of input sources into big data store such as HDFS or Splunk
+* Real-time analytics at ingestion time, e.g. gathering metrics and counting values.
+* Workflow management of batch jobs.  The jobs combine interactions with standard enterprise systems (e.g. RDBMS) as well as Hadoop operations (e.g. MapReduce, HDFS, Pig, Hive or Cascading).
+* High throughput data export, e.g. from HDFS to a RDBMS or NoSQL database.
+
+This document is the guide for Spring XD.  It explains how to get download and get stared and then dives into more detailed explinations of the architecture, individual components and concepts.
+
+While every effort has been made to ensure that this documentation is comprehensive and there are no errors, if you spot omissions or errors please feel free to send a pull request or raise an issue to call it to our attention.
 
 
 
