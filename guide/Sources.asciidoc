@@ -2,6 +2,12 @@
 In this section we will show some variations on input sources.  As a prerequisite start the XD Container
 as instructed in the link:wiki/Getting Started[Getting Started] page.
 
+The Sources covered are
+
+* <<http>>
+* <<tail>>
+
+[[http]]
 === HTTP
 
 The HTTP source has X options
@@ -22,7 +28,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/httptest
 
-=== HTTP with options
+==== HTTP with options
 
 The http source has one option
 
@@ -36,6 +42,7 @@ Here is an example
 
      $ cat /tmp/xd/output/httptest9020
 
+[[tail]]
 === Tail
 
 To create a stream definition post using curl
