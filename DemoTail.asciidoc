@@ -17,6 +17,8 @@ The tail source has 3 options:
 
      curl -X POST -d "tail | file" http://localhost:8080/streams/tailtest
 
+     mkdir -p /tmp/xd/input
+
      echo blah >> /tmp/xd/input/tailtest
 
      cat /tmp/xd/output/tailtest
