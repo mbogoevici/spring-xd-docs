@@ -6,6 +6,7 @@ The Sources covered are
 
 * <<http, HTTP>>
 * <<tail, Tail>>
+* <<gemfire-cq,Gemfire CQ>>
 
 [[http]]
 === HTTP
