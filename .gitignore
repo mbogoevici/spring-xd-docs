@@ -1,2 +1,5 @@
 /*.asciidoc~
 /*.html
+/target/
+/build/
+/.gradle/

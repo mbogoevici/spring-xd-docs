@@ -1,0 +1,12 @@
+= Spring XD Guide
+:doctype: book
+
+include::GuideIntroduction.asciidoc[]
+
+include::GuideGettingStarted.asciidoc[]
+
+include::GuideModule.asciidoc[]
+
+
+
+

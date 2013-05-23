@@ -2,11 +2,11 @@
 
 Currently XD supports GemFire's client-server topology. This requires a GemFire cache server to be running as a separate process. The XD distribution includes a GemFire server suitable for development purposes. It is available under GemFire's development license which is limited to 3 nodes. Streams that write to GemFire create a client cache and client region. No data is cached on the client; all entries are cached on the Server. This example requires a cache server to be running and its host and port must be known (NOTE: GemFire locators are not supported yet). 
 
-== Launching the XD GemFire Server
+=== Launching the XD GemFire Server
 
 The GemFire Server provided by XD is a simple Java class that runs with a Spring configured cache server. The configuration is passed as a command line argument to the server's main method. The configuration includes a cache server port and one or more configured region. XD includes a sample cache configuration called  https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[cq-demo]. This starts a server on port 40404 and creates a region named _Stocks_. A Logging cache listener is configured  for the region to log region events.
 
-== Creating the Stream
+=== Creating the Stream
 
 Using the http source requires no configuration unless another instance is already running. The http port must be unique for each instance and is associated with the stream. There are 2 implementation of the gemfire sink: gemfire-server and gemfire-json-server. They are identical except the latter convert JSON string payloads to a JSON document type proprietary to GemFire. This allows the contents to be parsed so that a simple SpEL expression can be defined to extract one or more input fields to use as a cache key. GemFire's JSON representation also allows the cached content to be queried.  If this functionality is not needed, the gemfire-server module will write the payload directly to the configured region. As this discussion suggests, either gemfire module requires some configuration. The following parameters must be provided:
 
