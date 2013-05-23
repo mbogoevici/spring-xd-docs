@@ -4,8 +4,8 @@ as instructed in the link:wiki/Getting Started[Getting Started] page.
 
 The Sources covered are
 
-* <<http>>
-* <<tail>>
+* <<http, HTTP>>
+* <<tail, Tail>>
 
 [[http]]
 === HTTP
