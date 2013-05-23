@@ -113,9 +113,9 @@ As updates are posted to the cache you should see them captured in the output fi
 
     $cat /tmp/xd/output/cqtest
 
- CqEvent [CqName=GfCq1; base operation=CREATE; cq operation=CREATE; key=VMW; value=PDX[1,__GEMFIRE_JSON]{price=78, symbol=VMW}]
-    CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[1,__GEMFIRE_JSON]{price=79, symbol=VMW}]
-    CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[2,__GEMFIRE_JSON]{price=80, symbol=VMW}]
+CqEvent [CqName=GfCq1; base operation=CREATE; cq operation=CREATE; key=VMW; value=PDX[1,__GEMFIRE_JSON]{price=78, symbol=VMW}]
+CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[1,__GEMFIRE_JSON]{price=79, symbol=VMW}]
+CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[2,__GEMFIRE_JSON]{price=80, symbol=VMW}]
 
 
 
