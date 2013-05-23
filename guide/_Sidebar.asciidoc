@@ -4,7 +4,7 @@
 link:Introduction[Introduction] +
 link:Getting%20Started[Getting Started] +
 link:Architecture[Architecture] +
-link:Streams[Steams] +
+link:Streams[Streams] +
 link:Modules[Modules] +
 link:Sources[Sources] +
 link:Sinks[Sinks] +
