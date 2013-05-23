@@ -89,7 +89,7 @@ Some platforms, such as linux, send status messages to `stderr`. The tail module
 ----
 
 [[gemfire-cq]]
-===GemFire Continuous Query (CQ)
+=== GemFire Continuous Query (CQ)
 Continuous query allows client applications to create a GemFire query using Object Query Language(OQL) and register a CQ listener which subscribes to the query and is notified every time the query 's result set changes. The _gemfire_cq_ source registers a CQ which will post CQEvent messages to the stream. 
 
 === Launching the XD GemFire Server
