@@ -10,6 +10,8 @@ Unzip the distribution.
 
 ==== Installing Redis
 
+TBD
+
 ==== Starting Redis
 
 ```sh
@@ -44,10 +46,34 @@ You should expect something like this:
 [35142] 01 May 14:36:28.941 * The server is now ready to accept connections on port 6379
 ----
 
+=== Starting Spring XD
+
+Spring XD consists of two servers
+
+* XDAdmin - controls deployment of modules into containers
+* XDContainer - execute modules
+
+
+The most simple deployment is to lauch an XD Container with an embedded XDAdmin
+
+[source,sh]
+----
+>$ ./xd-container --embeddedAdmin --xdHomeDir <your-install-directory>
+----
+
+You can start them individually
+
+[source,sh]
+----
+>$ ./xd-admin --xdHomeDir <your-install-directory>
+>$ ./xd-container 
+----
+
+Pass in the --help option to see additional configuration properties
 
 
 
-The most simple deployment is to lauch an XD Container with an embedded administrative application.
+
 
 
 
