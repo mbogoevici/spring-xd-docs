@@ -106,5 +106,16 @@ Here is an example:
 
       $ curl -X POST -d "gemfire-cq --query=Select * from /Stocks where symbol='VMW' | file" http://localhost:8080/streams/cqtest
 
-The _cqtest_ stream is now listening for any stock quote updates for VMW. Ppresumably, another process is updating the cache. You may create a separate stream to test this (see link:GemfireServer).
+The _cqtest_ stream is now listening for any stock quote updates for VMW. Presumably, another process is updating the cache. You may create a separate stream to test this (see https://github.com/SpringSource/spring-xd/wiki/GemfireServer[GemfireServer] for instructions).
 
+As updates are posted to the cache you should see them captured in the output file:
+
+    $cat /tmp/xd/output/cqtest
+
+ CqEvent [CqName=GfCq1; base operation=CREATE; cq operation=CREATE; key=VMW; value=PDX[1,__GEMFIRE_JSON]{price=78, symbol=VMW}]
+    CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[1,__GEMFIRE_JSON]{price=79, symbol=VMW}]
+    CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[2,__GEMFIRE_JSON]{price=80, symbol=VMW}]
+
+
+
+ 
