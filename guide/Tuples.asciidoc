@@ -1,5 +1,3 @@
-== Tuple data structure
-
 === Introduction
 
 The Tuple class is a central data structure in Spring XD.  It is an ordered list of values that can be retrieved by name or by index.  Tuples are created by a TupleBuilder and are immutable.  The values that are stored can be of any type and null values are allowed.  

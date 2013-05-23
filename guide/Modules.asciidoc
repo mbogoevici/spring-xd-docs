@@ -1,4 +1,3 @@
-== Modules
 === Introduction
 
 The XD runtime environment supports data ingestion by allowing users to define link:Streams[streams]. Streams are composed of _modules_ which encapsulate a unit of work into a reusable component. A module has the following required attributes:
