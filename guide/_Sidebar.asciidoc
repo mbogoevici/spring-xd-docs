@@ -1,7 +1,7 @@
 .Contents
 // The space with a plus symbol is markdown for a hard line break
 ****
-link:GuideIntroduction[Introduction] +
+link:Introduction[Introduction] +
 link:GuideGettingStarted[Getting Started] +
 link:Architecture[Architecture] +
 link:Streams[Steams] +
