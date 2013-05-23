@@ -1,10 +1,11 @@
 = Spring XD Guide
 :doctype: book
 
-include::GuideIntroduction.asciidoc[]
+include::Introduction.asciidoc[]
 
-include::GuideGettingStarted.asciidoc[]
+include::Getting Started.asciidoc[]
 
-include::GuideModule.asciidoc[]
+include::Modules.asciidoc[]
+
 
 
