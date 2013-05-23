@@ -87,6 +87,24 @@ Some platforms, such as linux, send status messages to `stderr`. The tail module
 [message=tail: `/tmp/xd/input/tailtest' has become accessible, file=/tmp/xd/input/tailtest]
 ----
 
+[[gemfire-cq]]
+===GemFire Continuous Query (CQ)
+Continuous query allows client applications to create a GemFire query using Object Query Language(OQL) and register a CQ listener which subscribes to the query and is notified every time the query 's result set changes. The _gemfire_cq_ source registers a CQ which will post CQEvent messages to the stream. 
 
+=== Launching the XD GemFire Server
+This source requires a cache server to be running in a separate process and its host and port must be known (NOTE: GemFire locators are not supported yet). The XD distribution includes a GemFire server executable suitable for development and test purposes. This is a Java main class that runs with a Spring configured cache server. The configuration is passed as a command line argument to the server's main method. The configuration includes a cache server port and one or more configured region. XD includes a sample cache configuration called  https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[cq-demo]. This starts a server on port 40404 and creates a region named _Stocks_. A Logging cache listener is configured  for the region to log region events.  (TBD: describe launch script)
 
+=== Options
+
+The qemfire-cq source has the following options
+
+-query: The query string in Object Query Language(OQL) (Required)
+-gemfireHost: The host on which the GemFire server is running. Default is 'localhost'
+-gemfirePort: The port on which the GemFire server is running. Default is 40404
+
+Here is an example:
+
+      $ curl -X POST -d "gemfire-cq --query=Select * from /Stocks where symbol='VMW' | file" http://localhost:8080/streams/cqtest
+
+The _cqtest_ stream is now listening for any stock quote updates for VMW. Ppresumably, another process is updating the cache. You may create a separate stream to test this (see link:GemfireServer).
 
