@@ -15,7 +15,7 @@ That will start an instance of the StreamServer, which is a very basic REST API 
 If you look within the modules/source and modules/sink directories you will see what modules are currently available. A stream can be POSTed to the StreamServer via the url localhost:8080/streams/{streamName} as follows:
 
 ````
-curl -X POST -d "testsource | testsink" http://localhost:8080/streams/example
+curl -X POST -d "time | log" http://localhost:8080/streams/example
 ````
 
 If a module configuration file contains property placeholders (e.g. value="${paramName}"), those values can be provided in the stream definition as --paramName=paramValue, e.g.
