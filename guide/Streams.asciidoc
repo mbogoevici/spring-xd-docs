@@ -32,8 +32,8 @@ which will produce the following output from the server
 
 Note that we don't see any other output this time until we actually post some data
 
-  $ curl -X POST -d "hello"
-  $ curl -X POST -d "goodbye"
+  $ curl -X POST -d "hello" http://localhost:9000
+  $ curl -X POST -d "goodbye" http://localhost:9000
 
 and the stream will then funnel the data from the http source to the output log implemented by the testsink
 
