@@ -1,3 +1,85 @@
-=== Introdution
+== Sources
+In this section we will show some variations on input sources.  As a prerequisite start the XD Container
+as instructed in the link:wiki/Getting Started[Getting Started] page.
 
-TBD
+=== HTTP
+
+The HTTP source has X options
+
+To create a stream definition in the server post using curl
+
+     $ curl -X POST -d "http | file" http://localhost:8080/streams/httptest
+
+Make sure the default output directory exists
+
+     $ mkdir -p /tmp/xd/output/
+
+Post some data to the http server on the default port of 9000
+
+     $ curl -X POST -d "hello world" http://localhost:9000
+
+See if the data ended up in the file
+
+     $ cat /tmp/xd/output/httptest
+
+=== HTTP with options
+
+The http source has one option
+
+- port: The http port where data will be posted
+
+Here is an example 
+
+     $ curl -X POST -d "http --port=9020 | file" http://localhost:8080/streams/httptest9020
+
+     $ curl -X POST -d "hello world" http://localhost:9020
+
+     $ cat /tmp/xd/output/httptest9020
+
+=== Tail
+
+To create a stream definition post using curl
+
+     $ curl -X POST -d "tail | file" http://localhost:8080/streams/tailtest
+
+Make sure the default output directory exists
+
+     $ mkdir -p /tmp/xd/input
+
+Send some text into the file being monitored 
+
+     $ echo blah >> /tmp/xd/input/tailtest
+
+See if the data ended up in the file
+     
+     $ cat /tmp/xd/output/tailtest
+
+==== Tail with options
+
+The tail source has 3 options:
+
+- name: the absolute path to the file to tail (default: `/tmp/xd/input/<streamName>`)
+- lines: the number of lines from the end of an existing file to tail (default: 0)
+- delay: on platforms that don't wait for a missing file to appear, how often (ms) to look for the file (default: 5000)
+
+Here is an example 
+
+     $ curl -X POST -d "tail --name=/tmp/foo --lines=5 | file --name=bar" http://localhost:8080/streams/tailtest
+
+     $ echo blah >> /tmp/foo
+
+     $ cat /tmp/xd/output/bar
+
+
+==== Tail Status Events
+
+Some platforms, such as linux, send status messages to `stderr`. The tail module sends these events to a logging adapter, at WARN level; for example...
+
+----
+[message=tail: cannot open `/tmp/xd/input/tailtest' for reading: No such file or directory, file=/tmp/xd/input/tailtest]
+[message=tail: `/tmp/xd/input/tailtest' has become accessible, file=/tmp/xd/input/tailtest]
+----
+
+
+
+

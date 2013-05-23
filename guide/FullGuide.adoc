@@ -5,6 +5,8 @@ include::Introduction.asciidoc[]
 
 include::Getting Started.asciidoc[]
 
+include::Sources.asciidoc[]
+
 include::Modules.asciidoc[]
 
 
