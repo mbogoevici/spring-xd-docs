@@ -1,3 +1,6 @@
-=== Introdution
+== Sinks
+In this section we will show some variations on output sinks.  As a prerequisite start the XD Container
+as instructed in the link:wiki/Getting Started[Getting Started] page.
 
-link:GemfireServer[Gemfire Server]
+The Sinks covered are
+* link:GemfireServer[Gemfire Server]
