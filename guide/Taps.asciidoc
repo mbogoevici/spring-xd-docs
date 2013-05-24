@@ -46,4 +46,4 @@ Multi-value fields are also supported. For example, if a field contains a list, 
 
 The field value counter on the field _users_ will contain:
 
-    dave:1, fred:2, sue:2, jon:1
+    dave:1, fred:1, sue:2, jon:1
