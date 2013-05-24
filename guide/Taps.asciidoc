@@ -1,7 +1,12 @@
 == Taps
-In this section we will show some examples of creating taps on existing streams. Taps are used to monitor incoming messages on existing streams. A tap receives a copy of each message and can process it in a separate flow without affecting the existing stream. A primary use case for taps is capturing metrics such as gauges and counters on existing streams to support real time analytics.
 
-As a prerequisite start the XD Container as instructed in the link:wiki/Getting Started[Getting Started] page. 
+A tap acts like a source in that it occurs as the first module within a stream and can pipe its output to a sink (and/or one or more processors added to a chain before the ultimate sink), but for a tap the messages are actually those being produced by some other source.  Each tap consumes a copy of every incoming message on the target stream so it can process the same data at the same time without affecting the target stream. You may think of a tap as a "tee" stream. 
+
+A primary use case is to perform realtime analytics at the same time as data is being ingested via its primary stream. Typically a counter or gauge would follow the pipe after a tap. The syntax for creating a tap is:
+
+   tap @ <target stream>
+ 
+In this section we will show some examples of creating taps on existing streams. As a prerequisite start the XD Container as instructed in the link:wiki/Getting Started[Getting Started] page. 
 
 The Taps covered are
 
@@ -47,3 +52,27 @@ Multi-value fields are also supported. For example, if a field contains a list, 
 The field value counter on the field _users_ will contain:
 
     dave:1, fred:1, sue:2, jon:1
+
+
+field_value_counter has the following options:
+
+- fieldName: The name of the field for which values are counted (required)
+- counterName: A key used to access the counter values. This defaults to ${fieldName}.
+
+To try this out, create a stream to ingest twitter feeds containing the word _spring_ and output to a file:
+
+   curl -X POST -d "twittersearch --query=spring | file" http://localhost:8080/streams/springtweets
+
+Now create a tap for a field value counter:
+
+   curl -X POST -d "tap@springtweets | field-value-counter --fieldName=fromUser" http://localhost:8080/streams/tweettap
+
+The _twittersearch_ source produces JSON strings which contain the user id of the tweeter in the _fromUser_ field. The _field_value_counter_ sink parses the tweet and updates a field value counter named _fromUser_ in Redis. To view the counts:
+
+   $redis-cli
+   redis 127.0.0.1:6379>zrange fieldvaluecounters.fromUser 0 -1 withscores 
+
+ 
+
+
+
