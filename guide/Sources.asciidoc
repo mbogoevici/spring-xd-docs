@@ -6,6 +6,7 @@ The Sources covered are
 
 * <<http, HTTP>>
 * <<tail, Tail>>
+* <<twittersearch, Twitter Search>>
 * <<gemfire-cq,Gemfire CQ>>
 
 [[http]]
@@ -87,6 +88,26 @@ Some platforms, such as linux, send status messages to `stderr`. The tail module
 [message=tail: cannot open `/tmp/xd/input/tailtest' for reading: No such file or directory, file=/tmp/xd/input/tailtest]
 [message=tail: `/tmp/xd/input/tailtest' has become accessible, file=/tmp/xd/input/tailtest]
 ----
+
+[[twittersearch]]
+=== Twitter Search
+
+The twittersearch source has one option
+
+- query: The query that will be run against Twitter
+
+To create a stream definition in the server post using curl
+
+     $ curl -X POST -d "twittersearch --query='#springone2gx' | file" http://localhost:8080/streams/springone2gx
+
+Make sure the default output directory exists
+
+     $ mkdir -p /tmp/xd/output/
+
+Let the twittersearch run for a little while and then check to see 
+if some data ended up in the file
+
+     $ cat /tmp/xd/output/springone2gx
 
 [[gemfire-cq]]
 === GemFire Continuous Query (CQ)
