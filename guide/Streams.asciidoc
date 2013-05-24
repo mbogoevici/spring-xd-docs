@@ -6,7 +6,7 @@ In Spring XD, a basic stream defines the ingestion of data from a _source_ to a 
 The `StreamServer`
 ------------------
 
-The `StreamServer` is a prototype implementation for managing streams. TODO: XD-Server + other functionality. It uses Redis for TODO brief list???, so make sure Redis is running. You can then run `./gradlew launch` from the root directory to start the server. It exposes a REST API (at the `/streams`) endpoint to which you can post stream definition commands to define new streams. The stream definitions are built from a simple DSL. For example, let's walk through what happens if we execute the following request
+The `StreamServer` is a prototype implementation for managing streams. TODO: XD-Server + other functionality. It uses Redis for TODO brief list???, so make sure Redis is running. You can then run `./gradlew run` from the root directory to start the server. It exposes a REST API (at the `/streams`) endpoint to which you can post stream definition commands to define new streams. The stream definitions are built from a simple DSL. For example, let's walk through what happens if we execute the following request
 
   $ curl -X POST -d "time | log" http://localhost:8080/streams/ticktock
 
