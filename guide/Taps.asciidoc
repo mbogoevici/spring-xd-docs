@@ -1,5 +1,5 @@
 == Taps
-In this section we will show some examples of creating taps on existing streams. Taps are used to monitor incoming messages on existing streams. A tap receives a copy of each message and can process it in a separate flow without affecting the existing stream. A primary use case for taps are capturing metrics such as gauges and counters on existing streams, used for real time analytics.
+In this section we will show some examples of creating taps on existing streams. Taps are used to monitor incoming messages on existing streams. A tap receives a copy of each message and can process it in a separate flow without affecting the existing stream. A primary use case for taps is capturing metrics such as gauges and counters on existing streams to support real time analytics.
 
 As a prerequisite start the XD Container as instructed in the link:wiki/Getting Started[Getting Started] page. 
 
