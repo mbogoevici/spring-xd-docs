@@ -1,12 +1,12 @@
 Introduction
 ------------
 
-In Spring XD, a basic stream defines the ingestion of data from a _source_ to a _sink_. Streams are managed using the `StreamServer` from the `spring-xd-dirt` subproject and defined in terms of source and sink _modules_. Modules are predefined configurations for sources and sinks and examples can be found in the `modules` directory within the `spring-xd` project footnote:[Using the filesystem is just one possible way of configuring a module registry. A Redis implementation would be another option.]. When you ask the `StreamServer` to set up a new stream, it looks in the modules directory for the source and sink definitions.
+In Spring XD, a basic stream defines the ingestion of data from a _source_ to a _sink_. Streams are managed using the XD Admin Server and defined in terms of source and sink _modules_. Modules are predefined configurations for sources and sinks and examples can be found in the `modules` directory within the `spring-xd` project footnote:[Using the filesystem is just one possible way of configuring a module registry. A Redis implementation would be another option.]. When you ask the server to set up a new stream, it looks in the modules directory for the source and sink definitions.
 
-The `StreamServer`
-------------------
+The XD Admin Server
+-------------------
 
-The `StreamServer` is a prototype implementation for managing streams. TODO: XD-Server + other functionality. It uses Redis for TODO brief list???, so make sure Redis is running. You can then run `./gradlew run` from the root directory to start the server. It exposes a REST API (at the `/streams`) endpoint to which you can post stream definition commands to define new streams. The stream definitions are built from a simple DSL. For example, let's walk through what happens if we execute the following request
+The XD Admin server exposes a REST API (at the `/streams`) endpoint which allows you to create new streams footnote:[The server is implemented by the `AdminMain` class in the `spring-xd-dirt` subproject]. It uses Redis for TODO brief list???, so make sure Redis is running. You can then run `./gradlew run` from the root directory to start the server. New streams are created by posting stream definitions to the endpoint. The defintions are built from a simple DSL. For example, let's walk through what happens if we execute the following request
 
   $ curl -X POST -d "time | log" http://localhost:8080/streams/ticktock
 
@@ -51,6 +51,8 @@ In the examples above, we connected a source to a sink using the pipe symbol `|`
 
 If you know a bit about Spring configuration files, you can inspect the module definition to see which properties it exposes. Alternatively, you can read more in the module documentation TODO: Link to source and sink docs???.
 
+///////////////////////////////////////////////////
+
 TODO: Questions I Would Have as a Beginner
 -------------------------------------
 
@@ -59,6 +61,8 @@ What does REDIS do in all this?
 How do I control the lifecycle of streams - e.g. if I have several running and want to stop one. Or if I accidentally create one with the wrong configuration and want to replace it.
 
 What does the group refer to? e.g. in `processing module 'Module [name=log, type=sink]' from group 'myhttpteststream'`
+
+///////////////////////////////////////////////////
 
 
 
