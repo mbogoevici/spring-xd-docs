@@ -1,6 +1,6 @@
 == Sinks
 In this section we will show some variations on output sinks.  As a prerequisite start the XD Container
-as instructed in the link:wiki/Getting Started[Getting Started] page.
+as instructed in the link:Getting%20Started[Getting Started] page.
 
 The Sinks covered are
 
