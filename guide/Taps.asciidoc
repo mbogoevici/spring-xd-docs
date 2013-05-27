@@ -17,7 +17,8 @@ The Taps covered are
 === Field Value Counter
 
 A field value counter is a Metric used for counting occurrences of unique values for a named field in a message payload. XD Supports the following payload types out of the box:
-* POJO (Java bean), 
+
+* POJO (Java bean)
 * Tuple
 * JSON String
 
