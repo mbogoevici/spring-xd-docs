@@ -31,7 +31,7 @@ class Foo {
        this.user = user;
    }
 }
----
+
 If the stream source produces messages with the following objects:
 
 [source, java]
@@ -39,7 +39,6 @@ If the stream source produces messages with the following objects:
    new Foo("sue")
    new Foo("dave")
    new Foo("sue")
----
 
 The field value counter on the field _user_ will contain:
 
@@ -58,7 +57,7 @@ The field value counter on the field _users_ will contain:
 field_value_counter has the following options:
 
 - fieldName: The name of the field for which values are counted (required)
-- counterName: A key used to access the counter values. This defaults to ${fieldName}.
+- counterName: A key used to access the counter values. This defaults to $\{fieldName\}.
 
 To try this out, create a stream to ingest twitter feeds containing the word _spring_ and output to a file:
 
@@ -74,6 +73,5 @@ The _twittersearch_ source produces JSON strings which contain the user id of th
    redis 127.0.0.1:6379>zrange fieldvaluecounters.fromUser 0 -1 withscores 
 
  
-
 
 
