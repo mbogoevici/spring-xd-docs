@@ -53,7 +53,7 @@ To create a stream definition post using curl
 
 Make sure the default output directory exists
 
-     $ mkdir -p /tmp/xd/input
+     $ mkdir -p /tmp/xd/output
 
 Send some text into the file being monitored 
 
