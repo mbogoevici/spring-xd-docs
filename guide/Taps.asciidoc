@@ -6,7 +6,7 @@ A primary use case is to perform realtime analytics at the same time as data is 
 
    tap @ <target stream>
  
-In this section we will show some examples of creating taps on existing streams. As a prerequisite start the XD Container as instructed in the link:wiki/Getting Started[Getting Started] page. 
+In this section we will show some examples of creating taps on existing streams. As a prerequisite start the XD Container as instructed in the link:Getting%20Started[Getting Started] page. 
 
 The Taps covered are
 
@@ -73,5 +73,4 @@ The _twittersearch_ source produces JSON strings which contain the user id of th
    redis 127.0.0.1:6379>zrange fieldvaluecounters.fromUser 0 -1 withscores 
 
  
-
 
