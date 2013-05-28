@@ -19,9 +19,21 @@ For the example, suppose the JSON content looks like:
 
 We want this content to be cached under the stock symbol. So the stream specification is:
 
-     http | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('VMW')
+     http | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')
 
-The keyExpression depends on the payload type. In this case, com.gemstone.org.json.JSONObject. JSONObject defines the _getField_ method.  Here's another example:
+The keyExpression depends on the payload type. In this case, com.gemstone.org.json.JSONObject. JSONObject defines the _getField_ method. To run this example:
+
+    $ curl -X POST -d "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')" http://localhost:8080
+    $  curl -X POST -d "{\"symbol\":\"VMW\", \"price\":73}" http://localhost:9090
+
+This should write an entry to the GemFire _Stocks_ region with the key _VMW_
+
+ 
+
+ 
+
+
+Here's another example:
 
 Suppose we have a Person object and a corresponding region configured:
 
