@@ -181,7 +181,7 @@ UDP - Mac OSX (syslog.conf) and Ubuntu (rsyslog.conf)
 TCP - Ubuntu (rsyslog.conf)
 
     $ModLoad omfwd
-    *.*	@@localhost:11112
+    *.*	@@localhost:11111
 
 Restart the syslog daemon after reconfiguring.
 
