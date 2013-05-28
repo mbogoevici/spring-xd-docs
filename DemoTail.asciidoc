@@ -17,7 +17,7 @@ The tail source has 3 options:
 
      mkdir -p /tmp/xd/input
 
-     touch /tmp/xd/input/tailtest <1>
+     touch /tmp/xd/input/tailtest                               <1>
 
      curl -X POST -d "tail | file" http://localhost:8080/streams/tailtest
 
@@ -25,9 +25,9 @@ The tail source has 3 options:
 
      cat /tmp/xd/output/tailtest
 
-or
+<1> Note: this step is not necessary on some platforms; for example, on Linux, the `tail` command suspends when a missing file is tailed. However, on Mac OSX, the `tail` command exits in this situation. When this happens, the tail source keeps trying to open the file every 5 seconds. Since, by default, the tail source tails from the end of the file, some lines might be missed.
 
-     touch /tmp/foo
+or
 
      curl -X POST -d "tail --name=/tmp/foo --lines=5 | file --name=bar" http://localhost:8080/streams/tailtest
 
