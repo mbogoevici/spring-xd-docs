@@ -8,6 +8,7 @@ The Sources covered are
 * <<tail, Tail>>
 * <<twittersearch, Twitter Search>>
 * <<gemfire-cq,Gemfire CQ>>
+* <<syslog, Syslog>>
 
 [[http]]
 === HTTP
@@ -150,5 +151,37 @@ As updates are posted to the cache you should see them captured in the output fi
     CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[2,__GEMFIRE_JSON]{price=80, symbol=VMW}]
 
 
+[[syslog]]
+=== Syslog
 
- 
+Two syslog sources are provided: `syslog-udp` and `syslog-tcp`. They each take one option `port`, which determines the port on which the system will listen for syslog messages (default 11111).
+
+To create a stream definition post using curl
+
+     $ curl -X POST -d "syslog-udp --port=1514 | file" http://localhost:8080/streams/syslogtest
+
+or
+
+     $ curl -X POST -d "syslog-tcp --port=1514 | file" http://localhost:8080/streams/syslogtest
+
+Send a test message to the syslog
+
+     logger -p local3.info -t TESTING "Test Syslog Message"
+
+See if the data ended up in the file
+     
+     $ cat /tmp/xd/output/syslogtest
+
+Refer to your syslog documentation to configure the syslog daemon to forward syslog messages to the stream; some examples are:
+
+UDP - Mac OSX (syslog.conf) and Ubuntu (rsyslog.conf)
+
+    *.*	@localhost:11111 
+
+TCP - Ubuntu (rsyslog.conf)
+
+    $ModLoad omfwd
+    *.*	@@localhost:11112
+
+Restart the syslog daemon after reconfiguring.
+
