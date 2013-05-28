@@ -47,13 +47,17 @@ Here is an example
 [[tail]]
 === Tail
 
+Make sure the default input directory exists
+
+     $ mkdir -p /tmp/xd/input
+
+Create an empty file to tail (this is not needed on some platforms such as Linux)
+
+     touch /tmp/xd/input/tailtest  
+
 To create a stream definition post using curl
 
      $ curl -X POST -d "tail | file" http://localhost:8080/streams/tailtest
-
-Make sure the default output directory exists
-
-     $ mkdir -p /tmp/xd/output
 
 Send some text into the file being monitored 
 
