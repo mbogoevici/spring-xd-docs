@@ -124,9 +124,17 @@ The qemfire-cq source has the following options
 -gemfireHost: The host on which the GemFire server is running. Default is 'localhost'
 -gemfirePort: The port on which the GemFire server is running. Default is 40404
 
-Here is an example:
+Here is an example. Create two streams: One to write http messages to a Gemfire region named _Stocks_, and another to execute the CQ.
 
+
+      $ curl -X POST -d "http --port=9090 | gemfire-json-server --regionName=Stocks" http://localhost:8080/streams/stocks
       $ curl -X POST -d "gemfire-cq --query=Select * from /Stocks where symbol='VMW' | file" http://localhost:8080/streams/cqtest
+
+No send some messages to the stocks stream.
+
+     $ curl -X POST -d "{\"symbol\":\"VMW\", \"price\":73}" http:localhost:9090
+     $ curl -X POST -d "{\"symbol\":\"VMW\", \"price\":78}" http:localhost:9090
+     $ curl -X POST -d "{\"symbol\":\"VMW\", \"price\":80}" http:localhost:9090
 
 The _cqtest_ stream is now listening for any stock quote updates for VMW. Presumably, another process is updating the cache. You may create a separate stream to test this (see https://github.com/SpringSource/spring-xd/wiki/GemfireServer[GemfireServer] for instructions).
 
@@ -134,8 +142,8 @@ As updates are posted to the cache you should see them captured in the output fi
 
     $cat /tmp/xd/output/cqtest
 
-    CqEvent [CqName=GfCq1; base operation=CREATE; cq operation=CREATE; key=VMW; value=PDX[1,__GEMFIRE_JSON]{price=78, symbol=VMW}]
-    CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[1,__GEMFIRE_JSON]{price=79, symbol=VMW}]
+    CqEvent [CqName=GfCq1; base operation=CREATE; cq operation=CREATE; key=VMW; value=PDX[1,__GEMFIRE_JSON]{price=73, symbol=VMW}]
+    CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[1,__GEMFIRE_JSON]{price=78, symbol=VMW}]
     CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[2,__GEMFIRE_JSON]{price=80, symbol=VMW}]
 
 
