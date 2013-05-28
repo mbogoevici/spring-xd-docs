@@ -40,7 +40,7 @@ and the stream will then funnel the data from the http source to the output log 
   15:08:01,676  WARN ThreadPoolTaskScheduler-1 logger.myhttpteststream:141 - hello
   15:08:12,520  WARN ThreadPoolTaskScheduler-1 logger.myhttpteststream:141 - goodbye
 
-Of course, we could also change the sink implementation. You could pipe the output to a file (`file`), to hadoop (`hdfs`) or to any of the other sink modules which are provided. You can also define your own modules TODO: Link. 
+Of course, we could also change the sink implementation. You could pipe the output to a file (`file`), to hadoop (`hdfs`) or to any of the other sink modules which are provided. You can also define your own modules link:Modules[modules].
 
 DSL Syntax
 ----------
@@ -49,7 +49,7 @@ In the examples above, we connected a source to a sink using the pipe symbol `|`
 
   $ curl -X POST -d "http --port=8000 | log" http://localhost:8080/streams/myhttpteststream
 
-If you know a bit about Spring configuration files, you can inspect the module definition to see which properties it exposes. Alternatively, you can read more in the module documentation TODO: Link to source and sink docs???.
+If you know a bit about Spring configuration files, you can inspect the module definition to see which properties it exposes. Alternatively, you can read more in the link:Sources[source] and link:Sinks[sink] documentation.
 
 ///////////////////////////////////////////////////
 
