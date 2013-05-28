@@ -5,3 +5,41 @@ as instructed in the link:Getting%20Started[Getting Started] page.
 The Sinks covered are
 
 * link:GemfireServer[Gemfire Server]
+
+* HDFS
+
+
+Hadoop (HDFS)
+-------------
+
+http://hadoop.apache.org/docs/stable/single_node_setup.html[Install Hadoop] and start it using the `start-all.sh` script. It's assumed HDFS is running on port 9000 (the default).
+
+You should then be able to use the `hdfs` sink when creating a link:Streams[stream]
+
+  $ curl -X POST -d "http --port=8000 | hdfs --rollover=10" http://localhost:8080/streams/myhdfsstream
+
+Note that we've set the `rollover` parameter to a small value for this exercise. This is just to avoid bufffering, so that we can actually see the data has made it into HDFS.
+
+You can then try adding some data. We've used the `http` source on port 8000 here, so run the following command a few times
+
+  $ curl -X POST -d "hello" http://localhost:8000
+
+If you list the hadoop filesystem contents using `hadoop fs -ls /`, you should see that an `xd` directory has appeared in the root with a sub-directory named after our stream
+
+  $ hadoop fs -ls /xd
+  Found 1 items
+  drwxr-xr-x   - luke supergroup          0 2013-05-28 14:53 /xd/myhdfsstream
+
+And there will be one or more log files in there depending how many times you ran the command to post the data
+
+  $ hadoop fs -ls /xd/myhdfsstream
+  Found 1 items
+  -rw-r--r--   3 luke supergroup          0 2013-05-28 14:53 /xd/myhdfsstream/myhdfsstream-0.log
+
+You can examine the file contents using `hadoop fs -cat`
+
+  $ hadoop fs -cat /xd/myhdfsstream/myhdfsstream-0.log
+  hello
+  hello
+
+
