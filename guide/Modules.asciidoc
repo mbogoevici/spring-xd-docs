@@ -12,6 +12,16 @@ XD comes with a number of modules used for assembling streams which perform comm
 
 However, if you are interested in extending XD with your own modules, some knowledge of Spring, Spring Integration, and Spring Batch is essential. The remainder of this document assumes the reader has some familiarity with these topics.
 
+=== Registering a Module
+
+XD provides a strategy interface https://github.com/SpringSource/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/module/ModuleRegistry.java[ModuleRegistry] which it uses to find a module of a given name and type. Currently XD provides RedisModuleRegistry and FileModuleRegistry, The ModuleRegistry is a required component for the XD Server. By default the XD Server is configured with the FileModuleRegistry which looks for modules in ${xd.home:..}/modules. Where xd.home is a Java System Property or may be passed as a command line argument to the container launcher. So out of the box, the modules are contained in the XD modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
+
+      modules/processor
+      modules/sink
+      modules/source
+
+Using the default server configuration, you simply drop your module file into the modules directory and deploy a stream to the server.
+
 === Modules and Spring
 At the core, a module is any component that may be implemented using a Spring application context. In this respect, the concept may be extended for purposes other than data ingestion. The types mentioned above (source, processor,sink) are specific to XD and constructing streams. But other module types are envisioned. 
 
@@ -33,12 +43,3 @@ In Spring Integration terms,
 
 Because it is a plain old Spring Integration flow, a module can be independently deployed and tested in any JVM environment, such as Junit. A module has no inherent dependency on XD other than naming conventions.
  
-=== Registering a Module
-
-XD provides a strategy interface https://github.com/SpringSource/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/module/ModuleRegistry.java[ModuleRegistry] which it uses to find a module of a given name and type. Currently XD provides RedisModuleRegistry and FileModuleRegistry, The ModuleRegistry is a required component for the XD Server. By default the XD Server is configured with the FileModuleRegistry which looks for modules in ${xd.home:..}/modules. Where xd.home is a Java System Property or may be passed as a command line argument to the container launcher. So out of the box, the modules are contained in the XD modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
-
-      modules/processor
-      modules/sink
-      modules/source
-
-Using the default server configuration, you simply drop your module file into the modules directory and deploy a stream to the server.
