@@ -120,17 +120,16 @@ This source requires a cache server to be running in a separate process and its 
 
 The qemfire-cq source has the following options
 
--query: The query string in Object Query Language(OQL) (Required)
--gemfireHost: The host on which the GemFire server is running. Default is 'localhost'
--gemfirePort: The port on which the GemFire server is running. Default is 40404
+- query: The query string in Object Query Language(OQL) (Required)
+- gemfireHost: The host on which the GemFire server is running. Default is 'localhost'
+- gemfirePort: The port on which the GemFire server is running. Default is 40404
 
 Here is an example. Create two streams: One to write http messages to a Gemfire region named _Stocks_, and another to execute the CQ.
-
 
       $ curl -X POST -d "http --port=9090 | gemfire-json-server --regionName=Stocks" http://localhost:8080/streams/stocks
       $ curl -X POST -d "gemfire-cq --query=Select * from /Stocks where symbol='VMW' | file" http://localhost:8080/streams/cqtest
 
-No send some messages to the stocks stream.
+Now send some messages to the stocks stream.
 
      $ curl -X POST -d "{\"symbol\":\"VMW\", \"price\":73}" http:localhost:9090
      $ curl -X POST -d "{\"symbol\":\"VMW\", \"price\":78}" http:localhost:9090
