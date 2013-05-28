@@ -40,7 +40,7 @@ and the stream will then funnel the data from the http source to the output log 
   15:08:01,676  WARN ThreadPoolTaskScheduler-1 logger.myhttpteststream:141 - hello
   15:08:12,520  WARN ThreadPoolTaskScheduler-1 logger.myhttpteststream:141 - goodbye
 
-Of course, we could also change the sink implementation. You could pipe the output to a file (`file`), to hadoop (`hdfs`) or to any of the other sink modules which are provided. You can also define your own modules link:Modules[modules].
+Of course, we could also change the sink implementation. You could pipe the output to a file (`file`), to hadoop (`hdfs`) or to any of the other sink modules which are provided. You can also define your own link:Modules[modules].
 
 DSL Syntax
 ----------
