@@ -1,8 +1,0 @@
-=== Prerequisites
-
-To get started make sure your system has Java JDK 1.6 or newer.
-
-=== Download, Installation and Configuration
-
-The `spring-xd-<version>.zip` (or tar.gz) archive can be downloaded from TBD.
-
