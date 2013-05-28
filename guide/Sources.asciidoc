@@ -126,7 +126,7 @@ The qemfire-cq source has the following options
 
 Here is an example. Create two streams: One to write http messages to a Gemfire region named _Stocks_, and another to execute the CQ.
 
-      $ curl -X POST -d "http --port=9090 | gemfire-json-server --regionName=Stocks" http://localhost:8080/streams/stocks
+      $ curl -X POST -d "http --port=9090 | gemfire-json-server --regionName=Stocks" --keyExpression=payload.getField('symbol')" http://localhost:8080/streams/stocks
       $ curl -X POST -d "gemfire-cq --query=Select * from /Stocks where symbol='VMW' | file" http://localhost:8080/streams/cqtest
 
 Now send some messages to the stocks stream.
