@@ -25,23 +25,39 @@ Using the default server configuration, you simply drop your module file into th
 === Modules and Spring
 At the core, a module is any component that may be implemented using a Spring application context. In this respect, the concept may be extended for purposes other than data ingestion. The types mentioned above (source, processor,sink) are specific to XD and constructing streams. But other module types are envisioned. 
 
-A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/Module.java[Module] is typically configured using property placeholders which are bound to the modules attributes. Attributes may be required or optional and this coincides with whether a default value is provided for the placeholder. For example, if the Spring configuration for a module contains something like:
+A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/Module.java[Module] is typically configured using property placeholders which are bound to the modules attributes. Attributes may be required or optional and this coincides with whether a default value is provided for the placeholder. 
 
-       <bean id="handler" class="org.springframework.xd.analytics.metrics.integration.MessageCounterHandler">
+For example, here is part of Spring configuration for a _counter_ sink that counts messages and stores the result in Redis :
+  
+   <beans>   
+        ...
+	<bean id="handler" class="org.springframework.xd.analytics.metrics.integration.MessageCounterHandler">
 		<constructor-arg ref="service"/>
 		<constructor-arg value="${name}"/>
 	</bean>
 
-Then _name_ is a required attribute.
+	<bean id="service" class="org.springframework.xd.analytics.metrics.redis.RedisCounterService">
+		<constructor-arg ref="repository"/>
+	</bean>
 
-If the module configuration contains something like:
+	<bean id="repository" class="org.springframework.xd.analytics.metrics.redis.RedisCounterRepository">
+		<constructor-arg ref="connectionFactory"/>
+	</bean>
 
-      <bean id="connectionFactory" class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory">
+	<bean id="connectionFactory" class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory">
 		<constructor-arg index="0" value="${redis.hostname:localhost}"/>
 		<constructor-arg index="1" value="${redis.port:6379}"/>	  
 	</bean>
 
-Then the attributes _hostname_ and _port_ default to _localhost_ and _6379_ respectively. So these are optional. In either case, the XD server will substitue values for these properties as configured for each module instance.
+   </beans>  
+
+Note the property placeholders for _name_, _redis.hostname_ and _redis.port_. The _name_ property defines no default value, so it is a required attribute for this module. _redis.hostname_ and _redis.port_ default to _localhost_ and _6379_ respectively. So these are optional attributes. In either case, the XD server will substitue values for these properties as configured for each module instance.  For example, we can create two streams each creating an instance of the _counter_ module with a different configuration.
+
+    curl -X POST -d "time | counter --name=test" http://localhost:8080/streams/counttest 
+
+or 
+
+    curl -X POST -d "time | counter --name=test2 --redis.host=redis.example.com --redis.port=63710" http://localhost:8080/streams/counttest2 
 
 In addition to properties, modules may reference Spring beans which are defined externally such that each module instance may inject a different implementation of a bean. A Module may also define Spring environment profiles which may be activated by each module instance. The ability to create module instances each configured differently is only possible if each module is created in its own application context. The module may be configured with a parent context, but this should be done with care. In the simplest case, the module context is completely separate. This results in some very useful features, such as being able to create multiple bean instances with the same id, possibly with different configurations. More generally, this allows modules to adhere to the KISS principle.    
 
