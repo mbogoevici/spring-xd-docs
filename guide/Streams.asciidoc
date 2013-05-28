@@ -6,7 +6,7 @@ In Spring XD, a basic stream defines the ingestion of data from a _source_ to a 
 The XD Admin Server
 -------------------
 
-The XD Admin server exposes a REST API (at the `/streams`) endpoint which allows you to create new streams footnote:[The server is implemented by the `AdminMain` class in the `spring-xd-dirt` subproject]. It uses Redis for TODO brief list???, so make sure Redis is running. You can then run `./gradlew run` from the root directory to start the server. New streams are created by posting stream definitions to the endpoint. The defintions are built from a simple DSL. For example, let's walk through what happens if we execute the following request
+The XD Admin server exposes a REST API (at the `/streams`) endpoint which allows you to create new streams footnote:[The server is implemented by the `AdminMain` class in the `spring-xd-dirt` subproject]. It uses Redis for TODO brief list???, so make sure Redis is running. You can then run `./gradlew spring-xd-dirt:run` from the root directory to start the server. New streams are created by posting stream definitions to the endpoint. The defintions are built from a simple DSL. For example, let's walk through what happens if we execute the following request
 
   $ curl -X POST -d "time | log" http://localhost:8080/streams/ticktock
 
