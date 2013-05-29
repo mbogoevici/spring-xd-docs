@@ -9,11 +9,10 @@ The Sources covered are
 * <<twittersearch, Twitter Search>>
 * <<gemfire-cq,Gemfire CQ>>
 * <<syslog, Syslog>>
+* <<tcp, TCP>>
 
 [[http]]
 === HTTP
-
-The HTTP source has X options
 
 To create a stream definition in the server post using curl
 
@@ -184,4 +183,44 @@ TCP - Ubuntu (rsyslog.conf)
     *.*	@@localhost:11111
 
 Restart the syslog daemon after reconfiguring.
+
+
+[[tcp]]
+=== TCP
+
+To create a stream definition in the server,  post using curl
+
+     $ curl -X POST -d "tcp | file" http://localhost:8080/streams/tcptest
+
+This will create the default TCP source and send data read from it to the `tcptest` file.
+
+TCP is a streaming protocol and some mechanism is needed to frame messages on the wire. A number of decoders are available, the default being 'CRLF' which is compatible with Telnet.
+
+----
+     $ telnet localhost 1234
+Trying ::1...
+Connected to localhost.
+Escape character is '^]'.
+foo
+^]
+
+telnet> quit
+Connection closed.
+----
+
+See if the data ended up in the file
+
+     $ cat /tmp/xd/output/tcptest
+
+==== TCP with options
+
+The TCP source has the following options
+
+`port` - the port on which to listen (default `1234`)
+`reverse-lookup` - perform a reverse DNS lookup on the remote IP Address (default `false`)
+`socket-timeout` - the timeout (ms) before closing the socket when no data received (default `120000`)
+`nio` - whether or not to use NIO (default false). NIO is more efficient when there are many connections.
+`decoder` - how to decode the stream (default `CRLF`) - see below
+`binary` - whether the data is binary (true) or text (false) - (default false)
+`charset` - the charset used when converting text to `String` (default 'UTF-8')
 
