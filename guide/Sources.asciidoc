@@ -262,42 +262,56 @@ See if the data ended up in the file
 ==== LF Decoder
 
      $ curl -X POST -d "tcp --port=1235 --decoder=LF | file" http://localhost:8080/streams/tcptest2
+
      $ echo -en 'foobar\n' | netcat localhost 1235
+
      $ cat /tmp/xd/output/tcptest2
 
 ==== NULL Decoder
 
      $ curl -X POST -d "tcp --port=1236 --decoder=NULL | file" http://localhost:8080/streams/tcptest3
+
      $ echo -en 'foobar\x00' | netcat localhost 1236
+
      $ cat /tmp/xd/output/tcptest3
 
 ==== STXETX Decoder
 
      $ curl -X POST -d "tcp --port=1237 --decoder=STXETX | file" http://localhost:8080/streams/tcptest4
+
      $ echo -en '\x02foobar\x03' | netcat localhost 1237
+
      $ cat /tmp/xd/output/tcptest4
 
 ==== RAW Decoder
 
      $ curl -X POST -d "tcp --port=1238 --decoder=RAW | file" http://localhost:8080/streams/tcptest5
+
      $ echo -n 'foobar' | netcat localhost 1238
+
      $ cat /tmp/xd/output/tcptest5
 
 ==== L1 Decoder
 
      $ curl -X POST -d "tcp --port=1239 --decoder=L1 | file" http://localhost:8080/streams/tcptest6
+
      $ echo -en '\x06foobar' | netcat localhost 1239
+
      $ cat /tmp/xd/output/tcptest6
 
 ==== L2 Decoder
 
      $ curl -X POST -d "tcp --port=1240 --decoder=L2 | file" http://localhost:8080/streams/tcptest7
+
      $ echo -en '\x00\x06foobar' | netcat localhost 1240
+
      $ cat /tmp/xd/output/tcptest7
 
 ==== L4 Decoder
 
      $ curl -X POST -d "tcp --port=1241 --decoder=L4 | file" http://localhost:8080/streams/tcptest8
+
      $ echo -en '\x00\x00\x00\x06foobar' | netcat localhost 1241
+
      $ cat /tmp/xd/output/tcptest8
 
