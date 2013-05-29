@@ -1,16 +1,67 @@
 == Requirements
 
-To get started make sure your system has *Java JDK 6* or newer installed. Furthermore, http://redis.io/[Redis] is used for persistence.
+To get started make sure your system has *Java JDK 6* or newer installed. Furthermore, http://redis.io/[Redis] is used for persistence. Either an installed or the Spring XD provided Redis instance can be used.
 
-=== Download and Install Spring XD
+== Installation of Spring XD
+
+=== Download Spring XD
 
 Download http://www.springframework.org[spring-xd-1.0-M1.zip]
 
 Unzip the distribution.
 
-==== Installing Redis
+=== Installing Redis
 
-TBD
+If you have a running instance of Redis it can be used for Spring XD. By default Spring XD will try to use a Redis instance running on *localhost* using *port 6379*. However, you can overwrite these defaults using system properties:
+
+* redis.hostname
+* redis.port
+
+If you don't have a pre-existing installation of Redis, you can use the Spring XD provided instance. 
+----
+$ cd redis/bin
+$ ./install-redis
+----
+
+This will compile the redis source tar and add the Redis executables available under redis/bin
+
+* redis-check-dump
+* redis-sentinel
+* redis-benchmark
+* redis-cli
+* redis-server
+
+==== Redis on Windows
+
+Presently, Spring XD does not ship Windows binaries for Redis. However, Microsoft http://blogs.msdn.com/b/interoperability/archive/2013/04/22/redis-on-windows-stable-and-reliable.aspx[is actively working] on supporting Redis on Windows. You can download Windows Redis binaries from:
+
+https://github.com/MSOpenTech/redis/tree/2.6/bin/release 
+
+==== Redis is not running
+
+If you try to run Spring XD and Redis is NOT running, you will see the following exception:
+
+----
+Caused by: com.lambdaworks.redis.RedisException: Unable to connect
+	at com.lambdaworks.redis.RedisClient.connect(RedisClient.java:176)
+	at com.lambdaworks.redis.RedisClient.connectAsync(RedisClient.java:139)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.initConnection(LettuceConnectionFactory.java:108)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.afterPropertiesSet(LettuceConnectionFactory.java:86)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1547)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1485)
+	... 13 more
+Caused by: java.net.ConnectException: Connection refused: localhost/127.0.0.1:6379
+	at sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:599)
+	at org.jboss.netty.channel.socket.nio.NioClientBoss.connect(NioClientBoss.java:150)
+	at org.jboss.netty.channel.socket.nio.NioClientBoss.processSelectedKeys(NioClientBoss.java:105)
+	at org.jboss.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:79)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:312)
+	at org.jboss.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:895)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:918)
+	at java.lang.Thread.run(Thread.java:680)
+----
 
 ==== Starting Redis
 
@@ -77,7 +128,6 @@ xd/bin>$ ./xd-container --xdHomeDir <xd-install-directory>
 ----
 
 Pass in the +--help+ option to see additional configuration properties.
-
 
 
 
