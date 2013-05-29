@@ -1,6 +1,6 @@
-== Getting Started
+== Requirements
 
-To get started make sure your system has Java JDK 1.6 or newer.
+To get started make sure your system has *Java JDK 6* or newer installed. Furthermore, http://redis.io/[Redis] is used for persistence.
 
 === Download and Install Spring XD
 
@@ -77,7 +77,6 @@ xd/bin>$ ./xd-container --xdHomeDir <xd-install-directory>
 ----
 
 Pass in the +--help+ option to see additional configuration properties.
-
 
 
 
