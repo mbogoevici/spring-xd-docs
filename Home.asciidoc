@@ -11,7 +11,7 @@ You don't need to code anything up to get going, no build scripts, no IDE, no ma
 
 The project is just getting started now, but we have been doing a lot of prototyping over the past year so we expect to deliver significant functionality by our first milestone release scheduled for late May.
 
-We encourage you to link:wiki/Contribute[contribute], submit issue and feature requests on JIRA[https://jira.springsource.org/browse/XD] or https://github.com/springsource/spring-xd/issues[GitHub Issues], and follow our link:wiki/Guide[Spring XD Guide] to kick the tires of Spring XD. You can follow our progress week by week by looking at our link:wiki/WeeklyDemo[weekly demos]
+We encourage you to link:wiki/Contribute[contribute], submit issue and feature requests on JIRA[https://jira.springsource.org/browse/XD] or https://github.com/springsource/spring-xd/issues[GitHub Issues], and follow our link:wiki/Introduction[Spring XD Guide] to kick the tires of Spring XD. You can follow our progress week by week by looking at our link:wiki/WeeklyDemo[weekly demos]
 
 For the curious, 'XD' is an abbreviation for 'eXtreme Data'.
 
