@@ -319,7 +319,7 @@ See if the data ended up in the file
 
      $ curl -X POST -d "tcp --port=1242 --decoder=L1 | file --binary=true " http://localhost:8080/streams/tcptest9
 
-Note that we configure the `file` sink with `binary=true` so no newline is appended.
+Note that we configure the `file` sink with `binary=true` so that a newline is not appended.
 
      $ echo -en '\x08foo\x00bar\x0b' | netcat localhost 1242
 
