@@ -315,3 +315,16 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest8
 
+==== Binary Data Example
+
+     $ curl -X POST -d "tcp --port=1242 --decoder=L1 | file --binary=true " http://localhost:8080/streams/tcptest9
+
+Note that we configure the `file` sink with `binary=true` so no newline is appended.
+
+     $ echo -en '\x08foo\x00bar\x0b' | netcat localhost 1242
+
+----
+$ hexdump -C /tmp/xd/output/tcptest9
+00000000  66 6f 6f 00 62 61 72 0b                           |foo.bar.|
+00000008
+----
