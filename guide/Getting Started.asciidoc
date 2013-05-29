@@ -37,7 +37,7 @@ You are now ready to start Redis by executing
 $ ./redis-server 
 ----
 
-TIP: For further information on installing Redis in general, please checkout the http://redis.io/topics/quickstart[Redis Quick Start]. If you using Mac OS, you can also install Redis via http://mxcl.github.io/homebrew/[Homebrew]
+TIP: For further information on installing Redis in general, please checkout the http://redis.io/topics/quickstart[Redis Quick Start] guide. If you using Mac OS, you can also install Redis via http://mxcl.github.io/homebrew/[Homebrew]
 
 ==== Redis on Windows
 
