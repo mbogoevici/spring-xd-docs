@@ -197,7 +197,7 @@ This will create the default TCP source and send data read from it to the `tcpte
 TCP is a streaming protocol and some mechanism is needed to frame messages on the wire. A number of decoders are available, the default being 'CRLF' which is compatible with Telnet.
 
 ----
-     $ telnet localhost 1234
+$ telnet localhost 1234
 Trying ::1...
 Connected to localhost.
 Escape character is '^]'.
@@ -242,3 +242,62 @@ The TCP source has the following options
 
 
 === Examples
+
+The following examples all use `echo` to send data to `netcat` which sends the data to the source.
+
+The echo options `-en` allows echo to interpret escape sequences and not send a newline.
+
+==== CRLF Decoder
+
+    $ curl -X POST -d "tcp | file" http://localhost:8080/streams/tcptest
+
+This uses the default (CRLF) decoder and port 1234; send some data
+
+     $ echo -en 'foobar\r\n' | netcat localhost 1234
+
+See if the data ended up in the file
+
+     $ cat /tmp/xd/output/tcptest
+
+==== LF Decoder
+
+     $ curl -X POST -d "tcp --port=1235 --decoder=LF | file" http://localhost:8080/streams/tcptest2
+     $ echo -en 'foobar\n' | netcat localhost 1235
+     $ cat /tmp/xd/output/tcptest2
+
+==== NULL Decoder
+
+     $ curl -X POST -d "tcp --port=1236 --decoder=NULL | file" http://localhost:8080/streams/tcptest3
+     $ echo -en 'foobar\x00' | netcat localhost 1236
+     $ cat /tmp/xd/output/tcptest3
+
+==== STXETX Decoder
+
+     $ curl -X POST -d "tcp --port=1237 --decoder=STXETX | file" http://localhost:8080/streams/tcptest4
+     $ echo -en '\x02foobar\x03' | netcat localhost 1237
+     $ cat /tmp/xd/output/tcptest4
+
+==== RAW Decoder
+
+     $ curl -X POST -d "tcp --port=1238 --decoder=RAW | file" http://localhost:8080/streams/tcptest5
+     $ echo -n 'foobar' | netcat localhost 1238
+     $ cat /tmp/xd/output/tcptest5
+
+==== L1 Decoder
+
+     $ curl -X POST -d "tcp --port=1239 --decoder=L1 | file" http://localhost:8080/streams/tcptest6
+     $ echo -en '\x06foobar' | netcat localhost 1239
+     $ cat /tmp/xd/output/tcptest6
+
+==== L2 Decoder
+
+     $ curl -X POST -d "tcp --port=1240 --decoder=L2 | file" http://localhost:8080/streams/tcptest7
+     $ echo -en '\x00\x06foobar' | netcat localhost 1240
+     $ cat /tmp/xd/output/tcptest7
+
+==== L4 Decoder
+
+     $ curl -X POST -d "tcp --port=1241 --decoder=L4 | file" http://localhost:8080/streams/tcptest8
+     $ echo -en '\x00\x00\x00\x06foobar' | netcat localhost 1241
+     $ cat /tmp/xd/output/tcptest8
+
