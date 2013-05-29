@@ -31,6 +31,14 @@ This will compile the redis source tar and add the Redis executables available u
 * redis-cli
 * redis-server
 
+You are now ready to start Redis by executing
+
+----
+$ ./redis-server 
+----
+
+TIP: For further information on installing Redis in general, please checkout the http://redis.io/topics/quickstart[Redis Quick Start]. If you using Mac OS, you can also install Redis via http://mxcl.github.io/homebrew/[Homebrew]
+
 ==== Redis on Windows
 
 Presently, Spring XD does not ship Windows binaries for Redis. However, Microsoft http://blogs.msdn.com/b/interoperability/archive/2013/04/22/redis-on-windows-stable-and-reliable.aspx[is actively working] on supporting Redis on Windows. You can download Windows Redis binaries from:
@@ -128,7 +136,6 @@ xd/bin>$ ./xd-container --xdHomeDir <xd-install-directory>
 ----
 
 Pass in the +--help+ option to see additional configuration properties.
-
 
 
 
