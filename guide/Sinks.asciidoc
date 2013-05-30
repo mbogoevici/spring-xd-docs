@@ -51,7 +51,7 @@ TCP
 
 The TCP Sink provides for outbound messaging over TCP.
 
-The following examples use `netcat` (linux) to receive the data; the equivalent on Max OSX is `nc`.
+The following examples use `netcat` (linux) to receive the data; the equivalent on Mac OSX is `nc`.
 
 First, start a netcat to receive the data, and background it
 
