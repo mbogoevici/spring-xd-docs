@@ -1,25 +1,39 @@
-Introduction
-------------
+== Introduction
 
-In Spring XD, a basic stream defines the ingestion of data from a _source_ to a _sink_. Streams are managed using the XD Admin Server and defined in terms of source and sink _modules_. Modules are predefined configurations for sources and sinks and examples can be found in the `modules` directory within the `spring-xd` project footnote:[Using the filesystem is just one possible way of configuring a module registry. A Redis implementation would be another option.]. When you ask the server to set up a new stream, it looks in the modules directory for the source and sink definitions.
 
-The XD Admin Server
--------------------
+In Spring XD, a basic stream defines the ingestion of event driven data from a _source_ to a _sink_ that passes through any number of _processors_.  Stream processing is performed inside the XD Containers and the deployment of stream definitions to containers is done via the XD Admin Server.  The link:Getting%20Started[Getting Started] section shows you how to start these servers.
 
-The XD Admin server exposes a REST API (at the `/streams`) endpoint which allows you to create new streams footnote:[The server is implemented by the `AdminMain` class in the `spring-xd-dirt` subproject]. It uses Redis for TODO brief list???, so make sure Redis is running. You can then run `./gradlew spring-xd-dirt:run` from the root directory to start the server. New streams are created by posting stream definitions to the endpoint. The defintions are built from a simple DSL. For example, let's walk through what happens if we execute the following request
+Sources, sinks and processors are predefined configurations of a _module_.  Module definitions are found in the `xd/modules` directory.  footnote:[Using the filesystem is just one possible way of storing module defintions.  Other backends will be supported in the future, e.g. Redis.].  Modules definitions are standard Spring configuration files that use existing Spring classes, such as http://static.springsource.org/spring-integration/reference/htmlsingle/#spring-integration-adapters[Input/Output adapters] and http://static.springsource.org/spring-integration/reference/htmlsingle/#transformer[Transformers] from Spring Integration that support general http://www.eaipatterns.com/[Enterprise Integration Patterns].
+
+A high level DSL is used to create stream definitions. The DSL to define a stream that has an http source and a file sink (with no processors) is shown below
+
+     http | file
+
+The DSL mimics a UNIX pipes and filters syntax. Default values for ports and filenames are used in this example but can be overriden using `--` options, such as 
+
+     http --port 8091 | file --dir=/tmp/httpdata/
+
+To create these steam definitions you make an HTTP POST to the XD Admin Server.  More details can be found in the sections below.
+
+== Creating a Simple Stream
+
+
+The XD Admin server in the M1 release exposes only a simple POST endpoint (located at http://host:8080/streams) which allows you to create new streams.  footnote:[The server is implemented by the `AdminMain` class in the `spring-xd-dirt` subproject]. A full RESTful API for managing the lifecycle of stream definitions will be provided in the M2 release.  
+
+New streams are created by posting stream definitions.  The defintions are built from a simple DSL. For example, let's walk through what happens if we execute the following request
 
   $ curl -X POST -d "time | log" http://localhost:8080/streams/ticktock
 
-The DSL uses the "pipe" symbol `|`, to connect a source to a sink. The stream server finds the `time` and `log` definitions in the modules directory and uses them to setup the stream footnote:[The definitions are just standard Spring configuration files]. In this simple example, the time source simply sends the current time as a message each second, and the log sink outputs it using the logging framework.
+This defines a stream named `ticktock` based off the DSL expression `time | log`.  The DSL uses the "pipe" symbol `|`, to connect a source to a sink. The stream server finds the `time` and `log` definitions in the modules directory and uses them to setup the stream.  In this simple example, the time source simply sends the current time as a message each second, and the log sink outputs it using the logging framework.
 
   processing module 'Module [name=log, type=sink]' from group 'ticktock' with index: 1
   processing module 'Module [name=time, type=source]' from group 'ticktock' with index: 0
   17:26:18,774  WARN ThreadPoolTaskScheduler-1 logger.ticktock:141 - Thu May 23 17:26:18 EDT 2013
 
-Other Source and Sink Types
-----------------------------
 
-Let's try something a bit more complicated and swap out the `time` source for something else. Another supported source type is `http`, which accepts data for ingestion over HTTP POSTs. Note that this should not be confused with the REST API which the server uses to create streams. The `http` source accepts data on a different port (default 9000), from the API one.
+== Other Source and Sink Types
+
+Let's try something a bit more complicated and swap out the `time` source for something else. Another supported source type is `http`, which accepts data for ingestion over HTTP POSTs. Note that this should not be confused with the POST requests to the Admin Server used to create streams. The `http` source accepts data on a different port (default 9000), from the Admin Server (default 8080).
 
 To create a stream using an `http` source, but still using the same `log` sink, we would change the original command above to
 
@@ -35,21 +49,43 @@ Note that we don't see any other output this time until we actually post some da
   $ curl -X POST -d "hello" http://localhost:9000
   $ curl -X POST -d "goodbye" http://localhost:9000
 
-and the stream will then funnel the data from the http source to the output log implemented by the testsink
+and the stream will then funnel the data from the http source to the output log implemented by the log sink
 
   15:08:01,676  WARN ThreadPoolTaskScheduler-1 logger.myhttpteststream:141 - hello
   15:08:12,520  WARN ThreadPoolTaskScheduler-1 logger.myhttpteststream:141 - goodbye
 
 Of course, we could also change the sink implementation. You could pipe the output to a file (`file`), to hadoop (`hdfs`) or to any of the other sink modules which are provided. You can also define your own link:Modules[modules].
 
-DSL Syntax
-----------
+== Simple Stream Processing
+
+As an example of a simple processing step, we can transform the payload of the HTTP posted data to upper case using the stream definitions
+
+    http | transform --expression=payload.toUpperCase() | log
+
+
+To create this stream sent a POST request to the Admin Server 
+
+  $ curl -X POST -d "http | transform --expression=payload.toUpperCase() | log" http://localhost:8080/streams/myprocstream
+
+Posting some data
+
+  $ curl -X POST -d "hello" http://localhost:9000
+
+Will result in an uppercased 'hello' in the log
+
+  15:18:21,345  WARN ThreadPoolTaskScheduler-1 logger.myhttpteststream:141 - HELLO
+
+See the link:Processors[Processors] section for more information.
+
+== DSL Syntax
 
 In the examples above, we connected a source to a sink using the pipe symbol `|`. You can also pass parameters to the source and sink configurations. The parameter names will depend on the individual module implementations, but as an example, the `http` source module exposes a `port` setting which allows you to change the data ingestion port from the default value. To create the stream using port 8000, we would use 
 
   $ curl -X POST -d "http --port=8000 | log" http://localhost:8080/streams/myhttpteststream
 
 If you know a bit about Spring configuration files, you can inspect the module definition to see which properties it exposes. Alternatively, you can read more in the link:Sources[source] and link:Sinks[sink] documentation.
+
+The Spring XD M2 release will provide a DSL for non-linear flows, e.g. a directed graph.
 
 ///////////////////////////////////////////////////
 
