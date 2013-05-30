@@ -6,9 +6,9 @@ To get started make sure your system has *Java JDK 6* or newer installed. Furthe
 
 === Download Spring XD
 
-Download http://www.springframework.org[spring-xd-1.0-M1.zip]
+Download http://www.springframework.org[spring-xd-1.0-M1.zip] (TODO)
 
-Unzip the distribution.
+Unzip the distribution. This will yield the installation directory *spring-xd*.
 
 === Installing Redis
 
@@ -17,13 +17,13 @@ If you have a running instance of Redis it can be used for Spring XD. By default
 * redis.hostname
 * redis.port
 
-If you don't have a pre-existing installation of Redis, you can use the Spring XD provided instance. 
+If you don't have a pre-existing installation of Redis, you can use the Spring XD provided instance. Inside the Spring XD installation directory (spring-xd) do:
 ----
 $ cd redis/bin
 $ ./install-redis
 ----
 
-This will compile the redis source tar and add the Redis executables available under redis/bin
+This will compile the redis source tar and add the Redis executables under redis/bin:
 
 * redis-check-dump
 * redis-sentinel
@@ -41,7 +41,7 @@ TIP: For further information on installing Redis in general, please checkout the
 
 ==== Redis on Windows
 
-Presently, Spring XD does not ship Windows binaries for Redis. However, Microsoft http://blogs.msdn.com/b/interoperability/archive/2013/04/22/redis-on-windows-stable-and-reliable.aspx[is actively working] on supporting Redis on Windows. You can download Windows Redis binaries from:
+Presently, Spring XD does not ship Windows binaries for Redis (See https://jira.springsource.org/browse/XD-151[XD-151]). However, Microsoft http://blogs.msdn.com/b/interoperability/archive/2013/04/22/redis-on-windows-stable-and-reliable.aspx[is actively working] on supporting Redis on Windows. You can download Windows Redis binaries from:
 
 https://github.com/MSOpenTech/redis/tree/2.6/bin/release 
 
@@ -136,7 +136,6 @@ xd/bin>$ ./xd-container --xdHomeDir <xd-install-directory>
 ----
 
 Pass in the +--help+ option to see additional configuration properties.
-
 
 
 
