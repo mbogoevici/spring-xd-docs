@@ -25,7 +25,7 @@ cd spring-xd-gemfire-server and execute:
 
 == Start the XD stream server
 
-as instructed in the link:wiki/demo[Demo] page.
+as instructed in the link:wiki/Demo[Demo] page.
 
 == Create the streams
 
