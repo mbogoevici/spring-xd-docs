@@ -1,6 +1,6 @@
 == Requirements
 
-To get started make sure your system has *Java JDK 6* or newer installed. Furthermore, http://redis.io/[Redis] is used for persistence. Either an installed or the Spring XD provided Redis instance can be used.
+To get started make sure your system has http://www.oracle.com/technetwork/java/javase/downloads/[*Java JDK 6*] or newer installed. Furthermore, http://redis.io/[*Redis*] is used for persistence. You can either use an existing instance of _Redis_ or the Spring XD provided Redis instance.
 
 == Installation of Spring XD
 
@@ -12,18 +12,24 @@ Unzip the distribution. This will yield the installation directory *spring-xd*.
 
 === Installing Redis
 
-If you have a running instance of Redis it can be used for Spring XD. By default Spring XD will try to use a Redis instance running on *localhost* using *port 6379*. However, you can overwrite these defaults using system properties:
+If you have a running instance of _Redis_ it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*. However, you can overwrite these defaults using system properties:
 
 * redis.hostname
 * redis.port
 
-If you don't have a pre-existing installation of Redis, you can use the Spring XD provided instance. Inside the Spring XD installation directory (spring-xd) do:
+e.g. 
+
+----
+-Dredis.hostname=myHost -Dredis.port=1234
+----
+
+If you don't have a pre-existing installation of _Redis_, you can use the _Spring XD_ provided instance (For Linux and Mac). Inside the _Spring XD_ installation directory (spring-xd) do:
 ----
 $ cd redis/bin
 $ ./install-redis
 ----
 
-This will compile the redis source tar and add the Redis executables under redis/bin:
+This will compile the _Redis_ source tar and add the _Redis_ executables under redis/bin:
 
 * redis-check-dump
 * redis-sentinel
@@ -31,23 +37,23 @@ This will compile the redis source tar and add the Redis executables under redis
 * redis-cli
 * redis-server
 
-You are now ready to start Redis by executing
+You are now ready to start _Redis_ by executing
 
 ----
 $ ./redis-server 
 ----
 
-TIP: For further information on installing Redis in general, please checkout the http://redis.io/topics/quickstart[Redis Quick Start] guide. If you using Mac OS, you can also install Redis via http://mxcl.github.io/homebrew/[Homebrew]
+TIP: For further information on installing _Redis_ in general, please checkout the http://redis.io/topics/quickstart[Redis Quick Start] guide. If you using _Mac OS_, you can also install _Redis_ via http://mxcl.github.io/homebrew/[Homebrew]
 
 ==== Redis on Windows
 
-Presently, Spring XD does not ship Windows binaries for Redis (See https://jira.springsource.org/browse/XD-151[XD-151]). However, Microsoft http://blogs.msdn.com/b/interoperability/archive/2013/04/22/redis-on-windows-stable-and-reliable.aspx[is actively working] on supporting Redis on Windows. You can download Windows Redis binaries from:
+Presently, _Spring XD_ does not ship _Windows_ binaries for _Redis_ (See https://jira.springsource.org/browse/XD-151[XD-151]). However, _Microsoft_ http://blogs.msdn.com/b/interoperability/archive/2013/04/22/redis-on-windows-stable-and-reliable.aspx[is actively working] on supporting _Redis_ on _Windows_. You can download _Windows_ _Redis_ binaries from:
 
 https://github.com/MSOpenTech/redis/tree/2.6/bin/release 
 
 ==== Redis is not running
 
-If you try to run Spring XD and Redis is NOT running, you will see the following exception:
+If you try to run _Spring XD_ and Redis is NOT running, you will see the following exception:
 
 ----
 Caused by: com.lambdaworks.redis.RedisException: Unable to connect
@@ -136,6 +142,5 @@ xd/bin>$ ./xd-container --xdHomeDir <xd-install-directory>
 ----
 
 Pass in the +--help+ option to see additional configuration properties.
-
 
 
