@@ -12,6 +12,8 @@ The Taps covered are
 
 * <<counter,Counter>>
 * <<field-value-counter,Field Value Counter>>
+* <<gauge,Gauge>>
+* <<rich-gauge,Rich Gauge>>
 
 [[counter]]
 === Counter
@@ -92,4 +94,134 @@ The _twittersearch_ source produces JSON strings which contain the user id of th
    $redis-cli
    redis 127.0.0.1:6379>zrange fieldvaluecounters.fromUser 0 -1 withscores 
 
- 
+[[gauge]]
+=== Gauge
+
+A guage is a Metric, similar to a counter in that it holds a single long value associated with a unique name. In this case the value can represent any numeric value defined by the application. 
+
+The _gauge_ sink provided with XD stores expects a numeric value as a payload, typically this would be a decimal formatted string, and stores its values in Redis. The gauge includes the following attributes:
+
+ - name: The name for the gauge (optional, defaults to the stream name)
+
+
+Here is an example of creating a tap for a gauge:
+
+==== Simple Tap Example
+
+Create an ingest stream
+
+      $ curl -X POST -d "http --port=9090 | file" http://localhost:8080/streams/test
+
+Next create the tap:
+
+      $curl -X POST -d "tap@test | gauge" http://localhost:8080/streams/simplegauge
+
+Now Post a message to the ingest stream:
+
+    $curl -X POST -d "10" http://localhost:9090
+
+Check the gauge:
+
+    $redis-cli
+    redis 127.0.0.1:6379> get gauges.simplegauge
+    "10"
+
+[[rich-gauge]]
+=== Rich Gauge
+
+A rich guage is a Metric that holds a double value associated with a unique name. In addition to the value, The rich guage keeps a running average, along with the minimum and maximum values and the sample count.
+
+The _richgauge_ sink provided with XD stores expects a numeric value as a payload, typically this would be a decimal formatted string, and stores its values in Redis. The richgauge includes the following attributes:
+
+ - name: The name for the gauge (optional, defaults to the stream name)
+
+The values are stored in Redis as a space delimited string, formatted as _value_ _mean_ _max_ _min_ _count_
+
+Here are some examples of creating a tap for a rich gauge:
+
+==== Simple Tap Example
+
+Create an ingest stream
+
+      $ curl -X POST -d "http --port=9090 | file" http://localhost:8080/streams/test
+
+Next create the tap:
+
+      $curl -X POST -d "tap@test | richgauge" http://localhost:8080/streams/testgauge
+
+Now Post some messages to the ingest stream:
+
+    $curl -X POST -d "10" http://localhost:9090
+    $curl -X POST -d "13" http://localhost:9090
+    $curl -X POST -d "16" http://localhost:9090
+
+Check the gauge:
+
+    $redis-cli
+    redis 127.0.0.1:6379> get richgauges.testgauge
+    "16.0 13.0 16.0 10.0 3"
+
+==== Stock Price Example
+
+In this example, we will track stock prices, which is a more practical example. The data is ingested as JSON strings like 
+
+    {"symbol":"VMW","price":72.04}
+
+
+Create an ingest stream
+
+      $ curl -X POST -d "http --port=9090 | file" http://localhost:8080/streams/stocks
+
+Next create the tap, using the json-field-extractor to extract the stock price from the payload: 
+
+     $curl -X POST -d "tap@stocks | json-field-extractor --fieldName=price | richgauge" http://localhost:8080/streams/stockprice
+
+Now Post some messages to the ingest stream:
+
+    $curl -X POST -d "{\"symbol\":\"VMW\",\"price\":72.04}" http://localhost:9000
+    $curl -X POST -d "{\"symbol\":\"VMW\",\"price\":72.06}" http://localhost:9000
+    $curl -X POST -d "{\"symbol\":\"VMW\",\"price\":72.08}" http://localhost:9000
+
+Check the gauge:
+
+    $redis-cli
+    redis 127.0.0.1:6379> get richgauges.stockprice
+    "72.08 72.04 72.08 72.02 3"
+
+
+==== Improved Stock Price Example
+
+In this example, we will track stock prices for selected stocks. The data is ingested as JSON strings like 
+
+    {"symbol":"VMW","price":72.04}
+    {"symbol":"EMC","price":24.92}
+
+The previous example would feed these prices to a single gauge. What we really want is to create a separate tap for each ticker symbol in which we are interested:
+
+Create an ingest stream
+
+      $ curl -X POST -d "http --port=9090 | file" http://localhost:8080/streams/stocks
+
+Next create the taps, using the json-field-extractor to extract the stock price from the payload: 
+
+     $curl -X POST -d "tap@stocks |json-field-value-filter --fieldName=symbol --fieldValue=VMW| json-field-extractor --fieldName=price | richgauge" http://localhost:8080/streams/vmwprice
+     $curl -X POST -d "tap@stocks |json-field-value-filter --fieldName=symbol --fieldValue=EMC| json-field-extractor --fieldName=price | richgauge" http://localhost:8080/streams/emcprice
+
+Now Post some messages to the ingest stream:
+
+    $curl -X POST -d "{\"symbol\":\"VMW\",\"price\":72.04}" http://localhost:9000
+    $curl -X POST -d "{\"symbol\":\"VMW\",\"price\":72.06}" http://localhost:9000
+    $curl -X POST -d "{\"symbol\":\"VMW\",\"price\":72.08}" http://localhost:9000
+
+    $curl -X POST -d "{\"symbol\":\"EMC\",\"price\":24.92}" http://localhost:9000
+    $curl -X POST -d "{\"symbol\":\"EMC\",\"price\":24.90}" http://localhost:9000
+    $curl -X POST -d "{\"symbol\":\"EMC\",\"price\":24.96}" http://localhost:9000
+
+Check the gauge:
+
+    $redis-cli
+    redis 127.0.0.1:6379> get richgauges.emcprice
+    "24.96 24.926666666666666 24.96 24.9 3"
+    
+    redis 127.0.0.1:6379> get richgauges.vmwprice
+    "72.08 72.04 72.08 72.02 3"

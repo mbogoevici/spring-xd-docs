@@ -29,7 +29,8 @@ A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/mai
 
 For example, here is part of Spring configuration for a _counter_ sink that counts messages and stores the result in Redis :
  
-[source ,xml]
+[source,xml]
+----
 <beans>   
     ...
   <bean id="handler" class="org.springframework.xd.analytics.metrics.integration.MessageCounterHandler">
@@ -47,8 +48,7 @@ For example, here is part of Spring configuration for a _counter_ sink that coun
 	<constructor-arg index="1" value="${redis.port:6379}"/>	  
   </bean>
 </beans> 
- 
----
+----
 
 Note the property placeholders for _name_, _redis.hostname_ and _redis.port_. The _name_ property defines no default value, so it is a required attribute for this module. _redis.hostname_ and _redis.port_ default to _localhost_ and _6379_ respectively. So these are optional attributes. In either case, the XD server will substitue values for these properties as configured for each module instance.  For example, we can create two streams each creating an instance of the _counter_ module with a different configuration.
 
