@@ -9,11 +9,10 @@ The Sources covered are
 * <<twittersearch, Twitter Search>>
 * <<gemfire-cq,Gemfire CQ>>
 * <<syslog, Syslog>>
+* <<tcp, TCP>>
 
 [[http]]
 === HTTP
-
-The HTTP source has X options
 
 To create a stream definition in the server post using curl
 
@@ -185,3 +184,147 @@ TCP - Ubuntu (rsyslog.conf)
 
 Restart the syslog daemon after reconfiguring.
 
+
+[[tcp]]
+=== TCP
+
+To create a stream definition in the server,  post using curl
+
+     $ curl -X POST -d "tcp | file" http://localhost:8080/streams/tcptest
+
+This will create the default TCP source and send data read from it to the `tcptest` file.
+
+TCP is a streaming protocol and some mechanism is needed to frame messages on the wire. A number of decoders are available, the default being 'CRLF' which is compatible with Telnet.
+
+----
+$ telnet localhost 1234
+Trying ::1...
+Connected to localhost.
+Escape character is '^]'.
+foo
+^]
+
+telnet> quit
+Connection closed.
+----
+
+See if the data ended up in the file
+
+     $ cat /tmp/xd/output/tcptest
+
+==== TCP with options
+
+The TCP source has the following options
+
+- `port` - the port on which to listen (default `1234`)
+- `reverse-lookup` - perform a reverse DNS lookup on the remote IP Address (default `false`)
+- `socket-timeout` - the timeout (ms) before closing the socket when no data received (default `120000`)
+- `nio` - whether or not to use NIO (default false). NIO is more efficient when there are many connections.
+- `decoder` - how to decode the stream (default `CRLF`) - see below
+- `binary` - whether the data is binary (true) or text (false) - (default false)
+- `charset` - the charset used when converting text to `String` (default 'UTF-8')
+
+=== Available Decoders
+
+==== Text Data
+
+- `CRLF` - text terminated by carriage return (0x0d) followed by line feed (0x0a) (TELNET)
+- `LF` - text terminated by line feed (0x0a)
+- `NULL` - text terminated by a null byte (0x00)
+- `STXETX` - text preceded by an STX (0x02) and terminated by an ETX (0x03)
+
+==== Text and Binary Data
+
+- `RAW` - no structure - the client indicates a complete message by closing the socket
+- `L1` - data preceded by a one byte (unsigned) length field (supports up to 255 bytes)
+- `L2` - data preceded by a two byte (unsigned) length field (up to 2**16-1 bytes)
+- `L4` - data preceded by a four byte (signed) length field (up to 2**31-1 bytes)
+
+
+=== Examples
+
+The following examples all use `echo` to send data to `netcat` which sends the data to the source.
+
+The echo options `-en` allows echo to interpret escape sequences and not send a newline.
+
+==== CRLF Decoder
+
+    $ curl -X POST -d "tcp | file" http://localhost:8080/streams/tcptest
+
+This uses the default (CRLF) decoder and port 1234; send some data
+
+     $ echo -en 'foobar\r\n' | netcat localhost 1234
+
+See if the data ended up in the file
+
+     $ cat /tmp/xd/output/tcptest
+
+==== LF Decoder
+
+     $ curl -X POST -d "tcp --port=1235 --decoder=LF | file" http://localhost:8080/streams/tcptest2
+
+     $ echo -en 'foobar\n' | netcat localhost 1235
+
+     $ cat /tmp/xd/output/tcptest2
+
+==== NULL Decoder
+
+     $ curl -X POST -d "tcp --port=1236 --decoder=NULL | file" http://localhost:8080/streams/tcptest3
+
+     $ echo -en 'foobar\x00' | netcat localhost 1236
+
+     $ cat /tmp/xd/output/tcptest3
+
+==== STXETX Decoder
+
+     $ curl -X POST -d "tcp --port=1237 --decoder=STXETX | file" http://localhost:8080/streams/tcptest4
+
+     $ echo -en '\x02foobar\x03' | netcat localhost 1237
+
+     $ cat /tmp/xd/output/tcptest4
+
+==== RAW Decoder
+
+     $ curl -X POST -d "tcp --port=1238 --decoder=RAW | file" http://localhost:8080/streams/tcptest5
+
+     $ echo -n 'foobar' | netcat localhost 1238
+
+     $ cat /tmp/xd/output/tcptest5
+
+==== L1 Decoder
+
+     $ curl -X POST -d "tcp --port=1239 --decoder=L1 | file" http://localhost:8080/streams/tcptest6
+
+     $ echo -en '\x06foobar' | netcat localhost 1239
+
+     $ cat /tmp/xd/output/tcptest6
+
+==== L2 Decoder
+
+     $ curl -X POST -d "tcp --port=1240 --decoder=L2 | file" http://localhost:8080/streams/tcptest7
+
+     $ echo -en '\x00\x06foobar' | netcat localhost 1240
+
+     $ cat /tmp/xd/output/tcptest7
+
+==== L4 Decoder
+
+     $ curl -X POST -d "tcp --port=1241 --decoder=L4 | file" http://localhost:8080/streams/tcptest8
+
+     $ echo -en '\x00\x00\x00\x06foobar' | netcat localhost 1241
+
+     $ cat /tmp/xd/output/tcptest8
+
+==== Binary Data Example
+
+     $ curl -X POST -d "tcp --port=1242 --decoder=L1 | file --binary=true " http://localhost:8080/streams/tcptest9
+
+Note that we configure the `file` sink with `binary=true` so that a newline is not appended.
+
+     $ echo -en '\x08foo\x00bar\x0b' | netcat localhost 1242
+
+----
+$ hexdump -C /tmp/xd/output/tcptest9
+00000000  66 6f 6f 00 62 61 72 0b                           |foo.bar.|
+00000008
+----

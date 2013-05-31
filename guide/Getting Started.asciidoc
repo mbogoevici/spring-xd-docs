@@ -1,16 +1,81 @@
-== Getting Started
+== Requirements
 
-To get started make sure your system has Java JDK 1.6 or newer.
+To get started make sure your system has http://www.oracle.com/technetwork/java/javase/downloads/[*Java JDK 6*] or newer installed. Furthermore, http://redis.io/[*Redis*] is used for persistence. You can either use an existing instance of _Redis_ or the Spring XD provided Redis instance.
 
-=== Download and Install Spring XD
+== Installation of Spring XD
 
-Download http://www.springframework.org[spring-xd-1.0-M1.zip]
+=== Download Spring XD
 
-Unzip the distribution.
+Download http://www.springframework.org[spring-xd-1.0-M1.zip] (TODO)
 
-==== Installing Redis
+Unzip the distribution. This will yield the installation directory *spring-xd*.
 
-TBD
+=== Installing Redis
+
+If you have a running instance of _Redis_ it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*. However, you can overwrite these defaults using system properties:
+
+* redis.hostname
+* redis.port
+
+e.g. 
+
+----
+-Dredis.hostname=myHost -Dredis.port=1234
+----
+
+If you don't have a pre-existing installation of _Redis_, you can use the _Spring XD_ provided instance (For Linux and Mac). Inside the _Spring XD_ installation directory (spring-xd) do:
+----
+$ cd redis/bin
+$ ./install-redis
+----
+
+This will compile the _Redis_ source tar and add the _Redis_ executables under redis/bin:
+
+* redis-check-dump
+* redis-sentinel
+* redis-benchmark
+* redis-cli
+* redis-server
+
+You are now ready to start _Redis_ by executing
+
+----
+$ ./redis-server 
+----
+
+TIP: For further information on installing _Redis_ in general, please checkout the http://redis.io/topics/quickstart[Redis Quick Start] guide. If you using _Mac OS_, you can also install _Redis_ via http://mxcl.github.io/homebrew/[Homebrew]
+
+==== Redis on Windows
+
+Presently, _Spring XD_ does not ship _Windows_ binaries for _Redis_ (See https://jira.springsource.org/browse/XD-151[XD-151]). However, _Microsoft_ http://blogs.msdn.com/b/interoperability/archive/2013/04/22/redis-on-windows-stable-and-reliable.aspx[is actively working] on supporting _Redis_ on _Windows_. You can download _Windows_ _Redis_ binaries from:
+
+https://github.com/MSOpenTech/redis/tree/2.6/bin/release 
+
+==== Redis is not running
+
+If you try to run _Spring XD_ and Redis is NOT running, you will see the following exception:
+
+----
+Caused by: com.lambdaworks.redis.RedisException: Unable to connect
+	at com.lambdaworks.redis.RedisClient.connect(RedisClient.java:176)
+	at com.lambdaworks.redis.RedisClient.connectAsync(RedisClient.java:139)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.initConnection(LettuceConnectionFactory.java:108)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.afterPropertiesSet(LettuceConnectionFactory.java:86)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1547)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1485)
+	... 13 more
+Caused by: java.net.ConnectException: Connection refused: localhost/127.0.0.1:6379
+	at sun.nio.ch.SocketChannelImpl.checkConnect(Native Method)
+	at sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:599)
+	at org.jboss.netty.channel.socket.nio.NioClientBoss.connect(NioClientBoss.java:150)
+	at org.jboss.netty.channel.socket.nio.NioClientBoss.processSelectedKeys(NioClientBoss.java:105)
+	at org.jboss.netty.channel.socket.nio.NioClientBoss.process(NioClientBoss.java:79)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:312)
+	at org.jboss.netty.channel.socket.nio.NioClientBoss.run(NioClientBoss.java:42)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:895)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:918)
+	at java.lang.Thread.run(Thread.java:680)
+----
 
 ==== Starting Redis
 
@@ -51,7 +116,7 @@ You should expect something like this:
 Spring XD consists of two servers
 
 * XDAdmin - controls deployment of modules into containers
-* XDContainer - execute modules
+* XDContainer - executes modules
 
 
 The most simple deployment is to launch an XD Container with an embedded XDAdmin from the +<xd-install-dir>/xd/bin+ directory
@@ -77,10 +142,5 @@ xd/bin>$ ./xd-container --xdHomeDir <xd-install-directory>
 ----
 
 Pass in the +--help+ option to see additional configuration properties.
-
-
-
-
-
 
 

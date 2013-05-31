@@ -2,7 +2,7 @@ This page describes how to setup and run a GemFire continuous query (CQ) in in S
 
 The demo uses GemFire's JSON Support, introduced in 7.0. This allows JSON content to be cached using a GemFire proprietary format that supports OQL queries and other operations on cached JSON content. OQL also works against POJOs however JSON was chosen for it's simplicity and interoperability with XD modules.
 
-The demo implements a stock price use case using the XD Stream server as described in the link:wiki/demo[Demo] page.
+The demo implements a stock price use case using the XD Stream server as described in the link:wiki/Demo[Demo] page.
 
 This demo requires two streams:
 
@@ -25,7 +25,7 @@ cd spring-xd-gemfire-server and execute:
 
 == Start the XD stream server
 
-as instructed in the link:wiki/demo[Demo] page.
+as instructed in the link:wiki/Demo[Demo] page.
 
 == Create the streams
 
