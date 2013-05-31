@@ -116,7 +116,7 @@ You should expect something like this:
 Spring XD consists of two servers
 
 * XDAdmin - controls deployment of modules into containers
-* XDContainer - execute modules
+* XDContainer - executes modules
 
 
 The most simple deployment is to launch an XD Container with an embedded XDAdmin from the +<xd-install-dir>/xd/bin+ directory
