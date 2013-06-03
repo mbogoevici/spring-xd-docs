@@ -74,6 +74,10 @@ Thu May 30 10:28:33 EDT 2013
 
 TCP is a streaming protocol and some mechanism is needed to frame messages on the wire. A number of encoders are available, the default being 'CRLF'.
 
+Undeploy the stream; netcat will terminate when the TCP Sink disconnects.
+
+     $ curl -X DELETE http://localhost:8080/streams/tcptest
+
 === TCP with Options
 
 The TCP Sink has the following options
@@ -120,6 +124,10 @@ Start netcat in the background and redirect the output to a file `foo`
 Create the stream, using the `L4` encoder
 
      $ curl -X POST -d "time --interval=3 | tcp --encoder=L4 --port=1235" http://localhost:8080/streams/tcptest
+
+Undeploy the stream
+
+     $ curl -X DELETE http://localhost:8080/streams/tcptest
 
 Check the output
 
@@ -177,4 +185,3 @@ The keyExpression is a SpEL expression that depends on the payload type. In this
 This will write an entry to the GemFire _Stocks_ region with the key _VMW_. You should see a message on STDOUT for the process running the GemFire server like:
 
     INFO [LoggingCacheListener] - updated entry VMW
-
