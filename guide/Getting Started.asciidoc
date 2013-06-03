@@ -1,6 +1,6 @@
 == Requirements
 
-To get started make sure your system has http://www.oracle.com/technetwork/java/javase/downloads/[*Java JDK 6*] or newer installed. Furthermore, http://redis.io/[*Redis*] is used for persistence. You can either use an existing instance of _Redis_ or the Spring XD provided Redis instance.
+To get started make sure your system has as a minimum  http://www.oracle.com/technetwork/java/javase/downloads/[*Java JDK 6*] or newer installed. *Java JDK 7* is recommended. Furthermore, http://redis.io/[*Redis*] is used for persistence. You can either use an existing instance of _Redis_ or the Spring XD provided Redis instance.
 
 == Installation of Spring XD
 
@@ -12,16 +12,7 @@ Unzip the distribution. This will yield the installation directory *spring-xd*.
 
 === Installing Redis
 
-If you have a running instance of _Redis_ it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*. However, you can overwrite these defaults using system properties:
-
-* redis.hostname
-* redis.port
-
-e.g. 
-
-----
--Dredis.hostname=myHost -Dredis.port=1234
-----
+If you have a running instance of _Redis_ it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*.
 
 If you don't have a pre-existing installation of _Redis_, you can use the _Spring XD_ provided instance (For Linux and Mac). Inside the _Spring XD_ installation directory (spring-xd) do:
 ----
@@ -142,5 +133,4 @@ xd/bin>$ ./xd-container --xdHomeDir <xd-install-directory>
 ----
 
 Pass in the +--help+ option to see additional configuration properties.
-
 
