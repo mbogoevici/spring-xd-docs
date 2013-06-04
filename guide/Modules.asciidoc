@@ -11,7 +11,7 @@ XD comes with a number of modules used for assembling streams which perform comm
 However, if you are interested in extending XD with your own modules, some knowledge of Spring, Spring Integration, and Spring Batch is essential. The remainder of this document assumes the reader has some familiarity with these topics.
 
 === Creating a Module
-This section provides details on how to write and register custom modules. For a quick start, dive into the examples of creating link:Creating A Source Module[source], link:Creating A Processor Module[processor], and link:Creating A Sink Module[sink] modules.
+This section provides details on how to write and register custom modules. For a quick start, dive into the examples of creating link:Creating-a-Source-Module[source], link:Creating-a-Processor-Module[processor], and link:Creating-a-Sink-Module[sink] modules.
 
 A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/Module.java[Module] has the following required attributes:
 
