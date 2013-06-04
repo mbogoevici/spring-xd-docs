@@ -1,37 +1,34 @@
 == Modules
 
-The XD runtime environment supports data ingestion by allowing users to define link:Streams[streams]. Streams are composed of _modules_ which encapsulate a unit of work into a reusable component. A module has the following required attributes:
+=== Introduction
 
-* name - the name of the component, normally a single word representing the purpose of the module. Examples are _file_, _http_, _syslog_.
-* type - Modules are categorized by type, typically representing the role or function of the module, but may  represent any category. Current XD module types include _source_, _sink_, and _processor_ which indicate how they modules may be composed in a stream. Specifically, a source polls an external resource, or is triggered by an event and only provides an output. The first module in a stream is always a source. A processor performs some type of transformation or business logic and provides an input and one or more outputs. A sink provides only an input and outputs data to an external resource to terminate the stream. 
-* instance id - This represents a named instance of a module with a given name and type, with a specific configuration. 
+The XD runtime environment supports data ingestion by allowing users to define link:Streams[streams]. Streams are composed of _modules_ which encapsulate a unit of work into a reusable component.
 
-Modules are configurable. For example, the file source accepts a _name_ property which indicates a directory name which is polled for files. This property defaults to the stream name if not provided.
+Modules are categorized by type, typically representing the role or function of the module. Current XD module types include _source_, _sink_, and _processor_ which indicate how they modules may be composed in a stream. Specifically, a source polls an external resource, or is triggered by an event and only provides an output. The first module in a stream is always a source. A processor performs some type of transformation or business logic and provides an input and one or more outputs. A sink provides only an input and outputs data to an external resource to terminate the stream.
 
-XD comes with a number of modules used for assembling streams which perform common input and/or output operations with files, HDFS, http, twitter, syslog, GemFire, and more. Users can easily assemble these into streams to build complex big data applications without having to know the underlying Spring products on which XD is built. 
+XD comes with a number of modules used for assembling streams which perform common input and/or output operations with files, HDFS, http, twitter, syslog, GemFire, and more. Users can easily assemble these into streams to build complex big data applications without having to know the underlying Spring products on which XD is built.
 
 However, if you are interested in extending XD with your own modules, some knowledge of Spring, Spring Integration, and Spring Batch is essential. The remainder of this document assumes the reader has some familiarity with these topics.
 
-=== Registering a Module
+=== Creating a Module
+This section provides details on how to write and register custom modules. For a quick start, dive into the examples of creating link:CreatingASourceModule[source], link:CreatingAProcessorModule[processor], and link:CreatingASinkModule[sink] modules.
 
-XD provides a strategy interface https://github.com/SpringSource/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/module/ModuleRegistry.java[ModuleRegistry] which it uses to find a module of a given name and type. Currently XD provides RedisModuleRegistry and FileModuleRegistry, The ModuleRegistry is a required component for the XD Server. By default the XD Server is configured with the FileModuleRegistry which looks for modules in ${xd.home:..}/modules. Where xd.home is a Java System Property or may be passed as a command line argument to the container launcher. So out of the box, the modules are contained in the XD modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
+A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/Module.java[Module] has the following required attributes:
 
-      modules/processor
-      modules/sink
-      modules/source
+* name - the name of the component, normally a single word representing the purpose of the module. Examples are _file_, _http_, _syslog_.
+* type - the module type, current XD module types include _source_, _sink_, and _processor_
+* instance id - This represents a named instance of a module with a given name and type, with a specific configuration.
 
-Using the default server configuration, you simply drop your module file into the modules directory and deploy a stream to the server.
+==== Modules and Spring
+At the core, a module is any component that may be implemented using a Spring application context. In this respect, the concept may be extended for purposes other than data ingestion. The types mentioned above (source, processor,sink) are specific to XD and constructing streams. But other module types are envisioned.
 
-=== Modules and Spring
-At the core, a module is any component that may be implemented using a Spring application context. In this respect, the concept may be extended for purposes other than data ingestion. The types mentioned above (source, processor,sink) are specific to XD and constructing streams. But other module types are envisioned. 
+A module is typically configured using property placeholders which are bound to the module's attributes. Attributes may be required or optional and this coincides with whether a default value is provided for the placeholder.
 
-A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/Module.java[Module] is typically configured using property placeholders which are bound to the modules attributes. Attributes may be required or optional and this coincides with whether a default value is provided for the placeholder. 
+For example, here is part of Spring configuration for a _counter_ sink that counts messages and stores the result in Redis:
 
-For example, here is part of Spring configuration for a _counter_ sink that counts messages and stores the result in Redis :
- 
 [source,xml]
 ----
-<beans>   
+<beans>
     ...
   <bean id="handler" class="org.springframework.xd.analytics.metrics.integration.MessageCounterHandler">
 		<constructor-arg ref="service"/>
@@ -45,34 +42,45 @@ For example, here is part of Spring configuration for a _counter_ sink that coun
   </bean>
   <bean id="connectionFactory" class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory">
 	<constructor-arg index="0" value="${redis.hostname:localhost}"/>
-	<constructor-arg index="1" value="${redis.port:6379}"/>	  
+	<constructor-arg index="1" value="${redis.port:6379}"/>
   </bean>
-</beans> 
+</beans>
 ----
 
-Note the property placeholders for _name_, _redis.hostname_ and _redis.port_. The _name_ property defines no default value, so it is a required attribute for this module. _redis.hostname_ and _redis.port_ default to _localhost_ and _6379_ respectively. So these are optional attributes. In either case, the XD server will substitue values for these properties as configured for each module instance.  For example, we can create two streams each creating an instance of the _counter_ module with a different configuration.
+Note the property placeholders for _name_, _redis.hostname_ and _redis.port_. The _name_ property defines no default value, so it is a required attribute for this module. _redis.hostname_ and _redis.port_ default to _localhost_ and _6379_ respectively. So these are optional attributes. In either case, the XD server will substitute values for these properties as configured for each module instance.  For example, we can create two streams each creating an instance of the _counter_ module with a different configuration.
 
-    curl -X POST -d "time | counter --name=test" http://localhost:8080/streams/counttest 
+    curl -X POST -d "time | counter --name=test" http://localhost:8080/streams/counttest
 
-or 
+or
 
-    curl -X POST -d "time | counter --name=test2 --redis.host=redis.example.com --redis.port=63710" http://localhost:8080/streams/counttest2 
+    curl -X POST -d "time | counter --name=test2 --redis.host=redis.example.com --redis.port=63710" http://localhost:8080/streams/counttest2
 
-In addition to properties, modules may reference Spring beans which are defined externally such that each module instance may inject a different implementation of a bean. A Module may also define Spring environment profiles which may be activated by each module instance. The ability to create module instances each configured differently is only possible if each module is created in its own application context. The module may be configured with a parent context, but this should be done with care. In the simplest case, the module context is completely separate. This results in some very useful features, such as being able to create multiple bean instances with the same id, possibly with different configurations. More generally, this allows modules to adhere to the KISS principle.    
+In addition to properties, modules may reference Spring beans which are defined externally such that each module instance may inject a different implementation of a bean. The ability to configure each module instance differently is only possible if each module is created in its own application context. The module may be configured with a parent context, but this should be done with care. In the simplest case, the module context is completely separate. This results in some very useful features, such as being able to create multiple bean instances with the same id, possibly with different configurations. More generally, this allows modules to adhere to the KISS principle.
 
-=== Integration Modules
-Modules of type source, processor, and sink are built with Spring Integration and are typically very fine-grained. For example, take a look at the https://github.com/SpringSource/spring-xd/blob/master/modules/source/file.xml[file source] which simply polls a directory using a file inbound adapter and https://github.com/SpringSource/spring-xd/blob/master/modules/sink/file.xml[file sink] which appends incoming message payloads to a file using a file outbound adapter. One the surface, there is nothing special about these components. They are plain old Spring XML bean definition files. Upon closer inspection, you will notice that modules adhere to some important conventions. For one thing, the file name is the module name. Also note the channels named  _input_ and _output_, in keeping with the KISS principle (let us know if you come up with some simpler names). These names are by convention what XD uses to discover a module's input and/or output channels which it wires  together to compose streams. Another thing you will observe is the use of property placeholders with sensible defaults where possible.  For example, the file source requires a directory. An appropriate strategy is to define a common root path for XD input files (At the time of this writing it is /tmp/xd/input/. This is subject to change, but illustrates the point). An instance of this module may specify the directory by providing _name_ property. If not provided, it will default to the stream name, which is contained in the _xd.stream.name_ property defined by the XD runtime. By convention, XD defined properties are prefixed with _xd_ 
+==== Integration Modules
 
-    directory="/tmp/xd/input/${name:${xd.stream.name}}"
+In Spring Integration terms,
 
-=== Creating a Module
-In Spring Integration terms, 
-
-* A _source_ is a valid message flow that contains a direct channel named _output_ which is fed by an inbound adapter, either configured with a poller, or triggered by an event. 
+* A _source_ is a valid message flow that contains a direct channel named _output_ which is fed by an inbound adapter, either configured with a poller, or triggered by an event.
 
 * A _processor_ is a valid message flow that contains a direct channel named _input_ and a subscribable channel named _output_ (direct or publish subscribe). It should perform some type of transformation on the message. (TBD: Describe multiple outputs, routing, etc.)
 
 * A _sink_ is a valid message flow that contains a direct channel named _input_ and an outbound adapter, or service activator used to consume a message payload.
 
-Because it is a plain old Spring Integration flow, a module can be independently deployed and tested in any JVM environment, such as Junit. A module has no inherent dependency on XD other than naming conventions.
- 
+Modules of type source, processor, and sink are built with Spring Integration and are typically very fine-grained.
+
+For example, take a look at the https://github.com/SpringSource/spring-xd/blob/master/modules/source/file.xml[file source] which simply polls a directory using a file inbound adapter and https://github.com/SpringSource/spring-xd/blob/master/modules/sink/file.xml[file sink] which appends incoming message payloads to a file using a file outbound adapter. One the surface, there is nothing special about these components. They are plain old Spring XML bean definition files.
+
+Upon closer inspection, you will notice that modules adhere to some important conventions. For one thing, the file name is the module name. Also note the channels named  _input_ and _output_, in keeping with the KISS principle (let us know if you come up with some simpler names). These names are by convention what XD uses to discover a module's input and/or output channels which it wires together to compose streams. Another thing you will observe is the use of property placeholders with sensible defaults where possible.  For example, the file source requires a directory. An appropriate strategy is to define a common root path for XD input files (At the time of this writing it is /tmp/xd/input/. This is subject to change, but illustrates the point). An instance of this module may specify the directory by providing _name_ property. If not provided, it will default to the stream name, which is contained in the _xd.stream.name_ property defined by the XD runtime. By convention, XD defined properties are prefixed with _xd_
+
+    directory="/tmp/xd/input/${name:${xd.stream.name}}"
+
+=== Registering a Module
+
+XD provides a strategy interface https://github.com/SpringSource/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/module/ModuleRegistry.java[ModuleRegistry] which it uses to find a module of a given name and type. Currently XD provides RedisModuleRegistry and FileModuleRegistry, The ModuleRegistry is a required component for the XD Server. By default the XD Server is configured with the FileModuleRegistry which looks for modules in ${xd.home:..}/modules. Where xd.home is a Java System Property or may be passed as a command line argument to the container launcher. So out of the box, the modules are contained in the XD modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
+
+      modules/processor
+      modules/sink
+      modules/source
+
+Using the default server configuration, you simply drop your module file into the modules directory and deploy a stream to the server.
