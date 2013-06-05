@@ -1,6 +1,6 @@
 == Requirements
 
-To get started make sure your system has as a minimum  http://www.oracle.com/technetwork/java/javase/downloads/[*Java JDK 6*] or newer installed. *Java JDK 7* is recommended. Furthermore, http://redis.io/[*Redis*] is used for persistence. You can either use an existing instance of _Redis_ or the Spring XD provided Redis instance. Test.
+To get started make sure your system has as a minimum  http://www.oracle.com/technetwork/java/javase/downloads/[*Java JDK 6*] or newer installed. *Java JDK 7* is recommended. Furthermore, http://redis.io/[*Redis*] is used for persistence. You can either use an existing instance of _Redis_ or the Spring XD provided Redis instance.
 
 == Installation of Spring XD
 
