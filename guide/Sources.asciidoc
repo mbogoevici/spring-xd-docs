@@ -228,19 +228,19 @@ charset:: the charset used when converting text to `String`. *(default `UTF-8`)*
 
 ==== Available Decoders
 
-===== Text Data
+==== Text Data
 
-- `CRLF` - text terminated by carriage return (0x0d) followed by line feed (0x0a) (TELNET)
-- `LF` - text terminated by line feed (0x0a)
-- `NULL` - text terminated by a null byte (0x00)
-- `STXETX` - text preceded by an STX (0x02) and terminated by an ETX (0x03)
+CRLF (default):: text terminated by carriage return (0x0d) followed by line feed (0x0a)
+LF:: text terminated by line feed (0x0a)
+NULL:: text terminated by a null byte (0x00)
+STXETX:: text preceded by an STX (0x02) and terminated by an ETX (0x03)
 
-===== Text and Binary Data
+==== Text and Binary Data
 
-- `RAW` - no structure - the client indicates a complete message by closing the socket
-- `L1` - data preceded by a one byte (unsigned) length field (supports up to 255 bytes)
-- `L2` - data preceded by a two byte (unsigned) length field (up to 2**16-1 bytes)
-- `L4` - data preceded by a four byte (signed) length field (up to 2**31-1 bytes)
+RAW:: no structure - the client indicates a complete message by closing the socket
+L1:: data preceded by a one byte (unsigned) length field (supports up to 255 bytes)
+L2:: data preceded by a two byte (unsigned) length field (up to 2^16^-1 bytes)
+L4:: data preceded by a four byte (signed) length field (up to 2^31^-1 bytes)
 
 
 ==== Examples
