@@ -9,7 +9,7 @@ Spring Integration provides a number of adapters out of the box to support vario
 These steps will demonstrate how to create and deploy a source module using the Spring Integration Twitter Search Inbound Message Channel Adapter.
 
 === 1. Create the module Application Context file
-The inbound channel adapter can be created with a single bean definition:
+Create the Inbound Channel Adapter with a single bean definition:
 
 [source,xml]
 ----
@@ -49,9 +49,118 @@ Users may want to specify a different Twitter query or polling interval when cre
 Now users can optionally pass _query_ and _polling-interval_ property values on stream creation. If not present, the specified defaults will be used.
 
 === 3. Test the module locally
-You can, of course, skip to Step 4 and test the module by deploying it to Spring XD. This section covers setup of a local project containing some test code for testing outside of an XD container.
+You can, of course, skip to Step 4 and test the module by deploying it to Spring XD. This section covers setup of a local project containing some code for testing outside of an XD container.
 
-TODO
+==== Create a project
+The module can be tested by writing a Spring integration test to load the context file and validate that tweets are received. In order to write the test, you will need to create a project in an IDE such as STS, Eclipse, or IDEA. Eclipse will be used for this example.
+
+Create a _tweetsearch_ directory and add _tweetsearch.xml_ to _src/main/resources_. Add the following _build.gradle_ (or an equivalent _pom.xml_) to the root directory:
+
+[source,groovy]
+----
+description = 'Tweet Search Source Module'
+group = 'org.springframework.xd.samples'
+
+repositories {
+  maven { url "http://repo.springsource.org/libs-snapshot" }
+  maven { url "http://repo.springsource.org/plugins-release" }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+ext {
+    junitVersion = '4.11'
+    springVersion = '3.2.2.RELEASE'
+    springIntegrationVersion = '3.0.0.M2'
+    springSocialVersion = '1.0.1.RELEASE'
+}
+
+dependencies {
+    compile("org.springframework:spring-core:$springVersion")
+    compile "org.springframework:spring-context-support:$springVersion"
+    compile "org.springframework.integration:spring-integration-core:$springIntegrationVersion"
+    compile "org.springframework.integration:spring-integration-twitter:$springIntegrationVersion"
+
+    // Testing
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.springframework:spring-test:$springVersion"
+    testCompile "org.springframework.social:spring-social-twitter:$springSocialVersion"
+}
+
+defaultTasks 'build'
+----
+
+Run _gradle eclipse_ to generate the Eclipse project. Import the project into Eclipse.
+
+==== Create the Spring integration test
+The main objective of the test is to ensure that tweets are received once the module's Application Context is loaded. This can be tested by adding an Outbound Channel Adapter that will direct tweets to a POJO that can store them for validation.
+
+Add the following _src/test/resources/org/springframework/xd/samples/test-context.xml_:
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/integration
+		http://www.springframework.org/schema/integration/spring-integration.xsd">
+
+	<context:property-placeholder/>
+
+	<int:outbound-channel-adapter channel="output" ref="target" method="add" />
+
+	<bean id="target" class="org.springframework.xd.samples.TweetCache" />
+
+</beans>
+----
+This context creates an Outbound Channel Adapter that will subscribe to all messages on the _output_ channel and pass the message payload to the _add_ method of a _TweetCache_ object. The context also creates the PropertyPlaceholderConfigurer that is ordinarily provided by the XD container.
+
+Create the _src/test/java/org/springframework/xd/samples/TweetCache_ class:
+[source,java]
+----
+package org.springframework.xd.samples;
+import ...
+
+public class TweetCache {
+	
+	final BlockingDeque<Tweet> tweets = new LinkedBlockingDeque<Tweet>(99);
+
+	public void add(Tweet tweet) {
+	     tweets.add(tweet);
+	}
+}
+----
+The _TweetCache_ places all received Tweets on a _BlockingDeque_ that our test can use to validate successful routing of messages.
+
+Lastly, create and run the _src/test/java/org/springframework/xd/samples/TweetCache_TweetsearchSourceModuleTest_:
+[source,java]
+----
+package org.springframework.xd.samples;
+import ...
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:tweetsearch.xml", "test-context.xml"})
+public class TweetsearchSourceModuleTest {
+	
+	@Autowired
+	TweetCache tweetCache;
+	
+	@Test
+	public void testTweetSearch() throws Exception {
+	     assertNotNull(tweetCache.tweets.poll(5, TimeUnit.SECONDS));
+	}
+}
+----
+The test will load an Application Context using our tweetsearch and test context files. It will fail if a tweet is not placed into the TweetCache within 5 seconds.
+
+You now have a way to build and test your new module independently. Time to deploy to Spring XD!
 
 === 4. Deploy the module
 Spring XD looks for modules in the ${xd.home}/modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
@@ -60,7 +169,7 @@ Spring XD looks for modules in the ${xd.home}/modules directory. The modules dir
       modules/sink
       modules/source
 
-Simply drop the module file (call it tweetsearch.xml) into the modules/source directory and fire up the server. See link:Getting-Started[Getting Started] to learn how to start the Spring XD server. 
+Simply drop the module context file (call it _tweetsearch.xml_) into the modules/source directory and fire up the server. See link:Getting-Started[Getting Started] to learn how to start the Spring XD server. 
 
 === 5. Test the deployed module
 Once the XD server is running, create a stream to test it out. This stream will write tweets containing the word "java" to the XD log:
@@ -72,4 +181,3 @@ You should start seeing messages like the following in the container console win
    WARN logger.javasearch: org.springframework.social.twitter.api.Tweet@7db81d4f
 
 As noted before, logging the Tweet domain object directly isn't much to look at. To make it prettier, create a link:Creating-a-Processor-Module[processor] module to further transform the tweet or modify this module to convert the tweet to JSON or String before sending the message to the _output_ channel.
-
