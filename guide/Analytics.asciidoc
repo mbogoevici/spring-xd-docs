@@ -10,7 +10,7 @@ We'll look at the following metrics
 * <<rich-gauge,Rich Gauge>>
 
 
-Metrics can be used directly in place of a sink, but you can also perform analysis on data from an existing stream using a link:Taps[Tap]. In this section we will show some examples of creating taps on existing streams. As a prerequisite start the XD Container as instructed in the link:Getting%20Started[Getting Started] page. 
+Metrics can be used directly in place of a sink just as if you were creating any other link:Streams[stream], but you can also analyse data from an existing stream using a link:Taps[Tap]. We'll look at some examples of of using metrics with taps in the following sections. As a prerequisite start the XD Container as instructed in the link:Getting%20Started[Getting Started] page. 
 
 [[counter]]
 == Counter
@@ -19,7 +19,7 @@ A counter is a Metric that associates a unique name with a long value. It is pri
 
 Here's an example:
 
-Start by creating a main stream to perform data ingest. Something like:
+Start by creating a data ingestion stream. Something like:
 
    $ curl -X POST -d "twittersearch --query=spring | file --directory=/tweets/" http://localhost:8080/streams/springtweets
 
