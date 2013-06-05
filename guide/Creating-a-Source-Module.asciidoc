@@ -139,7 +139,7 @@ public class TweetCache {
 ----
 The _TweetCache_ places all received Tweets on a _BlockingDeque_ that our test can use to validate successful routing of messages.
 
-Lastly, create and run the _src/test/java/org/springframework/xd/samples/TweetCache_TweetsearchSourceModuleTest_:
+Lastly, create and run the _src/test/java/org/springframework/xd/samples/TweetsearchSourceModuleTest_:
 [source,java]
 ----
 package org.springframework.xd.samples;
