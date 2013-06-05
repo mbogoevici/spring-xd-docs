@@ -1,0 +1,75 @@
+== Creating a Source Module
+
+As outlined in the link:Modules[modules] document, XD currently supports 3 types of modules: source, sink, and processor. This document walks through creation of a custom source module.
+
+The first module in a link:Streams[stream] is always a source. Source modules are built with Spring Integration and are typically very fine-grained. A module of type _source_ is responsible for placing a message on a channel named _output_. This message can then be consumed by the other processor and sink modules in the stream. A source module is typically fed data by an inbound channel adapter, configured with a poller.
+
+Spring Integration provides a number of adapters out of the box to support various transports, such as JMS, File, HTTP, Web Services, Mail, and more. You can typically create a source module that uses these inbound channel adapters by writing just a single Spring application context file.
+
+These steps will demonstrate how to create and deploy a source module using the Spring Integration Twitter Search Inbound Message Channel Adapter.
+
+=== 1. Create the module Application Context file
+The inbound channel adapter can be created with a single bean definition:
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:twitter="http://www.springframework.org/schema/integration/twitter"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration 
+		http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/twitter
+		http://www.springframework.org/schema/integration/twitter/spring-integration-twitter.xsd">
+
+	<twitter:search-inbound-channel-adapter id="output" query="spring">
+		<int:poller fixed-rate="5000"/>
+	</twitter:search-inbound-channel-adapter>
+
+</beans>
+----
+
+The adapter is configured to search Twitter for the word "spring" every 5 seconds.  Once a tweet is found, it will create a message with a Tweet domain object payload and write it to a message channel called _output_.  Since the _id_ attribute is set, a channel with the name _output_ is implicitly created.  Alternatively, you could set channel="output" and create the output channel with <int:channel id="output"/>. The name _output_ should be used by convention so that your source module can easily be combined with any processor and sink module in a stream.
+
+NOTE: The existing https://github.com/SpringSource/spring-xd/blob/master/modules/source/twittersearch.xml[twittersearch source module] contains additional logic to convert the Tweet domain object to JSON before sending the message to the _output_ channel. This makes the data consumable by a wider range of processor and sink modules.
+
+=== 2. Make the module configurable
+Users may want to specify a different Twitter query or polling interval when creating a stream. Spring XD will automatically make a PropertyPlaceholderConfigurer available to your application context. You can simply reference property names and users can then pass in values when creating a the link:Streams[stream] using the DSL.
+
+[source,xml]
+----
+<twitter:search-inbound-channel-adapter id="output" query="${query:spring}">
+     <int:poller fixed-rate="${polling-interval:5000}"/>
+</twitter:search-inbound-channel-adapter>
+----
+
+Now users can optionally pass _query_ and _polling-interval_ property values on stream creation. If not present, the specified defaults will be used.
+
+=== 3. Test the module locally
+You can, of course, skip to Step 4 and test the module by deploying it to Spring XD. This section covers setup of a local project containing some test code for testing outside of an XD container.
+
+TODO
+
+=== 4. Deploy the module
+Spring XD looks for modules in the ${xd.home}/modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
+
+      modules/processor
+      modules/sink
+      modules/source
+
+Simply drop the module file (call it tweetsearch.xml) into the modules/source directory and fire up the server. See link:Getting-Started[Getting Started] to learn how to start the Spring XD server. 
+
+=== 5. Test the deployed module
+Once the XD server is running, create a stream to test it out. This stream will write tweets containing the word "java" to the XD log:
+
+    $ curl -X POST -d "tweetsearch --query=java | log" http://localhost:8080/streams/javasearch
+
+You should start seeing messages like the following in the container console window:
+
+   WARN logger.javasearch: org.springframework.social.twitter.api.Tweet@7db81d4f
+
+As noted before, logging the Tweet domain object directly isn't much to look at. To make it prettier, create a link:Creating-a-Processor-Module[processor] module to further transform the tweet or modify this module to convert the tweet to JSON or String before sending the message to the _output_ channel.
+
