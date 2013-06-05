@@ -1,6 +1,6 @@
 == Sources
 In this section we will show some variations on input sources.  As a prerequisite start the XD Container
-as instructed in the link:Getting%20Started[Getting Started] page.
+as instructed in the link:Getting-Started[Getting Started] page.
 
 The Sources covered are
 

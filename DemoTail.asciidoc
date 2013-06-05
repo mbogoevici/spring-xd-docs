@@ -2,7 +2,7 @@ This page describes how to setup and run a stream that tails a file. Spring Inte
 
 == Start the XD stream server
 
-as instructed in the link:wiki/Getting Started[Getting Started] page.
+as instructed in the link:wiki/Getting-Started[Getting Started] page.
 
 == Create the streams
 

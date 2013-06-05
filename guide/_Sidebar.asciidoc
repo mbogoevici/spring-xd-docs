@@ -2,7 +2,7 @@
 // The space with a plus symbol is markdown for a hard line break
 ****
 link:Introduction[Introduction] +
-link:Getting%20Started[Getting Started] +
+link:Getting-Started[Getting Started] +
 link:Architecture[Architecture] +
 link:Streams[Streams] +
 link:Modules[Modules] +
