@@ -1,7 +1,7 @@
 == Introduction
 
 
-In Spring XD, a basic stream defines the ingestion of event driven data from a _source_ to a _sink_ that passes through any number of _processors_.  Stream processing is performed inside the XD Containers and the deployment of stream definitions to containers is done via the XD Admin Server.  The link:Getting%20Started[Getting Started] section shows you how to start these servers.
+In Spring XD, a basic stream defines the ingestion of event driven data from a _source_ to a _sink_ that passes through any number of _processors_.  Stream processing is performed inside the XD Containers and the deployment of stream definitions to containers is done via the XD Admin Server.  The link:Getting-Started[Getting Started] section shows you how to start these servers.
 
 Sources, sinks and processors are predefined configurations of a _module_.  Module definitions are found in the `xd/modules` directory.  footnote:[Using the filesystem is just one possible way of storing module defintions.  Other backends will be supported in the future, e.g. Redis.].  Modules definitions are standard Spring configuration files that use existing Spring classes, such as http://static.springsource.org/spring-integration/reference/htmlsingle/#spring-integration-adapters[Input/Output adapters] and http://static.springsource.org/spring-integration/reference/htmlsingle/#transformer[Transformers] from Spring Integration that support general http://www.eaipatterns.com/[Enterprise Integration Patterns].
 
