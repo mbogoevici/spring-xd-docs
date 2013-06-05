@@ -1,4 +1,4 @@
-== Sources
+== Introduction
 In this section we will show some variations on input sources.  As a prerequisite start the XD Container
 as instructed in the link:Getting-Started[Getting Started] page.
 
@@ -34,7 +34,7 @@ See if the data ended up in the file
 
 The http source has one option
 
-- port: The http port where data will be posted
+port:: The http port where data will be posted *(default: `9000`)*
 
 Here is an example 
 
@@ -71,9 +71,9 @@ See if the data ended up in the file
 
 The tail source has 3 options:
 
-- name: the absolute path to the file to tail (default: `/tmp/xd/input/<streamName>`)
-- lines: the number of lines from the end of an existing file to tail (default: 0)
-- delay: on platforms that don't wait for a missing file to appear, how often (ms) to look for the file (default: 5000)
+name:: the absolute path to the file to tail *(default: `/tmp/xd/input/<streamName>`)*
+lines:: the number of lines from the end of an existing file to tail *(default: `0`)*
+delay:: on platforms that don't wait for a missing file to appear, how often (ms) to look for the file *(default: `5000`)*
 
 Here is an example 
 
@@ -98,13 +98,13 @@ Some platforms, such as linux, send status messages to `stderr`. The tail module
 
 The twittersearch source has one option
 
-- query: The query that will be run against Twitter
+query:: The query that will be run against Twitter *(required)*
 
 To create a stream definition in the server post using curl
 
      $ curl -X POST -d "twittersearch --query='#springone2gx' | file" http://localhost:8080/streams/springone2gx
 
-Make sure the default output directory exists
+Make sure the default output directory for the `file` sink exists
 
      $ mkdir -p /tmp/xd/output/
 
@@ -117,16 +117,16 @@ if some data ended up in the file
 === GemFire Continuous Query (CQ)
 Continuous query allows client applications to create a GemFire query using Object Query Language(OQL) and register a CQ listener which subscribes to the query and is notified every time the query 's result set changes. The _gemfire_cq_ source registers a CQ which will post CQEvent messages to the stream. 
 
-=== Launching the XD GemFire Server
+==== Launching the XD GemFire Server
 This source requires a cache server to be running in a separate process and its host and port must be known (NOTE: GemFire locators are not supported yet). The XD distribution includes a GemFire server executable suitable for development and test purposes. This is a Java main class that runs with a Spring configured cache server. The configuration is passed as a command line argument to the server's main method. The configuration includes a cache server port and one or more configured region. XD includes a sample cache configuration called  https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[cq-demo]. This starts a server on port 40404 and creates a region named _Stocks_. A Logging cache listener is configured  for the region to log region events.  (TBD: describe launch script)
 
-=== Options
+==== Options
 
 The qemfire-cq source has the following options
 
-- query: The query string in Object Query Language(OQL) (Required)
-- gemfireHost: The host on which the GemFire server is running. Default is 'localhost'
-- gemfirePort: The port on which the GemFire server is running. Default is 40404
+query:: The query string in Object Query Language(OQL) *(required, String)*
+gemfireHost:: The host on which the GemFire server is running. *(default: `localhost`)*
+gemfirePort:: The port on which the GemFire server is running. *(default: `40404`)*
 
 Here is an example. Create two streams: One to write http messages to a Gemfire region named _Stocks_, and another to execute the CQ.
 
@@ -153,7 +153,9 @@ As updates are posted to the cache you should see them captured in the output fi
 [[syslog]]
 === Syslog
 
-Two syslog sources are provided: `syslog-udp` and `syslog-tcp`. They each take one option `port`, which determines the port on which the system will listen for syslog messages (default 11111).
+Two syslog sources are provided: `syslog-udp` and `syslog-tcp`. They both support the following options:
+
+port:: the port on which the system will listen for syslog messages *(default `11111`)*
 
 To create a stream definition post using curl
 
@@ -216,24 +218,24 @@ See if the data ended up in the file
 
 The TCP source has the following options
 
-- `port` - the port on which to listen (default `1234`)
-- `reverse-lookup` - perform a reverse DNS lookup on the remote IP Address (default `false`)
-- `socket-timeout` - the timeout (ms) before closing the socket when no data received (default `120000`)
-- `nio` - whether or not to use NIO (default false). NIO is more efficient when there are many connections.
-- `decoder` - how to decode the stream (default `CRLF`) - see below
-- `binary` - whether the data is binary (true) or text (false) - (default false)
-- `charset` - the charset used when converting text to `String` (default 'UTF-8')
+port:: the port on which to listen *(default `1234`)*
+reverse-lookup:: perform a reverse DNS lookup on the remote IP Address *(default `false`)*
+socket-timeout:: the timeout (ms) before closing the socket when no data received *(default `120000`)*
+nio:: whether or not to use NIO. NIO is more efficient when there are many connections. *(default `false`)*
+decoder:: how to decode the stream - see below. *(default `CRLF`)*
+binary:: whether the data is binary (true) or text (false). *(default `false`)*
+charset:: the charset used when converting text to `String`. *(default `UTF-8`)*
 
-=== Available Decoders
+==== Available Decoders
 
-==== Text Data
+===== Text Data
 
 - `CRLF` - text terminated by carriage return (0x0d) followed by line feed (0x0a) (TELNET)
 - `LF` - text terminated by line feed (0x0a)
 - `NULL` - text terminated by a null byte (0x00)
 - `STXETX` - text preceded by an STX (0x02) and terminated by an ETX (0x03)
 
-==== Text and Binary Data
+===== Text and Binary Data
 
 - `RAW` - no structure - the client indicates a complete message by closing the socket
 - `L1` - data preceded by a one byte (unsigned) length field (supports up to 255 bytes)
@@ -241,13 +243,13 @@ The TCP source has the following options
 - `L4` - data preceded by a four byte (signed) length field (up to 2**31-1 bytes)
 
 
-=== Examples
+==== Examples
 
 The following examples all use `echo` to send data to `netcat` which sends the data to the source.
 
 The echo options `-en` allows echo to interpret escape sequences and not send a newline.
 
-==== CRLF Decoder
+===== CRLF Decoder
 
     $ curl -X POST -d "tcp | file" http://localhost:8080/streams/tcptest
 
@@ -259,7 +261,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest
 
-==== LF Decoder
+===== LF Decoder
 
      $ curl -X POST -d "tcp --port=1235 --decoder=LF | file" http://localhost:8080/streams/tcptest2
 
@@ -267,7 +269,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest2
 
-==== NULL Decoder
+===== NULL Decoder
 
      $ curl -X POST -d "tcp --port=1236 --decoder=NULL | file" http://localhost:8080/streams/tcptest3
 
@@ -275,7 +277,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest3
 
-==== STXETX Decoder
+===== STXETX Decoder
 
      $ curl -X POST -d "tcp --port=1237 --decoder=STXETX | file" http://localhost:8080/streams/tcptest4
 
@@ -283,7 +285,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest4
 
-==== RAW Decoder
+===== RAW Decoder
 
      $ curl -X POST -d "tcp --port=1238 --decoder=RAW | file" http://localhost:8080/streams/tcptest5
 
@@ -291,7 +293,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest5
 
-==== L1 Decoder
+===== L1 Decoder
 
      $ curl -X POST -d "tcp --port=1239 --decoder=L1 | file" http://localhost:8080/streams/tcptest6
 
@@ -299,7 +301,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest6
 
-==== L2 Decoder
+===== L2 Decoder
 
      $ curl -X POST -d "tcp --port=1240 --decoder=L2 | file" http://localhost:8080/streams/tcptest7
 
@@ -307,7 +309,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest7
 
-==== L4 Decoder
+===== L4 Decoder
 
      $ curl -X POST -d "tcp --port=1241 --decoder=L4 | file" http://localhost:8080/streams/tcptest8
 
@@ -315,7 +317,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest8
 
-==== Binary Data Example
+===== Binary Data Example
 
      $ curl -X POST -d "tcp --port=1242 --decoder=L1 | file --binary=true " http://localhost:8080/streams/tcptest9
 

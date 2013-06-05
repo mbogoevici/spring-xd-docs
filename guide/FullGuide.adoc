@@ -1,13 +1,39 @@
+// Main entry point for docbook generation.
+// This should mirror the _Sidebar file, used for
+// viewing online on github. Note that GH adds filename
+// as h1 title, which asciidoctor does not, hence the h1s here.
+
 = Spring XD Guide
 :doctype: book
 
+= Introduction
 include::Introduction.asciidoc[]
 
+= Getting Started
 include::Getting-Started.asciidoc[]
 
-include::Sources.asciidoc[]
+= Architecture
+include::Architecture.asciidoc[]
 
+= Streams
+include::Streams.asciidoc[]
+
+= Modules
 include::Modules.asciidoc[]
 
+= Sources
+include::Sources.asciidoc[]
+
+= Sinks
+include::Sinks.asciidoc[]
+
+= Taps
+include::Taps.asciidoc[]
+
+= Analytics
+include::Analytics.asciidoc[]
+
+= Tuples
+include::Tuples.asciidoc[]
 
 

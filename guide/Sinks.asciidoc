@@ -1,4 +1,4 @@
-== Sinks
+== Introduction
 In this section we will show some variations on output sinks.  As a prerequisite start the XD Container
 as instructed in the link:Getting-Started[Getting Started] page.
 
@@ -45,6 +45,15 @@ You can examine the file contents using `hadoop fs -cat`
   hello
   hello
 
+=== HDFS with Options
+
+The HDFS Sink has the following options:
+
+newline:: whether to append a newline to the message payload *(default: `true`)*
+directory:: where to output the files in the Hadoop FileSystem *(default: `/xd/<streamname>`)*
+filename:: the base filename to use for the created files (a counter will be appended before the file extension). *(default: `<streamname>`)*
+suffix:: the file extension to use *(default: `log`)*
+rollover:: when to roll files over, expressed in bytes *(default: `1000000`, roughly 1MB)*
 
 [[tcp]]
 TCP
@@ -82,19 +91,19 @@ Undeploy the stream; netcat will terminate when the TCP Sink disconnects.
 
 The TCP Sink has the following options
 
-- `host` - the host (or IP Address) to connect to
-- `port` - the port on the `host` (default `1234`)
-- `reverse-lookup` - perform a reverse DNS lookup on IP Addresses (default `false`)
-- `nio` - whether or not to use NIO (default false).
-- `encoder` - how to encode the stream (default `CRLF`) - see below
-- `close` - whether to close the socket after each message (default `false`)
-- `charset` - the charset used when converting text from `String` to bytes (default 'UTF-8')
+host:: the host (or IP Address) to connect to *(default: `localhost`)*
+port:: the port on the `host` *(default `1234`)*
+reverse-lookup:: perform a reverse DNS lookup on IP Addresses *(default: `false`)*
+nio:: whether or not to use NIO *(default: `false`)*
+encoder:: how to encode the stream  - see below *(default `CRLF`)*
+close:: whether to close the socket after each message *(default `false`)*
+charset:: the charset used when converting text from `String` to bytes *(default `UTF-8`)*
 
 Retry Options
 
-- `retry-max-attempts` - the maximum number of attempts to send the data (default 5 - original request and 4 retries)
-- `retry-initial-interval` - the time (ms) to wait for the first retry (default 2000)
-- `retry-multiplier` - the multiplier for exponential back off of retries
+retry-max-attempts:: the maximum number of attempts to send the data *(default `5` - original request and 4 retries)*
+retry-initial-interval:: the time (ms) to wait for the first retry *(default `2000`)*
+retry-multiplier:: the multiplier for exponential back off of retries *(default: `2`)*
 
 With the default retry configuration, the attempts will be made after 0, 2, 4, 8, and 16 seconds.
 
@@ -102,17 +111,17 @@ With the default retry configuration, the attempts will be made after 0, 2, 4, 8
 
 ==== Text Data
 
-- `CRLF` - text terminated by carriage return (0x0d) followed by line feed (0x0a)
-- `LF` - text terminated by line feed (0x0a)
-- `NULL` - text terminated by a null byte (0x00)
-- `STXETX` - text preceded by an STX (0x02) and terminated by an ETX (0x03)
+CRLF (default):: text terminated by carriage return (0x0d) followed by line feed (0x0a)
+LF:: text terminated by line feed (0x0a)
+NULL:: text terminated by a null byte (0x00)
+STXETX:: text preceded by an STX (0x02) and terminated by an ETX (0x03)
 
 ==== Text and Binary Data
 
-- `RAW` - no structure - the client indicates a complete message by closing the socket
-- `L1` - data preceded by a one byte (unsigned) length field (supports up to 255 bytes)
-- `L2` - data preceded by a two byte (unsigned) length field (up to 2**16-1 bytes)
-- `L4` - data preceded by a four byte (signed) length field (up to 2**31-1 bytes)
+RAW:: no structure - the client indicates a complete message by closing the socket
+L1:: data preceded by a one byte (unsigned) length field (supports up to 255 bytes)
+L2:: data preceded by a two byte (unsigned) length field (up to 2^16^-1 bytes)
+L4: data preceded by a four byte (signed) length field (up to 2^31^-1 bytes)
 
 
 === An Additional Example
@@ -163,10 +172,10 @@ The command line argument is the location of a Spring file with a configured cac
 
 There are 2 implementation of the gemfire sink: _gemfire-server_ and _gemfire-json-server_. They are identical except the latter converts JSON string payloads to a JSON document format  proprietary to GemFire and provides JSON field access and query capabilities. If you are not using JSON, the gemfire-server module will write the payload using java serialization to the configured region. Either of these modules accepts the following attributes:
 
-* _regionName_ - the name of the GemFire region. This must be the name of a region configured for the cache server. This module creates the corresponding client region. The default value is the stream name.
-* _keyExpression_ - A SpEL expression which is evaluated to create a cache key. Typically, the key value is derived from the payload. By default the cache key is the stream name, which will overwrite the same entry for every message received on the stream.
-* _gemfireHost_ - The host name or IP address of the cache server (default: localhost)
-* _gemfirePort_ - The TCP port number of the cache server (default: 40404)
+regionName:: the name of the GemFire region. This must be the name of a region configured for the cache server. This module creates the corresponding client region. *(default: `<streamname>`)*
+keyExpression:: A SpEL expression which is evaluated to create a cache key. Typically, the key value is derived from the payload. *(default: `<streamname>`, which will overwrite the same entry for every message received on the stream)*
+gemfireHost:: The host name or IP address of the cache server *(default: `localhost`)*
+gemfirePort:: The TCP port number of the cache server *(default: `40404`)*
 
 === Example
 Suppose we have a JSON document containing a stock price:

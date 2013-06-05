@@ -1,6 +1,4 @@
-== Modules
-
-=== Introduction
+== Introduction
 
 The XD runtime environment supports data ingestion by allowing users to define link:Streams[streams]. Streams are composed of _modules_ which encapsulate a unit of work into a reusable component.
 
@@ -10,7 +8,7 @@ XD comes with a number of modules used for assembling streams which perform comm
 
 However, if you are interested in extending XD with your own modules, some knowledge of Spring, Spring Integration, and Spring Batch is essential. The remainder of this document assumes the reader has some familiarity with these topics.
 
-=== Creating a Module
+== Creating a Module
 This section provides details on how to write and register custom modules. For a quick start, dive into the examples of creating link:Creating-a-Source-Module[source], link:Creating-a-Processor-Module[processor], and link:Creating-a-Sink-Module[sink] modules.
 
 A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/Module.java[Module] has the following required attributes:
@@ -19,7 +17,7 @@ A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/mai
 * type - the module type, current XD module types include _source_, _sink_, and _processor_
 * instance id - This represents a named instance of a module with a given name and type, with a specific configuration.
 
-==== Modules and Spring
+=== Modules and Spring
 At the core, a module is any component that may be implemented using a Spring application context. In this respect, the concept may be extended for purposes other than data ingestion. The types mentioned above (source, processor,sink) are specific to XD and constructing streams. But other module types are envisioned.
 
 A module is typically configured using property placeholders which are bound to the module's attributes. Attributes may be required or optional and this coincides with whether a default value is provided for the placeholder.
@@ -57,7 +55,7 @@ or
 
 In addition to properties, modules may reference Spring beans which are defined externally such that each module instance may inject a different implementation of a bean. The ability to configure each module instance differently is only possible if each module is created in its own application context. The module may be configured with a parent context, but this should be done with care. In the simplest case, the module context is completely separate. This results in some very useful features, such as being able to create multiple bean instances with the same id, possibly with different configurations. More generally, this allows modules to adhere to the KISS principle.
 
-==== Integration Modules
+=== Integration Modules
 
 In Spring Integration terms,
 
@@ -75,7 +73,7 @@ Upon closer inspection, you will notice that modules adhere to some important co
 
     directory="/tmp/xd/input/${name:${xd.stream.name}}"
 
-=== Registering a Module
+== Registering a Module
 
 XD provides a strategy interface https://github.com/SpringSource/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/module/ModuleRegistry.java[ModuleRegistry] which it uses to find a module of a given name and type. Currently XD provides RedisModuleRegistry and FileModuleRegistry, The ModuleRegistry is a required component for the XD Server. By default the XD Server is configured with the FileModuleRegistry which looks for modules in ${xd.home:..}/modules. Where xd.home is a Java System Property or may be passed as a command line argument to the container launcher. So out of the box, the modules are contained in the XD modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
 

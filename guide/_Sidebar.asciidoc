@@ -1,5 +1,6 @@
+// This should mirror the FullGuide.adoc file (used for docbook generation)
 .Contents
-// The space with a plus symbol is markdown for a hard line break
+// The space with a plus symbol is asciidoc for a hard line break
 ****
 link:Introduction[Introduction] +
 link:Getting-Started[Getting Started] +

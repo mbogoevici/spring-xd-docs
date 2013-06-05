@@ -5,17 +5,17 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:0.3.0'
+        classpath 'org.asciidoctor:asciidoctor-gradle-plugin:0.4.1'
     }
 }
 
 apply plugin: 'asciidoctor'
 
 asciidoctor {
-  // Can't specify a single file for the gradle task
-  // See https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/15
-  sourceDir = file("guide/FullGuide.adoc")
+  sourceDir = file("guide/")
+  sourceDocumentName = file("guide/FullGuide.adoc")
   outputDir = new File("$buildDir/docs")
+  //backend = 'docbook'
   options = [
     attributes: [
       'theme': 'flask',
