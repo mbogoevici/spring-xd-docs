@@ -1,6 +1,6 @@
 == Introduction
 
-Spring XD is a system for processing large amounts of data from event-driven sources and coordinating the workflow steps of large batch jobs. The foundations of XD’s architecture are based on the over 50+ man years of work that have gone into the Spring Batch, Integration and Data projects. Building upon these projects, Spring XD, provides a out of the box servers and a DSL for configuration that you can use immediately to start processing data.  You do not need to build an application yourself from a collection of jars to start using SpringXD.
+Spring XD is a system for processing large amounts of data from event-driven sources and coordinating the workflow steps of large batch jobs. The foundations of XD’s architecture are based on the over 100+ man years of work that have gone into the Spring Batch, Integration and Data projects. Building upon these projects, Spring XD, provides a out of the box servers and a DSL for configuration that you can use immediately to start processing data.  You do not need to build an application yourself from a collection of jars to start using SpringXD.
 
 SpringXD has two modes of operation. The first is a single process that responsible for all processing and administration. This mode helps you get started easily and simplifies the development and testing of your application. The second is a distributed mode, where processing tasks can be spread across a cluster of machines and an administrative server sends commands to control processing tasks executing on the cluster. 
 
