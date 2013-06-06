@@ -29,7 +29,7 @@ For testing and development purposes, a single node runtime is provided that run
 
 [[single-node-runtime]]
 .Single Node Runtime
-image::images/local-node.png[]
+image::images/local-mode.png[]
 
 [[admin-server-arch]]
 === Admin Server Architecture
@@ -60,7 +60,7 @@ NOTE: http://www.enterpriseintegrationpatterns.com/WireTap.html[WireTaps] are pa
 .Taps, Jobs, and Streams
 image::images/tap-jobs-streams.png[]
 
-[streams
+[[streams]]
 === Streams
 
 The programming model for processing event streams in SpringXD is based based on the well known http://www.eaipatterns.com/[Enterprise Integration Patterns] as implemented by components in the http://www.springsource.org/spring-integration[Spring Integration] project.  The programming model was designed to be easy to test components.
@@ -117,7 +117,7 @@ Incorporating a processing step, such a transformer, in a stream processing defi
 http | transformer --expression=payload.toUpperCase() | file
 ----
 
-For more information on processing modules, refer to the section <<processor-modules>>
+For more information on processing modules, refer to the section link:Processors[Processors]
 
 === Stream Deployment
 
