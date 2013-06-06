@@ -10,6 +10,7 @@ The Sinks covered are
 
 * <<gemfire,GemFire Server>>
 
+See the section link:Creating-a-Sink-Module[Creating a Sink Module] for information on how to create sink modules using other Spring Integration Adapters.
 
 [[hdfs]]
 ==== Hadoop (HDFS)
