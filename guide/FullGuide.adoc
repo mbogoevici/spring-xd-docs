@@ -41,6 +41,6 @@ include::Tuples.asciidoc[]
 
 [appendix]
 = Installing Hadoop
-include::HadoopInstall.asciidoc[]
+include::Hadoop-Installation.asciidoc[]
 
 

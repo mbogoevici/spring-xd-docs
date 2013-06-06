@@ -15,7 +15,7 @@ The Sinks covered are
 ==== Hadoop (HDFS)
 
 
-First install and start Hadoop as described in our link:HadoopInstall[separate guide]. It's assumed HDFS is running on port 9000 (the default).
+First install and start Hadoop as described in our link:Hadoop-Installation[separate guide]. It's assumed HDFS is running on port 9000 (the default).
 
 You should then be able to use the `hdfs` sink when creating a link:Streams[stream]
 
