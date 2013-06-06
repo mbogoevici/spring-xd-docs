@@ -43,4 +43,8 @@ include::Tuples.asciidoc[]
 = Installing Hadoop
 include::Hadoop-Installation.asciidoc[]
 
+[appendix]
+= Creating Custom Modules
+include::Creating-Custom-Modules.asciidoc[]
+
 
