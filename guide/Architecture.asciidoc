@@ -25,7 +25,7 @@ In the M1 release, you are responsible for starting up a single XD Admin server 
 [[single-node-runtime]]
 === Single Node Runtime
 
-For testing and development purposes, a single node runtime is provided that runs the Admin and Container servers in the same process. The communication to the XD Admin server is over HTTP and the XD Admin server communicated to an in-process XD Container using an in-memory queue.
+For testing and development purposes, a single node runtime is provided that runs the Admin and Container servers in the same process. The communication to the XD Admin server is over HTTP and the XD Admin server communicates to an in-process XD Container using an in-memory queue.
 
 .Single Node Runtime
 image::images/local-mode.png[]
@@ -46,14 +46,11 @@ The key components of data processing in SpringXD are
 * Taps
 
 
-Streams define how event driven data is collected, processed, and stored or forwarded. For example, a stream may be collect syslog data, filter, and store it in HDFS. 
+Streams define how event driven data is collected, processed, and stored or forwarded. For example, a stream might collect syslog data, filter, and store it in HDFS. 
 
 Jobs define how coarse grained and time consuming batch processing steps are orchestrated, for example a job could be be defined to coordinate performing HDFS operations and the subsequent execution of multiple MapReduce processing tasks. 
 
-Taps define how to process data in a non-invasive way as data is being processed by a Stream or a Job.  Much like wiretaps used on telephones, a Tap on a Stream lets you consume data at any point along the Stream’s processing pipeline. The behavior of the original stream is unaffected by the presence of the Tap. For example, consider a Stream of data that is consuming Twitter search results and writing them to HDFS. A tap can be created such that before data is written to HDFS, a tap is used to increment counters that correspond to the number of times Twitter hashtags were mentioned in the tweets.  
-
-NOTE: http://www.enterpriseintegrationpatterns.com/WireTap.html[WireTaps] are part of the standard catalog of EAI patterns and http://static.springsource.org/spring-integration/reference/htmlsingle/#channel-wiretap[are part of] the Spring Integration EAI framework used by SpringXD.
-
+Taps are used to process data in a non-invasive way as data is being processed by a Stream or a Job.  Much like wiretaps used on telephones, a Tap on a Stream lets you consume data at any point along the Stream’s processing pipeline. The behavior of the original stream is unaffected by the presence of the Tap. 
 
 [[taps-jobs-streams]]
 .Taps, Jobs, and Streams
@@ -62,14 +59,14 @@ image::images/tap-jobs-streams.png[]
 [[streams]]
 === Streams
 
-The programming model for processing event streams in SpringXD is based on the well known http://www.eaipatterns.com/[Enterprise Integration Patterns] as implemented by components in the http://www.springsource.org/spring-integration[Spring Integration] project.  The programming model was designed to be easy to test components.
+The programming model for processing event streams in Spring XD is based on the well known http://www.eaipatterns.com/[Enterprise Integration Patterns] as implemented by components in the http://www.springsource.org/spring-integration[Spring Integration] project.  The programming model was designed to be easy to test components.
 
 Streams consist of the following types of modules:
 * Input sources
 * Processing steps
 * Output sinks
 
-Input sources produce messages from a variety of sources, e.g. syslog, tcp, http. A message contains a payload of data and a collection of key-value headers. Messages flow through message channels from the source, through optional processing steps, to the output sink. The output sink often will write the message to a file system, such as HDFS, but may also forward the message over tcp, http, or another type of middleware. The M1 release supports message forwarding over tcp. Subsequent releases will support forwarding over RabbitMQ, HTTP, JMS, and the many other transports supported by Spring Integration. A guide to extending SpringXD for other transports is shown here. 
+Input sources produce messages from a variety of sources, e.g. syslog, tcp, http. A message contains a payload of data and a collection of key-value headers. Messages flow through message channels from the source, through optional processing steps, to the output sink. The output sink will often write the message to a file system, such as HDFS, but may also forward the message over tcp, http, or another type of middleware. The M1 release supports message forwarding over tcp. Subsequent releases will support forwarding over RabbitMQ, HTTP, JMS, and the many other transports supported by Spring Integration. A guide to extending Spring XD for other transports is shown here. 
 
 A stream that consists of a input source and a output sink is shown below
 
@@ -108,9 +105,9 @@ public class SimpleProcessor {
 }
 ----
 
-The payload of the incoming Message is passed as a string to the method process.  The contents of the payload is the body of the http request as we are using a http souce.  The non-void return value is used as the payload of the Message passed to the next step.  These programming conventions make it very easy to test your Processor component in isolation.  There are several processing components provided in SpringXD that do not require you to write any code, such as a filter and transformer that use the Spring Expression Language or Groovy.
+The payload of the incoming Message is passed as a string to the method process.  The contents of the payload is the body of the http request as we are using a http source.  The non-void return value is used as the payload of the Message passed to the next step.  These programming conventions make it very easy to test your Processor component in isolation.  There are several processing components provided in Spring XD that do not require you to write any code, such as a filter and transformer that use the Spring Expression Language or Groovy.
 
-Incorporating a processing step, such a transformer, in a stream processing defintion can be expressed as 
+Incorporating a processing step, such as a transformer, in a stream processing defintion can be written as 
 
 ----
 http | transformer --expression=payload.toUpperCase() | file
@@ -138,7 +135,7 @@ image::images/http2filter2file.png[]
 
 == Jobs
 
-The creation and execution of Jobs is not part of the M1 release and will be included in the M2 release.  SpringXD’s job functionality builds on the Spring Batch project and also the Spring for Apache Hadoop project that adds support for Hadoop based workflows. 
+The creation and execution of Jobs is not part of the M1 release and will be included in the M2 release.  Spring XD’s job functionality builds on the Spring Batch project and also the Spring for Apache Hadoop project that adds support for Hadoop based workflows. 
 
 == Taps
 

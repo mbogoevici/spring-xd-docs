@@ -1,11 +1,28 @@
 == Introduction
 
-A tap acts like a source in that it occurs as the first module within a stream and can pipe its output to a sink (and/or one or more processors added to a chain before the ultimate sink), but for a tap the messages are actually those being produced by some other source.  Each tap consumes a copy of every incoming message on the target stream so it can process the same data at the same time without affecting the target stream. You may think of a tap as a "tee" stream. 
+A Tap allows you to "listen in" to data from another stream and process the data separately from the original stream definition. The original stream is unaffected by the tap and isn't aware of its presence, similar to a phone wiretap (http://www.enterpriseintegrationpatterns.com/WireTap.html[WireTaps] are part of the standard catalog of EAI patterns and http://static.springsource.org/spring-integration/reference/htmlsingle/#channel-wiretap[are part of] the Spring Integration EAI framework used by Spring XD). 
+
+A tap acts like a source in that it occurs as the first module within a stream and can pipe its output to a sink (and/or one or more processors added to a chain before the ultimate sink), but for a tap the messages are actually those being processed by some other stream.  
 
 The syntax for creating a tap is:
 
    tap @ <target stream>
 
-A primary use case is to perform realtime analytics at the same time as data is being ingested via its primary stream. You'll find examples of creating taps on existing streams in the link:Analytics[Analytics] section.
+A tap can consume data from any point along the target stream's proessing pipeline. For example, if you have a stream called `mystream`, defined as
+
+----
+source | filter | transformer | sink
+----
+
+Then creating a tap using
+  
+  tap@mystream.filter | sink2
+
+would tap into the stream's data after the filter has been applied but before the transformer. So the untransformed data would be sent to `sink2`.
+
+
+A primary use case is to perform realtime analytics at the same time as data is being ingested via its primary stream. For example, consider a Stream of data that is consuming Twitter search results and writing them to HDFS. A tap can be created before the data is written to HDFS, and the data piped from the tap to a counter that correspond to the number of times specific hashtags were mentioned in the tweets.  
+
+You'll find specific examples of creating taps on existing streams in the link:Analytics[Analytics] section.
 
 
