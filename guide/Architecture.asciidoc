@@ -1,3 +1,22 @@
 == Introduction
 
-TBD
+Spring XD is a system for processing large amounts of data from event-driven sources and coordinating the workflow steps of large batch jobs. The foundations of XD’s architecture are based on the over 50+ man years of work that have gone into the Spring Batch, Integration and Data projects. Building upon these projects, Spring XD, provides a out of the box servers and a DSL for configuration that you can use immediately to start processing data.  You do not need to build an application yourself from a collection of jars to start using SpringXD.
+
+SpringXD has two modes of operation. The first is a single process that responsible for all processing and administration. This mode helps you get started easily and simplifies the development and testing of your application. The second is a distributed mode, where processing tasks can be spread across a cluster of machines and an administrative server sends commands to control processing tasks executing on the cluster. 
+
+=== Runtime Architecture
+
+The key components in Spring XD are the XD Admin and XD Container Servers. Using a high level DSL you post the description of the processing tasks to perform to the Admin server over HTTP. The Admin server then maps the processing tasks into processing modules. A module is a unit of execution and is implemented as a Spring ApplicationContext. A simple distributed runtime is provided that will assign modules to execute across multiple XD Container servers. A single XD Container server can run multiple modules. To simplify development, a single node runtime is provided that runs all modules in a single XD Container and also runs the XD Admin server in the same process.
+
+==== DIRT Runtime
+
+A simple distributed runtime, called Distributed Integration Runtime, aka DIRT, will distribute the processing tasks across multiple XD Container instances. The distribution strategy in the M1 release is extremely simple. The current strategy has each XD Container instances listing to a shared Redis queue for processing module definitions.  Each container picks up a module definition off the queue, in a round-robin like manner, and creates a Spring ApplicationContext to run that module.  This is very simple strategy and not optimal for many use-cases so support for defining grouping of modules will be introduced in later releases.
+
+[[simple-distributed-runtime]]
+.A simple distributed runtime for processing tasks
+image::images/distributed-node.png[]
+
+=== Support for other distributed runtimes
+
+Spring projects have always been able to be run in multiple runtime environments, e.g. Servlet Container, JEE Application Servers, PAAS platforms such as Google AppEngine and CloudFoundry, and OSGi containers. In the same spirit, future releases of SpringXD will support execution in other distributed runtime environment such as Hadoop’s YARN architecture and CloudFoundry.
+
