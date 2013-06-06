@@ -105,9 +105,7 @@ public class SimpleProcessor {
 }
 ----
 
-The payload of the incoming Message is passed as a string to the method process.  The contents of the payload is the body of the http request as we are using a http source.  The non-void return value is used as the payload of the Message passed to the next step.  These programming conventions make it very easy to test your Processor component in isolation.  There are several processing components provided in Spring XD that do not require you to write any code, such as a filter and transformer that use the Spring Expression Language or Groovy.
-
-Incorporating a processing step, such as a transformer, in a stream processing defintion can be written as 
+The payload of the incoming Message is passed as a string to the method process.  The contents of the payload is the body of the http request as we are using a http source.  The non-void return value is used as the payload of the Message passed to the next step.  These programming conventions make it very easy to test your Processor component in isolation.  There are several processing components provided in Spring XD that do not require you to write any code, such as a filter and transformer that use the Spring Expression Language or Groovy. For example, adding a processing step, such as a transformer, in a stream processing definition can be as simple as
 
 ----
 http | transformer --expression=payload.toUpperCase() | file
