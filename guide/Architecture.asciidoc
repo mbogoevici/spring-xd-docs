@@ -27,7 +27,6 @@ In the M1 release, you are responsible for starting up a single XD Admin server 
 
 For testing and development purposes, a single node runtime is provided that runs the Admin and Container servers in the same process. The communication to the XD Admin server is over HTTP and the XD Admin server communicated to an in-process XD Container using an in-memory queue.
 
-[[single-node-runtime]]
 .Single Node Runtime
 image::images/local-mode.png[]
 
