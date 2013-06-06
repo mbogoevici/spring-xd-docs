@@ -6,7 +6,7 @@ The Sinks covered are
 
 * <<hdfs, HDFS>>
 
-* <<tcp, TCP>>
+* <<tcp_sinks, TCP>>
 
 * <<gemfire,GemFire Server>>
 
@@ -55,7 +55,7 @@ filename:: the base filename to use for the created files (a counter will be app
 suffix:: the file extension to use *(default: `log`)*
 rollover:: when to roll files over, expressed in bytes *(default: `1000000`, roughly 1MB)*
 
-[[tcp]]
+[[tcp_sinks]]
 TCP
 ---
 
