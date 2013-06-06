@@ -108,7 +108,7 @@ xd/bin>$ ./xd-admin
 xd/bin>$ ./xd-container 
 ----
 
-There is an additional configuration option to specify the location of the SpringXD install 
+There is an additional configuration option to specify the location of the Spring XD install. 
 
 [source,sh]
 ----

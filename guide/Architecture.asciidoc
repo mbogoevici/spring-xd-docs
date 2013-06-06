@@ -39,7 +39,7 @@ The Admin Server in the M1 release uses an embedded servlet container and expose
 [[container-server-arch]]
 ==== Container Server Architecture
 
-The key components of data processing in SpringXD are 
+The key components of data processing in Spring XD are
 
 * Streams
 * Jobs
@@ -90,7 +90,7 @@ http | file
 
 The pipe symbol represents a message channel that passes data from the HTTP source to the File sink. In the M1 release, the message channel implementation can either be backed with a local in-memory transport or use Redis queues.  Future releases will support backing the message channel with other transports such as RabbitMQ and JMS.
 
-Note that the UNIX pipes and filter syntax is the basis for the DSL that SpringXD uses to describe simple linear flows, but we will significantly extend the syntax to cover non-linear flow in a subsequent release.
+Note that the UNIX pipes and filter syntax is the basis for the DSL that Spring XD uses to describe simple linear flows, but we will significantly extend the syntax to cover non-linear flow in a subsequent release.
 
 The programming model for processing steps in a stream comes from the Spring Integration project.  The central concept is one of a Message Handler class, which relies on simple coding conventions to Map incoming messages to processing methods.  For example, using an http source you can process the body of an HTTP POST request using the following class
 
