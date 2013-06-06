@@ -25,4 +25,6 @@ A primary use case is to perform realtime analytics at the same time as data is 
 
 You'll find specific examples of creating taps on existing streams in the link:Analytics[Analytics] section.
 
+=== Tap Lifecycle
 
+A side effect of a stream being unaware of any taps on its pipeline, is that deleting the stream will not automatically delete the taps. The taps have to be deleted separately.
