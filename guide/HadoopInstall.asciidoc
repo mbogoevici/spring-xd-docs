@@ -1,5 +1,4 @@
-Installing Hadoop
------------------
+=== Installing Hadoop
 
 If you don't have a local Hadoop cluster available already, you can do a local http://hadoop.apache.org/docs/r1.1.2/single_node_setup.html[single node installation] and use that to try out Hadoop with Spring XD. The examples have been run with Hadoop 1.1.2, the stable release at the time of writing.
 
@@ -50,8 +49,7 @@ You're then ready to format the filesystem for use by HDFS
 
   $ bin/hadoop namenode -format
 
-Running Hadoop
---------------
+=== Running Hadoop
 
 You should now finally be ready to run hadoop. Run the `start-all.sh` script 
 

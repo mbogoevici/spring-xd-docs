@@ -1,4 +1,4 @@
-== Introduction
+=== Introduction
 
 A Tap allows you to "listen in" to data from another stream and process the data separately from the original stream definition. The original stream is unaffected by the tap and isn't aware of its presence, similar to a phone wiretap (http://www.enterpriseintegrationpatterns.com/WireTap.html[WireTaps] are part of the standard catalog of EAI patterns and http://static.springsource.org/spring-integration/reference/htmlsingle/#channel-wiretap[are part of] the Spring Integration EAI framework used by Spring XD). 
 

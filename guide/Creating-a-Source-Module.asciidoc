@@ -1,4 +1,4 @@
-== Introduction
+=== Introduction
 
 As outlined in the link:Modules[modules] document, XD currently supports 3 types of modules: source, sink, and processor. This document walks through creation of a custom source module.
 
@@ -8,7 +8,7 @@ Spring Integration provides a number of adapters out of the box to support vario
 
 These steps will demonstrate how to create and deploy a source module using the Spring Integration Twitter Search Inbound Message Channel Adapter.
 
-=== Create the module Application Context file
+==== Create the module Application Context file
 Create the Inbound Channel Adapter with a single bean definition in a file called _tweetsearch.xml_:
 
 [source,xml]
@@ -36,7 +36,7 @@ The adapter is configured to search Twitter for the word "spring" every 5 second
 
 NOTE: The existing https://github.com/SpringSource/spring-xd/blob/master/modules/source/twittersearch.xml[twittersearch source module] contains additional logic to convert the Tweet domain object to JSON before sending the message to the _output_ channel. This makes the data consumable by a wider range of processor and sink modules.
 
-=== Make the module configurable
+==== Make the module configurable
 Users may want to specify a different Twitter query or polling interval when creating a stream. Spring XD will automatically make a PropertyPlaceholderConfigurer available to your application context. You can simply reference property names and users can then pass in values when creating a link:Streams[stream] using the DSL.
 
 [source,xml]
@@ -48,10 +48,10 @@ Users may want to specify a different Twitter query or polling interval when cre
 
 Now users can optionally pass _query_ and _polling-interval_ property values on stream creation. If not present, the specified defaults will be used.
 
-=== Test the module locally
+==== Test the module locally
 This section covers setup of a local project containing some code for testing outside of an XD container. This step can be skipped if you prefer to test the module by <<deploy-module,deploying to Spring XD>>.
 
-==== Create a project
+===== Create a project
 The module can be tested by writing a Spring integration test to load the context file and validate that tweets are received. In order to write the test, you will need to create a project in an IDE such as STS, Eclipse, or IDEA. Eclipse will be used for this example.
 
 Create a _tweetsearch_ directory and add _tweetsearch.xml_ to _src/main/resources_. Add the following _build.gradle_ (or an equivalent _pom.xml_) to the root directory:
@@ -94,7 +94,7 @@ defaultTasks 'build'
 
 Run _gradle eclipse_ to generate the Eclipse project. Import the project into Eclipse.
 
-==== Create the Spring integration test
+===== Create the Spring integration test
 The main objective of the test is to ensure that tweets are received once the module's Application Context is loaded. This can be tested by adding an Outbound Channel Adapter that will direct tweets to a POJO that can store them for validation.
 
 Add the following _src/test/resources/org/springframework/xd/samples/test-context.xml_:
@@ -163,7 +163,7 @@ The test will load an Application Context using our tweetsearch and test context
 You now have a way to build and test your new module independently. Time to deploy to Spring XD!
 
 [[deploy-module]]
-=== Deploy the module
+==== Deploy the module
 Spring XD looks for modules in the ${xd.home}/modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
 
       modules/processor
@@ -172,7 +172,7 @@ Spring XD looks for modules in the ${xd.home}/modules directory. The modules dir
 
 Simply drop _tweetsearch.xml_ into the _modules/source_ directory and fire up the server. See link:Getting-Started[Getting Started] to learn how to start the Spring XD server. 
 
-=== Test the deployed module
+==== Test the deployed module
 Once the XD server is running, create a stream to test it out. This stream will write tweets containing the word "java" to the XD log:
 
     $ curl -X POST -d "tweetsearch --query=java | log" http://localhost:8080/streams/javasearch

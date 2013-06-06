@@ -13,4 +13,5 @@ link:Sinks[Sinks] +
 link:Taps[Taps] +
 link:Analytics[Analytics] +
 link:Tuples[Tuples] +
+link:HadoopInstall[Appendix A: Installing Hadoop]
 ****

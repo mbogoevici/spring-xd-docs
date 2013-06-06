@@ -1,14 +1,14 @@
-== Introduction
+=== Introduction
 
 Spring XD is a system for processing large amounts of data from event-driven sources and coordinating the workflow steps of large batch jobs. The foundations of XD’s architecture are based on the over 100+ man years of work that have gone into the Spring Batch, Integration and Data projects. Building upon these projects, Spring XD provides servers and a configuration DSL that you can immediately use to start processing data.  You do not need to build an application yourself from a collection of jars to start using Spring XD.
 
 Spring XD has two modes of operation - single and multi-node. The first is a single process that is responsible for all processing and administration. This mode helps you get started easily and simplifies the development and testing of your application. The second is a distributed mode, where processing tasks can be spread across a cluster of machines and an administrative server sends commands to control processing tasks executing on the cluster. 
 
-=== Runtime Architecture
+==== Runtime Architecture
 
 The key components in Spring XD are the XD Admin and XD Container Servers. Using a high-level DSL, you post the description of the required processing tasks to the Admin server over HTTP. The Admin server then maps the processing tasks into processing modules. A module is a unit of execution and is implemented as a Spring ApplicationContext. A simple distributed runtime is provided that will assign modules to execute across multiple XD Container servers. A single XD Container server can run multiple modules. When using the single node runtime, all modules are run in a single XD Container and the XD Admin server is run in the same process.
 
-==== DIRT Runtime
+===== DIRT Runtime
 
 A simple distributed runtime, called Distributed Integration Runtime, aka DIRT, will distribute the processing tasks across multiple XD Container instances. The distribution strategy in the M1 release is extremely simple.  The XD Admin server breaks up a processing task into individual module defintions and publishes them to a shared Redis queue.  Each container picks up a module definition off the queue, in a round-robin like manner, and creates a Spring ApplicationContext to run that module. This is a very simple strategy and not optimal for many use-cases, so support for defining grouping of modules will be introduced in later releases.
 
@@ -18,12 +18,12 @@ image::images/distributed-node.png[]
 
 How the processing task is broken down into modules is discussed in the section <<container-server-architecture>>.
 
-==== Support for other distributed runtimes
+===== Support for other distributed runtimes
 
 In the M1 release, you are responsible for starting up a single XD Admin server and one or more XD Containers.  As we progress towards a final release, the goal is to support running XD on top of other distributed runtime environments such as Hadoop's YARN architecture and CloudFoundry.  
 
 [[single-node-runtime]]
-=== Single Node Runtime
+==== Single Node Runtime
 
 For testing and development purposes, a single node runtime is provided that runs the Admin and Container servers in the same process. The communication to the XD Admin server is over HTTP and the XD Admin server communicates to an in-process XD Container using an in-memory queue.
 
@@ -31,13 +31,13 @@ For testing and development purposes, a single node runtime is provided that run
 image::images/local-mode.png[]
 
 [[admin-server-arch]]
-=== Admin Server Architecture
+==== Admin Server Architecture
 
 The Admin Server in the M1 release uses an embedded servlet container and exposes two endpoints for creating and deleting the modules required to perform data processing tasks as declared in the DSL. For the M2 release, the Admin Server will be implemented using Spring’s MVC framework and the https://github.com/SpringSource/spring-hateoas[Spring HATEOAS] library to create REST representations that follow the http://en.wikipedia.org/wiki/HATEOAS[HATEOAS] principle. The Admin Server communicates with the Container Servers using a pluggable transport based, the default uses Redis queues.
 
 
 [[container-server-arch]]
-=== Container Server Architecture
+==== Container Server Architecture
 
 The key components of data processing in SpringXD are 
 
@@ -57,7 +57,7 @@ Taps are used to process data in a non-invasive way as data is being processed b
 image::images/tap-jobs-streams.png[]
 
 [[streams]]
-=== Streams
+==== Streams
 
 The programming model for processing event streams in Spring XD is based on the well known http://www.eaipatterns.com/[Enterprise Integration Patterns] as implemented by components in the http://www.springsource.org/spring-integration[Spring Integration] project.  The programming model was designed to be easy to test components.
 
@@ -115,7 +115,7 @@ http | transformer --expression=payload.toUpperCase() | file
 
 For more information on processing modules, refer to the section link:Processors[Processors]
 
-=== Stream Deployment
+==== Stream Deployment
 
 The Container Server listens for module deployment requests sent from the Admin Server. In the `http | file` example, a module deployment request sent for the http module and another request is sent for the file module.  The definition of a module is stored in a Module Registry, which is a Spring XML configuration file.  The module definition contains variable placeholders that allow you to customize the behavior of the module. For example, setting the http listening port would be done by passing in the option `--port`, e.g. `http --port=8090 | file`, which is in turn used to substitute a placeholder value in the module definition. 
 
@@ -133,11 +133,11 @@ Data produced by the HTTP module is sent over a Redis Queue and is consumed by t
 .Distributed HTTP to Filter to File Stream 
 image::images/http2filter2file.png[]
 
-== Jobs
+=== Jobs
 
 The creation and execution of Jobs is not part of the M1 release and will be included in the M2 release.  Spring XD’s job functionality builds on the Spring Batch project and also the Spring for Apache Hadoop project that adds support for Hadoop based workflows. 
 
-== Taps
+=== Taps
 
 Taps provide a non-invasive way to consume the data that is being processed by either a Stream or a Job, much like a real time telephone wire tap lets you eavesdrop on telephone conversations. Taps are recommended as way to collect metrics and perform analytics on a Stream of data. See the section link:Taps[Taps] for more information.
 

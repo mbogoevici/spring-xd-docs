@@ -1,7 +1,7 @@
 // Main entry point for docbook generation.
 // This should mirror the _Sidebar file, used for
 // viewing online on github. Note that GH adds filename
-// as h1 title, which asciidoctor does not, hence the h1s here.
+// as h1 title, which asciidoctor does not, hence the '== Title' here (which render as sect1 in docbook)
 
 = Spring XD Guide
 Mark Fisher ; Mark Pollack ; David Turanski ; Gunnar Hillert ; Eric Bottard ; Gary Russell ; Ilayaperumal Gopinathan ; Jennifer Hickey ; Michael Minella ; Luke Taylor ; Thomas Risberg ; Winston Koh
@@ -9,34 +9,38 @@ Mark Fisher ; Mark Pollack ; David Turanski ; Gunnar Hillert ; Eric Bottard ; Ga
 {appversion}
 :doctype: book
 
-= Introduction
+== Introduction
 include::Introduction.asciidoc[]
 
-= Getting Started
+== Getting Started
 include::Getting-Started.asciidoc[]
 
-= Architecture
+== Architecture
 include::Architecture.asciidoc[]
 
-= Streams
+== Streams
 include::Streams.asciidoc[]
 
-= Modules
+== Modules
 include::Modules.asciidoc[]
 
-= Sources
+== Sources
 include::Sources.asciidoc[]
 
-= Sinks
+== Sinks
 include::Sinks.asciidoc[]
 
-= Taps
+== Taps
 include::Taps.asciidoc[]
 
-= Analytics
+== Analytics
 include::Analytics.asciidoc[]
 
-= Tuples
+== Tuples
 include::Tuples.asciidoc[]
+
+[appendix]
+= Installing Hadoop
+include::HadoopInstall.asciidoc[]
 
 

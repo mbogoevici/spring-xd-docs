@@ -1,16 +1,16 @@
-== Requirements
+=== Requirements
 
 To get started make sure your system has as a minimum  http://www.oracle.com/technetwork/java/javase/downloads/[*Java JDK 6*] or newer installed. *Java JDK 7* is recommended. Furthermore, http://redis.io/[*Redis*] is used for persistence. You can either use an existing instance of _Redis_ or the Spring XD provided Redis instance.
 
-== Installation of Spring XD
+=== Installation of Spring XD
 
-=== Download Spring XD
+==== Download Spring XD
 
 Download http://www.springframework.org[spring-xd-1.0-M1.zip] (TODO)
 
 Unzip the distribution. This will yield the installation directory *spring-xd*.
 
-=== Installing Redis
+==== Installing Redis
 
 If you have a running instance of _Redis_ it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*.
 
@@ -36,13 +36,13 @@ $ ./redis-server
 
 TIP: For further information on installing _Redis_ in general, please checkout the http://redis.io/topics/quickstart[Redis Quick Start] guide. If you are using _Mac OS_, you can also install _Redis_ via http://mxcl.github.io/homebrew/[Homebrew]
 
-==== Redis on Windows
+===== Redis on Windows
 
 Presently, _Spring XD_ does not ship _Windows_ binaries for _Redis_ (See https://jira.springsource.org/browse/XD-151[XD-151]). However, _Microsoft_ http://blogs.msdn.com/b/interoperability/archive/2013/04/22/redis-on-windows-stable-and-reliable.aspx[is actively working] on supporting _Redis_ on _Windows_. You can download _Windows_ _Redis_ binaries from:
 
 https://github.com/MSOpenTech/redis/tree/2.6/bin/release 
 
-==== Redis is not running
+===== Redis is not running
 
 If you try to run _Spring XD_ and Redis is NOT running, you will see the following exception:
 
@@ -51,7 +51,7 @@ If you try to run _Spring XD_ and Redis is NOT running, you will see the followi
 Redis does not seem to be running. Did you install and start Redis? Please see the Getting Started section of the guide for instructions.
 ----
 
-==== Starting Redis
+===== Starting Redis
 
 ```sh
 $ redis-server
@@ -85,7 +85,7 @@ You should expect something like this:
 [35142] 01 May 14:36:28.941 * The server is now ready to accept connections on port 6379
 ----
 
-=== Starting Spring XD
+==== Starting Spring XD
 
 Spring XD consists of two servers
 

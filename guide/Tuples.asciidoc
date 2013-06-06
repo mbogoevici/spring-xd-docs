@@ -1,4 +1,4 @@
-== Introduction
+=== Introduction
 
 The Tuple class is a central data structure in Spring XD.  It is an ordered list of values that can be retrieved by name or by index.  Tuples are created by a TupleBuilder and are immutable.  The values that are stored can be of any type and null values are allowed.  
 
@@ -8,7 +8,7 @@ The Tuple's types conversion is performed by Spring's http://static.springsource
 
 There are several overloads for getters that let you provide default values for primitive types should the field you are looking for not be found.  Date format patterns and Locale aware NumberFormat conversion are also supported.  A best effort has been made to preserve the functionality available in Spring Batch's http://static.springsource.org/spring-batch/2.1.x/apidocs/org/springframework/batch/item/file/transform/FieldSet.html[`FieldSet`] class that has been extensively used for parsing String based data in files.
 
-=== Creating a Tuple
+==== Creating a Tuple
 
 The `TupleBuilder` class is how you create new `Tuple` instances.  The most basic case is
 
@@ -64,7 +64,7 @@ List<Object> values = Arrays.asList(tokens);
 tuple = tuple().ofNamesAndValues(names, values);
 ----
 
-=== Getting Tuple values
+==== Getting Tuple values
 
 There are getters for all the primitive types and also for BigDecimal and Date. The primitive types are
 
@@ -120,7 +120,7 @@ There are a few other more generic methods available.  Their functionality shoud
 * `boolean hasFieldName(String name)`
 
 
-=== Using SpEL expressions to filter a tuple
+==== Using SpEL expressions to filter a tuple
 
 SpEL provides support to transform a source collection into another by selecting from its entries.  We make use of this functionalty to select a elements of a the tuple into a new one.
 
