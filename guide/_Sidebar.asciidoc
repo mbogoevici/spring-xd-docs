@@ -8,6 +8,7 @@ link:Architecture[Architecture] +
 link:Streams[Streams] +
 link:Modules[Modules] +
 link:Sources[Sources] +
+link:Processors[Processors] +
 link:Sinks[Sinks] +
 link:Taps[Taps] +
 link:Analytics[Analytics] +

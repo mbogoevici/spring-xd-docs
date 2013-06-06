@@ -11,6 +11,8 @@ The Sources covered are
 * <<syslog, Syslog>>
 * <<tcp, TCP>>
 
+Future releases will provide support for RabbitMQ, JMS, and other currently available Spring Integration Adatpers.  For information on how to adapt an existing Spring Integration Adapter for use in SpringXD see the section link:Creating-a-Source-Module[Creating a Source Module].
+
 [[http]]
 === HTTP
 
