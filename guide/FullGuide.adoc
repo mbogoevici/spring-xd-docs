@@ -4,6 +4,9 @@
 // as h1 title, which asciidoctor does not, hence the h1s here.
 
 = Spring XD Guide
+Mark Fisher ; Mark Pollack ; David Turanski ; Gunnar Hillert ; Eric Bottard ; Gary Russell ; Ilayaperumal Gopinathan ; Jennifer Hickey ; Michael Minella ; Luke Taylor ; Thomas Risberg ; Winston Koh
+:appversion: 1.0 (wiki)
+{appversion}
 :doctype: book
 
 = Introduction
