@@ -1,1 +1,1 @@
-link:wiki[Home] | link:About-Spring-XD[About] | link:Project-and-Community[Project] | link:Getting-Started[Getting Started] | link:Technical-Documentation[Technical Docs]
+link:Home[Home] | link:About-Spring-XD[About] | link:Project-and-Community[Project] | link:Getting-Started[Getting Started] | link:Technical-Documentation[Technical Docs]
