@@ -27,6 +27,9 @@ include::Modules.asciidoc[]
 == Sources
 include::Sources.asciidoc[]
 
+== Processors
+include::Processors.asciidoc[]
+
 == Sinks
 include::Sinks.asciidoc[]
 
