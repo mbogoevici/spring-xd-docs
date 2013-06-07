@@ -1,0 +1,14 @@
+Spring XD* is an open source http://www.apache.org/licenses/LICENSE-2.0[Apache 2 License] licensed project whose goal is to tackle big data complexity.  Much of the complexity in building real-world big data applications is related to integrating many disparate systems into one cohesive solution across a range of use-cases.  Common use-cases encountered in creating a comprehensive big data solution are
+
+* High throughput distributed data ingestion from a variety of input sources into big data store such as HDFS or Splunk
+* Real-time analytics at ingestion time, e.g. gathering metrics and counting values.
+* Workflow management via batch jobs.  The jobs combine interactions with standard enterprise systems (e.g. RDBMS) as well as Hadoop operations (e.g. MapReduce, HDFS, Pig, Hive or Cascading).
+* High throughput data export, e.g. from HDFS to a RDBMS or NoSQL database.
+
+The link:wiki/SpringEcosystem[Spring ecosystem] of projects provides an excellent foundation for building big data applications.  The Spring XD project aims to build upon this foundation and provide a one stop shop solution for these use-cases.  This is in contrast to many other offerings that are more siloed and fragmented.  One of our first link:wiki/Features[features] is to create an out-of-the-box server that provide a consistent configuration model and runtime that spans the four use-case categories listed above.  
+
+You don't need to code anything up to get going, no build scripts, no IDE, no maven coordinates.  You can use a high level configuration DSL (not XML!) that will allow you to 'hit your head against the keyboard' and get started quickly.  However, if you choose to extend the platform (and we hope you will), Spring provides the foundation for extensibility.
+
+The project is just getting started now, but we have been doing a lot of prototyping over the past year so we expect to deliver significant functionality by our first milestone release scheduled for late May.
+
+* For the curious, 'XD' is an abbreviation for 'eXtreme Data'.
