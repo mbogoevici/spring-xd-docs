@@ -15,6 +15,9 @@ include::Introduction.asciidoc[]
 == Getting Started
 include::Getting-Started.asciidoc[]
 
+== Running in Distributed Mode
+include::Running-Distributed-Mode.asciidoc[]
+
 == Architecture
 include::Architecture.asciidoc[]
 

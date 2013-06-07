@@ -1,0 +1,103 @@
+=== Introduction
+The Spring XD distributed runtime (DIRT) supports distribution of processing tasks across multiple nodes. See link:Getting-Started[Getting Started] for information on running Spring XD as a single node.
+
+The distributed runtime uses http://redis.io/[*Redis*] so we'll look at installing and running that first.
+
+=== Installing Redis
+
+If you already have a running instance of _Redis_ it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*.
+
+If you don't have a pre-existing installation of _Redis_, you can use the _Spring XD_ provided instance (For Linux and Mac). Inside the _Spring XD_ installation directory (spring-xd) do:
+----
+$ cd redis/bin
+$ ./install-redis
+----
+
+This will compile the _Redis_ source tar and add the _Redis_ executables under redis/bin:
+
+* redis-check-dump
+* redis-sentinel
+* redis-benchmark
+* redis-cli
+* redis-server
+
+You are now ready to start _Redis_ by executing
+
+----
+$ ./redis-server
+----
+
+TIP: For further information on installing _Redis_ in general, please checkout the http://redis.io/topics/quickstart[Redis Quick Start] guide. If you are using _Mac OS_, you can also install _Redis_ via http://mxcl.github.io/homebrew/[Homebrew]
+
+==== Redis on Windows
+
+Presently, _Spring XD_ does not ship _Windows_ binaries for _Redis_ (See https://jira.springsource.org/browse/XD-151[XD-151]). However, _Microsoft_ http://blogs.msdn.com/b/interoperability/archive/2013/04/22/redis-on-windows-stable-and-reliable.aspx[is actively working] on supporting _Redis_ on _Windows_. You can download _Windows_ _Redis_ binaries from:
+
+https://github.com/MSOpenTech/redis/tree/2.6/bin/release
+
+==== Redis is not running
+
+If you try to run _Spring XD_ and Redis is NOT running, you will see the following exception:
+
+----
+11:26:37,830 ERROR main launcher.RedisContainerLauncher:85 - Unable to connect to Redis on localhost:6379; nested exception is com.lambdaworks.redis.RedisException: Unable to connect
+Redis does not seem to be running. Did you install and start Redis? Please see the Getting Started section of the guide for instructions.
+----
+
+=== Starting Redis
+
+```sh
+$ redis-server
+```
+
+You should see something like this:
+
+[source,sh]
+----
+[35142] 01 May 14:36:28.939 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+[35142] 01 May 14:36:28.940 * Max number of open files set to 10032
+                _._
+           _.-``__ ''-._
+      _.-``    `.  `_.  ''-._           Redis 2.6.12 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._
+ (    '      ,       .-`  | `,    )     Running in stand alone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 35142
+  `-._    `-._  `-./  _.-'    _.-'
+ |`-._`-._    `-.__.-'    _.-'_.-'|
+ |    `-._`-._        _.-'_.-'    |           http://redis.io
+  `-._    `-._`-.__.-'_.-'    _.-'
+ |`-._`-._    `-.__.-'    _.-'_.-'|
+ |    `-._`-._        _.-'_.-'    |
+  `-._    `-._`-.__.-'_.-'    _.-'
+      `-._    `-.__.-'    _.-'
+          `-._        _.-'
+              `-.__.-'
+
+[35142] 01 May 14:36:28.941 # Server started, Redis version 2.6.12
+[35142] 01 May 14:36:28.941 * The server is now ready to accept connections on port 6379
+----
+
+=== Starting Spring XD in Distributed Mode
+
+Spring XD consists of two servers
+
+* XDAdmin - controls deployment of modules into containers
+* XDContainer - executes modules
+
+You can start the +xd-container+ and +xd-admin+ servers individually as follows:
+
+[source,sh]
+----
+xd/bin>$ ./xd-admin
+xd/bin>$ ./xd-container
+----
+
+There is an additional configuration option to specify the location of the Spring XD install.
+
+[source,sh]
+----
+xd/bin>$ ./xd-container --xdHomeDir <xd-install-directory>
+----
+
+Pass in the +--help+ option to see additional configuration properties.
