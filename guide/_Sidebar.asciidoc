@@ -4,7 +4,7 @@
 ****
 *link:Introduction[Introduction]* +
 link:Getting-Started[*Getting Started*] +
-*Technical Documentation* +
+*link:Technical-Documentation[Technical Documentation]* +
 link:Architecture[Architecture] +
 link:Streams[Streams] +
 link:Modules[Modules] +
