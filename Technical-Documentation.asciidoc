@@ -1,0 +1,11 @@
+This document describes the runtime architecture of Spring XD and the components of processing data, namely Streams, Taps, Analytics and the DSL used to declare them.
+
+* link:Architecture[Architecture]
+*  link:Streams[Streams]
+**  link:Modules[Modules]
+*** link:Sources[Sources]
+*** link:Processors[Processors]
+*** link:Sinks[Sinks]
+* link:Taps[Taps]
+* link:Analytics[Analytics]
+* link:Tuples[Tuples]
