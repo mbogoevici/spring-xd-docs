@@ -114,15 +114,7 @@ Spring XD consists of two servers
 * XDAdmin - controls deployment of modules into containers
 * XDContainer - executes modules
 
-
-The simplest deployment option is to launch an XD Container with an embedded XDAdmin from the +<xd-install-dir>/xd/bin+ directory
-
-[source,sh]
-----
-xd/bin>$ ./xd-admin --embeddedContainer
-----
-
-You can start the +xd-container+ and +xd-admin+ servers individually
+You can start the +xd-container+ and +xd-admin+ servers individually as follows:
 
 [source,sh]
 ----
