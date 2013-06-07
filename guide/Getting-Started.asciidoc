@@ -2,17 +2,39 @@
 
 To get started make sure your system has as a minimum  http://www.oracle.com/technetwork/java/javase/downloads/[*Java JDK 6*] or newer installed. *Java JDK 7* is recommended. Furthermore, http://redis.io/[*Redis*] is used for persistence. You can either use an existing instance of _Redis_ or the Spring XD provided Redis instance.
 
-=== Installation of Spring XD
+==== Installing Spring XD
+
+Spring XD can be run in two different modes. There's a single-node runtime option for testing and development, and there's a distributed runtime which supports distribution of processing tasks across multiple nodes.  The distributed runtime also requires a _Redis_ installation.
 
 ==== Download Spring XD
 
 Download http://www.springframework.org[spring-xd-1.0-M1.zip] (TODO)
 
-Unzip the distribution. This will yield the installation directory *spring-xd*.
+Unzip the distribution. This will yield the installation directory *spring-xd*. All the commands below are executed from this directory, so change into it before proceeding
 
-==== Installing Redis
+[source,sh]
+----
+$ cd spring-xd
+----
 
-If you have a running instance of _Redis_ it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*.
+==== Single Node Runtime
+
+The single node option is the easiest to get started with. It runs everything you need in a single process. To start it, you just need to run the following command
+
+[source,sh]
+----
+xd/bin>$ ./xd-singlenode
+----
+
+You should then be able to start using Spring XD.
+
+==== Distributed Runtime (DIRT)
+
+The distributed runtime uses _Redis_ so we'll cover look at installing that and running that first.
+
+===== Installing Redis
+
+If you already have a running instance of _Redis_ it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*.
 
 If you don't have a pre-existing installation of _Redis_, you can use the _Spring XD_ provided instance (For Linux and Mac). Inside the _Spring XD_ installation directory (spring-xd) do:
 ----
@@ -57,7 +79,7 @@ Redis does not seem to be running. Did you install and start Redis? Please see t
 $ redis-server
 ```
 
-You should expect something like this:
+You should see something like this:
 
 [source,sh]
 ----
@@ -85,7 +107,7 @@ You should expect something like this:
 [35142] 01 May 14:36:28.941 * The server is now ready to accept connections on port 6379
 ----
 
-==== Starting Spring XD
+==== Starting Spring XD in Distributed Mode
 
 Spring XD consists of two servers
 
@@ -93,7 +115,7 @@ Spring XD consists of two servers
 * XDContainer - executes modules
 
 
-The most simple deployment is to launch an XD Container with an embedded XDAdmin from the +<xd-install-dir>/xd/bin+ directory
+The simplest deployment option is to launch an XD Container with an embedded XDAdmin from the +<xd-install-dir>/xd/bin+ directory
 
 [source,sh]
 ----
