@@ -1,3 +1,3 @@
 = Contributor Guidelines
 
-Most of the Spring projects follow a similar set of guidelines.  The Spring XD project has adopted https://github.com/SpringSource/spring-integration/blob/master/CONTRIBUTING.md[this set of guidelines] from the Spring Integration project.  Wherever you see 'spring-integration' that page, replace with 'spring-xd'.  
+Most of the Spring projects follow a similar set of guidelines.  The Spring XD project has adopted https://github.com/SpringSource/spring-integration/blob/master/CONTRIBUTING.md[this set of guidelines] from the Spring Integration project.  Wherever you see 'spring-integration' in that page, replace with 'spring-xd'.  
