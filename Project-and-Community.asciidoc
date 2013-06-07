@@ -1,0 +1,3 @@
+We encourage you to link:wiki/Contribute[contribute], submit issue and feature requests on https://jira.springsource.org/browse/XD[JIRA] or https://github.com/springsource/spring-xd/issues[GitHub Issues], and follow our link:wiki/Introduction[Spring XD Guide] to kick the tires of Spring XD. 
+
+You can follow our progress week by week by looking at our link:wiki/WeeklyDemo[weekly demos]
