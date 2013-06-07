@@ -2,7 +2,7 @@
 Follow our link:Getting-Started[Getting Started Guide] to kick the tires of Spring XD. 
 
 == Contribute
-We encourage contributions to Spring XD. Please see the link:wiki/Contribute[Contribution Guide] for details.
+We encourage contributions to Spring XD. Please see the link:Contribute[Contribution Guide] for details.
 
 == Improve Spring XD
 Submit issue and feature requests on https://jira.springsource.org/browse/XD[JIRA] or https://github.com/springsource/spring-xd/issues[GitHub Issues]
