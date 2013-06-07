@@ -2,8 +2,9 @@
 .Contents
 // The space with a plus symbol is asciidoc for a hard line break
 ****
-link:Introduction[Introduction] +
-link:Getting-Started[Getting Started] +
+*link:Introduction[Introduction]* +
+link:Getting-Started[*Getting Started*] +
+*Technical Documentation* +
 link:Architecture[Architecture] +
 link:Streams[Streams] +
 link:Modules[Modules] +
