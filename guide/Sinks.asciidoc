@@ -4,7 +4,9 @@ as instructed in the link:Getting-Started[Getting Started] page.
 
 The Sinks covered are
 
-* <<file_sinks, File Sinks>>
+* <<log_sinks, Log>>
+
+* <<file_sinks, File>>
 
 * <<hdfs, HDFS>>
 
@@ -14,6 +16,24 @@ The Sinks covered are
 
 See the section link:Creating-a-Sink-Module[Creating a Sink Module] for information on how to create sink modules using other Spring Integration Adapters.
 
+[[log_sinks]]
+
+Probably the simplest option for a sink is just to log the data. The `log` sink uses the application logger to output the data for inspection. The log level is set to `WARN` and the logger name is created from the stream name. To create a stream using a `log` sink you would use a command like
+
+  $ curl -X POST -d "http --port=8000 | log" http://localhost:8080/streams/mylogstream
+
+You can then try adding some data. We've used the `http` source on port 8000 here, so run the following command to send a message
+
+  $ curl -X POST -d "hello" http://localhost:8000
+
+and you should see the following output in the XD container console.
+
+  13/06/07 16:12:18 WARN logger.mylogstream: hello
+
+The logger name is the sink name prefixed with the string "logger.". The sink name is the same as the stream name by default, but you can set it by passing the `--name` parameter 
+
+  $ curl -X POST -d "http --port=8000 | log --name=mylogger" http://localhost:8080/streams/myotherlogstream
+
 [[file_sinks]]
 ==== File Sink
 
@@ -21,7 +41,7 @@ Another simple option is to stream data to a file on the host OS. This can be do
 
   $ curl -X POST -d "http --port=8000 | file" http://localhost:8080/streams/myfilestream
 
-You can then try adding some data. We've used the `http` source on port 8000 here, so run the following command to send a message
+We've used the `http` source again, so run the following command to send a message
 
   $ curl -X POST -d "hello" http://localhost:8000
 
