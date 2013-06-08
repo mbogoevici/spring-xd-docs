@@ -9,6 +9,7 @@ Mark Fisher ; Mark Pollack ; David Turanski ; Gunnar Hillert ; Eric Bottard ; Ga
 {appversion}
 :doctype: book
 
+= Reference Guide
 == Introduction
 include::Introduction.asciidoc[]
 
@@ -45,6 +46,7 @@ include::Analytics.asciidoc[]
 == Tuples
 include::Tuples.asciidoc[]
 
+= Appendices
 [appendix]
 = Installing Hadoop
 include::Hadoop-Installation.asciidoc[]
