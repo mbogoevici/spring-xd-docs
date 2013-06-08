@@ -8,7 +8,7 @@ Check out the link:Features[Roadmap] for existing and planned features.
 We encourage contributions to Spring XD. Please see the link:Contribute[Contribution Guide] for details.
 
 == Ask Questions
-Please use the tag `springxd` to ask questions
+Please use the tag `springxd` to ask questions.
 
 == Improve Spring XD
 Submit issue and feature requests on https://jira.springsource.org/browse/XD[JIRA] or https://github.com/springsource/spring-xd/issues[GitHub Issues]
