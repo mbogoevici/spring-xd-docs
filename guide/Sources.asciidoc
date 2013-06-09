@@ -220,13 +220,13 @@ See if the data ended up in the file
 
 The TCP source has the following options
 
-port:: the port on which to listen *(default `1234`)*
-reverse-lookup:: perform a reverse DNS lookup on the remote IP Address *(default `false`)*
-socket-timeout:: the timeout (ms) before closing the socket when no data received *(default `120000`)*
-nio:: whether or not to use NIO. NIO is more efficient when there are many connections. *(default `false`)*
-decoder:: how to decode the stream - see below. *(default `CRLF`)*
-binary:: whether the data is binary (true) or text (false). *(default `false`)*
-charset:: the charset used when converting text to `String`. *(default `UTF-8`)*
+port:: the port on which to listen *(default: `1234`)*
+reverse-lookup:: perform a reverse DNS lookup on the remote IP Address *(default: `false`)*
+socket-timeout:: the timeout (ms) before closing the socket when no data received *(default: `120000`)*
+nio:: whether or not to use NIO. NIO is more efficient when there are many connections. *(default: `false`)*
+decoder:: how to decode the stream - see below. *(default: `CRLF`)*
+binary:: whether the data is binary (true) or text (false). *(default: `false`)*
+charset:: the charset used when converting text to `String`. *(default: `UTF-8`)*
 
 ===== Available Decoders
 
