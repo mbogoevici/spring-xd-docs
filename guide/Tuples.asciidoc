@@ -103,7 +103,7 @@ There is extra functionality for getting `Date`s.  The are overloaded getters th
 * `Date getDateWithPattern(String name, String pattern)`
 * `Date getDateWithPattern(String name, String pattern, Date defaultValue)`
 
-There are a few other more generic methods available.  Their functionality shoudl be obvious from their names
+There are a few other more generic methods available.  Their functionality should be obvious from their names
 
 * `size()`
 * `getFieldCount()`
