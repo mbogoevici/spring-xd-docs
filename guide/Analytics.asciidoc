@@ -128,7 +128,7 @@ Check the gauge:
 
 A rich guage is a Metric that holds a double value associated with a unique name. In addition to the value, the rich guage keeps a running average, along with the minimum and maximum values and the sample count.
 
-The _richgauge_ sink provided with XD stores expects a numeric value as a payload, typically this would be a decimal formatted string, and stores its values in Redis. The richgauge includes the following attributes:
+The _richgauge_ sink provided with XD expects a numeric value as a payload, typically this would be a decimal formatted string, and stores its values in Redis. The richgauge includes the following attributes:
 
  name:: The name for the gauge *(default: `<streamname>`)*
 
