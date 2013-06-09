@@ -101,7 +101,6 @@ suffix:: the file extension to use *(default: `log`)*
 rollover:: when to roll files over, expressed in bytes *(default: `1000000`, roughly 1MB)*
 
 [[tcp_sinks]]
-TCP
 ==== TCP
 
 The TCP Sink provides for outbound messaging over TCP.
@@ -140,14 +139,14 @@ host:: the host (or IP Address) to connect to *(default: `localhost`)*
 port:: the port on the `host` *(default `1234`)*
 reverse-lookup:: perform a reverse DNS lookup on IP Addresses *(default: `false`)*
 nio:: whether or not to use NIO *(default: `false`)*
-encoder:: how to encode the stream  - see below *(default `CRLF`)*
-close:: whether to close the socket after each message *(default `false`)*
-charset:: the charset used when converting text from `String` to bytes *(default `UTF-8`)*
+encoder:: how to encode the stream  - see below *(default: `CRLF`)*
+close:: whether to close the socket after each message *(default: `false`)*
+charset:: the charset used when converting text from `String` to bytes *(default: `UTF-8`)*
 
 Retry Options
 
-retry-max-attempts:: the maximum number of attempts to send the data *(default `5` - original request and 4 retries)*
-retry-initial-interval:: the time (ms) to wait for the first retry *(default `2000`)*
+retry-max-attempts:: the maximum number of attempts to send the data *(default: `5` - original request and 4 retries)*
+retry-initial-interval:: the time (ms) to wait for the first retry *(default: `2000`)*
 retry-multiplier:: the multiplier for exponential back off of retries *(default: `2`)*
 
 With the default retry configuration, the attempts will be made after 0, 2, 4, 8, and 16 seconds.
