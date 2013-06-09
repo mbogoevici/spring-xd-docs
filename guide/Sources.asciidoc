@@ -157,7 +157,7 @@ As updates are posted to the cache you should see them captured in the output fi
 
 Two syslog sources are provided: `syslog-udp` and `syslog-tcp`. They both support the following options:
 
-port:: the port on which the system will listen for syslog messages *(default `11111`)*
+port:: the port on which the system will listen for syslog messages *(default: `11111`)*
 
 To create a stream definition post using curl
 
