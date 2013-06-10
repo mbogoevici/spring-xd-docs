@@ -110,7 +110,7 @@ To get a `consumerKey` and `consumerSecret` you need to register a twitter appli
 
 To create a stream definition in the server post using curl
 
-     $ curl -X POST -d "twittersearch --query='#springone2gx' | file" http://localhost:8080/streams/springone2gx
+     $ curl -d "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query='#springone2gx' | file" http://localhost:8080/streams/springone2gx
 
 Make sure the default output directory for the `file` sink exists
 
