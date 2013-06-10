@@ -43,6 +43,9 @@ include::Taps.asciidoc[]
 == Analytics
 include::Analytics.asciidoc[]
 
+== DSL Reference
+include::DSL-Reference.asciidoc[]
+
 == Tuples
 include::Tuples.asciidoc[]
 

@@ -1,6 +1,6 @@
 === Introduction
 
-Spring XD provides a DSL for defining a stream.  Over time the DSL is likely to evolve significantly as it gains the ability to define more and more sophisticated streams.  
+Spring XD provides a DSL for defining a stream.  Over time the DSL is likely to evolve significantly as it gains the ability to define more and more sophisticated streams as well as the steps of a batch job.
 
 === Pipes and filters
 
