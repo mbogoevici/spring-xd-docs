@@ -39,7 +39,7 @@ For example, here is a stream called 'mystream':
 
   source | filter | transform | sink
 
-The output of the filter step can be 'tapped':
+The output of the filter step can be tapped:
 
   tap mystream.filter | sink2
 
