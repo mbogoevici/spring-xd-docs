@@ -33,12 +33,10 @@ Create the Inbound Channel Adapter in a file called _tweetsearch.xml_:
 		<int:poller fixed-rate="5000"/>
 	</twitter:search-inbound-channel-adapter>
 
-        <bean id="twitterTemplate" class="org.springframework.social.oauth2.OAuth2Template">
+        <bean id="twitterTemplate" class="org.springframework.social.twitter.api.impl.TwitterTemplate">
 		<constructor-arg index="0" value="${consumerKey}" />
 		<constructor-arg index="1" value="${consumerSecret}" />
-		<constructor-arg index="2" value="http://notused" />
-		<constructor-arg index="3" value="http://notused" />
-		<constructor-arg index="4" value="https://api.twitter.com/oauth2/token" />
+		<constructor-arg index="2" value="https://api.twitter.com/oauth2/token" />
 	</bean>
 
 </beans>
