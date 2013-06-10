@@ -1,4 +1,4 @@
-Welcome to *Spring XD* - a unified, distributed, and extensible service for data ingestion, real time analytics, batch processing, and data export
+Welcome to *Spring XD* - a unified, distributed, and extensible service for data ingestion, real time analytics, batch processing, and data export.
 
 [width="80%",cols="3,^2,^2,10",options="header"]
 |=========================================================
