@@ -1,1 +1,82 @@
-TODO
+=== Introduction
+
+As outlined in the link:Modules[modules] document, XD currently supports 3 types of modules: source, sink, and processor. This document walks through creation of a custom processor module.
+
+One or more processors can be included in a link:Streams[stream] definition to modifythe data as it passes between the inital source and the destination sink. The link:Architecture[architecture] section covers the basics of processors modules provided out of the box are covered in the link:Processors[processors] section.
+
+Here we'll look at how to create and deploy a custom processor module to transform the input from an incoming `twittersearch`. The steps are essentially the same for any source though. Rather than using built-in functionality, we'll write a custom processor implementation class and wire it up using Spring Integration.
+
+==== Writing the Transformer Code
+
+The tweet messages from `twittersearch` contain quite a lot of data (id, author, time and so on). The transformer we'll write will discard everything but the text content and output this as a string. The output messages from the `twittersearch` source are also strings, containing the tweet data as JSON. We first parse this into a map using Jackson library code, then extract the "text" field from the map.
+
+[source,java]
+----
+
+package custom;
+
+import java.io.IOException;
+import java.util.Map;
+
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
+import org.springframework.integration.transformer.MessageTransformationException;
+
+public class TweetTransformer {
+  private ObjectMapper mapper = new ObjectMapper();
+
+  public String transform(String payload) {
+    try {
+      Map<String, Object> tweet = mapper.readValue(payload, new TypeReference<Map<String, Object>>() {});
+      return tweet.get("text").toString();
+    } catch (IOException e) {
+      throw new MessageTransformationException("Unable to transform tweet: " + e.getMessage(), e);
+    }
+  }
+}
+
+----
+
+==== Creating the module Application Context File
+
+Create the following file as _tweettransformer.xml_:
+
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/integration"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/integration
+    http://www.springframework.org/schema/integration/spring-integration.xsd">
+  <channel id="input"/>
+
+  <transformer input-channel="input" output-channel="output">
+    <beans:bean class="custom.TweetTransformer" />
+  </transformer>
+
+  <channel id="output"/>
+</beans:beans>
+----
+
+==== Deploying the Module
+
+To deploy the module, you need to copy the _tweettransformer.xml_ file to the `${xd.home}/modules/processors` directory. We also need to make the custom module code available. Currently Spring XD looks for code in the jars it finds in the `${xd.home}/lib` directory. So create a jar with the `TweetTransformer` class in it (and the correct package structure) and drop it into `lib`.
+
+==== Testing the deployed module
+
+Start the XD server and try creating a stream to test your processor:
+
+  $ curl -d "twittersearch --query=java --consumerKey=<your_key> --consumerSecret=<your_secret> | tweettransformer | file" http://localhost:8080/streams/javatweets
+
+If you haven't already used `twittersearch`, read the link:Sources[sources] section for more details. This command should stream tweets to the file `/tmp/xd/output/javatweets` but, unlike the normal `twittersearch` output, you should just see the plain tweet text there, rather than the full JSON data
+
+
+
+
+
+
+
