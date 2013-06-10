@@ -1,10 +1,9 @@
-Welcome to *Spring XD* - a light-weight distributed service for assembling data streams and collecting, processing, and orchestrating real-time and batch analytics.
+Welcome to *Spring XD* - a unified, distributed, and extensible service for data ingestion, real time analytics, batch processing, and data export
 
 [width="80%",cols="3,^2,^2,10",options="header"]
 |=========================================================
 |link:wiki/About-Spring-XD[About Spring XD] |link:wiki/Project-and-Community[Project & Community] |link:wiki/Getting-Started[Getting Started] |link:wiki/Technical-Documentation[Technical Documentation]
 |What is Spring XD? Why did we build it?|Learn about the open source project and how to contribute|Get started using Spring XD in a few easy steps|Learn all about the architecture and components of Spring XD
-
 
 
 
