@@ -1,0 +1,48 @@
+=== Introduction
+
+Spring XD provides a DSL for defining a stream.  Over time the DSL is likely to evolve significantly as it gains the ability to define more and more sophisticated streams.  
+
+=== Pipes and filters
+
+A simple linear stream consists of a sequence of modules.  Typically an Input Source, (optional) Processing Steps, and an Output Sink.  As a simple example consider the collection of data from an HTTP Source writing to a File Sink. Using the DSL the stream description is:
+
+  http | file
+
+A stream that involves some processing:
+
+  http | filter | transform | file
+
+The modules in a stream definition are connected together using the pipe symbol `|`.  
+
+=== Module parameters
+
+Each module may take parameters. The parameters supported by a module are defined by the module implementation. As an example the `http` source module exposes `port` setting which allows the data ingestion port to be changed from the default value.
+
+  http --port=1337
+
+It is only necessary to quote parameter values if they contain spaces or the `|` character. Here the transform processor module is being passed a SpEL expression that will be applied to any data it encounters:
+
+  transform --expression='new StringBuilder(payload).reverse()'
+
+If the parameter value needs to embed a single quote, use two single quotes:
+
+  // Query is: Select * from /Customers where name='Smith'
+  scan --query='Select * from /Customers where name=''Smith'''
+
+=== Tap
+
+A Tap can be used to "listen in" to data from another stream and process the data in a separate stream. A tap can consume data from any point along the target stream’s processing pipeline. The format of tap is:
+
+  tap <stream>.<module>
+
+For example, here is a stream called 'mystream':
+
+  source | filter | transform | sink
+
+The output of the filter step can be 'tapped':
+
+  tap mystream.filter | sink2
+
+
+
+The Spring XD M2 release will provide a DSL for non-linear flows, e.g. a directed graph.
