@@ -8,8 +8,10 @@ Spring Integration provides a number of adapters out of the box to support vario
 
 These steps will demonstrate how to create and deploy a source module using the Spring Integration Twitter Search Inbound Message Channel Adapter.
 
+To get a `consumerKey` and `consumerSecret` you need to register a twitter application. If you don't already have one set up, you can create an app at the https://dev.twitter.com/apps[Twitter Developers] site to get these credentials.
+
 ==== Create the module Application Context file
-Create the Inbound Channel Adapter with a single bean definition in a file called _tweetsearch.xml_:
+Create the Inbound Channel Adapter in a file called _tweetsearch.xml_:
 
 [source,xml]
 ----
@@ -25,9 +27,19 @@ Create the Inbound Channel Adapter with a single bean definition in a file calle
 		http://www.springframework.org/schema/integration/twitter
 		http://www.springframework.org/schema/integration/twitter/spring-integration-twitter.xsd">
 
-	<twitter:search-inbound-channel-adapter id="output" query="spring">
+        <context:property-placeholder location="tweetsearch.properties"/>
+
+	<twitter:search-inbound-channel-adapter id="output" query="spring" twitter-template="twitterTemplate">
 		<int:poller fixed-rate="5000"/>
 	</twitter:search-inbound-channel-adapter>
+
+        <bean id="twitterTemplate" class="org.springframework.social.oauth2.OAuth2Template">
+		<constructor-arg index="0" value="${consumerKey}" />
+		<constructor-arg index="1" value="${consumerSecret}" />
+		<constructor-arg index="2" value="http://notused" />
+		<constructor-arg index="3" value="http://notused" />
+		<constructor-arg index="4" value="https://api.twitter.com/oauth2/token" />
+	</bean>
 
 </beans>
 ----
@@ -48,13 +60,22 @@ Users may want to specify a different Twitter query or polling interval when cre
 
 Now users can optionally pass _query_ and _polling-interval_ property values on stream creation. If not present, the specified defaults will be used.
 
+==== Add auth properties
+Create a _tweetsearch.properties_ file containing the Twitter authentication properties:
+
+[source,java]
+----
+consumerKey=<your key>
+consumerSecret=<your secret>
+----
+
 ==== Test the module locally
 This section covers setup of a local project containing some code for testing outside of an XD container. This step can be skipped if you prefer to test the module by <<deploy-module,deploying to Spring XD>>.
 
 ===== Create a project
 The module can be tested by writing a Spring integration test to load the context file and validate that tweets are received. In order to write the test, you will need to create a project in an IDE such as STS, Eclipse, or IDEA. Eclipse will be used for this example.
 
-Create a _tweetsearch_ directory and add _tweetsearch.xml_ to _src/main/resources_. Add the following _build.gradle_ (or an equivalent _pom.xml_) to the root directory:
+Create a _tweetsearch_ directory and add _tweetsearch.xml_ and _tweetsearch.properties_ to _src/main/resources_. Add the following _build.gradle_ (or an equivalent _pom.xml_) to the root directory:
 
 [source,groovy]
 ----
@@ -74,7 +95,7 @@ ext {
     junitVersion = '4.11'
     springVersion = '3.2.2.RELEASE'
     springIntegrationVersion = '3.0.0.M2'
-    springSocialVersion = '1.0.1.RELEASE'
+    springSocialVersion = '1.0.5.RELEASE'
 }
 
 dependencies {
@@ -111,8 +132,6 @@ Add the following _src/test/resources/org/springframework/xd/samples/test-contex
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/integration
 		http://www.springframework.org/schema/integration/spring-integration.xsd">
-
-	<context:property-placeholder/>
 
 	<int:outbound-channel-adapter channel="output" ref="target" method="add" />
 
@@ -170,7 +189,7 @@ Spring XD looks for modules in the ${xd.home}/modules directory. The modules dir
       modules/sink
       modules/source
 
-Simply drop _tweetsearch.xml_ into the _modules/source_ directory and fire up the server. See link:Getting-Started[Getting Started] to learn how to start the Spring XD server. 
+Simply drop _tweetsearch.xml_ into the _modules/source_ directory and drop _tweetsearch.properties_ into ${xd.home}/config and fire up the server. See link:Getting-Started[Getting Started] to learn how to start the Spring XD server. 
 
 ==== Test the deployed module
 Once the XD server is running, create a stream to test it out. This stream will write tweets containing the word "java" to the XD log:
