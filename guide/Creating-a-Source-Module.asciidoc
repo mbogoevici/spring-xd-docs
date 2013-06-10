@@ -175,7 +175,7 @@ Simply drop _feed.xml_ into the _modules/source_ directory and add the dependenc
     rome-1.0.0.jar
     rome-fetcher-1.0.0.jar
 
-fire up the server. See link:Getting-Started[Getting Started] to learn how to start the Spring XD server. 
+Now fire up the server. See link:Getting-Started[Getting Started] to learn how to start the Spring XD server. 
 
 ==== Test the deployed module
 Once the XD server is running, create a stream to test it out. This stream will write SyndEntry objects to the XD log:
