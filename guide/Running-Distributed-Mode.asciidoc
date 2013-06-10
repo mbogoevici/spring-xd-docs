@@ -93,11 +93,21 @@ xd/bin>$ ./xd-admin
 xd/bin>$ ./xd-container
 ----
 
-There is an additional configuration option to specify the location of the Spring XD install.
+There are additional configuration options available for these scripts:
+ 
+To specify the location of the Spring XD install,
 
 [source,sh]
 ----
+xd/bin>$ ./xd-admin --xdHomeDir <xd-install-directory>
 xd/bin>$ ./xd-container --xdHomeDir <xd-install-directory>
+----
+
+To specify the http port of the XDAdmin server,
+
+[source,sh]
+----
+xd/bin>$ ./xd-admin --httpPort <httpPort> 
 ----
 
 Pass in the +--help+ option to see other configuration properties.
