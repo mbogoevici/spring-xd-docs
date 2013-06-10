@@ -51,11 +51,11 @@ For example, here is part of Spring configuration for a _counter_ sink that coun
 
 Note the property placeholders for _name_, _redis.hostname_ and _redis.port_. The _name_ property defines no default value, so it is a required attribute for this module. _redis.hostname_ and _redis.port_ default to _localhost_ and _6379_ respectively. So these are optional attributes. In either case, the XD server will substitute values for these properties as configured for each module instance.  For example, we can create two streams each creating an instance of the _counter_ module with a different configuration.
 
-    curl -X POST -d "time | counter --name=test" http://localhost:8080/streams/counttest
+    curl -d "time | counter --name=test" http://localhost:8080/streams/counttest
 
 or
 
-    curl -X POST -d "time | counter --name=test2 --redis.host=redis.example.com --redis.port=63710" http://localhost:8080/streams/counttest2
+    curl -d "time | counter --name=test2 --redis.host=redis.example.com --redis.port=63710" http://localhost:8080/streams/counttest2
 
 In addition to properties, modules may reference Spring beans which are defined externally such that each module instance may inject a different implementation of a bean. The ability to configure each module instance differently is only possible if each module is created in its own application context. The module may be configured with a parent context, but this should be done with care. In the simplest case, the module context is completely separate. This results in some very useful features, such as being able to create multiple bean instances with the same id, possibly with different configurations. More generally, this allows modules to adhere to the KISS principle.
 

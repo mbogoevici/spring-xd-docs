@@ -20,11 +20,11 @@ See the section link:Creating-a-Sink-Module[Creating a Sink Module] for informat
 
 Probably the simplest option for a sink is just to log the data. The `log` sink uses the application logger to output the data for inspection. The log level is set to `WARN` and the logger name is created from the stream name. To create a stream using a `log` sink you would use a command like
 
-  $ curl -X POST -d "http --port=8000 | log" http://localhost:8080/streams/mylogstream
+  $ curl -d "http --port=8000 | log" http://localhost:8080/streams/mylogstream
 
 You can then try adding some data. We've used the `http` source on port 8000 here, so run the following command to send a message
 
-  $ curl -X POST -d "hello" http://localhost:8000
+  $ curl -d "hello" http://localhost:8000
 
 and you should see the following output in the XD container console.
 
@@ -32,18 +32,18 @@ and you should see the following output in the XD container console.
 
 The logger name is the sink name prefixed with the string "logger.". The sink name is the same as the stream name by default, but you can set it by passing the `--name` parameter 
 
-  $ curl -X POST -d "http --port=8000 | log --name=mylogger" http://localhost:8080/streams/myotherlogstream
+  $ curl -d "http --port=8000 | log --name=mylogger" http://localhost:8080/streams/myotherlogstream
 
 [[file_sinks]]
 ==== File Sink
 
 Another simple option is to stream data to a file on the host OS. This can be done using the `file` sink module to create a link:Streams[stream].
 
-  $ curl -X POST -d "http --port=8000 | file" http://localhost:8080/streams/myfilestream
+  $ curl -d "http --port=8000 | file" http://localhost:8080/streams/myfilestream
 
 We've used the `http` source again, so run the following command to send a message
 
-  $ curl -X POST -d "hello" http://localhost:8000
+  $ curl -d "hello" http://localhost:8000
 
 The `file` sink uses the stream name as the default name for the file it creates, and places the file in the `/tmp/xd/output/` directory.
 
@@ -52,7 +52,7 @@ The `file` sink uses the stream name as the default name for the file it creates
 
 You can of course cutomize the behavior. For example
 
-  $ curl -X POST -d "http --port=8000 | file --name=myfile --dir=/some/custom/directory" http://localhost:8080/streams/otherfilestream
+  $ curl -d "http --port=8000 | file --name=myfile --dir=/some/custom/directory" http://localhost:8080/streams/otherfilestream
 
 [[hdfs]]
 ==== Hadoop (HDFS)
@@ -62,13 +62,13 @@ First install and start Hadoop as described in our link:Hadoop-Installation[sepa
 
 You should then be able to use the `hdfs` sink when creating a link:Streams[stream]
 
-  $ curl -X POST -d "http --port=8000 | hdfs --rollover=10" http://localhost:8080/streams/myhdfsstream
+  $ curl -d "http --port=8000 | hdfs --rollover=10" http://localhost:8080/streams/myhdfsstream
 
 Note that we've set the `rollover` parameter to a small value for this exercise. This is just to avoid buffering, so that we can actually see the data has made it into HDFS.
 
 As in the above examples, we've used the `http` source on port 8000, so we can post some data again using
 
-  $ curl -X POST -d "hello" http://localhost:8000
+  $ curl -d "hello" http://localhost:8000
 
 Repeat the command a few times.
 
@@ -113,7 +113,7 @@ First, start a netcat to receive the data, and background it
 
 Now, configure a stream
 
-     $ curl -X POST -d "time --interval=3 | tcp" http://localhost:8080/streams/tcptest
+     $ curl -d "time --interval=3 | tcp" http://localhost:8080/streams/tcptest
 
 This sends the time, every 3 seconds to the default tcp Sink, which connects to port `1234` on `localhost`.
 
@@ -176,7 +176,7 @@ Start netcat in the background and redirect the output to a file `foo`
 
 Create the stream, using the `L4` encoder
 
-     $ curl -X POST -d "time --interval=3 | tcp --encoder=L4 --port=1235" http://localhost:8080/streams/tcptest
+     $ curl -d "time --interval=3 | tcp --encoder=L4 --port=1235" http://localhost:8080/streams/tcptest
 
 Undeploy the stream
 
@@ -231,8 +231,8 @@ We want this to be cached using the stock symbol as the key. The stream definiti
 
 The keyExpression is a SpEL expression that depends on the payload type. In this case, _com.gemstone.org.json.JSONObject. JSONObject_ which  provides the _getField_ method. To run this example:
 
-    $ curl -X POST -d "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')" http://localhost:8080/streams/stocks
-    $ curl -X POST -d "{\"symbol\":\"VMW\", \"price\":73}" http://localhost:9090
+    $ curl -d "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')" http://localhost:8080/streams/stocks
+    $ curl -d "{\"symbol\":\"VMW\", \"price\":73}" http://localhost:9090
 
 This will write an entry to the GemFire _Stocks_ region with the key _VMW_. You should see a message on STDOUT for the process running the GemFire server like:
 

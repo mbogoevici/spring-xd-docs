@@ -15,19 +15,19 @@ That will start an instance of the StreamServer, which is a very basic REST API 
 If you look within the modules/source and modules/sink directories you will see what modules are currently available. A stream can be POSTed to the StreamServer via the url localhost:8080/streams/{streamName} as follows:
 
 ````
-curl -X POST -d "time | log" http://localhost:8080/streams/example
+curl -d "time | log" http://localhost:8080/streams/example
 ````
 
 If a module configuration file contains property placeholders (e.g. value="${paramName}"), those values can be provided in the stream definition as --paramName=paramValue, e.g.
 
 ````
-curl -X POST -d "twittersearch --query=spring | hdfs --directory=/tweets/" http://localhost:8080/streams/springtweets
+curl -d "twittersearch --query=spring | hdfs --directory=/tweets/" http://localhost:8080/streams/springtweets
 ````
 
 A _tap_ acts like a source in that it occurs as the first module within a stream and can pipe its output to a sink (and/or one or more processors added to a chain before the ultimate sink), but for a tap the messages are actually those being produced by some other source. The basic idea is to add a "tee" stream so that realtime analytics may be performed at the same time as data is being ingested via its primary stream. Typically a counter or gauge would follow the pipe after a tap. Here's an example:
 
 ````
-curl -X POST -d "tap @ springtweets | counter --name=tweetcount" http://localhost:8080/streams/tweettap
+curl -d "tap @ springtweets | counter --name=tweetcount" http://localhost:8080/streams/tweettap
 ````
 
 The counter module increments a counter with the provided name, currently in Redis (an in-memory implementation of the CounterService also exists and GemFire/MongoDB implementations are on the roadmap). To view the count use the redis-cli:

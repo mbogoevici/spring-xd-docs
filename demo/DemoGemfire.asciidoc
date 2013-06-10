@@ -31,13 +31,13 @@ as instructed in the link:wiki/Demo[Demo] page.
 
 The CQ stream requires a a query parameter. 'host' and 'port' are optional and default to localhost and 40404, respectively. 
    
-     curl -X POST -d "gemfire-cq --query=Select * from /Stocks where symbol='VMW' | file" http://localhost:8080/streams/cqtest
+     curl -d "gemfire-cq --query=Select * from /Stocks where symbol='VMW' | file" http://localhost:8080/streams/cqtest
 
 The stream to put data into the cache requires a region to use and a keyExpression which is the value of the cache key used to write the data. In this case, the key is hard coded. 
 
 _NOTE: This is pretty crude, as we really want to use the value of any stock symbol contained in the input. Since the file input is interpreted as a string, it is necessary to parse the string to obtain this value. A better way is to add a processor to convert the payload to JSON. We will add that at some point._
 
-     curl -X POST -d "file | gemfire-json-server --regionName=Stocks --keyExpression='VMW'" http://localhost:8080/streams/stocks
+     curl -d "file | gemfire-json-server --regionName=Stocks --keyExpression='VMW'" http://localhost:8080/streams/stocks
 
 == Run the demo
 

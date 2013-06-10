@@ -19,7 +19,7 @@ The tail source has 3 options:
 
      touch /tmp/xd/input/tailtest                               <1>
 
-     curl -X POST -d "tail | file" http://localhost:8080/streams/tailtest
+     curl -d "tail | file" http://localhost:8080/streams/tailtest
 
      echo blah >> /tmp/xd/input/tailtest
 
@@ -29,7 +29,7 @@ The tail source has 3 options:
 
 or
 
-     curl -X POST -d "tail --name=/tmp/foo --lines=5 | file --name=bar" http://localhost:8080/streams/tailtest
+     curl -d "tail --name=/tmp/foo --lines=5 | file --name=bar" http://localhost:8080/streams/tailtest
 
      echo blah >> /tmp/foo
 

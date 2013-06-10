@@ -175,7 +175,7 @@ Simply drop _tweetsearch.xml_ into the _modules/source_ directory and fire up th
 ==== Test the deployed module
 Once the XD server is running, create a stream to test it out. This stream will write tweets containing the word "java" to the XD log:
 
-    $ curl -X POST -d "tweetsearch --query=java | log" http://localhost:8080/streams/javasearch
+    $ curl -d "tweetsearch --query=java | log" http://localhost:8080/streams/javasearch
 
 You should start seeing messages like the following in the container console window:
 
