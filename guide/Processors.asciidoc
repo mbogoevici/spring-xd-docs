@@ -30,7 +30,7 @@ Alternatively, if you send the word "bad" (or anything else), you shouldn't see 
 ===== Filter with Groovy Script
 For more complex filtering, you can pass the location of a Groovy script using the _location_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
 
-    $ curl -X POST -d "http --port=9001 | filter --location=custom-filter.groovy | log" http://localhost:8080/streams/groovyfiltertest
+    $ curl -X POST -d "http --port=9001 | filter --script=custom-filter.groovy | log" http://localhost:8080/streams/groovyfiltertest
 
 By default, Spring XD will search the classpath for _custom-filter.groovy_. You can place the script in _${xd.home}/modules/processor/scripts_ to make it available on the classpath.  Alternatively, you can prefix the _location_ value with _file:_ to load from the file system.
 
@@ -62,7 +62,7 @@ This transform will convert all message payloads to the word "FOO". Try sending 
 ===== Transform with Groovy Script
 For more complex transformations, you can pass the location of a Groovy script using the _location_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
 
-    $ curl -X POST -d "http --port=9004 | transform --location=custom-transform.groovy | log" http://localhost:8080/streams/groovytransformtest
+    $ curl -X POST -d "http --port=9004 | transform --script=custom-transform.groovy | log" http://localhost:8080/streams/groovytransformtest
 
 By default, Spring XD will search the classpath for _custom-transform.groovy_. You can place the script in _${xd.home}/modules/processor/scripts_ to make it available on the classpath.  Alternatively, you can prefix the _location_ value with _file:_ to load from the file system.
 
