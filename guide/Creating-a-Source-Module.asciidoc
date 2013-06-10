@@ -6,78 +6,59 @@ The first module in a link:Streams[stream] is always a source. Source modules ar
 
 Spring Integration provides a number of adapters out of the box to support various transports, such as JMS, File, HTTP, Web Services, Mail, and more. You can typically create a source module that uses these inbound channel adapters by writing just a single Spring application context file.
 
-These steps will demonstrate how to create and deploy a source module using the Spring Integration Twitter Search Inbound Message Channel Adapter.
-
-To get a `consumerKey` and `consumerSecret` you need to register a twitter application. If you don't already have one set up, you can create an app at the https://dev.twitter.com/apps[Twitter Developers] site to get these credentials.
+These steps will demonstrate how to create and deploy a source module using the Spring Integration Feed Inbound Channel Adapter.
 
 ==== Create the module Application Context file
-Create the Inbound Channel Adapter in a file called _tweetsearch.xml_:
+Create the Inbound Channel Adapter in a file called _feed.xml_:
 
 [source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:int="http://www.springframework.org/schema/integration"
-	xmlns:twitter="http://www.springframework.org/schema/integration/twitter"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	xmlns:int-feed="http://www.springframework.org/schema/integration/feed"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/integration 
+		http://www.springframework.org/schema/integration
 		http://www.springframework.org/schema/integration/spring-integration.xsd
-		http://www.springframework.org/schema/integration/twitter
-		http://www.springframework.org/schema/integration/twitter/spring-integration-twitter.xsd">
+		http://www.springframework.org/schema/integration/feed
+		http://www.springframework.org/schema/integration/feed/spring-integration-feed.xsd">
 
-        <context:property-placeholder location="tweetsearch.properties"/>
-
-	<twitter:search-inbound-channel-adapter id="output" query="spring" twitter-template="twitterTemplate">
-		<int:poller fixed-rate="5000"/>
-	</twitter:search-inbound-channel-adapter>
-
-        <bean id="twitterTemplate" class="org.springframework.social.twitter.api.impl.TwitterTemplate">
-		<constructor-arg index="0" value="${consumerKey}" />
-		<constructor-arg index="1" value="${consumerSecret}" />
-		<constructor-arg index="2" value="https://api.twitter.com/oauth2/token" />
-	</bean>
-
+	<int-feed:inbound-channel-adapter  channel="output" url="http://feeds.bbci.co.uk/news/rss.xml">
+		<int:poller fixed-rate="5000" max-messages-per-poll="100" />
+	</int-feed:inbound-channel-adapter>
+	
+	<int:channel id="output"/>
 </beans>
 ----
 
-The adapter is configured to search Twitter for the word "spring" every 5 seconds.  Once a tweet is found, it will create a message with a Tweet domain object payload and write it to a message channel called _output_.  Since the _id_ attribute is set, a channel with the name _output_ is implicitly created.  Alternatively, you could set channel="output" and create the output channel with <int:channel id="output"/>. The name _output_ should be used by convention so that your source module can easily be combined with any processor and sink module in a stream.
-
-NOTE: The existing https://github.com/SpringSource/spring-xd/blob/master/modules/source/twittersearch.xml[twittersearch source module] contains additional logic to convert the Tweet domain object to JSON before sending the message to the _output_ channel. This makes the data consumable by a wider range of processor and sink modules.
+The adapter is configured to poll the BBC News Feed every 5 seconds.  Once an item is found, it will create a message with a SyndEntryImpl domain object payload and write it to a message channel called _output_. The name _output_ should be used by convention so that your source module can easily be combined with any processor and sink module in a stream.
 
 ==== Make the module configurable
-Users may want to specify a different Twitter query or polling interval when creating a stream. Spring XD will automatically make a PropertyPlaceholderConfigurer available to your application context. You can simply reference property names and users can then pass in values when creating a link:Streams[stream] using the DSL.
+Users may want to pull data from feeds other than BBC News. Spring XD will automatically make a PropertyPlaceholderConfigurer available to your application context. You can simply reference property names and users can then pass in values when creating a link:Streams[stream] using the DSL.
 
 [source,xml]
 ----
-<twitter:search-inbound-channel-adapter id="output" query="${query:spring}">
-     <int:poller fixed-rate="${polling-interval:5000}"/>
-</twitter:search-inbound-channel-adapter>
+<int-feed:inbound-channel-adapter  channel="output" url="${url:http://feeds.bbci.co.uk/news/rss.xml}">
+  <int:poller fixed-rate="5000" max-messages-per-poll="100" />
+</int-feed:inbound-channel-adapter>
 ----
 
-Now users can optionally pass _query_ and _polling-interval_ property values on stream creation. If not present, the specified defaults will be used.
+Now users can optionally pass a _url_ property value on stream creation. If not present, the specified default will be used.
 
-==== Add auth properties
-Create a _tweetsearch.properties_ file containing the Twitter authentication properties:
-
-[source,java]
-----
-consumerKey=<your key>
-consumerSecret=<your secret>
-----
 
 ==== Test the module locally
 This section covers setup of a local project containing some code for testing outside of an XD container. This step can be skipped if you prefer to test the module by <<deploy-module,deploying to Spring XD>>.
 
 ===== Create a project
-The module can be tested by writing a Spring integration test to load the context file and validate that tweets are received. In order to write the test, you will need to create a project in an IDE such as STS, Eclipse, or IDEA. Eclipse will be used for this example.
+The module can be tested by writing a Spring integration test to load the context file and validate that news items are received. In order to write the test, you will need to create a project in an IDE such as STS, Eclipse, or IDEA. Eclipse will be used for this example.
 
-Create a _tweetsearch_ directory and add _tweetsearch.xml_ and _tweetsearch.properties_ to _src/main/resources_. Add the following _build.gradle_ (or an equivalent _pom.xml_) to the root directory:
+Create a _feed_ directory and add _feed.xml_ to _src/main/resources_. Add the following _build.gradle_ (or an equivalent _pom.xml_) to the root directory:
 
 [source,groovy]
 ----
-description = 'Tweet Search Source Module'
+description = 'Feed Source Module'
 group = 'org.springframework.xd.samples'
 
 repositories {
@@ -93,19 +74,16 @@ ext {
     junitVersion = '4.11'
     springVersion = '3.2.2.RELEASE'
     springIntegrationVersion = '3.0.0.M2'
-    springSocialVersion = '1.0.5.RELEASE'
 }
 
 dependencies {
     compile("org.springframework:spring-core:$springVersion")
     compile "org.springframework:spring-context-support:$springVersion"
-    compile "org.springframework.integration:spring-integration-core:$springIntegrationVersion"
-    compile "org.springframework.integration:spring-integration-twitter:$springIntegrationVersion"
+    compile "org.springframework.integration:spring-integration-feed:$springIntegrationVersion"
 
     // Testing
     testCompile "junit:junit:$junitVersion"
     testCompile "org.springframework:spring-test:$springVersion"
-    testCompile "org.springframework.social:spring-social-twitter:$springSocialVersion"
 }
 
 defaultTasks 'build'
@@ -114,7 +92,7 @@ defaultTasks 'build'
 Run _gradle eclipse_ to generate the Eclipse project. Import the project into Eclipse.
 
 ===== Create the Spring integration test
-The main objective of the test is to ensure that tweets are received once the module's Application Context is loaded. This can be tested by adding an Outbound Channel Adapter that will direct tweets to a POJO that can store them for validation.
+The main objective of the test is to ensure that news items are received once the module's Application Context is loaded. This can be tested by adding an Outbound Channel Adapter that will direct items to a POJO that can store them for validation.
 
 Add the following _src/test/resources/org/springframework/xd/samples/test-context.xml_:
 [source,xml]
@@ -131,51 +109,54 @@ Add the following _src/test/resources/org/springframework/xd/samples/test-contex
 		http://www.springframework.org/schema/integration
 		http://www.springframework.org/schema/integration/spring-integration.xsd">
 
+	<context:property-placeholder/>
+	
 	<int:outbound-channel-adapter channel="output" ref="target" method="add" />
 
-	<bean id="target" class="org.springframework.xd.samples.TweetCache" />
+	<bean id="target" class="org.springframework.xd.samples.FeedCache" />
 
 </beans>
 ----
-This context creates an Outbound Channel Adapter that will subscribe to all messages on the _output_ channel and pass the message payload to the _add_ method of a _TweetCache_ object. The context also creates the PropertyPlaceholderConfigurer that is ordinarily provided by the XD container.
+This context creates an Outbound Channel Adapter that will subscribe to all messages on the _output_ channel and pass the message payload to the _add_ method of a _FeedCache_ object. The context also creates the PropertyPlaceholderConfigurer that is ordinarily provided by the XD container.
 
-Create the _src/test/java/org/springframework/xd/samples/TweetCache_ class:
+Create the _src/test/java/org/springframework/xd/samples/FeedCache_ class:
 [source,java]
 ----
 package org.springframework.xd.samples;
 import ...
 
-public class TweetCache {
-	
-	final BlockingDeque<Tweet> tweets = new LinkedBlockingDeque<Tweet>(99);
+public class FeedCache {
 
-	public void add(Tweet tweet) {
-	     tweets.add(tweet);
+	final BlockingDeque<SyndEntry> entries = new LinkedBlockingDeque<SyndEntry>(99);
+
+	public void add(SyndEntry entry) {
+		entries.add(entry);
 	}
 }
 ----
-The _TweetCache_ places all received Tweets on a _BlockingDeque_ that our test can use to validate successful routing of messages.
+The _FeedCache_ places all received SyndEntry objects on a _BlockingDeque_ that our test can use to validate successful routing of messages.
 
-Lastly, create and run the _src/test/java/org/springframework/xd/samples/TweetsearchSourceModuleTest_:
+Lastly, create and run the _src/test/java/org/springframework/xd/samples/FeedSourceModuleTest_:
 [source,java]
 ----
 package org.springframework.xd.samples;
 import ...
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:tweetsearch.xml", "test-context.xml"})
-public class TweetsearchSourceModuleTest {
+@ContextConfiguration(locations={"classpath:feed.xml", "test-context.xml"})
+public class FeedSourceModuleTest {
 	
 	@Autowired
-	TweetCache tweetCache;
+	FeedCache feedCache;
 	
 	@Test
-	public void testTweetSearch() throws Exception {
-	     assertNotNull(tweetCache.tweets.poll(5, TimeUnit.SECONDS));
+	public void testFeedPolling() throws Exception {
+		assertNotNull(feedCache.entries.poll(5, TimeUnit.SECONDS));
 	}
+
 }
 ----
-The test will load an Application Context using our tweetsearch and test context files. It will fail if a tweet is not placed into the TweetCache within 5 seconds.
+The test will load an Application Context using our feed and test context files. It will fail if a item is not placed into the FeedCache within 5 seconds.
 
 You now have a way to build and test your new module independently. Time to deploy to Spring XD!
 
@@ -187,15 +168,27 @@ Spring XD looks for modules in the ${xd.home}/modules directory. The modules dir
       modules/sink
       modules/source
 
-Simply drop _tweetsearch.xml_ into the _modules/source_ directory and drop _tweetsearch.properties_ into ${xd.home}/config and fire up the server. See link:Getting-Started[Getting Started] to learn how to start the Spring XD server. 
+Simply drop _feed.xml_ into the _modules/source_ directory and add the dependencies to the lib directory. For now, all module dependencies need to be added to ${xd.home}/lib. Future versions of Spring XD will provide a more elegant module packaging approach. Copy the following jars from your gradle cache to ${xd.home}/lib:
+
+    spring-integration-feed-3.0.0.M2.jar
+    jdom-1.0.jar
+    rome-1.0.0.jar
+    rome-fetcher-1.0.0.jar
+
+fire up the server. See link:Getting-Started[Getting Started] to learn how to start the Spring XD server. 
 
 ==== Test the deployed module
-Once the XD server is running, create a stream to test it out. This stream will write tweets containing the word "java" to the XD log:
+Once the XD server is running, create a stream to test it out. This stream will write SyndEntry objects to the XD log:
 
-    $ curl -d "tweetsearch --query=java | log" http://localhost:8080/streams/javasearch
+    $ curl -d "feed | log" http://localhost:8080/streams/feedtest
 
 You should start seeing messages like the following in the container console window:
 
-   WARN logger.javasearch: org.springframework.social.twitter.api.Tweet@7db81d4f
+   WARN logger.feedtest: SyndEntryImpl.contributors=[]
+SyndEntryImpl.contents=[]
+SyndEntryImpl.updatedDate=null
+SyndEntryImpl.link=http://www.bbc.co.uk/news/uk-22850006#sa-ns_mchannel=rss&ns_source=PublicRSS20-sa
+SyndEntryImpl.titleEx.value=VIDEO: Queen visits Prince Philip in hospital
+...
 
-As noted before, logging the Tweet domain object directly isn't much to look at. To make it prettier, create a link:Creating-a-Processor-Module[processor] module to further transform the tweet or modify this module to convert the tweet to JSON or String before sending the message to the _output_ channel.
+As you can see, the _SyndEntryImpl_ toString is fairly verbose. To make the output more concise, create a link:Creating-a-Processor-Module[processor] module to further transform the SyndEntry or consider converting the entry to JSON and using the link:Processors[JSON Field Extractor] to send a single attribute value to the output channel.
