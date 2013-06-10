@@ -98,9 +98,15 @@ Some platforms, such as linux, send status messages to `stderr`. The tail module
 [[twittersearch]]
 ==== Twitter Search
 
-The twittersearch source has one option
+The twittersearch source has three required parameters
 
 query:: The query that will be run against Twitter *(required)*
+
+consumerKey:: An application consumer key issued by twitter
+
+consumerSecret:: The secret corresponding to the `consumerKey` 
+
+To get a `consumerKey` and `consumerSecret` you need to register a twitter application. If you don't already have one set up, you can create an app at the https://dev.twitter.com/apps[Twitter Developers] site to get these credentials.
 
 To create a stream definition in the server post using curl
 
