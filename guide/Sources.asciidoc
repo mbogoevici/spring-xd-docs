@@ -257,7 +257,7 @@ The following examples all use `echo` to send data to `netcat` which sends the d
 
 The echo options `-en` allows echo to interpret escape sequences and not send a newline.
 
-====== CRLF Decoder
+===== CRLF Decoder
 
     $ curl -X POST -d "tcp | file" http://localhost:8080/streams/tcptest
 
@@ -269,7 +269,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest
 
-====== LF Decoder
+===== LF Decoder
 
      $ curl -X POST -d "tcp --port=1235 --decoder=LF | file" http://localhost:8080/streams/tcptest2
 
@@ -277,7 +277,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest2
 
-====== NULL Decoder
+===== NULL Decoder
 
      $ curl -X POST -d "tcp --port=1236 --decoder=NULL | file" http://localhost:8080/streams/tcptest3
 
@@ -285,7 +285,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest3
 
-====== STXETX Decoder
+===== STXETX Decoder
 
      $ curl -X POST -d "tcp --port=1237 --decoder=STXETX | file" http://localhost:8080/streams/tcptest4
 
@@ -293,7 +293,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest4
 
-====== RAW Decoder
+===== RAW Decoder
 
      $ curl -X POST -d "tcp --port=1238 --decoder=RAW | file" http://localhost:8080/streams/tcptest5
 
@@ -301,7 +301,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest5
 
-====== L1 Decoder
+===== L1 Decoder
 
      $ curl -X POST -d "tcp --port=1239 --decoder=L1 | file" http://localhost:8080/streams/tcptest6
 
@@ -309,7 +309,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest6
 
-====== L2 Decoder
+===== L2 Decoder
 
      $ curl -X POST -d "tcp --port=1240 --decoder=L2 | file" http://localhost:8080/streams/tcptest7
 
@@ -317,7 +317,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest7
 
-====== L4 Decoder
+===== L4 Decoder
 
      $ curl -X POST -d "tcp --port=1241 --decoder=L4 | file" http://localhost:8080/streams/tcptest8
 
@@ -325,7 +325,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest8
 
-====== Binary Data Example
+===== Binary Data Example
 
      $ curl -X POST -d "tcp --port=1242 --decoder=L1 | file --binary=true " http://localhost:8080/streams/tcptest9
 
