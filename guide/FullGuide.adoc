@@ -66,21 +66,22 @@ include::Tuples.asciidoc[]
 = Appendices
 [[installing-hadoop]]
 [appendix]
-= Installing Hadoop
+== Installing Hadoop
 include::Hadoop-Installation.asciidoc[]
 
-[[creating-custom-modules]]
+//[[creating-custom-modules]]
 [appendix]
-= Creating Custom Modules
-
+//== Creating Custom Modules
 [[creating-a-source-module]]
 == Creating a Source Module
 include::Creating-a-Source-Module.asciidoc[]
 
+[appendix]
 [[creating-a-processor-module]]
 == Creating a Processor Module
 include::Creating-a-Processor-Module.asciidoc[]
 
+[appendix]
 [[creating-a-sink-module]]
 == Creating a Sink Module
 include::Creating-a-Sink-Module.asciidoc[]

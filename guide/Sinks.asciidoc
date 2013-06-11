@@ -168,7 +168,7 @@ L2:: data preceded by a two byte (unsigned) length field (up to 2^16^-1 bytes)
 L4:: data preceded by a four byte (signed) length field (up to 2^31^-1 bytes)
 
 
-==== An Additional Example
+===== An Additional Example
 
 Start netcat in the background and redirect the output to a file `foo`
 
