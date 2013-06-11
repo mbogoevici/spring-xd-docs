@@ -50,7 +50,7 @@ The `file` sink uses the stream name as the default name for the file it creates
   $ less /tmp/xd/output/myfilestream
   hello
 
-You can of course cutomize the behavior. For example
+You can cutomize the behavior and specify the `name` and `dir` properties of the output file. For example
 
   $ curl -d "http --port=8000 | file --name=myfile --dir=/some/custom/directory" http://localhost:8080/streams/otherfilestream
 
