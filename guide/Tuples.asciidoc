@@ -2,6 +2,8 @@
 
 The Tuple class is a central data structure in Spring XD.  It is an ordered list of values that can be retrieved by name or by index.  Tuples are created by a TupleBuilder and are immutable.  The values that are stored can be of any type and null values are allowed.  
 
+The underlying Message class that moves data from one processing step to the next can have an arbitrary data type as its payload.  Instead of creating a custom Java class that encapsulates the properties of what is read or set in each processing step, the Tuple class can be used instead.  Processing steps can be developed that read data from specific named values and write data to specific named values.  The M1 release does not make extensive use of the Tuple class, this is planned for M2.
+
 There are accessor methods that perform type conversion to the basic primitive types as well as BigDecimal and Date.  This avoids you from having to cast the values to specific types.  Insteam you can rely on the Tuple's type conversion infastructure to perform the conversion.   
 
 The Tuple's types conversion is performed by Spring's http://static.springsource.org/spring/docs/3.0.x/reference/validation.html#core-convert[Type Conversion Infrastructure] which supports commonly encountered type conversions and is extensible.  
