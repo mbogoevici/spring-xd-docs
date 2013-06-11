@@ -16,6 +16,7 @@ link:Taps[Taps] +
 link:Analytics[Analytics] +
 link:DSL-Reference[DSL Reference] +
 link:Tuples[Tuples] +
+link:Samples[Samples] +
 --
 link:Hadoop-Installation[Appendix A: Installing Hadoop] +
 link:Creating-a-Source-Module[Appendix B: Creating a Source Module]
