@@ -1,6 +1,6 @@
 === Introduction
 This section will cover the processors available out-of-the-box with Spring XD.  As a prerequisite, start the XD Container
-as instructed in the link:Getting-Started[Getting Started] page.
+as instructed in the link:Getting-Started#getting-started[Getting Started] page.
 
 The Processors covered are
 
@@ -10,11 +10,11 @@ The Processors covered are
 * <<json-field-extractor, JSON Field Extractor>>
 * <<script, Script>>
 
-See the section link:Creating-a-Processor-Module[Creating a Processor Module] for information on how to create custom processor modules.
+See the section link:Creating-a-Processor-Module#creating-a-processor-module[Creating a Processor Module] for information on how to create custom processor modules.
 
 [[filter]]
 ==== Filter
-Use the filter module in a link:Streams[stream] to determine whether a Message should be passed to the output channel.
+Use the filter module in a link:Streams#streams[stream] to determine whether a Message should be passed to the output channel.
 
 ===== Filter with SpEL expression
 The simplest way to use the filter processor is to pass a SpEL expression when creating the stream. The expression should evaluate the message and return true or false.  For example:
@@ -48,7 +48,7 @@ Alternatively, if you send a different _firstName_, you shouldn't see the log en
 
 [[transform]]
 ==== Transform
-Use the transform module in a link:Streams[stream] to convert a Message's content or structure.
+Use the transform module in a link:Streams#streams[stream] to convert a Message's content or structure.
 
 ===== Transform with SpEL expression
 The simplest way to use the transform processor is to pass a SpEL expression when creating the stream. The expression should return the modified message or payload.  For example:

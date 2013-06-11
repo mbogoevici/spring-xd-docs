@@ -10,7 +10,7 @@ We'll look at the following metrics
 * <<rich-gauge,Rich Gauge>>
 
 
-Metrics can be used directly in place of a sink just as if you were creating any other link:Streams[stream], but you can also analyse data from an existing stream using a link:Taps[Tap]. We'll look at some examples of of using metrics with taps in the following sections. As a prerequisite start the XD Container as instructed in the link:Getting%20Started[Getting Started] page. 
+Metrics can be used directly in place of a sink just as if you were creating any other link:Streams#streams[stream], but you can also analyse data from an existing stream using a link:Taps#taps[tap]. We'll look at some examples of of using metrics with taps in the following sections. As a prerequisite start the XD Container as instructed in the link:Getting-Started#getting-started[Getting Started] page. 
 
 [[counter]]
 === Counter

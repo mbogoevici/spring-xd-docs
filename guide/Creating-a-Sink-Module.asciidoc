@@ -1,8 +1,8 @@
 === Introduction
 
-As outlined in the link:Modules[modules] document, XD currently supports 3 types of modules: source, sink, and processor. This document walks through creation of a custom sink module.
+As outlined in the link:Modules#modules[modules] document, XD currently supports 3 types of modules: source, sink, and processor. This document walks through creation of a custom sink module.
 
-The last module in a link:Streams[stream] is always a sink. Sink modules are built with Spring Integration and are typically very fine-grained.  A module of type _sink_ listens on a channel named _input_ and is responsible for outputting received messages to an external resource to terminate the stream.
+The last module in a link:Streams#streams[stream] is always a sink. Sink modules are built with Spring Integration and are typically very fine-grained.  A module of type _sink_ listens on a channel named _input_ and is responsible for outputting received messages to an external resource to terminate the stream.
 
 Spring Integration provides a number of adapters out of the box to support various transports, such as JMS, File, HTTP, Web Services, Mail, and more. You can typically create a sink module that uses these outbound channel adapters by writing just a single Spring application context file.
 
@@ -43,7 +43,7 @@ The adapter is configured to listen on a channel named _input_. The name _input_
 NOTE: By default, the adapter uses a _StringRedisTemplate_. Therefore, this module will store all payloads directly as Strings. Create a custom _RedisTemplate_ with different value Serializers to serialize other forms of data like Java objects to the Redis collection.
 
 ==== Make the module configurable
-Users may want to specify a different Redis server or key to use for storing data. Spring XD will automatically make a PropertyPlaceholderConfigurer available to your application context. You can simply reference property names and users can then pass in values when creating a link:Streams[stream] using the DSL
+Users may want to specify a different Redis server or key to use for storing data. Spring XD will automatically make a PropertyPlaceholderConfigurer available to your application context. You can simply reference property names and users can then pass in values when creating a link:Streams#streams[stream] using the DSL
 
 [source,xml]
 ----
@@ -161,7 +161,7 @@ public class RedisStoreSinkModuleTest {
 The test will load an Application Context using our redis-store and test context files. It will fail if an item is not placed in the Redis list within 5 seconds.
 
 ===== Run the test
-The test requires a running Redis server. See link:Getting-Started[Getting Started] for information on installing and starting Redis.
+The test requires a running Redis server. See link:Getting-Started#getting-started[Getting Started] for information on installing and starting Redis.
 
 You now have a way to build and test your new module independently. Time to deploy to Spring XD!
 
@@ -173,14 +173,14 @@ Spring XD looks for modules in the ${xd.home}/modules directory. The modules dir
       modules/sink
       modules/source
 
-Simply drop _redis-store.xml_ into the _modules/sink_ directory and fire up the server. See link:Getting-Started[Getting Started] to learn how to start the Spring XD server. 
+Simply drop _redis-store.xml_ into the _modules/sink_ directory and fire up the server. See link:Getting-Started#getting-started[Getting Started] to learn how to start the Spring XD server. 
 
 ==== Test the deployed module
 Once the XD server is running, create a stream to test it out. This stream will write tweets containing the word "java" to Redis as a JSON string:
 
     $ curl -d "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=java | redis-store --key=javatweets" http://localhost:8080/streams/javasearch
 
-Note that you need to have a consumer key and secret to use the `twittersearch` module. See the description in the link:Streams[streams] section for more information.
+Note that you need to have a consumer key and secret to use the `twittersearch` module. See the description in the link:Streams#streams[streams] section for more information.
 
 Fire up the redis-cli and verify that tweets are being stored:
 

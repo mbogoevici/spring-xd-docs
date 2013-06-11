@@ -1,7 +1,7 @@
 === Introduction
 
 
-In Spring XD, a basic stream defines the ingestion of event driven data from a _source_ to a _sink_ that passes through any number of _processors_.  Stream processing is performed inside the XD Containers and the deployment of stream definitions to containers is done via the XD Admin Server.  The link:Getting-Started[Getting Started] section shows you how to start these servers.
+In Spring XD, a basic stream defines the ingestion of event driven data from a _source_ to a _sink_ that passes through any number of _processors_.  Stream processing is performed inside the XD Containers and the deployment of stream definitions to containers is done via the XD Admin Server.  The link:Getting-Started#getting-started[Getting Started] section shows you how to start these servers.
 
 Sources, sinks and processors are predefined configurations of a _module_.  Module definitions are found in the `xd/modules` directory.  footnote:[Using the filesystem is just one possible way of storing module defintions.  Other backends will be supported in the future, e.g. Redis.].  Modules definitions are standard Spring configuration files that use existing Spring classes, such as http://static.springsource.org/spring-integration/reference/htmlsingle/#spring-integration-adapters[Input/Output adapters] and http://static.springsource.org/spring-integration/reference/htmlsingle/#transformer[Transformers] from Spring Integration that support general http://www.eaipatterns.com/[Enterprise Integration Patterns].
 
@@ -60,7 +60,7 @@ and the stream will then funnel the data from the http source to the output log 
   15:08:01,676  WARN ThreadPoolTaskScheduler-1 logger.myhttpteststream:141 - hello
   15:08:12,520  WARN ThreadPoolTaskScheduler-1 logger.myhttpteststream:141 - goodbye
 
-Of course, we could also change the sink implementation. You could pipe the output to a file (`file`), to hadoop (`hdfs`) or to any of the other sink modules which are provided. You can also define your own link:Modules[modules].
+Of course, we could also change the sink implementation. You could pipe the output to a file (`file`), to hadoop (`hdfs`) or to any of the other sink modules which are provided. You can also define your own link:Modules#modules[modules].
 
 === Simple Stream Processing
 
@@ -80,7 +80,7 @@ Will result in an uppercased 'hello' in the log
 
   15:18:21,345  WARN ThreadPoolTaskScheduler-1 logger.myhttpteststream:141 - HELLO
 
-See the link:Processors[Processors] section for more information.
+See the link:Processors#processors[Processors] section for more information.
 
 === DSL Syntax
 
@@ -88,7 +88,7 @@ In the examples above, we connected a source to a sink using the pipe symbol `|`
 
   $ curl -d "http --port=8000 | log" http://localhost:8080/streams/myhttpteststream
 
-If you know a bit about Spring configuration files, you can inspect the module definition to see which properties it exposes. Alternatively, you can read more in the link:Sources[source] and link:Sinks[sink] documentation.
+If you know a bit about Spring configuration files, you can inspect the module definition to see which properties it exposes. Alternatively, you can read more in the link:Sources#sources[source] and link:Sinks#sinks[sink] documentation.
 
 The Spring XD M2 release will provide a DSL for non-linear flows, e.g. a directed graph.
 

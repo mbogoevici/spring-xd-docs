@@ -80,7 +80,7 @@ Try a few commands with `hadoop dfs` to make sure the basic system works
   $ bin/hadoop dfs -rmr /test
   Deleted hdfs://localhost:9000/test
  
-At this point you should be good to create a Spring XD link:Streams[stream] using a Hadoop link:Sinks[sink].
+At this point you should be good to create a Spring XD link:Streams#streams[stream] using a Hadoop link:Sinks#sinks[sink].
  
 
   

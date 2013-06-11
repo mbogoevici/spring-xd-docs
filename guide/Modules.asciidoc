@@ -1,6 +1,6 @@
 === Introduction
 
-The XD runtime environment supports data ingestion by allowing users to define link:Streams[streams]. Streams are composed of _modules_ which encapsulate a unit of work into a reusable component.
+The XD runtime environment supports data ingestion by allowing users to define link:Streams#streams[streams]. Streams are composed of _modules_ which encapsulate a unit of work into a reusable component.
 
 Modules are categorized by type, typically representing the role or function of the module. Current XD module types include _source_, _sink_, and _processor_ which indicate how they modules may be composed in a stream. Specifically, a source polls an external resource, or is triggered by an event and only provides an output. The first module in a stream is always a source. A processor performs some type of transformation or business logic and provides an input and one or more outputs. A sink provides only an input and outputs data to an external resource to terminate the stream.
 
@@ -9,7 +9,7 @@ XD comes with a number of modules used for assembling streams which perform comm
 However, if you are interested in extending XD with your own modules, some knowledge of Spring, Spring Integration, and Spring Batch is essential. The remainder of this document assumes the reader has some familiarity with these topics.
 
 === Creating a Module
-This section provides details on how to write and register custom modules. For a quick start, dive into the examples of creating link:Creating-a-Source-Module[source], link:Creating-a-Processor-Module[processor], and link:Creating-a-Sink-Module[sink] modules.
+This section provides details on how to write and register custom modules. For a quick start, dive into the examples of creating link:Creating-a-Source-Module#creating-a-source-module[source], link:Creating-a-Processor-Module#creating-a-processor-module[processor], and link:Creating-a-Sink-Module#creating-a-sink-module[sink] modules.
 
 A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/Module.java[Module] has the following required attributes:
 

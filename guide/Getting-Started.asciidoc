@@ -15,7 +15,7 @@ $ cd spring-xd
 
 === Install Spring XD
 
-Spring XD can be run in two different modes. There's a single-node runtime option for testing and development, and there's a distributed runtime which supports distribution of processing tasks across multiple nodes. This document will get you up and running quickly with a single-node runtime. See link:Running-Distributed-Mode[Running Distributed Mode] for details on setting up a distributed runtime.
+Spring XD can be run in two different modes. There's a single-node runtime option for testing and development, and there's a distributed runtime which supports distribution of processing tasks across multiple nodes. This document will get you up and running quickly with a single-node runtime. See link:Running-Distributed-Mode#running-distributed-mode[Running Distributed Mode] for details on setting up a distributed runtime.
 
 
 === Start the Runtime
@@ -41,8 +41,8 @@ This defines a stream named `ticktock` based off the DSL expression `time | log`
   17:26:18,774  WARN ThreadPoolTaskScheduler-1 logger.ticktock:141 - Thu May 23 17:26:18 EDT 2013
 
 === Explore Spring XD
-Learn about the modules available in Spring XD in the link:Sources[Sources], link:Processors[Processors], and link:Sinks[Sinks] sections of the documentation. 
+Learn about the modules available in Spring XD in the link:Sources#sources[Sources], link:Processors#processors[Processors], and link:Sinks#sinks[Sinks] sections of the documentation. 
 
-Don't see what you're looking for? Create a link:Creating-Custom-Modules[custom module] (and then consider link:Contribute[contributing] it back to Spring XD). 
+Don't see what you're looking for? Create a link:Creating-Custom-Modules#creating-custom-modules[custom module] (and then consider link:https://github.com/SpringSource/spring-xd/wiki/Contribute[contributing] it back to Spring XD). 
 
-Want to add some analytics to your stream? Check out the link:Taps[Taps] and link:Analytics[Analytics] sections. 
+Want to add some analytics to your stream? Check out the link:Taps#taps[Taps] and link:Analytics#analytics[Analytics] sections. 

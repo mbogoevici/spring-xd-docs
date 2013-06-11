@@ -1,6 +1,6 @@
 === Introduction
 In this section we will show some variations on input sources.  As a prerequisite start the XD Container
-as instructed in the link:Getting-Started[Getting Started] page.
+as instructed in the link:Getting-Started#getting-started[Getting Started] page.
 
 The Sources covered are
 
@@ -11,7 +11,7 @@ The Sources covered are
 * <<syslog, Syslog>>
 * <<tcp, TCP>>
 
-Future releases will provide support for RabbitMQ, JMS, and other currently available Spring Integration Adatpers.  For information on how to adapt an existing Spring Integration Adapter for use in Spring XD see the section link:Creating-a-Source-Module[Creating a Source Module].
+Future releases will provide support for RabbitMQ, JMS, and other currently available Spring Integration Adatpers.  For information on how to adapt an existing Spring Integration Adapter for use in Spring XD see the section link:Creating-a-Source-Module#creating-a-source-module[Creating a Source Module].
 
 [[http]]
 ==== HTTP

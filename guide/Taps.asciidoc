@@ -23,7 +23,7 @@ would tap into the stream's data after the filter has been applied but before th
 
 A primary use case is to perform realtime analytics at the same time as data is being ingested via its primary stream. For example, consider a Stream of data that is consuming Twitter search results and writing them to HDFS. A tap can be created before the data is written to HDFS, and the data piped from the tap to a counter that correspond to the number of times specific hashtags were mentioned in the tweets.  
 
-You'll find specific examples of creating taps on existing streams in the link:Analytics[Analytics] section.
+You'll find specific examples of creating taps on existing streams in the link:Analytics#analytics[Analytics] section.
 
 === Tap Lifecycle
 

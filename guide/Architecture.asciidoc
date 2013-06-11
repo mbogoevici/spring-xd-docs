@@ -137,5 +137,5 @@ The creation and execution of Jobs is not part of the M1 release and will be inc
 
 === Taps
 
-Taps provide a non-invasive way to consume the data that is being processed by either a Stream or a Job, much like a real time telephone wire tap lets you eavesdrop on telephone conversations. Taps are recommended as way to collect metrics and perform analytics on a Stream of data. See the section link:Taps[Taps] for more information.
+Taps provide a non-invasive way to consume the data that is being processed by either a Stream or a Job, much like a real time telephone wire tap lets you eavesdrop on telephone conversations. Taps are recommended as way to collect metrics and perform analytics on a Stream of data. See the section link:Taps#taps[Taps] for more information.
 

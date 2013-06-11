@@ -1,7 +1,9 @@
+// Note: This file is for online view only (not included in full guide). Keep content to a minimum.
+
 Consult these step-by-step guides to write your own modules for Spring XD:
 
-=== link:Creating-a-Source-Module[Source Modules]
+== link:Creating-a-Source-Module#creating-a-source-module[Source Modules]
 
-=== link:Creating-a-Processor-Module[Processor Modules]
+== link:Creating-a-Processor-Module#creating-a-processor-module[Processor Modules]
 
-=== link:Creating-a-Sink-Module[Sink Modules]
+== link:Creating-a-Sink-Module#creating-a-sink-module[Sink Modules]

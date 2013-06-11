@@ -1,5 +1,5 @@
 === Introduction
-The Spring XD distributed runtime (DIRT) supports distribution of processing tasks across multiple nodes. See link:Getting-Started[Getting Started] for information on running Spring XD as a single node.
+The Spring XD distributed runtime (DIRT) supports distribution of processing tasks across multiple nodes. See link:Getting-Started#getting-started[Getting Started] for information on running Spring XD as a single node.
 
 The distributed runtime uses http://redis.io/[*Redis*] so we'll look at installing and running that first.
 

@@ -1,6 +1,6 @@
 === Introduction
 In this section we will show some variations on output sinks.  As a prerequisite start the XD Container
-as instructed in the link:Getting-Started[Getting Started] page.
+as instructed in the link:Getting-Started#getting-started[Getting Started] page.
 
 The Sinks covered are
 
@@ -14,7 +14,7 @@ The Sinks covered are
 
 * <<gemfire,GemFire Server>>
 
-See the section link:Creating-a-Sink-Module[Creating a Sink Module] for information on how to create sink modules using other Spring Integration Adapters.
+See the section link:Creating-a-Sink-Module#creating-a-sink-module[Creating a Sink Module] for information on how to create sink modules using other Spring Integration Adapters.
 
 [[log_sinks]]
 
@@ -37,7 +37,7 @@ The logger name is the sink name prefixed with the string "logger.". The sink na
 [[file_sinks]]
 ==== File Sink
 
-Another simple option is to stream data to a file on the host OS. This can be done using the `file` sink module to create a link:Streams[stream].
+Another simple option is to stream data to a file on the host OS. This can be done using the `file` sink module to create a link:Streams#streams[stream].
 
   $ curl -d "http --port=8000 | file" http://localhost:8080/streams/myfilestream
 
@@ -58,9 +58,9 @@ You can of course cutomize the behavior. For example
 ==== Hadoop (HDFS)
 
 
-First install and start Hadoop as described in our link:Hadoop-Installation[separate guide]. It's assumed HDFS is running on port 9000 (the default).
+First install and start Hadoop as described in our link:Hadoop-Installation#hadoop-installation[separate guide]. It's assumed HDFS is running on port 9000 (the default).
 
-You should then be able to use the `hdfs` sink when creating a link:Streams[stream]
+You should then be able to use the `hdfs` sink when creating a link:Streams#streams[stream]
 
   $ curl -d "http --port=8000 | hdfs --rollover=10" http://localhost:8080/streams/myhdfsstream
 

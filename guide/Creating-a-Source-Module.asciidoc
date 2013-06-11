@@ -1,8 +1,8 @@
 === Introduction
 
-As outlined in the link:Modules[modules] document, XD currently supports 3 types of modules: source, sink, and processor. This document walks through creation of a custom source module.
+As outlined in the link:Modules#modules[modules] document, XD currently supports 3 types of modules: source, sink, and processor. This document walks through creation of a custom source module.
 
-The first module in a link:Streams[stream] is always a source. Source modules are built with Spring Integration and are typically very fine-grained. A module of type _source_ is responsible for placing a message on a channel named _output_. This message can then be consumed by the other processor and sink modules in the stream. A source module is typically fed data by an inbound channel adapter, configured with a poller.
+The first module in a link:Streams#streams[stream] is always a source. Source modules are built with Spring Integration and are typically very fine-grained. A module of type _source_ is responsible for placing a message on a channel named _output_. This message can then be consumed by the other processor and sink modules in the stream. A source module is typically fed data by an inbound channel adapter, configured with a poller.
 
 Spring Integration provides a number of adapters out of the box to support various transports, such as JMS, File, HTTP, Web Services, Mail, and more. You can typically create a source module that uses these inbound channel adapters by writing just a single Spring application context file.
 
@@ -36,7 +36,7 @@ Create the Inbound Channel Adapter in a file called _feed.xml_:
 The adapter is configured to poll the BBC News Feed every 5 seconds.  Once an item is found, it will create a message with a SyndEntryImpl domain object payload and write it to a message channel called _output_. The name _output_ should be used by convention so that your source module can easily be combined with any processor and sink module in a stream.
 
 ==== Make the module configurable
-Users may want to pull data from feeds other than BBC News. Spring XD will automatically make a PropertyPlaceholderConfigurer available to your application context. You can simply reference property names and users can then pass in values when creating a link:Streams[stream] using the DSL.
+Users may want to pull data from feeds other than BBC News. Spring XD will automatically make a PropertyPlaceholderConfigurer available to your application context. You can simply reference property names and users can then pass in values when creating a link:Streams#streams[stream] using the DSL.
 
 [source,xml]
 ----
@@ -175,7 +175,7 @@ Simply drop _feed.xml_ into the _modules/source_ directory and add the dependenc
     rome-1.0.0.jar
     rome-fetcher-1.0.0.jar
 
-Now fire up the server. See link:Getting-Started[Getting Started] to learn how to start the Spring XD server. 
+Now fire up the server. See link:Getting-Started#getting-started[Getting Started] to learn how to start the Spring XD server. 
 
 ==== Test the deployed module
 Once the XD server is running, create a stream to test it out. This stream will write SyndEntry objects to the XD log:
@@ -191,4 +191,4 @@ SyndEntryImpl.link=http://www.bbc.co.uk/news/uk-22850006#sa-ns_mchannel=rss&ns_s
 SyndEntryImpl.titleEx.value=VIDEO: Queen visits Prince Philip in hospital
 ...
 
-As you can see, the _SyndEntryImpl_ toString is fairly verbose. To make the output more concise, create a link:Creating-a-Processor-Module[processor] module to further transform the SyndEntry or consider converting the entry to JSON and using the link:Processors[JSON Field Extractor] to send a single attribute value to the output channel.
+As you can see, the _SyndEntryImpl_ toString is fairly verbose. To make the output more concise, create a link:Creating-a-Processor-Module#creating-a-processor-module[processor] module to further transform the SyndEntry or consider converting the entry to JSON and using the link:Processors#json-field-extractor[JSON Field Extractor] to send a single attribute value to the output channel.

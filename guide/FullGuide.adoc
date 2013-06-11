@@ -11,24 +11,31 @@ ifndef::host-github[:ext-relative: {outfilesuffix}]
 :doctype: book
 
 = Reference Guide
+[[introduction]]
 == Introduction
 include::Introduction.asciidoc[]
 
+[[getting-started]]
 == Getting Started
 include::Getting-Started.asciidoc[]
 
+[[running-distributed-mode]]
 == Running in Distributed Mode
 include::Running-Distributed-Mode.asciidoc[]
 
+[[architecture]]
 == Architecture
 include::Architecture.asciidoc[]
 
+[[streams]]
 == Streams
 include::Streams.asciidoc[]
 
+[[modules]]
 == Modules
 include::Modules.asciidoc[]
 
+[[sources]]
 == Sources
 include::Sources.asciidoc[]
 
@@ -36,28 +43,46 @@ include::Sources.asciidoc[]
 == Processors
 include::Processors.asciidoc[]
 
+[[sinks]]
 == Sinks
 include::Sinks.asciidoc[]
 
+[[taps]]
 == Taps
 include::Taps.asciidoc[]
 
+[[analytics]]
 == Analytics
 include::Analytics.asciidoc[]
 
+[[dsl-reference]]
 == DSL Reference
 include::DSL-Reference.asciidoc[]
 
+[[tuples]]
 == Tuples
 include::Tuples.asciidoc[]
 
 = Appendices
+[[installing-hadoop]]
 [appendix]
 = Installing Hadoop
 include::Hadoop-Installation.asciidoc[]
 
+[[creating-custom-modules]]
 [appendix]
 = Creating Custom Modules
-include::Creating-Custom-Modules.asciidoc[]
+
+[[creating-a-source-module]]
+== Creating a Source Module
+include::Creating-a-Source-Module.asciidoc[]
+
+[[creating-a-processor-module]]
+== Creating a Processor Module
+include::Creating-a-Processor-Module.asciidoc[]
+
+[[creating-a-sink-module]]
+== Creating a Sink Module
+include::Creating-a-Sink-Module.asciidoc[]
 
 
