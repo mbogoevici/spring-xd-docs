@@ -13,6 +13,8 @@ Unzip the distribution. This will yield the installation directory *spring-xd*. 
 $ cd spring-xd
 ----
 
+Set the environment variable `XD_HOME` to the installation directory `<root-install-dir>\spring-xd\xd`
+
 === Install Spring XD
 
 Spring XD can be run in two different modes. There's a single-node runtime option for testing and development, and there's a distributed runtime which supports distribution of processing tasks across multiple nodes. This document will get you up and running quickly with a single-node runtime. See link:Running-Distributed-Mode#running-distributed-mode[Running Distributed Mode] for details on setting up a distributed runtime.
@@ -20,7 +22,7 @@ Spring XD can be run in two different modes. There's a single-node runtime optio
 
 === Start the Runtime
 
-The single node option is the easiest to get started with. It runs everything you need in a single process. To start it, you just need to run the following command
+The single node option is the easiest to get started with. It runs everything you need in a single process. To start it, you just need to `cd` to the `xd` directory and run the following command
 
 [source,sh]
 ----
@@ -34,11 +36,19 @@ In Spring XD, a basic stream defines the ingestion of event driven data from a s
 
   $ curl -d "time | log" http://localhost:8080/streams/ticktock
 
-This defines a stream named `ticktock` based off the DSL expression `time | log`.  The DSL uses the "pipe" symbol `|`, to connect a source to a sink. The stream server finds the `time` and `log` definitions in the modules directory and uses them to setup the stream.  In this simple example, the time source simply sends the current time as a message each second, and the log sink outputs it using the logging framework.
+This defines a stream named `ticktock` based off the DSL expression `time | log`.  The DSL uses the "pipe" symbol `|`, to connect a source to a sink. The stream server finds the `time` and `log` definitions in the modules directory and uses them to setup the stream.  In this simple example, the time source simply sends the current time as a message each second, and the log sink outputs it using the logging framework at the WARN logging level.  In the shell where you started the server, you will see log output similar to that listed below
 
-  processing module 'Module [name=log, type=sink]' from group 'ticktock' with index: 1
-  processing module 'Module [name=time, type=source]' from group 'ticktock' with index: 0
-  17:26:18,774  WARN ThreadPoolTaskScheduler-1 logger.ticktock:141 - Thu May 23 17:26:18 EDT 2013
+  13:09:53,812  INFO http-bio-8080-exec-1 module.SimpleModule:109 - started module: Module [name=log, type=sink]
+  13:09:53,813  INFO http-bio-8080-exec-1 module.ModuleDeployer:111 - launched sink module: ticktock:log:1
+  13:09:53,911  INFO http-bio-8080-exec-1 module.SimpleModule:109 - started module: Module [name=time, type=source]
+  13:09:53,912  INFO http-bio-8080-exec-1 module.ModuleDeployer:111 - launched source module: ticktock:time:0
+  13:09:53,945  WARN task-scheduler-1 logger.ticktock:141 - 2013-06-11 13:09:53
+  13:09:54,948  WARN task-scheduler-1 logger.ticktock:141 - 2013-06-11 13:09:54
+  13:09:55,949  WARN task-scheduler-2 logger.ticktock:141 - 2013-06-11 13:09:55
+
+To delete the stream, send a `HTTP DELETE` request to the URL you used to create the stream
+
+  $ curl -X DELETE http://localhost:8080/streams/ticktock
 
 === Explore Spring XD
 Learn about the modules available in Spring XD in the link:Sources#sources[Sources], link:Processors#processors[Processors], and link:Sinks#sinks[Sinks] sections of the documentation. 
