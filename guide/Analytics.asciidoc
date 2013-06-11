@@ -1,6 +1,6 @@
 === Introdution
 
-Spring XD Analytics provides support for real-time analysis of data using metrics such as counters and gauges.
+Spring XD Analytics provides support for real-time analysis of data using metrics such as counters and gauges.  Spring XD intends to support a wide range of these metrics and analytical data structures as a general purpose class library that works with several backend storage technologies.
 
 We'll look at the following metrics
 
@@ -9,6 +9,7 @@ We'll look at the following metrics
 * <<gauge,Gauge>>
 * <<rich-gauge,Rich Gauge>>
 
+An in memory implementation and a Redis implementation are provided in M1.  Other metrics that will be provided in a future release are Aggregate Counters, Rate Counters, and Histograms.
 
 Metrics can be used directly in place of a sink just as if you were creating any other link:Streams#streams[stream], but you can also analyse data from an existing stream using a link:Taps#taps[tap]. We'll look at some examples of of using metrics with taps in the following sections. As a prerequisite start the XD Container as instructed in the link:Getting-Started#getting-started[Getting Started] page. 
 
