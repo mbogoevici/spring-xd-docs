@@ -1,4 +1,4 @@
-== Syslog ingestion into HDFS
+=== Syslog ingestion into HDFS
 
 In this section we will show a simple example on how to setup syslog ingestion from multiple hosts into HDFS.
 
