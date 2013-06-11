@@ -153,14 +153,14 @@ With the default retry configuration, the attempts will be made after 0, 2, 4, 8
 
 ===== Available Encoders
 
-====== Text Data
+.Text Data
 
 CRLF (default):: text terminated by carriage return (0x0d) followed by line feed (0x0a)
 LF:: text terminated by line feed (0x0a)
 NULL:: text terminated by a null byte (0x00)
 STXETX:: text preceded by an STX (0x02) and terminated by an ETX (0x03)
 
-====== Text and Binary Data
+.Text and Binary Data
 
 RAW:: no structure - the client indicates a complete message by closing the socket
 L1:: data preceded by a one byte (unsigned) length field (supports up to 255 bytes)
