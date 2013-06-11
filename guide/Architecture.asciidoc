@@ -56,7 +56,7 @@ Taps are used to process data in a non-invasive way as data is being processed b
 .Taps, Jobs, and Streams
 image::images/tap-jobs-streams.png[]
 
-[[streams]]
+[[architecture_streams]]
 ==== Streams
 
 The programming model for processing event streams in Spring XD is based on the well known http://www.eaipatterns.com/[Enterprise Integration Patterns] as implemented by components in the http://www.springsource.org/spring-integration[Spring Integration] project.  The programming model was designed to be easy to test components.
