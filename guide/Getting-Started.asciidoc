@@ -1,6 +1,5 @@
 === Requirements
 
-{asciidoctor-version}
 To get started, make sure your system has as a minimum  http://www.oracle.com/technetwork/java/javase/downloads/[*Java JDK 6*] or newer installed. *Java JDK 7* is recommended.
 
 === Download Spring XD
