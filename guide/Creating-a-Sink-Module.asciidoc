@@ -60,7 +60,7 @@ Users may want to specify a different Redis server or key to use for storing dat
 Now users can optionally pass _key_, _hostname_, and _port_ property values on stream creation. If not present, the specified defaults will be used.
 
 ==== Test the module locally
-This section covers setup of a local project containing some code for testing outside of an XD container. This step can be skipped if you prefer to test the module by <<deploy-module,deploying to Spring XD>>.
+This section covers setup of a local project containing some code for testing outside of an XD container. This step can be skipped if you prefer to test the module by <<deploy-module-sink,deploying to Spring XD>>.
 
 ===== Create a project
 The module can be tested by writing a Spring integration test to load the context file and validate that messages are stored in Redis. In order to write the test, you will need to create a project in an IDE such as STS, Eclipse, or IDEA. Eclipse will be used for this example.
@@ -165,7 +165,7 @@ The test requires a running Redis server. See link:Getting-Started#getting-start
 
 You now have a way to build and test your new module independently. Time to deploy to Spring XD!
 
-[[deploy-module]]
+[[deploy-module-sink]]
 ==== Deploy the module
 Spring XD looks for modules in the ${xd.home}/modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
 

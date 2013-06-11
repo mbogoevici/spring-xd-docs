@@ -49,7 +49,7 @@ Now users can optionally pass a _url_ property value on stream creation. If not 
 
 
 ==== Test the module locally
-This section covers setup of a local project containing some code for testing outside of an XD container. This step can be skipped if you prefer to test the module by <<deploy-module,deploying to Spring XD>>.
+This section covers setup of a local project containing some code for testing outside of an XD container. This step can be skipped if you prefer to test the module by <<deploy-module-source,deploying to Spring XD>>.
 
 ===== Create a project
 The module can be tested by writing a Spring integration test to load the context file and validate that news items are received. In order to write the test, you will need to create a project in an IDE such as STS, Eclipse, or IDEA. Eclipse will be used for this example.
@@ -160,7 +160,7 @@ The test will load an Application Context using our feed and test context files.
 
 You now have a way to build and test your new module independently. Time to deploy to Spring XD!
 
-[[deploy-module]]
+[[deploy-module-source]]
 ==== Deploy the module
 Spring XD looks for modules in the ${xd.home}/modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
 
