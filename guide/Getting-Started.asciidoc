@@ -43,6 +43,6 @@ This defines a stream named `ticktock` based off the DSL expression `time | log`
 === Explore Spring XD
 Learn about the modules available in Spring XD in the link:Sources#sources[Sources], link:Processors#processors[Processors], and link:Sinks#sinks[Sinks] sections of the documentation. 
 
-Don't see what you're looking for? Create a link:Creating-Custom-Modules#creating-custom-modules[custom module] (and then consider link:https://github.com/SpringSource/spring-xd/wiki/Contribute[contributing] it back to Spring XD). 
+Don't see what you're looking for? Create a custom module: link:Creating-a-Source-Module#creating-a-source-module[source], link:Creating-a-Processor-Module#creating-a-processor-module[processor] or link:Creating-a-Sink-Module#creating-a-sink-module[sink] (and then consider link:https://github.com/SpringSource/spring-xd/wiki/Contribute[contributing] it back to Spring XD). 
 
 Want to add some analytics to your stream? Check out the link:Taps#taps[Taps] and link:Analytics#analytics[Analytics] sections. 
