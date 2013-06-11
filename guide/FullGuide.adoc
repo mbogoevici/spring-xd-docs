@@ -6,6 +6,7 @@
 = Spring XD Guide
 Mark Fisher ; Mark Pollack ; David Turanski ; Gunnar Hillert ; Eric Bottard ; Gary Russell ; Ilayaperumal Gopinathan ; Jennifer Hickey ; Michael Minella ; Luke Taylor ; Thomas Risberg ; Winston Koh
 :appversion: 1.0 (wiki)
+ifndef::host-github[:ext-relative: {outfilesuffix}]
 {appversion}
 :doctype: book
 
