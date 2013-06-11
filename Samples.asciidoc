@@ -1,3 +1,5 @@
+== Syslog ingestion into HDFS
+
 In this section we will show a simple example on how to setup syslog ingestion from multiple hosts into HDFS.
 
 Create the streams with syslog as source and HDFS as sink (Please refer to link:Sources#sources[source] and link:Sinks#sinks[sink])
@@ -10,7 +12,7 @@ Please note for hdfs sink, set `rollover` parameter to a smaller value to avoid 
 
 Configure the external hosts’ syslog daemons forward their messages to the xd-container host’s UDP/TCP port (where the syslog-udp/syslog-tcp source module is deployed).
 
-=== A sample configuration using syslog-ng
+==== A sample configuration using syslog-ng
 
 Edit /etc/syslog-ng/syslog-ng.conf :
 
