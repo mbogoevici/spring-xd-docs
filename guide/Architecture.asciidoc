@@ -111,7 +111,7 @@ The payload of the incoming Message is passed as a string to the method process.
 http | transformer --expression=payload.toUpperCase() | file
 ----
 
-For more information on processing modules, refer to the section link:Processors[Processors]
+For more information on processing modules, refer to the section link:Processors#processors[Processors]
 
 ==== Stream Deployment
 
