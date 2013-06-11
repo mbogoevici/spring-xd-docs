@@ -22,7 +22,7 @@ Here's an example:
 
 Start by creating a data ingestion stream. Something like:
 
-   $ curl -d "twittersearch --query=spring | file --directory=/tweets/" http://localhost:8080/streams/springtweets
+   $ curl -d "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file --directory=/tweets/" http://localhost:8080/streams/springtweets
 
 Next, create a tap on the _springtweets_ stream that sets a message counter named _tweetcount_
 
@@ -81,7 +81,7 @@ counterName:: A key used to access the counter values. *(default: $\{fieldName\}
 
 To try this out, create a stream to ingest twitter feeds containing the word _spring_ and output to a file:
 
-   curl -d "twittersearch --query=spring | file" http://localhost:8080/streams/springtweets
+   curl -d "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file" http://localhost:8080/streams/springtweets
 
 Now create a tap for a field value counter:
 
