@@ -32,6 +32,7 @@ include::Modules.asciidoc[]
 == Sources
 include::Sources.asciidoc[]
 
+[[processors]]
 == Processors
 include::Processors.asciidoc[]
 
