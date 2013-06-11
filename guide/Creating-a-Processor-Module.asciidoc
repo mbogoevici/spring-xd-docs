@@ -6,7 +6,7 @@ One or more processors can be included in a link:Streams#streams[stream] definit
 
 Here we'll look at how to create and deploy a custom processor module to transform the input from an incoming `twittersearch`. The steps are essentially the same for any source though. Rather than using built-in functionality, we'll write a custom processor implementation class and wire it up using Spring Integration.
 
-==== Writing the Transformer Code
+=== Write the Transformer Code
 
 The tweet messages from `twittersearch` contain quite a lot of data (id, author, time and so on). The transformer we'll write will discard everything but the text content and output this as a string. The output messages from the `twittersearch` source are also strings, containing the tweet data as JSON. We first parse this into a map using Jackson library code, then extract the "text" field from the map.
 
@@ -37,7 +37,7 @@ public class TweetTransformer {
 
 ----
 
-==== Creating the module Application Context File
+=== Create the module Application Context File
 
 Create the following file as _tweettransformer.xml_:
 
@@ -62,11 +62,11 @@ Create the following file as _tweettransformer.xml_:
 </beans:beans>
 ----
 
-==== Deploying the Module
+=== Deploy the Module
 
 To deploy the module, you need to copy the _tweettransformer.xml_ file to the `${xd.home}/modules/processors` directory. We also need to make the custom module code available. Currently Spring XD looks for code in the jars it finds in the `${xd.home}/lib` directory. So create a jar with the `TweetTransformer` class in it (and the correct package structure) and drop it into `lib`.
 
-==== Testing the deployed module
+=== Test the deployed module
 
 Start the XD server and try creating a stream to test your processor:
 

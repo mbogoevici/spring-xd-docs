@@ -16,6 +16,9 @@ link:Taps[Taps] +
 link:Analytics[Analytics] +
 link:DSL-Reference[DSL Reference] +
 link:Tuples[Tuples] +
+--
 link:Hadoop-Installation[Appendix A: Installing Hadoop] +
-link:Creating-Custom-Modules[Appendix B: Creating Custom Modules]
+link:Creating-a-Source-Module[Appendix B: Creating a Source Module]
+link:Creating-a-Processor-Module[Appendix C: Creating a Processor Module]
+link:Creating-a-Sink-Module[Appendix D: Creating a Sink Module]
 ****

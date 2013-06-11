@@ -8,7 +8,7 @@ Spring Integration provides a number of adapters out of the box to support vario
 
 These steps will demonstrate how to create and deploy a source module using the Spring Integration Feed Inbound Channel Adapter.
 
-==== Create the module Application Context file
+=== Create the module Application Context file
 Create the Inbound Channel Adapter in a file called _feed.xml_:
 
 [source,xml]
@@ -48,10 +48,10 @@ Users may want to pull data from feeds other than BBC News. Spring XD will autom
 Now users can optionally pass a _url_ property value on stream creation. If not present, the specified default will be used.
 
 
-==== Test the module locally
+=== Test the module locally
 This section covers setup of a local project containing some code for testing outside of an XD container. This step can be skipped if you prefer to test the module by <<deploy-module-source,deploying to Spring XD>>.
 
-===== Create a project
+==== Create a project
 The module can be tested by writing a Spring integration test to load the context file and validate that news items are received. In order to write the test, you will need to create a project in an IDE such as STS, Eclipse, or IDEA. Eclipse will be used for this example.
 
 Create a _feed_ directory and add _feed.xml_ to _src/main/resources_. Add the following _build.gradle_ (or an equivalent _pom.xml_) to the root directory:
@@ -91,7 +91,7 @@ defaultTasks 'build'
 
 Run _gradle eclipse_ to generate the Eclipse project. Import the project into Eclipse.
 
-===== Create the Spring integration test
+==== Create the Spring integration test
 The main objective of the test is to ensure that news items are received once the module's Application Context is loaded. This can be tested by adding an Outbound Channel Adapter that will direct items to a POJO that can store them for validation.
 
 Add the following _src/test/resources/org/springframework/xd/samples/test-context.xml_:
@@ -161,7 +161,7 @@ The test will load an Application Context using our feed and test context files.
 You now have a way to build and test your new module independently. Time to deploy to Spring XD!
 
 [[deploy-module-source]]
-==== Deploy the module
+=== Deploy the module
 Spring XD looks for modules in the ${xd.home}/modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
 
       modules/processor
@@ -177,7 +177,7 @@ Simply drop _feed.xml_ into the _modules/source_ directory and add the dependenc
 
 Now fire up the server. See link:Getting-Started#getting-started[Getting Started] to learn how to start the Spring XD server. 
 
-==== Test the deployed module
+=== Test the deployed module
 Once the XD server is running, create a stream to test it out. This stream will write SyndEntry objects to the XD log:
 
     $ curl -d "feed | log" http://localhost:8080/streams/feedtest
