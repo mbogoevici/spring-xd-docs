@@ -4,4 +4,4 @@ Consult these step-by-step guides to write your own modules for Spring XD:
 
 === link:Creating-a-Processor-Module{ext-relative}[Processor Modules]
 
-=== link:Creating-a-Sink-Module{ext-relative}[Sink Modules]
+=== link:Creating-a-Sink-Module[Sink Modules]
