@@ -10,7 +10,7 @@ Unzip the distribution. This will yield the installation directory *spring-xd-1.
 
 [source,sh]
 ----
-$ cd spring-xd
+$ cd spring-xd-1.0.0.M1
 ----
 
 Set the environment variable `XD_HOME` to the installation directory `<root-install-dir>\spring-xd\xd`
