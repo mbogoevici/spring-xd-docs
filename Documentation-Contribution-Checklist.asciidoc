@@ -1,6 +1,14 @@
 The reference documentation for this project is generated _via_ a docbook toolchain from the contents of this link:https://github.com/SpringSource/spring-xd/wiki/_access[wiki repository]. Because this content needs to be consumed both from the github interface and in pdf/html form, there are some constraints to authoring documents in this repository, summarized below.
 
-== TOC
+== TOC / Concatenation
+The entry point for the full reference documentation is the `FullGuide.adoc` document. Apart from a header, it contains many `include:<document>` asciidoc directives which should build the whole document from parts. When viewed on github.com, pages reference a sidebar which allows quick navigation.
+If you add a section to the reference documentation, don't forget to add it to both `FullGuide.adoc` and `_Sidebar.asciidoc`.
+
+== Section nesting
+In asciidoc, the so-called level 0 titles (`=My Title`) translate to the document name in docbook. Subsequent level 0 sections translate to `<part>`s in docbook. Hence each new document page should have level 1 sections as its title (`== My Title`). Nevertheless, github.com already displays the file name of a document when viewed online. As such, that title should *not* be part of your document. It should only be added to the `FullGuide.adoc` file. As a consequence, the top-level sections in your files should be level 2 titles (`=== My title`) and they'll render Ok in both github.com and the concatenated documentation.
+
+To recap, let's imagine you want to add the *Awesome* section to the documentation. Here are the impacts on the `FullGuide.adoc` and `Awesome.asciidoc` 
+
 == Links
 To allow consumption as both separate documents on github.com and as a concatenated document, all links between documents should have the following form:
 ----
@@ -16,6 +24,3 @@ Behind the scenes, such links are rewritten in the docbook/html generation phase
 ----
 xref:<anchor>[<Label>]
 ----
-
-
-== Section nesting
