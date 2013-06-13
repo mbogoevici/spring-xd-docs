@@ -1,0 +1,21 @@
+The reference documentation for this project is generated _via_ a docbook toolchain from the contents of this link:https://github.com/SpringSource/spring-xd/wiki/_access[wiki repository]. Because this content needs to be consumed both from the github interface and in pdf/html form, there are some constraints to authoring documents in this repository, summarized below.
+
+== TOC
+== Links
+To allow consumption as both separate documents on github.com and as a concatenated document, all links between documents should have the following form:
+----
+link:<document>#<anchor>[<Label>]
+----
+where
+
+<document>:: is the name of the 'page' (for example 'Streams')
+<anchor>:: identifies a location on the document that we want to address. This needs to be created in the target page using the `[[<anchor>]]` notation. When viewed on github.com, that anchor may not exist (because it is declared in the TOC file -- FullGuide.adoc). This is not a problem as an inexistent anchor ends up as giving focus to the top of the page.
+<label>:: gives a readable text to display as the link text
+
+Behind the scenes, such links are rewritten in the docbook/html generation phase by the gradle build to the following form, suitable for a single asciidoc document:
+----
+xref:<anchor>[<Label>]
+----
+
+
+== Section nesting
