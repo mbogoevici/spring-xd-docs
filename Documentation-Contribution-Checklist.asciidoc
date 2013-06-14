@@ -1,13 +1,42 @@
+:indexdoc: FullGuide.adoc
+
 The reference documentation for this project is generated _via_ a docbook toolchain from the contents of this link:https://github.com/SpringSource/spring-xd/wiki/_access[wiki repository]. Because this content needs to be consumed both from the github interface and in pdf/html form, there are some constraints to authoring documents in this repository, summarized below.
 
 == TOC / Concatenation
-The entry point for the full reference documentation is the `FullGuide.adoc` document. Apart from a header, it contains many `include:<document>` asciidoc directives which should build the whole document from parts. When viewed on github.com, pages reference a sidebar which allows quick navigation.
-If you add a section to the reference documentation, don't forget to add it to both `FullGuide.adoc` and `_Sidebar.asciidoc`.
+The entry point for the full reference documentation is the +{indexdoc}+ document. Apart from a header, it contains many `include:<document>` asciidoc directives which should build the whole document from parts. When viewed on github.com, pages reference a sidebar which allows quick navigation.
+If you add a section to the reference documentation, don't forget to add it to both +{indexdoc}+ and +_Sidebar.asciidoc+.
 
 == Section nesting
-In asciidoc, the so-called level 0 titles (`=My Title`) translate to the document name in docbook. Subsequent level 0 sections translate to `<part>`s in docbook. Hence each new document page should have level 1 sections as its title (`== My Title`). Nevertheless, github.com already displays the file name of a document when viewed online. As such, that title should *not* be part of your document. It should only be added to the `FullGuide.adoc` file. As a consequence, the top-level sections in your files should be level 2 titles (`=== My title`) and they'll render Ok in both github.com and the concatenated documentation.
+In asciidoc, the so-called level 0 titles (`=My Title`) translate to the document name in docbook. Subsequent level 0 sections translate to `<part>` in docbook. Hence each new document page should have level 1 sections as its title (`== My Title`). Nevertheless, github.com already displays the file name of a document when viewed online. As such, that title should *not* be part of your document. It should only be added to the +{indexdoc}+ file. As a consequence, the top-level sections in your files should be level 2 titles (`=== My title`) and they'll render Ok in both github.com and the concatenated documentation.
 
-To recap, let's imagine you want to add the *Awesome* section to the documentation. Here are the impacts on the `FullGuide.adoc` and `Awesome.asciidoc` 
+To recap, let's imagine you want to add the *Awesome* section to the documentation. Here are the impacts on the +{indexdoc}+ and `Awesome.asciidoc` 
+
+.{indexdoc}
+[source,asciidoc]
+----
+... <1>
+
+[[awesome]] <2>
+== Awesome Stuff <3>
+include:Awesome.asciidoc
+...
+----
+<1> Other sections are already included here
+<2> The anchor for our new part
+<3> Note the use of section 1 titles, which are *not* in `Awesome.asciidoc`
+
+
+.Awesome.asciidoc
+[source,asciidoc]
+----
+<1>
+=== Introduction <2>
+Lorem ipsum
+=== More Things
+Blah blah
+----
+<1> Note the absence of a level 1 title here. It resides in +{indexdoc}+
+<2> Document starts with level 2 titles, which are *not* the name of the document
 
 == Links
 To allow consumption as both separate documents on github.com and as a concatenated document, all links between documents should have the following form:
@@ -17,7 +46,7 @@ link:<document>#<anchor>[<Label>]
 where
 
 <document>:: is the name of the 'page' (for example 'Streams')
-<anchor>:: identifies a location on the document that we want to address. This needs to be created in the target page using the `[[<anchor>]]` notation. When viewed on github.com, that anchor may not exist (because it is declared in the TOC file -- FullGuide.adoc). This is not a problem as an inexistent anchor ends up as giving focus to the top of the page.
+<anchor>:: identifies a location on the document that we want to address. This needs to be created in the target page using the `[[<anchor>]]` notation. When viewed on github.com, that anchor may not exist (because it is declared in the TOC file -- {indexdoc}). This is not a problem as an inexistent anchor ends up as giving focus to the top of the page.
 <label>:: gives a readable text to display as the link text
 
 Behind the scenes, such links are rewritten in the docbook/html generation phase by the gradle build to the following form, suitable for a single asciidoc document:
