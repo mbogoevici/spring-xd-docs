@@ -2,7 +2,7 @@
 Follow our link:Getting-Started[Getting Started Guide] to kick the tires of Spring XD.
 
 == Contribute
-We encourage contributions to Spring XD. Please see the link:Contribute[Contribution Guide] for details.
+We encourage contributions to Spring XD. Please see the link:Contribute[Contribution Guide] for details. If you want to contribute/fix this project's documentation, be sure to read our link:Documentation-Contribution-Checklist[guidelines].
 
 == Ask Questions
 Please use the tag `springxd` to ask questions.
