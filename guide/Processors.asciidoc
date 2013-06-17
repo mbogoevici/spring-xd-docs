@@ -78,7 +78,7 @@ Try sending this payload to the HTTP endpoint and you should see just the value 
 
 [[script]]
 ==== Script
-The script processor contains a _Service Activator_ that invokes a specified Groovy script. This is a slightly more generic way to accomplish processing logic, as the provided script may simply terminate the stream as well as transforming or filtering Messages. 
+The script processor contains a _Service Activator_ that invokes a specified Groovy script. This is a slightly more generic way to accomplish processing logic, as the provided script may simply terminate the stream as well as transform or filter Messages. 
 
 To use the module, pass the location of a Groovy script using the _location_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
 
