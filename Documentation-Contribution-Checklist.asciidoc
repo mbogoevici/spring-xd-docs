@@ -23,7 +23,7 @@ include:Awesome.asciidoc
 ----
 <1> Other sections are already included here
 <2> The anchor for our new part
-<3> Note the use of section 1 titles, which are *not* in `Awesome.asciidoc`
+<3> Note the use of level 1 titles, which are *not* in `Awesome.asciidoc`
 
 
 .Awesome.asciidoc
