@@ -9,6 +9,4 @@ The link:SpringEcosystem[Spring ecosystem] of projects provides an excellent fou
 
 You don't need to code anything up to get going, no build scripts, no IDE, no maven coordinates.  You can use a high level configuration DSL (not XML!) that will allow you to 'hit your head against the keyboard' and get started quickly.  However, if you choose to extend the platform (and we hope you will), Spring provides the foundation for extensibility.
 
-The project is just getting started now, but we have been doing a lot of prototyping over the past year so we expect to deliver significant functionality by our first milestone release scheduled for late May.
-
 * For the curious, 'XD' is an abbreviation for 'eXtreme Data'.
