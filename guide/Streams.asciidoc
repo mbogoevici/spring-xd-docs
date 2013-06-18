@@ -11,7 +11,7 @@ A high level DSL is used to create stream definitions. The DSL to define a strea
 
 The DSL mimics a UNIX pipes and filters syntax. Default values for ports and filenames are used in this example but can be overriden using `--` options, such as 
 
-     http --port 8091 | file --dir=/tmp/httpdata/
+     http --port=8091 | file --dir=/tmp/httpdata/
 
 To create these stream definitions you make an HTTP POST request to the XD Admin Server.  More details can be found in the sections below.
 
