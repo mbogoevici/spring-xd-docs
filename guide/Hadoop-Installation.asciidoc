@@ -23,7 +23,7 @@ Next make sure that you set `JAVA_HOME` in the `conf/hadoop-env.sh` script, or y
   # The java implementation to use.  Required.
   # export JAVA_HOME=/usr/lib/j2sdk1.5-sun
   
-  export JAVE_HOME/Library/Java/Home
+  export JAVA_HOME/Library/Java/Home
 
 As described in the installation guide, you also need to set up SSH login to locahost without a passphrase. On Linux, you may need to install the `ssh` package and ensure the `sshd` daemon is running. On Mac OS X, ssh is already installed but the `sshd` daemon isn't usually running. To start it, you need to enable "Remote Login" in the "Sharing" section of the control panel. Then you can carry on and setup SSH keys as described in the installation guide. Make sure you can log in at the command line using `ssh localhost` before trying to start hadoop:
 
