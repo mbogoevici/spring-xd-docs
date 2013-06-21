@@ -70,7 +70,7 @@ To deploy the module, you need to copy the _tweettransformer.xml_ file to the `$
 
 Start the XD server and try creating a stream to test your processor:
 
-  $ curl -d "twittersearch --query=java --consumerKey=<your_key> --consumerSecret=<your_secret> | tweettransformer | file" http://localhost:8080/streams/javatweets
+  $ curl -X PUT -H 'Content-Type: text/plain' -d "twittersearch --query=java --consumerKey=<your_key> --consumerSecret=<your_secret> | tweettransformer | file" http://localhost:8080/streams/javatweets
 
 If you haven't already used `twittersearch`, read the link:Sources#sources[sources] section for more details. This command should stream tweets to the file `/tmp/xd/output/javatweets` but, unlike the normal `twittersearch` output, you should just see the plain tweet text there, rather than the full JSON data.
 

@@ -22,11 +22,11 @@ Here's an example:
 
 Start by creating a data ingestion stream. Something like:
 
-   $ curl -d "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file --dir=/tweets/" http://localhost:8080/streams/springtweets
+   $ curl -X PUT -H 'Content-Type: text/plain' -d "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file --dir=/tweets/" http://localhost:8080/streams/springtweets
 
 Next, create a tap on the _springtweets_ stream that sets a message counter named _tweetcount_
 
-   $ curl -d "tap @ springtweets | counter --name=tweetcount" http://localhost:8080/streams/tweettap
+   $ curl -X PUT -H 'Content-Type: text/plain' -d "tap @ springtweets | counter --name=tweetcount" http://localhost:8080/streams/tweettap
 
 The results are written to redis under the key counter.${name}. To retrieve the count:
   
@@ -81,11 +81,11 @@ counterName:: A key used to access the counter values. *(default: $\{fieldName\}
 
 To try this out, create a stream to ingest twitter feeds containing the word _spring_ and output to a file:
 
-   curl -d "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file" http://localhost:8080/streams/springtweets
+   curl -X PUT -H 'Content-Type: text/plain' -d "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file" http://localhost:8080/streams/springtweets
 
 Now create a tap for a field value counter:
 
-   curl -d "tap@springtweets | field-value-counter --fieldName=fromUser" http://localhost:8080/streams/tweettap
+   curl -X PUT -H 'Content-Type: text/plain' -d "tap@springtweets | field-value-counter --fieldName=fromUser" http://localhost:8080/streams/tweettap
 
 The _twittersearch_ source produces JSON strings which contain the user id of the tweeter in the _fromUser_ field. The _field_value_counter_ sink parses the tweet and updates a field value counter named _fromUser_ in Redis. To view the counts:
 
@@ -108,11 +108,11 @@ Here is an example of creating a tap for a gauge:
 
 Create an ingest stream
 
-    $ curl -d "http --port=9090 | file" http://localhost:8080/streams/test
+    $ curl -X PUT -H 'Content-Type: text/plain' -d "http --port=9090 | file" http://localhost:8080/streams/test
 
 Next create the tap:
 
-    $ curl -d "tap@test | gauge" http://localhost:8080/streams/simplegauge
+    $ curl -X PUT -H 'Content-Type: text/plain' -d "tap@test | gauge" http://localhost:8080/streams/simplegauge
 
 Now Post a message to the ingest stream:
 
@@ -141,11 +141,11 @@ Here are some examples of creating a tap for a rich gauge:
 
 Create an ingest stream
 
-      $ curl -d "http --port=9090 | file" http://localhost:8080/streams/test
+      $ curl -X PUT -H 'Content-Type: text/plain' -d "http --port=9090 | file" http://localhost:8080/streams/test
 
 Next create the tap:
 
-      $ curl -d "tap@test | richgauge" http://localhost:8080/streams/testgauge
+      $ curl -X PUT -H 'Content-Type: text/plain' -d "tap@test | richgauge" http://localhost:8080/streams/testgauge
 
 Now Post some messages to the ingest stream:
 
@@ -168,11 +168,11 @@ In this example, we will track stock prices, which is a more practical example. 
 
 Create an ingest stream
 
-     $ curl -d "http --port=9090 | file" http://localhost:8080/streams/stocks
+     $ curl -X PUT -H 'Content-Type: text/plain' -d "http --port=9090 | file" http://localhost:8080/streams/stocks
 
 Next create the tap, using the json-field-extractor to extract the stock price from the payload: 
 
-     $ curl -d "tap@stocks | json-field-extractor --fieldName=price | richgauge" http://localhost:8080/streams/stockprice
+     $ curl -X PUT -H 'Content-Type: text/plain' -d "tap@stocks | json-field-extractor --fieldName=price | richgauge" http://localhost:8080/streams/stockprice
 
 Now Post some messages to the ingest stream:
 
@@ -198,12 +198,12 @@ The previous example would feed these prices to a single gauge. What we really w
 
 Create an ingest stream
 
-     $ curl -d "http --port=9090 | file" http://localhost:8080/streams/stocks
+     $ curl -X PUT -H 'Content-Type: text/plain' -d "http --port=9090 | file" http://localhost:8080/streams/stocks
 
 Next create the taps, using the json-field-extractor to extract the stock price from the payload: 
 
-     $ curl -d "tap@stocks |json-field-value-filter --fieldName=symbol --fieldValue=VMW| json-field-extractor --fieldName=price | richgauge" http://localhost:8080/streams/vmwprice
-     $ curl -d "tap@stocks |json-field-value-filter --fieldName=symbol --fieldValue=EMC| json-field-extractor --fieldName=price | richgauge" http://localhost:8080/streams/emcprice
+     $ curl -X PUT -H 'Content-Type: text/plain' -d "tap@stocks |json-field-value-filter --fieldName=symbol --fieldValue=VMW| json-field-extractor --fieldName=price | richgauge" http://localhost:8080/streams/vmwprice
+     $ curl -X PUT -H 'Content-Type: text/plain' -d "tap@stocks |json-field-value-filter --fieldName=symbol --fieldValue=EMC| json-field-extractor --fieldName=price | richgauge" http://localhost:8080/streams/emcprice
 
 Now Post some messages to the ingest stream:
 

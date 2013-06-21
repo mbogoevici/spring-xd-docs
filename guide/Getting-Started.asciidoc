@@ -34,7 +34,7 @@ You should then be able to start using Spring XD.
 === Create a Stream
 In Spring XD, a basic stream defines the ingestion of event driven data from a source to a sink that passes through any number of processors. Create a new stream by posting the stream definition to a REST endpoint.  Stream defintions are built from a simple DSL. For example, execute:
 
-  $ curl -d "time | log" http://localhost:8080/streams/ticktock
+  $ curl -X PUT -H 'Content-Type: text/plain' -d "time | log" http://localhost:8080/streams/ticktock
 
 This defines a stream named `ticktock` based off the DSL expression `time | log`.  The DSL uses the "pipe" symbol `|`, to connect a source to a sink. The stream server finds the `time` and `log` definitions in the modules directory and uses them to setup the stream.  In this simple example, the time source simply sends the current time as a message each second, and the log sink outputs it using the logging framework at the WARN logging level.  In the shell where you started the server, you will see log output similar to that listed below
 

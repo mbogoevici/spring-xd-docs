@@ -19,7 +19,7 @@ Use the filter module in a link:Streams#streams[stream] to determine whether a M
 ==== Filter with SpEL expression
 The simplest way to use the filter processor is to pass a SpEL expression when creating the stream. The expression should evaluate the message and return true or false.  For example:
 
-    $ curl -d "http | filter --expression=payload=='good' | log" http://localhost:8080/streams/filtertest
+    $ curl -X PUT -H 'Content-Type: text/plain' -d "http | filter --expression=payload=='good' | log" http://localhost:8080/streams/filtertest
 
 This filter will only pass Messages to the log sink if the payload is the word "good". Try sending "good" to the HTTP endpoint and you should see it in the XD log:
 
@@ -30,7 +30,7 @@ Alternatively, if you send the word "bad" (or anything else), you shouldn't see 
 ==== Filter with Groovy Script
 For more complex filtering, you can pass the location of a Groovy script using the _script_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
 
-    $ curl -d "http --port=9001 | filter --script=custom-filter.groovy --properties-location=custom-filter.properties | log" http://localhost:8080/streams/groovyfiltertest
+    $ curl -X PUT -H 'Content-Type: text/plain' -d "http --port=9001 | filter --script=custom-filter.groovy --properties-location=custom-filter.properties | log" http://localhost:8080/streams/groovyfiltertest
 
 By default, Spring XD will search the classpath for _custom-filter.groovy_ and _custom-filter.properties_. You can place the script in _${xd.home}/modules/processor/scripts_ and the properties file in _${xd.home}/config_ to make them available on the classpath.  Alternatively, you can prefix the _script_ and _properties-location_ values with _file:_ to load from the file system.
 
@@ -38,7 +38,7 @@ By default, Spring XD will search the classpath for _custom-filter.groovy_ and _
 === JSON Field Value Filter
 Use this filter to only pass messages to the output channel if they contain a specific JSON field matching a specific value.
 
-    $ curl -d "http --port=9002 | json-field-value-filter --fieldName=firstName --fieldValue=John | log" http://localhost:8080/streams/jsonfiltertest
+    $ curl -X PUT -H 'Content-Type: text/plain' -d "http --port=9002 | json-field-value-filter --fieldName=firstName --fieldValue=John | log" http://localhost:8080/streams/jsonfiltertest
 
 This filter will only pass Messages to the log sink if the JSON payload contains the _firstName_ "John". Try sending this payload to the HTTP endpoint and you should see it in the XD log:
 
@@ -53,7 +53,7 @@ Use the transform module in a link:Streams#streams[stream] to convert a Message'
 ==== Transform with SpEL expression
 The simplest way to use the transform processor is to pass a SpEL expression when creating the stream. The expression should return the modified message or payload.  For example:
 
-    $ curl -d "http --port=9003 | transform --expression='FOO' | log" http://localhost:8080/streams/transformtest
+    $ curl -X PUT -H 'Content-Type: text/plain' -d "http --port=9003 | transform --expression='FOO' | log" http://localhost:8080/streams/transformtest
 
 This transform will convert all message payloads to the word "FOO". Try sending something to the HTTP endpoint and you should see "FOO" in the XD log:
 
@@ -62,7 +62,7 @@ This transform will convert all message payloads to the word "FOO". Try sending 
 ==== Transform with Groovy Script
 For more complex transformations, you can pass the location of a Groovy script using the _script_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
 
-    $ curl -d "http --port=9004 | transform --script=custom-transform.groovy --properties-location=custom-transform.properties | log" http://localhost:8080/streams/groovytransformtest
+    $ curl -X PUT -H 'Content-Type: text/plain' -d "http --port=9004 | transform --script=custom-transform.groovy --properties-location=custom-transform.properties | log" http://localhost:8080/streams/groovytransformtest
 
 By default, Spring XD will search the classpath for _custom-transform.groovy_ and _custom-transform.properties_. You can place the script in _${xd.home}/modules/processor/scripts_ and the properties file in _${xd.home}/config_ to make them available on the classpath.  Alternatively, you can prefix the _script_ and _properties-location_ values with _file:_ to load from the file system.
 
@@ -70,7 +70,7 @@ By default, Spring XD will search the classpath for _custom-transform.groovy_ an
 === JSON Field Extractor
 This processor converts a JSON message payload to the value of a specific JSON field.
 
-    $ curl -d "http --port=9005 | json-field-extractor --fieldName=firstName | log" http://localhost:8080/streams/jsontransformtest
+    $ curl -X PUT -H 'Content-Type: text/plain' -d "http --port=9005 | json-field-extractor --fieldName=firstName | log" http://localhost:8080/streams/jsontransformtest
 
 Try sending this payload to the HTTP endpoint and you should see just the value "John" in the XD log:
 
@@ -82,6 +82,6 @@ The script processor contains a _Service Activator_ that invokes a specified Gro
 
 To use the module, pass the location of a Groovy script using the _location_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
 
-    $ curl -d "http --port=9006 | script --location=custom-processor.groovy --properties-location=custom-processor.properties | log" http://localhost:8080/streams/groovyprocessortest
+    $ curl -X PUT -H 'Content-Type: text/plain' -d "http --port=9006 | script --location=custom-processor.groovy --properties-location=custom-processor.properties | log" http://localhost:8080/streams/groovyprocessortest
 
 By default, Spring XD will search the classpath for _custom-processor.groovy_ and _custom-processor.properties_. You can place the script in _${xd.home}/modules/processor/scripts_ and the properties file in _${xd.home}/config_ to make them available on the classpath.  Alternatively, you can prefix the _location_ and _properties-location_ values with _file:_ to load from the file system.
