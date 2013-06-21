@@ -5,7 +5,7 @@ Follow our link:Getting-Started[Getting Started Guide] to kick the tires of Spri
 We encourage contributions to Spring XD. Please see the link:Contribute[Contribution Guide] for details. If you want to contribute/fix this project's documentation, be sure to read our link:Documentation-Contribution-Checklist[guidelines].
 
 == Ask Questions
-Please use the tag `springxd` to ask questions.
+Please use the tag http://stackoverflow.com/questions/tagged/spring-xd[`spring-xd`] to ask questions.
 
 == Improve Spring XD
 Submit issue and feature requests on https://jira.springsource.org/browse/XD[JIRA] or https://github.com/springsource/spring-xd/issues[GitHub Issues]
