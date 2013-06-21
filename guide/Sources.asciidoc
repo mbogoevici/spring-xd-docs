@@ -14,7 +14,7 @@ The Sources covered are
 Future releases will provide support for RabbitMQ, JMS, and other currently available Spring Integration Adatpers.  For information on how to adapt an existing Spring Integration Adapter for use in Spring XD see the section link:Creating-a-Source-Module#creating-a-source-module[Creating a Source Module].
 
 [[http]]
-==== HTTP
+=== HTTP
 
 To create a stream definition in the server post using curl
 
@@ -32,7 +32,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/httptest
 
-===== HTTP with options
+==== HTTP with options
 
 The http source has one option
 
@@ -47,7 +47,7 @@ Here is an example
      $ cat /tmp/xd/output/httptest9020
 
 [[tail]]
-==== Tail
+=== Tail
 
 Make sure the default input directory exists
 
@@ -69,7 +69,7 @@ See if the data ended up in the file
      
      $ cat /tmp/xd/output/tailtest
 
-===== Tail with options
+==== Tail with options
 
 The tail source has 3 options:
 
@@ -86,7 +86,7 @@ Here is an example
      $ cat /tmp/xd/output/bar
 
 
-===== Tail Status Events
+==== Tail Status Events
 
 Some platforms, such as linux, send status messages to `stderr`. The tail module sends these events to a logging adapter, at WARN level; for example...
 
@@ -96,7 +96,7 @@ Some platforms, such as linux, send status messages to `stderr`. The tail module
 ----
 
 [[twittersearch]]
-==== Twitter Search
+=== Twitter Search
 
 The twittersearch source has three required parameters
 
@@ -122,13 +122,13 @@ if some data ended up in the file
      $ cat /tmp/xd/output/springone2gx
 
 [[gemfire-cq]]
-==== GemFire Continuous Query (CQ)
+=== GemFire Continuous Query (CQ)
 Continuous query allows client applications to create a GemFire query using Object Query Language(OQL) and register a CQ listener which subscribes to the query and is notified every time the query 's result set changes. The _gemfire_cq_ source registers a CQ which will post CQEvent messages to the stream. 
 
-===== Launching the XD GemFire Server
+==== Launching the XD GemFire Server
 This source requires a cache server to be running in a separate process and its host and port must be known (NOTE: GemFire locators are not supported yet). The XD distribution includes a GemFire server executable suitable for development and test purposes. This is a Java main class that runs with a Spring configured cache server. The configuration is passed as a command line argument to the server's main method. The configuration includes a cache server port and one or more configured region. XD includes a sample cache configuration called  https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[cq-demo]. This starts a server on port 40404 and creates a region named _Stocks_. A Logging cache listener is configured  for the region to log region events.  (TBD: describe launch script)
 
-===== Options
+==== Options
 
 The qemfire-cq source has the following options
 
@@ -159,7 +159,7 @@ As updates are posted to the cache you should see them captured in the output fi
 
 
 [[syslog]]
-==== Syslog
+=== Syslog
 
 Two syslog sources are provided: `syslog-udp` and `syslog-tcp`. They both support the following options:
 
@@ -196,7 +196,7 @@ Restart the syslog daemon after reconfiguring.
 
 
 [[tcp]]
-==== TCP
+=== TCP
 
 To create a stream definition in the server,  post using curl
 
@@ -222,7 +222,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest
 
-===== TCP with options
+==== TCP with options
 
 The TCP source has the following options
 
@@ -234,7 +234,7 @@ decoder:: how to decode the stream - see below. *(default: `CRLF`)*
 binary:: whether the data is binary (true) or text (false). *(default: `false`)*
 charset:: the charset used when converting text to `String`. *(default: `UTF-8`)*
 
-===== Available Decoders
+==== Available Decoders
 
 .Text Data
 
@@ -251,7 +251,7 @@ L2:: data preceded by a two byte (unsigned) length field (up to 2^16^-1 bytes)
 L4:: data preceded by a four byte (signed) length field (up to 2^31^-1 bytes)
 
 
-===== Examples
+==== Examples
 
 The following examples all use `echo` to send data to `netcat` which sends the data to the source.
 
@@ -325,7 +325,7 @@ See if the data ended up in the file
 
      $ cat /tmp/xd/output/tcptest8
 
-===== Binary Data Example
+==== Binary Data Example
 
      $ curl -d "tcp --port=1242 --decoder=L1 | file --binary=true " http://localhost:8080/streams/tcptest9
 
