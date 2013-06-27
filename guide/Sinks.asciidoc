@@ -249,17 +249,17 @@ A Splunk sink that writes data to a TCP Data Input type for Splunk.
 The Splunk sink converts an object payload to a string using the object’s toString method and then converts this to a SplunkEvent that is sent via TCP to Splunk.  The module accepts the following attributes:
 
 host::
-The host name or IP address of the Splunk server (default: localhost)
+The host name or IP address of the Splunk server *(default: `localhost`)
 port::
-The TCP port number of the Splunk Server (default: 8089)
+The TCP port number of the Splunk Server *(default: `8089`)*
 username::
-The login name that has rights to send data to the tcp-port(default: admin)
+The login name that has rights to send data to the tcp-port *(default: `admin`)*
 password::
-The password associated with the username (default: password)
+The password associated with the username *(default: `password`)*
 owner::
-The owner of the tcp-port (default: admin)
+The owner of the tcp-port *(default: `admin1)*
 tcp-port::
-The TCP port number to where XD will send the data (default: 9500)
+The TCP port number to where XD will send the data *(default: `9500`)*
 
 ==== Example
 An example stream would be to take data from a twitter search and push it through to a splunk instance.
