@@ -14,6 +14,8 @@ The Sinks covered are
 
 * <<gemfire,GemFire Server>>
 
+* <<splunk,Splunk Server>>
+
 See the section link:Creating-a-Sink-Module#creating-a-sink-module[Creating a Sink Module] for information on how to create sink modules using other Spring Integration Adapters.
 
 [[log_sinks]]
@@ -238,3 +240,6 @@ The keyExpression is a SpEL expression that depends on the payload type. In this
 This will write an entry to the GemFire _Stocks_ region with the key _VMW_. You should see a message on STDOUT for the process running the GemFire server like:
 
     INFO [LoggingCacheListener] - updated entry VMW
+
+[[splunk]]
+=== Splunk Server
