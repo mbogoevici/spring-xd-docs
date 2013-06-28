@@ -76,9 +76,14 @@ No we can reference the trigger when creating the job:
 
 `curl -X PUT -H 'Content-Type: text/plain' -d "job --trigger=mytrigger" http://localhost:8080/streams/helloWorldJob`
 
+=== Stopping and Removing the Batch Job
+
+----
+curl -X DELETE -H 'Content-Type: text/plain' http://localhost:8080/streams/helloSpringXD
+----
+
 
 
 
  
-
 
