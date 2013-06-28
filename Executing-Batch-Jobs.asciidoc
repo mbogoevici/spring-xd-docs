@@ -28,6 +28,10 @@ public class HelloSpringXDTasklet implements Tasklet {
 }
 ----
 
+==== Setting Up the Application Context
+
+Under `modules/common/job`, please create the following XML Application context file named `job.xml`: 
+
 [source,xml]
 ----
 
