@@ -57,3 +57,28 @@ Under `modules/common/job`, please create the following XML Application context 
 
 </beans>
 ----
+
+=== Execute the Job
+
+=== Execute the Batch Job Once (Immediately)
+
+`curl -X PUT -H 'Content-Type: text/plain' -d "job" http://localhost:8080/streams/helloSpringXD`
+
+=== Using AdHoc Cron Expression
+
+`curl -X PUT -H 'Content-Type: text/plain' -d "job --cron='*/10 * * * * *'" http://localhost:8080/streams/helloSpringXD`
+
+=== Using Separate Trigger
+
+`curl -X PUT -H 'Content-Type: text/plain' -d "trigger --cron='*/10 * * * * *'" http://localhost:8080/streams/mytrigger`
+
+No we can reference the trigger when creating the job:
+
+`curl -X PUT -H 'Content-Type: text/plain' -d "job --trigger=mytrigger" http://localhost:8080/streams/helloWorldJob`
+
+
+
+
+ 
+
+
