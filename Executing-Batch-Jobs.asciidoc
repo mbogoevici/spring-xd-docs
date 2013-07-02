@@ -1,6 +1,6 @@
 === Introduction
 
-This chapter will show you how to execute Spring Batch Jobs using Spring XD.
+This chapter will show you how to execute http://www.springsource.org/spring-batch[Spring Batch] Jobs using Spring XD.
 
 === Setting up a simple Batch Job
 
