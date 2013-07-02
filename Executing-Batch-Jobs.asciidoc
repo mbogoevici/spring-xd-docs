@@ -30,11 +30,11 @@ public class HelloSpringXDTasklet implements Tasklet {
 }
 ----
 
-Please ensure that you deploy this class as part of a Jar file to the Spring XD *${xd.home}/lib* folder. Once, you restart the container the class will be added to the classpath. 
+Please ensure that you deploy this class as part of a Jar file to the Spring XD *${xd.home}/lib* folder. Once, you restart the Spring XD container the class will be automatically added to the classpath and thus made available.
 
 ==== Setting Up the Application Context
 
-Under `modules/common/job`, please create the following XML Application context file named `job.xml`: 
+Under `modules/common/job`, in the Spring XD home directory, please create the following XML Application context file named `job.xml`: 
 
 [source,xml]
 ----
