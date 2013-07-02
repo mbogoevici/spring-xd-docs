@@ -62,7 +62,7 @@ Under `modules/common/job`, please create the following XML Application context 
 </beans>
 ----
 
-=== Execute the Job
+=== Execute the Batch Job
 
 In order to execute the Batch Job, several options exist:
 
