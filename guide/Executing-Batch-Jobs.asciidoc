@@ -34,7 +34,7 @@ Please ensure that you deploy this class as part of a Jar file to the Spring XD 
 
 ==== Setting Up the Application Context
 
-Under *modules/common/job*, in the Spring XD home directory, please create the following XML Application context file named *job.xml*: 
+Under *modules/job*, in the Spring XD home directory, please create the following XML Application context file named *job.xml*: 
 
 [source,xml]
 ----
