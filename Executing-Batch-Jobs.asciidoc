@@ -6,6 +6,8 @@ This chapter will show you how to execute Spring Batch Jobs using Spring XD.
 
 ==== Creating the Tasklet
 
+We will create a very simple http://static.springsource.org/spring-batch/reference/html/configureStep.html#taskletStep[Tasklet]. The sole purpose of this Tasklet is to print out "Hello Spring XD!".
+
 [source,xml]
 ----
 package org.springframework.xd.dirt.plugins.job;
@@ -27,6 +29,8 @@ public class HelloSpringXDTasklet implements Tasklet {
 	}
 }
 ----
+
+Please ensure that you deploy this class as part of a Jar file to the Spring XD *${xd.home}/lib* folder. Once, you restart the container the class will be added to the classpath. 
 
 ==== Setting Up the Application Context
 
@@ -60,37 +64,57 @@ Under `modules/common/job`, please create the following XML Application context 
 
 === Execute the Job
 
-=== Execute the Batch Job Once (Immediately)
+In order to execute the Batch Job, several options exist:
+
+* Execute the Batch Job Once (Immediately)
+* Execute the Batch Job using an AdHoc Cron Expression
+* Execute the Batch using a named Cron-Trigger
+
+==== Execute the Batch Job Once (Immediately)
 
 ----
 curl -X PUT -H 'Content-Type: text/plain' -d "job" http://localhost:8080/streams/helloSpringXD
 ----
 
-=== Using AdHoc Cron Expression
+==== Execute the Batch Job using an AdHoc Cron Expression
 
 ----
 curl -X PUT -H 'Content-Type: text/plain' -d "job --cron='*/10 * * * * *'" http://localhost:8080/streams/helloSpringXD
 ----
 
-=== Using Separate Trigger
+==== Execute the Batch using a named Cron-Trigger
+
+You can explicitly create a named Trigger using:
 
 ----
 curl -X PUT -H 'Content-Type: text/plain' -d "trigger --cron='*/10 * * * * *'" http://localhost:8080/streams/mytrigger
 ----
 
-No we can reference the trigger when creating the job:
+The trigger will be added to the Common Context, which is shared across Plugins. Once the Trigger is created, we can reference the trigger when setting up the Batch Job:
 
 ----
 curl -X PUT -H 'Content-Type: text/plain' -d "job --trigger=mytrigger" http://localhost:8080/streams/helloWorldJob
 ----
 
-=== Stopping and Removing the Batch Job
+=== Removing Batch Jobs and Triggers 
+
+==== Stopping and Removing the Batch Job
+
+Batch Jobs can be deleted by executing:
 
 ----
 curl -X DELETE -H 'Content-Type: text/plain' http://localhost:8080/streams/helloSpringXD
 ----
 
+==== Removing the Cron Trigger
 
+Cron Triggers can be deleted by executing:
+
+----
+curl -X DELETE -H 'Content-Type: text/plain' http://localhost:8080/streams/helloSpringXD
+----
+
+NOTE: Be advised that when removing Triggers from the Context they may still be referenced by running Batch Jobs.
 
 
  
