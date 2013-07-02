@@ -51,6 +51,10 @@ include::Sinks.asciidoc[]
 == Taps
 include::Taps.asciidoc[]
 
+[[batch]]
+== Executing Batch Jobs
+include::Executing-Batch-Jobs.asciidoc[]
+
 [[analytics]]
 == Analytics
 include::Analytics.asciidoc[]
