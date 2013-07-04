@@ -7,7 +7,7 @@ The Sources covered are
 * <<http, HTTP>>
 * <<tail, Tail>>
 * <<twittersearch, Twitter Search>>
-* <<gardenhose, Twitter "Gardenhose">>
+* <<twitterstream, Twitter Stream>>
 * <<gemfire-cq,Gemfire CQ>>
 * <<syslog, Syslog>>
 * <<tcp, TCP>>
@@ -125,13 +125,24 @@ if some data ended up in the file
 TIP: For both `twittersearch` and `gardenhose` you can fill in in the `conf/twitter.properties` file instead of using the DSL parameters to supply keys and secrets.
 
 [[gardenhose]]
-==== Twitter "Gardenhose"
+==== Twitter Stream
 
-This source ingests data from Twitter's https://dev.twitter.com/docs/streaming-apis/streams/public[streaming] API. It uses the https://dev.twitter.com/docs/streaming-apis/streams/public[sample] stream rather than the full "firehose" which needs special access.
+This source ingests data from Twitter's https://dev.twitter.com/docs/streaming-apis/streams/public[streaming] API. It uses the https://dev.twitter.com/docs/streaming-apis/streams/public[sample and filter] stream endpoints rather than the full "firehose" which needs special access. The endpoint used will depend on the parameters you supply in the stream definition (some are specific to the filter endpoint).
 
 You need to supply all keys and secrets (both consumer and accessToken) to authenticate for this source, so it is easiest if you just add these to the `conf/twitter.properties` file. Stream creation is then straightforward:
 
-     $ curl -d "gardenhose | file" http://localhost:8080/streams/hose
+     $ curl -d "twitterstream | file" http://localhost:8080/streams/hose
+
+The parameters available are pretty much the same as those listed in the https://dev.twitter.com/docs/streaming-apis/parameters[API docs] and unless otherwise stated, the accepted formats are the same.
+
+ * https://dev.twitter.com/docs/streaming-apis/parameters#delimited[delimited] - set to `true` to get lenght delimiters in the stream data (defaults to `false`).
+
+ * https://dev.twitter.com/docs/streaming-apis/parameters#stall_warnings[stallWarnings] - set to `true` to enable stall warnings (defaults to `false`).
+ * https://dev.twitter.com/docs/streaming-apis/parameters#filter_level[filterLevel]
+ * https://dev.twitter.com/docs/streaming-apis/parameters#language[language]
+ * https://dev.twitter.com/docs/streaming-apis/parameters#follow[follow]
+ * https://dev.twitter.com/docs/streaming-apis/parameters#track[track]
+ * https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]
 
 [[gemfire-cq]]
 === GemFire Continuous Query (CQ)
