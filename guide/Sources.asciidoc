@@ -12,7 +12,9 @@ The Sources covered are
 * <<syslog, Syslog>>
 * <<tcp, TCP>>
 
-Future releases will provide support for RabbitMQ, JMS, and other currently available Spring Integration Adatpers.  For information on how to adapt an existing Spring Integration Adapter for use in Spring XD see the section link:Creating-a-Source-Module#creating-a-source-module[Creating a Source Module].
+Future releases will provide support for RabbitMQ, JMS, and other currently available Spring Integration Adapters.  For information on how to adapt an existing Spring Integration Adapter for use in Spring XD see the section link:Creating-a-Source-Module#creating-a-source-module[Creating a Source Module].
+
+The following sections show a mix of Spring XD shell and plain Unix shell commands, so if you are trying them out, you should open two separate terminal prompts, one running the XD shell and one to enter the standard commands for sending HTTP data, creating directories, reading files and so on.
 
 [[http]]
 === HTTP
