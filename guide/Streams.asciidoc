@@ -21,7 +21,7 @@ The XD Admin server footnote:[The server is implemented by the `AdminMain` class
 
 New streams are created by posting stream definitions.  The definitions are built from a simple DSL. For example, let's walk through what happens if we execute the following shell command
 
-    http://localhost:8080> stream create --definition "time | log" --name ticktock
+    http://localhost:8080:> stream create --definition "time | log" --name ticktock
   
 
 This defines a stream named `ticktock` based off the DSL expression `time | log`.  The DSL uses the "pipe" symbol `|`, to connect a source to a sink. The stream server finds the `time` and `log` definitions in the modules directory and uses them to setup the stream.  In this simple example, the time source simply sends the current time as a message each second, and the log sink outputs it using the logging framework.
@@ -35,14 +35,14 @@ This defines a stream named `ticktock` based off the DSL expression `time | log`
 
 You can delete a stream by issuing the `stream destroy` command from the shell:
   
-    http://localhost:8080> stream destroy --name ticktock
+    http://localhost:8080:> stream destroy --name ticktock
 
 === Deploying and Undeploying Streams
 
 Often you will want to stop a stream, but retain the name and definition for future use. In that case you can `undeploy` the stream by name and issue the `deploy` command at a later time to restart it.
 
-    http://localhost:8080> stream undeploy --name ticktock
-    http://localhost:8080> stream deploy --name ticktock
+    http://localhost:8080:> stream undeploy --name ticktock
+    http://localhost:8080:> stream deploy --name ticktock
 
 
 === Other Source and Sink Types
@@ -51,7 +51,7 @@ Let's try something a bit more complicated and swap out the `time` source for so
 
 To create a stream using an `http` source, but still using the same `log` sink, we would change the original command above to
 
-    http://localhost:8080> stream create --definition "http | log" --name myhttpstream
+    http://localhost:8080:> stream create --definition "http | log" --name myhttpstream
 
 which will produce the following output from the server
 
@@ -78,7 +78,7 @@ As an example of a simple processing step, we can transform the payload of the H
 
 To create this stream enter the following command in the shell
 
-    http://localhost:8080> stream deploy --definition "http | transform --expression=payload.toUpperCase() | log" --name myprocstrem
+    http://localhost:8080:> stream deploy --definition "http | transform --expression=payload.toUpperCase() | log" --name myprocstrem
 
 Posting some data
 
@@ -94,7 +94,7 @@ See the link:Processors#processors[Processors] section for more information.
 
 In the examples above, we connected a source to a sink using the pipe symbol `|`. You can also pass parameters to the source and sink configurations. The parameter names will depend on the individual module implementations, but as an example, the `http` source module exposes a `port` setting which allows you to change the data ingestion port from the default value. To create the stream using port 8000, we would use 
 
-    http://localhost:8080> stream create --definition "http --port=8000 | log" --name myhttpstream
+    http://localhost:8080:> stream create --definition "http --port=8000 | log" --name myhttpstream
 
 If you know a bit about Spring configuration files, you can inspect the module definition to see which properties it exposes. Alternatively, you can read more in the link:Sources#sources[source] and link:Sinks#sinks[sink] documentation.
 
