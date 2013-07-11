@@ -130,9 +130,9 @@ Thu May 30 10:28:33 EDT 2013
 
 TCP is a streaming protocol and some mechanism is needed to frame messages on the wire. A number of encoders are available, the default being 'CRLF'.
 
-Undeploy the stream; netcat will terminate when the TCP Sink disconnects.
+Destroy the stream; netcat will terminate when the TCP Sink disconnects.
 
-     $ curl -X DELETE http://localhost:8080/streams/tcptest
+    http://localhost:8080> stream destroy --name tcptest
 
 ==== TCP with Options
 
@@ -181,9 +181,9 @@ Create the stream, using the `L4` encoder
 
      http://localhost:8080:> stream create --name tcptest --definition "time --interval=3 | tcp --encoder=L4 --port=1235"
 
-Undeploy the stream
+Destroy the stream
 
-     $ curl -X DELETE http://localhost:8080/streams/tcptest
+     http://localhost:8080> stream destroy --name tcptest
 
 Check the output
 

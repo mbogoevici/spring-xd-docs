@@ -4,9 +4,9 @@ In this section we will show a simple example on how to setup syslog ingestion f
 
 Create the streams with syslog as source and HDFS as sink (Please refer to link:Sources#sources[source] and link:Sinks#sinks[sink])
 
-  $ curl -X PUT -H 'Content-Type: text/plain' -d “syslog-udp --port=<udp-port> | hdfs” http://localhost:8080/streams/<stream-name>
+  http://localhost:8080:> stream create --definition "syslog-udp --port=<udp-port> | hdfs" --name <stream-name>
 
-  $ curl -X PUT -H 'Content-Type: text/plain' -d “syslog-tcp –-port=<tcp-port> | hdfs” http://localhost:8080/streams/<stream-name>
+  http://localhost:8080:> stream create --definition "syslog-tcp --port=<tcp-port> | hdfs" --name <stream-name>
 
 Please note for hdfs sink, set `rollover` parameter to a smaller value to avoid buffering and to see the data has made to HDFS (incase of smaller volume of log).
 
