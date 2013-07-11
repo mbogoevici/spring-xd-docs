@@ -20,7 +20,7 @@ Set the environment variable `XD_HOME` to the installation directory `<root-inst
 Spring XD can be run in two different modes. There's a single-node runtime option for testing and development, and there's a distributed runtime which supports distribution of processing tasks across multiple nodes. This document will get you up and running quickly with a single-node runtime. See link:Running-Distributed-Mode#running-distributed-mode[Running Distributed Mode] for details on setting up a distributed runtime.
 
 
-=== Start the Runtime
+=== Start the Runtime and the XD Shell
 
 The single node option is the easiest to get started with. It runs everything you need in a single process. To start it, you just need to `cd` to the `xd` directory and run the following command
 
@@ -29,12 +29,32 @@ The single node option is the easiest to get started with. It runs everything yo
 xd/bin>$ ./xd-singlenode
 ----
 
-You should then be able to start using Spring XD.
+In a separate terminal, `cd` into the `shell` directory and start the XD shell, which you can use to issue commands. The shell is a more user-friendly front end to the REST API which Spring XD exposes to clients.
+
+[source,sh]
+----
+shell/bin>$ ./spring-xd-shell
+ _____                           __   _______
+/  ___|          (-)             \ \ / /  _  \
+\ `--. _ __  _ __ _ _ __   __ _   \ V /| | | |
+ `--. \ '_ \| '__| | '_ \ / _` |  / ^ \| | | |
+/\__/ / |_) | |  | | | | | (_| | / / \ \ |/ /
+\____/| .__/|_|  |_|_| |_|\__, | \/   \/___/
+      | |                  __/ |
+      |_|                 |___/
+eXtreme Data
+
+Welcome to Spring XD Shell
+http://localhost:8080:>
+----
+
+The shell prompt shows the URL of the currntly targeted Spring XD server. You should now be able to start using Spring XD.
 
 === Create a Stream
-In Spring XD, a basic stream defines the ingestion of event driven data from a source to a sink that passes through any number of processors. Create a new stream by posting the stream definition to a REST endpoint.  Stream defintions are built from a simple DSL. For example, execute:
 
-  $ curl -X PUT -H 'Content-Type: text/plain' -d "time | log" http://localhost:8080/streams/ticktock
+In Spring XD, a basic stream defines the ingestion of event driven data from a source to a sink that passes through any number of processors. You can create a new stream by issuing a `stream create` command from the XD shell.  Stream defintions are built from a simple DSL. For example, execute:
+
+  http://localhost:8080:> stream create --definition "time | log" --name ticktock
 
 This defines a stream named `ticktock` based off the DSL expression `time | log`.  The DSL uses the "pipe" symbol `|`, to connect a source to a sink. The stream server finds the `time` and `log` definitions in the modules directory and uses them to setup the stream.  In this simple example, the time source simply sends the current time as a message each second, and the log sink outputs it using the logging framework at the WARN logging level.  In the shell where you started the server, you will see log output similar to that listed below
 
@@ -46,13 +66,15 @@ This defines a stream named `ticktock` based off the DSL expression `time | log`
   13:09:54,948  WARN task-scheduler-1 logger.ticktock:141 - 2013-06-11 13:09:54
   13:09:55,949  WARN task-scheduler-2 logger.ticktock:141 - 2013-06-11 13:09:55
 
-To delete the stream, send a `HTTP DELETE` request to the URL you used to create the stream
+To stop the stream, and remove the definition completely, you can use the `stream destroy` command:
 
-  $ curl -X DELETE http://localhost:8080/streams/ticktock
+  http://localhost:8080:>stream destroy --name ticktock
+
+It is also possibly to stop and restart the stream instead, using the `undeploy` and `deploy` commands. The shell supports command completion so you can hit the `tab` key to see which commands and options are available.
 
 === Explore Spring XD
 Learn about the modules available in Spring XD in the link:Sources#sources[Sources], link:Processors#processors[Processors], and link:Sinks#sinks[Sinks] sections of the documentation. 
 
 Don't see what you're looking for? Create a custom module: link:Creating-a-Source-Module#creating-a-source-module[source], link:Creating-a-Processor-Module#creating-a-processor-module[processor] or link:Creating-a-Sink-Module#creating-a-sink-module[sink] (and then consider link:https://github.com/SpringSource/spring-xd/wiki/Contribute[contributing] it back to Spring XD). 
 
-Want to add some analytics to your stream? Check out the link:Taps#taps[Taps] and link:Analytics#analytics[Analytics] sections. 
+Want to add some analytics to your stream? Check out the link:Taps#taps[Taps] and link:Analytics#analytics[Analytics] sections.
