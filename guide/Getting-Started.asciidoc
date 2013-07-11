@@ -29,7 +29,7 @@ The single node option is the easiest to get started with. It runs everything yo
 xd/bin>$ ./xd-singlenode
 ----
 
-In a separate terminal, `cd` into the `shell` directory and start the XD shell, which you can use to issue commands. The shell is a more user-friendly front end to the REST API which Spring XD exposes to clients.
+In a separate terminal, `cd` into the `shell` directory and start the XD shell, which you can use to issue commands.
 
 [source,sh]
 ----
@@ -48,7 +48,9 @@ Welcome to Spring XD Shell
 http://localhost:8080:>
 ----
 
-The shell prompt shows the URL of the currntly targeted Spring XD server. You should now be able to start using Spring XD.
+The shell is a more user-friendly front end to the REST API which Spring XD exposes to clients. The prompt shows the URL of the currently targeted Spring XD server.
+
+You should now be able to start using Spring XD.
 
 === Create a Stream
 
