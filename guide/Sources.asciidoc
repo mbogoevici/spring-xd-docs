@@ -17,9 +17,9 @@ Future releases will provide support for RabbitMQ, JMS, and other currently avai
 [[http]]
 === HTTP
 
-To create a stream definition in the server post using curl
+To create a stream definition in the server using the XD shell
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "http | file" http://localhost:8080/streams/httptest
+    http://localhost:8080> stream create --name httptest --definition "http | file"
 
 Make sure the default output directory exists
 
@@ -41,11 +41,13 @@ port:: The http port where data will be posted *(default: `9000`)*
 
 Here is an example 
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "http --port=9020 | file" http://localhost:8080/streams/httptest9020
+    http://localhost:8080> stream create --name httptest9020 --definition "http --port=9020 | file"
 
-     $ curl -d "hello world" http://localhost:9020
+Post some data to the new port
 
-     $ cat /tmp/xd/output/httptest9020
+    $ curl -d "hello world" http://localhost:9020
+
+    $ cat /tmp/xd/output/httptest9020
 
 [[tail]]
 === Tail
@@ -58,9 +60,9 @@ Create an empty file to tail (this is not needed on some platforms such as Linux
 
      touch /tmp/xd/input/tailtest  
 
-To create a stream definition post using curl
+To create a stream definition using the XD shell
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "tail | file" http://localhost:8080/streams/tailtest
+    http://localhost:8080> stream create --name tailtest --definition "tail | file"
 
 Send some text into the file being monitored 
 
@@ -80,7 +82,7 @@ delay:: on platforms that don't wait for a missing file to appear, how often (ms
 
 Here is an example 
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "tail --name=/tmp/foo --lines=5 | file --name=bar" http://localhost:8080/streams/tailtest
+     http://localhost:8080> stream create --name tailtest --definition "tail --name=/tmp/foo | file --name=bar"
 
      $ echo blah >> /tmp/foo
 
@@ -109,9 +111,9 @@ consumerSecret:: The secret corresponding to the `consumerKey`
 
 To get a `consumerKey` and `consumerSecret` you need to register a twitter application. If you don't already have one set up, you can create an app at the https://dev.twitter.com/apps[Twitter Developers] site to get these credentials.
 
-To create a stream definition in the server post using curl
+To create a stream definition in the server using the XD shell
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query='#springone2gx' | file" http://localhost:8080/streams/springone2gx
+    http://localhost:8080> stream create --name springone2gx --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query='#springone2gx' | file"
 
 Make sure the default output directory for the `file` sink exists
 
@@ -122,7 +124,7 @@ if some data ended up in the file
 
      $ cat /tmp/xd/output/springone2gx
 
-TIP: For both `twittersearch` and `gardenhose` you can fill in in the `conf/twitter.properties` file instead of using the DSL parameters to supply keys and secrets.
+TIP: For both `twittersearch` and `twitterstream` you can fill in in the `conf/twitter.properties` file instead of using the DSL parameters to supply keys and secrets.
 
 [[twitterstream]]
 ==== Twitter Stream
@@ -131,7 +133,7 @@ This source ingests data from Twitter's https://dev.twitter.com/docs/streaming-a
 
 You need to supply all keys and secrets (both consumer and accessToken) to authenticate for this source, so it is easiest if you just add these to the `conf/twitter.properties` file. Stream creation is then straightforward:
 
-     $ curl -d "twitterstream | file" http://localhost:8080/streams/hose
+    http://localhost:8080> stream create --name tweets --definition "twitterstream | file"
 
 The parameters available are pretty much the same as those listed in the https://dev.twitter.com/docs/streaming-apis/parameters[API docs] and unless otherwise stated, the accepted formats are the same.
 
@@ -161,8 +163,8 @@ gemfirePort:: The port on which the GemFire server is running. *(default: `40404
 
 Here is an example. Create two streams: One to write http messages to a Gemfire region named _Stocks_, and another to execute the CQ.
 
-      $ curl -X PUT -H 'Content-Type: text/plain' -d "http --port=9090 | gemfire-json-server --regionName=Stocks" --keyExpression=payload.getField('symbol')" http://localhost:8080/streams/stocks
-      $ curl -X PUT -H 'Content-Type: text/plain' -d "gemfire-cq --query=Select * from /Stocks where symbol='VMW' | file" http://localhost:8080/streams/cqtest
+    http://localhost:8080> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')" 
+    http://localhost:8080> stream create --name cqtest --definition "gemfire-cq --query=Select * from /Stocks where symbol='VMW' | file"
 
 Now send some messages to the stocks stream.
 
@@ -190,11 +192,11 @@ port:: the port on which the system will listen for syslog messages *(default: `
 
 To create a stream definition post using curl
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "syslog-udp --port=1514 | file" http://localhost:8080/streams/syslogtest
+    http://localhost:8080> stream create --name syslogtest --definition "syslog-udp --port=1514 | file"
 
 or
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "syslog-tcp --port=1514 | file" http://localhost:8080/streams/syslogtest
+    http://localhost:8080> stream create --name syslogtest --definition "syslog-tcp --port=1514 | file"
 
 Send a test message to the syslog
 
@@ -221,9 +223,9 @@ Restart the syslog daemon after reconfiguring.
 [[tcp]]
 === TCP
 
-To create a stream definition in the server,  post using curl
+To create a stream definition in the server, use the following XD shell command
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "tcp | file" http://localhost:8080/streams/tcptest
+    http://localhost:8080> stream create --name tcptest --definition "tcp | file"
 
 This will create the default TCP source and send data read from it to the `tcptest` file.
 
@@ -282,7 +284,7 @@ The echo options `-en` allows echo to interpret escape sequences and not send a 
 
 .CRLF Decoder
 
-    $ curl -X PUT -H 'Content-Type: text/plain' -d "tcp | file" http://localhost:8080/streams/tcptest
+    http://localhost:8080> stream create --name tcptest --definition "tcp | file"
 
 This uses the default (CRLF) decoder and port 1234; send some data
 
@@ -294,7 +296,7 @@ See if the data ended up in the file
 
 .LF Decoder
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "tcp --port=1235 --decoder=LF | file" http://localhost:8080/streams/tcptest2
+     http://localhost:8080> stream create --name tcptest2 --definition "tcp --decoder=LF | file"
 
      $ echo -en 'foobar\n' | netcat localhost 1235
 
@@ -302,7 +304,7 @@ See if the data ended up in the file
 
 .NULL Decoder
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "tcp --port=1236 --decoder=NULL | file" http://localhost:8080/streams/tcptest3
+     http://localhost:8080> stream create --name tcptest3 --definition "tcp --decoder=NULL | file"
 
      $ echo -en 'foobar\x00' | netcat localhost 1236
 
@@ -310,7 +312,7 @@ See if the data ended up in the file
 
 .STXETX Decoder
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "tcp --port=1237 --decoder=STXETX | file" http://localhost:8080/streams/tcptest4
+     http://localhost:8080> stream create --name tcptest4 --definition "tcp --decoder=STXETX | file"
 
      $ echo -en '\x02foobar\x03' | netcat localhost 1237
 
@@ -318,7 +320,7 @@ See if the data ended up in the file
 
 .RAW Decoder
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "tcp --port=1238 --decoder=RAW | file" http://localhost:8080/streams/tcptest5
+     http://localhost:8080> stream create --name tcptest5 --definition "tcp --decoder=RAW | file"
 
      $ echo -n 'foobar' | netcat localhost 1238
 
@@ -326,7 +328,7 @@ See if the data ended up in the file
 
 .L1 Decoder
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "tcp --port=1239 --decoder=L1 | file" http://localhost:8080/streams/tcptest6
+     http://localhost:8080> stream create --name tcptest6 --definition "tcp --decoder=L1 | file"
 
      $ echo -en '\x06foobar' | netcat localhost 1239
 
@@ -334,7 +336,7 @@ See if the data ended up in the file
 
 .L2 Decoder
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "tcp --port=1240 --decoder=L2 | file" http://localhost:8080/streams/tcptest7
+     http://localhost:8080> stream create --name tcptest7 --definition "tcp --decoder=L2 | file"
 
      $ echo -en '\x00\x06foobar' | netcat localhost 1240
 
@@ -342,7 +344,7 @@ See if the data ended up in the file
 
 .L4 Decoder
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "tcp --port=1241 --decoder=L4 | file" http://localhost:8080/streams/tcptest8
+     http://localhost:8080> stream create --name tcptest8 --definition "tcp --decoder=L4 | file"
 
      $ echo -en '\x00\x00\x00\x06foobar' | netcat localhost 1241
 
@@ -350,7 +352,7 @@ See if the data ended up in the file
 
 ==== Binary Data Example
 
-     $ curl -X PUT -H 'Content-Type: text/plain' -d "tcp --port=1242 --decoder=L1 | file --binary=true " http://localhost:8080/streams/tcptest9
+     http://localhost:8080> stream create --name tcptest9 --definition "tcp --decoder=L1 | file --binary=true"
 
 Note that we configure the `file` sink with `binary=true` so that a newline is not appended.
 
