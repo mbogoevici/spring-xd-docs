@@ -92,4 +92,10 @@ include::Creating-a-Processor-Module.asciidoc[]
 == Creating a Sink Module
 include::Creating-a-Sink-Module.asciidoc[]
 
+// The following is generated a release-time
+// As a consequence, it needs not be present in the _Sidebar file
+[appendix]
+[[shell-command-reference]]
+== XD Shell Command Reference
+include::ShellReference.asciidoc
 
