@@ -11,6 +11,7 @@ The Sources covered are
 * <<gemfire-cq,Gemfire CQ>>
 * <<syslog, Syslog>>
 * <<tcp, TCP>>
+* <<time, Time>>
 
 Future releases will provide support for RabbitMQ, JMS, and other currently available Spring Integration Adapters.  For information on how to adapt an existing Spring Integration Adapter for use in Spring XD see the section link:Creating-a-Source-Module#creating-a-source-module[Creating a Source Module].
 
@@ -365,3 +366,10 @@ $ hexdump -C /tmp/xd/output/tcptest9
 00000000  66 6f 6f 00 62 61 72 0b                           |foo.bar.|
 00000008
 ----
+
+[[time]]
+=== Time
+The time source will simply emit a String with the current time every so often. It supports the following options:
+
+interval:: how often to emit a message, expressed in seconds *(default: `1` second)*
+format:: how to render the current time, using SimpleDateFormat *(default: `'yyyy-MM-dd HH:mm:ss'`)*
