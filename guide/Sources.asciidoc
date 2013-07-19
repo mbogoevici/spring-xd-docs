@@ -377,10 +377,10 @@ format:: how to render the current time, using SimpleDateFormat *(default: `'yyy
 
 
 [[mqtt]]
-===MQTT
+=== MQTT
 The mqtt source connects to an mqtt server and receives telemetry messages.
 
-====Options
+==== Options
 
 The folllowing options are configured in mqtt.properties in XD_HOME/config
 
