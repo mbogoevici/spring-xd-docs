@@ -12,6 +12,7 @@ The Sources covered are
 * <<syslog, Syslog>>
 * <<tcp, TCP>>
 * <<time, Time>>
+* <<mqtt, MQTT>>
 
 Future releases will provide support for RabbitMQ, JMS, and other currently available Spring Integration Adapters.  For information on how to adapt an existing Spring Integration Adapter for use in Spring XD see the section link:Creating-a-Source-Module#creating-a-source-module[Creating a Source Module].
 
@@ -373,3 +374,27 @@ The time source will simply emit a String with the current time every so often. 
 
 interval:: how often to emit a message, expressed in seconds *(default: `1` second)*
 format:: how to render the current time, using SimpleDateFormat *(default: `'yyyy-MM-dd HH:mm:ss'`)*
+
+
+[[mqtt]]
+===MQTT
+The mqtt source connects to an mqtt server and receives telemetry messages.
+
+====Options
+
+The folllowing options are configured in mqtt.properties in XD_HOME/config
+
+    mqtt.url=tcp://localhost:1883
+    mqtt.default.client.id=xd.mqtt.client.id
+    mqtt.username=guest
+    mqtt.password=guest
+    mqtt.default.topic=xd.mqtt.test
+
+The defaults are set up to connect to the RabbitMQ MQTT adapter on localhost.
+
+Note that the client id must be no more than 19 characters; this is because `.src` is added and the id must be no more than 23 characters.
+
+clientId:: Identifies the client - overrides the default above.
+topics:: The topics to which the source will subscribe - overrides the default above.
+
+
