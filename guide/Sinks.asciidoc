@@ -16,6 +16,8 @@ The Sinks covered are
 
 * <<splunk,Splunk Server>>
 
+* <<mqtt, MQTT>>
+
 See the section link:Creating-a-Sink-Module#creating-a-sink-module[Creating a Sink Module] for information on how to create sink modules using other Spring Integration Adapters.
 
 [[log_sinks]]
@@ -274,3 +276,29 @@ The TCP port number to where XD will send the data *(default: `9500`)*
 An example stream would be to take data from a twitter search and push it through to a splunk instance.
 
     http://localhost:8080:> stream create --name springone2gx --definition "twittersearch --consumerKey= --consumerSecret= --query='#LOTR' | splunk"
+
+[[mqtt]]
+=== MQTT
+The mqtt sink connects to an mqtt server and publishes telemetry messages.
+
+==== Options
+
+The folllowing options are configured in mqtt.properties in XD_HOME/config
+
+    mqtt.url=tcp://localhost:1883
+    mqtt.default.client.id=xd.mqtt.client.id
+    mqtt.username=guest
+    mqtt.password=guest
+    mqtt.default.topic=xd.mqtt.test
+
+The defaults are set up to connect to the RabbitMQ MQTT adapter on localhost.
+
+Note that the client id must be no more than 19 characters; this is because `.snk` is added and the id must be no more than 23 characters.
+
+clientId:: Identifies the client - overrides the default above.
+topic:: The topic to which the sink will publish - overrides the default above.
+qos:: The Quality of Service (default: 1)
+retained:: Whether the retained flag is set (default: false)
+
+
+
