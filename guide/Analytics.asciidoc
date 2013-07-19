@@ -6,6 +6,7 @@ We'll look at the following metrics
 
 * <<counter,Counter>>
 * <<field-value-counter,Field Value Counter>>
+* <<aggregate-counter, Aggregate Counter>>
 * <<gauge,Gauge>>
 * <<rich-gauge,Rich Gauge>>
 
@@ -91,6 +92,39 @@ The _twittersearch_ source produces JSON strings which contain the user id of th
 
    $ redis-cli
    redis 127.0.0.1:6379>zrange fieldvaluecounters.fromUser 0 -1 withscores 
+
+[[aggregate-couter]]
+=== Aggregate Counter
+
+The aggregate counter differs from a simple counter in that it not only keeps a total value for the count, but also retains the total count values for each minute, hour day and month of the period for which it is run. The data can then be queried by supplying a start and end date and the resolution at which the data should be returned. 
+
+Creating an aggregate counter is very similar to a simple counter. For example, to obtain an aggregate count for our spring tweets stream:
+   
+    http://localhost:8080:> stream create --name springtweets --definition "twittersearch --query=spring | file"
+
+you'd simply create a tap which pipes the input to `aggregatecounter`:
+
+   http://localhost:8080:> tap create --name tweettap --definition "tap @ springtweets | aggregatecounter --name=tweetcount"
+
+The Redis back-end stores the aggregate counts in buckets prefixed with `aggregatecounters.${name}`. The rest of the string contains the date information. So for our `tweetcount` counter you might see something like the following keys appearing in Redis:
+
+    redis 127.0.0.1:6379> keys aggregatecounters*
+    1) "aggregatecounters.tweetcount.total"
+    2) "aggregatecounters.tweetcount.years"
+    3) "aggregatecounters.tweetcount.2013"
+    4) "aggregatecounters.tweetcount.201307"
+    5) "aggregatecounters.tweetcount.20130719"
+    6) "aggregatecounters.tweetcount.2013071914"
+
+The general format is
+    
+    . One total value
+    . One years hash with a field per year eg. { 2010: value, 2011: value }
+    . One hash per year with a field per month { 01: value, ...}
+    . One hash per month with a field per day
+    . One hash per day with a field per hour
+    . One hash per hour with a field per minute
+
 
 [[gauge]]
 === Gauge
