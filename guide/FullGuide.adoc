@@ -92,6 +92,11 @@ include::Creating-a-Processor-Module.asciidoc[]
 == Creating a Sink Module
 include::Creating-a-Sink-Module.asciidoc[]
 
+[appendix]
+[[building-spring-xd]]
+== Building Spring XD 
+include:Building-Spring-XD.asciidoc[]
+
 // The following is generated at release-time
 // As a consequence, it needs not be present in the _Sidebar file
 [appendix]
