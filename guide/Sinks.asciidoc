@@ -16,7 +16,7 @@ The Sinks covered are
 
 * <<splunk,Splunk Server>>
 
-* <<mqtt, MQTT>>
+* <<mqtt_sink, MQTT>>
 
 See the section link:Creating-a-Sink-Module#creating-a-sink-module[Creating a Sink Module] for information on how to create sink modules using other Spring Integration Adapters.
 
@@ -277,7 +277,7 @@ An example stream would be to take data from a twitter search and push it throug
 
     http://localhost:8080:> stream create --name springone2gx --definition "twittersearch --consumerKey= --consumerSecret= --query='#LOTR' | splunk"
 
-[[mqtt]]
+[[mqtt_sink]]
 === MQTT
 The mqtt sink connects to an mqtt server and publishes telemetry messages.
 
