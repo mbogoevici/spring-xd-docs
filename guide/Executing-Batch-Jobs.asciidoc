@@ -34,7 +34,7 @@ Please ensure that you deploy this class as part of a Jar file to the Spring XD 
 
 ==== Setting Up the Application Context
 
-Under *modules/job*, in the Spring XD home directory, please create the following XML Application context file named *job.xml*: 
+Under *modules/job*, in the Spring XD home directory, please create the following XML Application context file named *myjob.xml*: 
 
 [source,xml]
 ----
@@ -74,13 +74,13 @@ In order to execute the Batch Job, several options exist:
 ==== Execute the Batch Job Once (Immediately)
 
 ----
-curl -X PUT -H 'Content-Type: text/plain' -d "job" http://localhost:8080/streams/helloSpringXD
+http://localhost:8080:> job create --name helloSpringXD --definition "myjob"
 ----
 
 ==== Execute the Batch Job using an AdHoc Cron Expression
 
 ----
-curl -X PUT -H 'Content-Type: text/plain' -d "job --cron='*/10 * * * * *'" http://localhost:8080/streams/helloSpringXD
+http://localhost:8080:> job create --name helloSpringXD --definition "myjob --cron='*/10 * * * * *'"
 ----
 
 ==== Execute the Batch using a named Cron-Trigger
@@ -88,13 +88,14 @@ curl -X PUT -H 'Content-Type: text/plain' -d "job --cron='*/10 * * * * *'" http:
 You can explicitly create a named Trigger using:
 
 ----
-curl -X PUT -H 'Content-Type: text/plain' -d "trigger --cron='*/10 * * * * *'" http://localhost:8080/streams/mytrigger
+http://localhost:8080:> trigger create --name mytrigger --definition "trigger --cron='*/10 * * * * *'"
+
 ----
 
 The trigger will be added to the Common Context, which is shared across Plugins. Once the Trigger is created, we can reference the trigger when setting up the Batch Job:
 
 ----
-curl -X PUT -H 'Content-Type: text/plain' -d "job --trigger=mytrigger" http://localhost:8080/streams/helloWorldJob
+http://localhost:8080:> job create --name helloWorldJob --definition "myjob --trigger=mytrigger"
 ----
 
 === Removing Batch Jobs and Triggers 
@@ -104,15 +105,23 @@ curl -X PUT -H 'Content-Type: text/plain' -d "job --trigger=mytrigger" http://lo
 Batch Jobs can be deleted by executing:
 
 ----
-curl -X DELETE -H 'Content-Type: text/plain' http://localhost:8080/streams/helloSpringXD
+http://localhost:8080:> job destroy --name helloSpringXD
 ----
+
+Alternatively, one can just undeploy the job, keeping its definition around for a future redeployment:
+
+----
+http://localhost:8080:> job undeploy --name helloSpringXD
+----
+
+
 
 ==== Removing the Cron Trigger
 
 Cron Triggers can be deleted by executing:
 
 ----
-curl -X DELETE -H 'Content-Type: text/plain' http://localhost:8080/streams/helloSpringXD
+http://localhost:8080:> trigger destroy --name mytrigger
 ----
 
 NOTE: Be advised that when removing Triggers from the Context they may still be referenced by running Batch Jobs.
