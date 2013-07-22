@@ -4,9 +4,16 @@ A Tap allows you to "listen in" to data from another stream and process the data
 
 A tap acts like a source in that it occurs as the first module within a stream and can pipe its output to a sink (and/or one or more processors added to a chain before the ultimate sink), but for a tap the messages are actually those being processed by some other stream.  
 
-The syntax for creating a tap is:
+The DSL syntax for creating a tap is:
 
    tap @ <target stream>
+
+To create a tap using the shell, use the following command (assuming you want to tap into the "foo1" stream, which we'll create first):
+
+----
+http://localhost:8080:> stream create --name foo1 --definition "time | log"
+http://localhost:8080:> stream tap --name tapname --definition "tap @ foo1 | log"
+----
 
 A tap can consume data from any point along the target stream's proessing pipeline. For example, if you have a stream called `mystream`, defined as
 
