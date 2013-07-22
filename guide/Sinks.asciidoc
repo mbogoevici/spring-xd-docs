@@ -259,7 +259,7 @@ The login name that has rights to send data to the tcp-port *(default: `admin`)*
 password::
 The password associated with the username *(default: `password`)*
 owner::
-The owner of the tcp-port *(default: `admin1)*
+The owner of the tcp-port *(default: `admin1`)*
 tcp-port::
 The TCP port number to where XD will send the data *(default: `9500`)*
 
