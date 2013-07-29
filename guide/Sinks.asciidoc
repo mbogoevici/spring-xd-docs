@@ -10,6 +10,8 @@ The Sinks covered are
 
 * <<hdfs, HDFS>>
 
+* <<jdbc_sink, JDBC>>
+
 * <<tcp_sinks, TCP>>
 
 * <<gemfire,GemFire Server>>
@@ -104,6 +106,14 @@ directory:: where to output the files in the Hadoop FileSystem *(default: `/xd/<
 filename:: the base filename to use for the created files (a counter will be appended before the file extension). *(default: `<streamname>`)*
 suffix:: the file extension to use *(default: `log`)*
 rollover:: when to roll files over, expressed in bytes *(default: `1000000`, roughly 1MB)*
+
+[[hdfs]]
+=== JDBC
+
+==== JDBC with Options
+
+The JDBC Sink has the following options:
+
 
 [[tcp_sinks]]
 === TCP
