@@ -114,6 +114,11 @@ rollover:: when to roll files over, expressed in bytes *(default: `1000000`, rou
 
 The JDBC Sink has the following options:
 
+configProperties:: base name of properties file containing configuration options for the sink. This file should contain the usual JDBC properties - driverClass, url, username, password *(default: `jdbc`)*
+initializeDatabase:: whether to initialize the database using theinitializer script (the default propertry file jdbc.properties has this set to true) *(default: `false`)*
+initializerScript:: the file name for the script containing SQL statements used to initialize the database when the sink starts (will search config directory for this file) *(default: `init_db.sql`)*
+tablename:: the name of the table to insert payload data into *(default: `/xd/<streamname>`)*
+columns:: comma separated list of column names to include in the insert statement. Use 'payload' to include the entire message payload into a payload column. *(default: `payload`)*
 
 [[tcp_sinks]]
 === TCP
@@ -309,6 +314,5 @@ clientId:: Identifies the client - overrides the default above.
 topic:: The topic to which the sink will publish - overrides the default above.
 qos:: The Quality of Service (default: 1)
 retained:: Whether the retained flag is set (default: false)
-
 
 
