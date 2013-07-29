@@ -142,7 +142,7 @@ This should result in something similar to the following output:
   2013-07-29 12:05:55
   2013-07-29 12:05:56
   2013-07-29 12:05:57
-  
+   
   Fetched 10 rows.
 
 ==== JDBC with Options
