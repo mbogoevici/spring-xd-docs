@@ -114,6 +114,22 @@ The JDBC sink can be used to insert message payload data into a relational datab
 
 The payload data will be inserted as is if the columns to be used is specified as 'payload'. This is the default behavior. If you specify any other column names the payload data will be assumed to be a JSON document that will be converted to a hash map. This hash map will be used to populate the data values for the SQL insert statement. There will be one insert statement executed for each message.
 
+To create a stream using a `jdbc` sink relying on all defaults you would use a command like
+
+  http://localhost:8080:> stream create --name myjdbc --definition "time | jdbc"
+
+This will insert the time messages into a 'payload' column in a table named 'myjdbc'. Since the default is using an in-memory HSQLDB database we can't connect to this database instance from an external tool. In order to do that we need to alter the connection properties. We can either modify the 'config/jdbc.properties' file or provide the 'url' property when we create the stream. Here is an example of the latter:
+
+  http://localhost:8080:> stream create --name mydata --definition "time | jdbc --url='jdbc:hsqldb:file:/tmp/xd/test'"
+ 
+We let the stream run for a little while and then destroy it so we can look at the data stored in the database.
+
+  http://localhost:8080:> stream destroy --name mydata
+
+You can use the above database URL from your favorite SQL tool or we can use the HSQL provided SQL Tool to run a quick query:
+ 
+  java -cp $XD_HOME/lib/hsqldb-1.8.0.10.jar org.hsqldb.util.SqlTool --inlineRc url=jdbc:hsqldb:file:/tmp/xd/test,user=sa,password= --sql "select * from mydata;"
+
 ==== JDBC with Options
 
 The JDBC Sink has the following options:
@@ -318,5 +334,4 @@ clientId:: Identifies the client - overrides the default above.
 topic:: The topic to which the sink will publish - overrides the default above.
 qos:: The Quality of Service (default: 1)
 retained:: Whether the retained flag is set (default: false)
-
 
