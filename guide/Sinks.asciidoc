@@ -132,18 +132,17 @@ You can use the above database URL from your favorite SQL tool or we can use the
 
 This should result in something similar to the following output:
 
-| 2013-07-29 12:05:48
-| 2013-07-29 12:05:49
-| 2013-07-29 12:05:50
-| 2013-07-29 12:05:51
-| 2013-07-29 12:05:52
-| 2013-07-29 12:05:53
-| 2013-07-29 12:05:54
-| 2013-07-29 12:05:55
-| 2013-07-29 12:05:56
-| 2013-07-29 12:05:57
-|
-| Fetched 10 rows.
+  2013-07-29 12:05:48
+  2013-07-29 12:05:49
+  2013-07-29 12:05:50
+  2013-07-29 12:05:51
+  2013-07-29 12:05:52
+  2013-07-29 12:05:53
+  2013-07-29 12:05:54
+  2013-07-29 12:05:55
+  2013-07-29 12:05:56
+  2013-07-29 12:05:57	
+  Fetched 10 rows.
 
 ==== JDBC with Options
 
@@ -349,4 +348,3 @@ clientId:: Identifies the client - overrides the default above.
 topic:: The topic to which the sink will publish - overrides the default above.
 qos:: The Quality of Service (default: 1)
 retained:: Whether the retained flag is set (default: false)
-
