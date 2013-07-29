@@ -126,9 +126,44 @@ We let the stream run for a little while and then destroy it so we can look at t
 
   http://localhost:8080:> stream destroy --name mydata
 
-You can use the above database URL from your favorite SQL tool or we can use the HSQL provided SQL Tool to run a quick query:
+You can use the above database URL from your favorite SQL tool or we can use the HSQL provided SQL Tool to run a quick query from the command line:
  
-  java -cp $XD_HOME/lib/hsqldb-1.8.0.10.jar org.hsqldb.util.SqlTool --inlineRc url=jdbc:hsqldb:file:/tmp/xd/test,user=sa,password= --sql "select * from mydata;"
+  $ java -cp $XD_HOME/lib/hsqldb-1.8.0.10.jar org.hsqldb.util.SqlTool --inlineRc url=jdbc:hsqldb:file:/tmp/xd/test,user=sa,password= --sql "select payload from mydata;"
+
+This should result in something similar to the following output:
+
+  2013-07-29 12:05:28
+  2013-07-29 12:05:29
+  2013-07-29 12:05:30
+  2013-07-29 12:05:31
+  2013-07-29 12:05:32
+  2013-07-29 12:05:33
+  2013-07-29 12:05:34
+  2013-07-29 12:05:35
+  2013-07-29 12:05:36
+  2013-07-29 12:05:37
+  2013-07-29 12:05:38
+  2013-07-29 12:05:39
+  2013-07-29 12:05:40
+  2013-07-29 12:05:41
+  2013-07-29 12:05:42
+  2013-07-29 12:05:43
+  2013-07-29 12:05:44
+  2013-07-29 12:05:45
+  2013-07-29 12:05:46
+  2013-07-29 12:05:47
+  2013-07-29 12:05:48
+  2013-07-29 12:05:49
+  2013-07-29 12:05:50
+  2013-07-29 12:05:51
+  2013-07-29 12:05:52
+  2013-07-29 12:05:53
+  2013-07-29 12:05:54
+  2013-07-29 12:05:55
+  2013-07-29 12:05:56
+  2013-07-29 12:05:57
+
+  Fetched 30 rows.
 
 ==== JDBC with Options
 
