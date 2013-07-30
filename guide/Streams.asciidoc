@@ -58,10 +58,10 @@ which will produce the following output from the server
   processing module 'Module [name=log, type=sink]' from group 'myhttpstream' with index: 1
   processing module 'Module [name=http, type=source]' from group 'myhttpstream' with index: 0
 
-Note that we don't see any other output this time until we actually post some data
+Note that we don't see any other output this time until we actually post some data (using shell command)
 
-  $ curl -d "hello" http://localhost:9000
-  $ curl -d "goodbye" http://localhost:9000
+  http://localhost:8080:>post httpsource --target http://localhost:9000 --data "hello"
+  http://localhost:8080:>post httpsource --target http://localhost:9000 --data "goodbye"
 
 and the stream will then funnel the data from the http source to the output log implemented by the log sink
 
@@ -80,9 +80,9 @@ To create this stream enter the following command in the shell
 
     http://localhost:8080:> stream deploy --definition "http | transform --expression=payload.toUpperCase() | log" --name myprocstrem
 
-Posting some data
+Posting some data (using shell command)
 
-  $ curl -d "hello" http://localhost:9000
+  http://localhost:8080:>post httpsource --target http://localhost:9000 --data "hello"
 
 Will result in an uppercased 'hello' in the log
 
@@ -99,4 +99,3 @@ In the examples above, we connected a source to a sink using the pipe symbol `|`
 If you know a bit about Spring configuration files, you can inspect the module definition to see which properties it exposes. Alternatively, you can read more in the link:Sources#sources[source] and link:Sinks#sinks[sink] documentation.
 
 The Spring XD M2 release will provide a DSL for non-linear flows, e.g. a directed graph.
-
