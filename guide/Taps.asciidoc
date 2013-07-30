@@ -15,7 +15,7 @@ http://localhost:8080:> stream create --name foo1 --definition "time | log"
 http://localhost:8080:> stream tap --name tapname --definition "tap @ foo1 | log"
 ----
 
-A tap can consume data from any point along the target stream's proessing pipeline. For example, if you have a stream called `mystream`, defined as
+A tap can consume data from any point along the target stream's processing pipeline. For example, if you have a stream called `mystream`, defined as
 
 ----
 source | filter | transformer | sink
