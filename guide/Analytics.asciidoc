@@ -93,7 +93,7 @@ The _twittersearch_ source produces JSON strings which contain the user id of th
    $ redis-cli
    redis 127.0.0.1:6379>zrange fieldvaluecounters.fromUser 0 -1 withscores 
 
-[[aggregate-couter]]
+[[aggregate-counter]]
 === Aggregate Counter
 
 The aggregate counter differs from a simple counter in that it not only keeps a total value for the count, but also retains the total count values for each minute, hour day and month of the period for which it is run. The data can then be queried by supplying a start and end date and the resolution at which the data should be returned. 
