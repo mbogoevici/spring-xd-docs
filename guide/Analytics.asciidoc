@@ -150,7 +150,7 @@ Next create the tap:
 
 Now Post a message to the ingest stream:
 
-    $ curl -d "10" http://localhost:9090
+    http://localhost:8080:> post httpsource --target http://localhost:9090 --data "10"
 
 Check the gauge:
 
@@ -183,9 +183,9 @@ Next create the tap:
 
 Now Post some messages to the ingest stream:
 
-    $ curl -d "10" http://localhost:9090
-    $ curl -d "13" http://localhost:9090
-    $ curl -d "16" http://localhost:9090
+    http://localhost:8080:> post httpsource --target http://localhost:9090 --data "10"
+    http://localhost:8080:> post httpsource --target http://localhost:9090 --data "13"
+    http://localhost:8080:> post httpsource --target http://localhost:9090 --data "16"
 
 Check the gauge:
 
@@ -210,9 +210,9 @@ Next create the tap, using the json-field-extractor to extract the stock price f
 
 Now Post some messages to the ingest stream:
 
-    $ curl -d "{\"symbol\":\"VMW\",\"price\":72.04}" http://localhost:9000
-    $ curl -d "{\"symbol\":\"VMW\",\"price\":72.06}" http://localhost:9000
-    $ curl -d "{\"symbol\":\"VMW\",\"price\":72.08}" http://localhost:9000
+    http://localhost:8080:> post httpsource --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.04}"
+    http://localhost:8080:> post httpsource --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.06}"
+    http://localhost:8080:> post httpsource --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.08}"
 
 Check the gauge:
 
@@ -241,13 +241,13 @@ Next create the taps, using the json-field-extractor to extract the stock price 
 
 Now Post some messages to the ingest stream:
 
-    $ curl -d "{\"symbol\":\"VMW\",\"price\":72.04}" http://localhost:9000
-    $ curl -d "{\"symbol\":\"VMW\",\"price\":72.06}" http://localhost:9000
-    $ curl -d "{\"symbol\":\"VMW\",\"price\":72.08}" http://localhost:9000
+    http://localhost:8080:> post httpsource --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.04}"
+    http://localhost:8080:> post httpsource --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.06}"
+    http://localhost:8080:> post httpsource --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.08}"
 
-    $ curl -d "{\"symbol\":\"EMC\",\"price\":24.92}" http://localhost:9000
-    $ curl -d "{\"symbol\":\"EMC\",\"price\":24.90}" http://localhost:9000
-    $ curl -d "{\"symbol\":\"EMC\",\"price\":24.96}" http://localhost:9000
+    http://localhost:8080:> post httpsource --target http://localhost:9000 --data "{\"symbol\":\"EMC\",\"price\":24.92}"
+    http://localhost:8080:> post httpsource --target http://localhost:9000 --data "{\"symbol\":\"EMC\",\"price\":24.90}"
+    http://localhost:8080:> post httpsource --target http://localhost:9000 --data "{\"symbol\":\"EMC\",\"price\":24.96}"
 
 Check the gauge:
 
