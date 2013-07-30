@@ -65,35 +65,49 @@ You can cutomize the behavior and specify the `name` and `dir` properties of the
 === Hadoop (HDFS)
 
 
-First install and start Hadoop as described in our link:Hadoop-Installation#hadoop-installation[separate guide]. It's assumed HDFS is running on port 9000 (the default).
-
-You should then be able to use the `hdfs` sink when creating a link:Streams#streams[stream]
+First install and start Hadoop as described in our link:Hadoop-Installation#hadoop-installation[separate guide]. Once Hadoop is up and running, you can then use the `hdfs` sink when creating a link:Streams#streams[stream]
 
   http://localhost:8080:> stream create --name myhdfsstream --definition "http --port=8000 | hdfs --rollover=10"
 
 Note that we've set the `rollover` parameter to a small value for this exercise. This is just to avoid buffering, so that we can actually see the data has made it into HDFS.
 
-As in the above examples, we've used the `http` source on port 8000, so we can post some data again using
+As in the above examples, we've used the `http` source on port 8000, so we can post some data using the shell's built int http post command
+
+  http://localhost:8080:> post httpsource --target http://localhost:8000 --data hello
+
+Which is the equivalent to using curl
 
   $ curl -d "hello" http://localhost:8000
 
 Repeat the command a few times.
 
-If you list the hadoop filesystem contents using `hadoop fs -ls /`, you should see that an `xd` directory has appeared in the root with a sub-directory named after our stream
+You can then list the contents of the hadoop filesystem using the shell's built in hadoop fs commands.  You will first need to configure the shell to point to your name node using the hadoop config command
+
+    http://localhost:8080:>hadoop config fs --namenode localhost:8020
+
+By default the hdfs protocol is used to access hadoop.  then list the contents of the root directory
+
+    http://localhost:8080:>hadoop fs ls /
+    Found 1 items
+    drwxr-xr-x   - mpollack supergroup          0 2013-07-30 02:34 /xd
+
+You should see that an `xd` directory has appeared in the root with a sub-directory named after our stream.  This is equivalent to using the hadoop command line utility
 
   $ hadoop dfs -ls /xd
   Found 1 items
-  drwxr-xr-x   - luke supergroup          0 2013-05-28 14:53 /xd/myhdfsstream
+  drwxr-xr-x   - mpollack supergroup          0 2013-07-30 02:34 /xd
 
 And there will be one or more log files in there depending how many times you ran the command to post the data
 
-  $ hadoop dfs -ls /xd/myhdfsstream
-  Found 1 items
-  -rw-r--r--   3 luke supergroup          0 2013-05-28 14:53 /xd/myhdfsstream/myhdfsstream-0.log
+  http://localhost:8080:>hadoop fs ls /xd/myhdfsstream
+  Found 3 items
+  -rw-r--r--   3 mpollack supergroup         12 2013-07-30 02:34 /xd/myhdfsstream/myhdfsstream-0.log
+  -rw-r--r--   3 mpollack supergroup         12 2013-07-30 02:39 /xd/myhdfsstream/myhdfsstream-1.log
+  -rw-r--r--   3 mpollack supergroup          0 2013-07-30 02:39 /xd/myhdfsstream/myhdfsstream-2.log
 
-You can examine the file contents using `hadoop fs -cat`
+You can examine the file contents using the shell's `hadoop fs cat` command
 
-  $ hadoop dfs -cat /xd/myhdfsstream/myhdfsstream-0.log
+  http://localhost:8080:>hadoop fs cat /xd/myhdfsstream/myhdfsstream-0.log
   hello
   hello
 
