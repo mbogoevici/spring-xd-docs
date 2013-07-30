@@ -23,7 +23,7 @@ The simplest way to use the filter processor is to pass a SpEL expression when c
 
 This filter will only pass Messages to the log sink if the payload is the word "good". Try sending "good" to the HTTP endpoint and you should see it in the XD log:
 
-    $ curl -d "good" http://localhost:9000
+    http://localhost:8080:>post httpsource --target http://localhost:9000 --data "good"
 
 Alternatively, if you send the word "bad" (or anything else), you shouldn't see the log entry.
 
@@ -42,7 +42,7 @@ Use this filter to only pass messages to the output channel if they contain a sp
 
 This filter will only pass Messages to the log sink if the JSON payload contains the _firstName_ "John". Try sending this payload to the HTTP endpoint and you should see it in the XD log:
 
-    $ curl -d "{\"firstName\":\"John\", \"lastName\":\"Smith\"}" http://localhost:9002
+    http://localhost:8080:>post httpsource --target http://localhost:9002 --data "{\"firstName\":\"John\", \"lastName\":\"Smith\"}"
 
 Alternatively, if you send a different _firstName_, you shouldn't see the log entry.
 
@@ -57,7 +57,7 @@ The simplest way to use the transform processor is to pass a SpEL expression whe
 
 This transform will convert all message payloads to the word "FOO". Try sending something to the HTTP endpoint and you should see "FOO" in the XD log:
 
-    $ curl -d "some message" http://localhost:9003
+    http://localhost:8080:>post httpsource --target http://localhost:9003 --data "some message"
 
 ==== Transform with Groovy Script
 For more complex transformations, you can pass the location of a Groovy script using the _script_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
@@ -74,7 +74,7 @@ This processor converts a JSON message payload to the value of a specific JSON f
 
 Try sending this payload to the HTTP endpoint and you should see just the value "John" in the XD log:
 
-    $ curl -d "{\"firstName\":\"John\", \"lastName\":\"Smith\"}" http://localhost:9005
+    http://localhost:8080:>post httpsource --target http://localhost:9005 --data "{\"firstName\":\"John\", \"lastName\":\"Smith\"}"
 
 [[script]]
 === Script
