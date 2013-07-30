@@ -31,7 +31,7 @@ Make sure the default output directory exists
 
 Post some data to the http server on the default port of 9000
 
-     $ curl -d "hello world" http://localhost:9000
+     http://localhost:8080:>post httpsource --target http://localhost:9000 --data "hello world"
 
 See if the data ended up in the file
 
@@ -49,7 +49,7 @@ Here is an example
 
 Post some data to the new port
 
-    $ curl -d "hello world" http://localhost:9020
+    http://localhost:8080:>post httpsource --target http://localhost:9020 --data "hello world"
 
     $ cat /tmp/xd/output/httptest9020
 
@@ -172,9 +172,9 @@ Here is an example. Create two streams: One to write http messages to a Gemfire 
 
 Now send some messages to the stocks stream.
 
-     $ curl -d "{\"symbol\":\"VMW\", \"price\":73}" http:localhost:9090
-     $ curl -d "{\"symbol\":\"VMW\", \"price\":78}" http:localhost:9090
-     $ curl -d "{\"symbol\":\"VMW\", \"price\":80}" http:localhost:9090
+     http://localhost:8080:>post httpsource --target http://localhost:9090 --data "{\"symbol\":\"VMW\", \"price\":73}"
+     http://localhost:8080:>post httpsource --target http://localhost:9090 --data "{\"symbol\":\"VMW\", \"price\":78}"
+     http://localhost:8080:>post httpsource --target http://localhost:9090 --data "{\"symbol\":\"VMW\", \"price\":80}"
 
 The _cqtest_ stream is now listening for any stock quote updates for VMW. Presumably, another process is updating the cache. You may create a separate stream to test this (see https://github.com/SpringSource/spring-xd/wiki/GemfireServer[GemfireServer] for instructions).
 
@@ -194,7 +194,7 @@ Two syslog sources are provided: `syslog-udp` and `syslog-tcp`. They both suppor
 
 port:: the port on which the system will listen for syslog messages *(default: `11111`)*
 
-To create a stream definition post using curl
+To create a stream definition (using shell command)
 
     http://localhost:8080:> stream create --name syslogtest --definition "syslog-udp --port=1514 | file"
 
@@ -396,5 +396,4 @@ Note that the client id must be no more than 19 characters; this is because `.sr
 
 clientId:: Identifies the client - overrides the default above.
 topics:: The topics to which the source will subscribe - overrides the default above.
-
 
