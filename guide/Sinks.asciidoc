@@ -31,7 +31,7 @@ Probably the simplest option for a sink is just to log the data. The `log` sink 
 
 You can then try adding some data. We've used the `http` source on port 8000 here, so run the following command to send a message
 
-  $ curl -d "hello" http://localhost:8000
+  http://localhost:8080:>post httpsource --target http://localhost:8000 --data "hello"
 
 and you should see the following output in the XD container console.
 
@@ -50,7 +50,7 @@ Another simple option is to stream data to a file on the host OS. This can be do
 
 We've used the `http` source again, so run the following command to send a message
 
-  $ curl -d "hello" http://localhost:8000
+  http://localhost:8080:>post httpsource --target http://localhost:8000 --data "hello"
 
 The `file` sink uses the stream name as the default name for the file it creates, and places the file in the `/tmp/xd/output/` directory.
 
@@ -73,7 +73,7 @@ Note that we've set the `rollover` parameter to a small value for this exercise.
 
 As in the above examples, we've used the `http` source on port 8000, so we can post some data using the shell's built int http post command
 
-  http://localhost:8080:> post httpsource --target http://localhost:8000 --data hello
+  http://localhost:8080:>post httpsource --target http://localhost:8000 --data "hello"
 
 Which is the equivalent to using curl
 
@@ -303,7 +303,8 @@ We want this to be cached using the stock symbol as the key. The stream definiti
 The keyExpression is a SpEL expression that depends on the payload type. In this case, _com.gemstone.org.json.JSONObject. JSONObject_ which  provides the _getField_ method. To run this example:
 
     http://localhost:8080:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')"
-    $ curl -d "{\"symbol\":\"VMW\", \"price\":73}" http://localhost:9090
+    
+    http://localhost:8080:>post httpsource --target http://localhost:9090 --data "{\"symbol\":\"VMW\", \"price\":73}"
 
 This will write an entry to the GemFire _Stocks_ region with the key _VMW_. You should see a message on STDOUT for the process running the GemFire server like:
 
