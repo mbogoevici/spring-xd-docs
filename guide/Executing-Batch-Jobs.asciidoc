@@ -92,6 +92,15 @@ http://localhost:8080:> trigger create --name mytrigger --definition "trigger --
 
 ----
 
+==== Execute the Batch using a named Fixed-Rate-Trigger
+
+You can explicitly create a named Trigger using:
+
+----
+http://localhost:8080:> trigger create --name mytrigger --definition "trigger --fixedRate='5000'"
+
+----
+==== Using a named trigger with the job
 The trigger will be added to the Common Context, which is shared across Plugins. Once the Trigger is created, we can reference the trigger when setting up the Batch Job:
 
 ----
@@ -124,7 +133,7 @@ Cron Triggers can be deleted by executing:
 http://localhost:8080:> trigger destroy --name mytrigger
 ----
 
-NOTE: Be advised that when removing Triggers from the Context they may still be referenced by running Batch Jobs.
+NOTE: Be advised that when removing Triggers from the Context they may still be referenced by running Batch Jobs.  Batch jobs that were created to use a trigger will continue to run on the schedule defined by the trigger even though it was destroyed.
 
 
  
