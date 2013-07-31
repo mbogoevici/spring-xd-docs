@@ -31,7 +31,7 @@ If the parameter value needs to embed a single quote, use two single quotes:
 
 === Stream composition
 
-As an aid to avoid individual stream definitions getting too complex and hard to follow, XD allows stream composition
+As an aid to avoiding individual stream definitions getting too complex and hard to follow, XD allows stream composition
 where more basic abstract streams can be combined into a larger and more sophisticated stream.
 An abstract stream represents a reusable module sequence that can include module customization or even parameterization
 which can then be reused simply by referring to it. They are called abstract because they are not deployable by themselves.
@@ -47,6 +47,7 @@ it is defined, the name is typically supplied as a separate parameter in the she
  
 For the single module case, on reuse it is possible to add further configuration:
 
+  // In addition to using port 7261, the http instance will have the specified timeout
   myhttp --timeout=300 | log
 
 A sequence of modules can reused:
@@ -81,7 +82,7 @@ Here is a typical stream:
 
   http | filter | transform | log
 
-It can be broken into pieces using channel references:
+It can be broken into pieces using named channels:
 
   // Use the 'foo' channel as a sink
   http | filter > :foo
@@ -140,7 +141,7 @@ When used for grouping a series of modules might share the same label:
 
   mystream = http | group1: filter | group1: transform | file
 
-Refering to the label `group1` then effectively refers to all the labeled modules. This is not
+Referring to the label `group1` then effectively refers to all the labeled modules. This is not
 yet exploited in XD but in future may be used for something like configuring deployment options:
 
   // Ensure all modules in group1 are on the same machine
