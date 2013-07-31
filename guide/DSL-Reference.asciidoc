@@ -29,6 +29,80 @@ If the parameter value needs to embed a single quote, use two single quotes:
   // Query is: Select * from /Customers where name='Smith'
   scan --query='Select * from /Customers where name=''Smith'''
 
+=== Stream composition
+
+As an aid to avoid individual stream definitions getting too complex and hard to follow, XD allows stream composition
+where more basic abstract streams can be combined into a larger and more sophisticated stream.
+An abstract stream represents a reusable module sequence that can include module customization or even parameterization
+which can then be reused simply by referring to it. They are called abstract because they are not deployable by themselves.
+This is easiest to understand by example.
+
+(Note: The `name =` is just a convenience here to indicate the name the stream is being given when
+it is defined, the name is typically supplied as a separate parameter in the shell)
+
+  // Define myhttp, a reusable version of http configured to use a non-default prot
+  myhttp = http --port=7261
+  // Refer to myhttp to use it in constructing a deployable stream
+  myhttp | log
+ 
+For the single module case, on reuse it is possible to add further configuration:
+
+  myhttp --timeout=300 | log
+
+A sequence of modules can reused:
+
+  // Sequence of modules that work on a string
+  stringProcessor = transform --expression=payload.trim() | transform --expression=payload.toUpperCase()
+  // Use that as a building block
+  http | stringProcessor | log
+
+Modules can be parameterized using `${variablename}` syntax:
+
+  obfuscator = transform --expression=payload.replaceAll('${word}','*');
+  // Supply the parameter value when using that stream:
+  http | obfuscator --word='password' | file
+
+Parameters can be given default values too:
+
+  userfilter = filter --expression=payload.contains('${user:guest}')
+  // Filter messages containing 'guest'
+  http | userfilter | log
+  // Filter messages containing 'Andy'
+  http | userfilter --user=Andy | log
+
+=== Named channels
+
+Instead of a source or sink it is possible to use a named channel. Normally the modules in a stream are connected
+by anonymous internal channels (represented by the pipes), but by using explicitly named channels it becomes 
+possible to construct more sophisticated flows. In keeping with the unix theme, sourcing/sinking data
+from/to a particular channel uses the `>` character. A channel name is prefixed with a `:`
+
+Here is a typical stream:
+
+  http | filter | transform | log
+
+It can be broken into pieces using channel references:
+
+  // Use the 'foo' channel as a sink
+  http | filter > :foo
+  // Use the foo channel as a source
+  :foo > transform | log
+
+What makes this powerful is that additional streams can use the same channel as a source:
+
+  http | filter > :foo
+  :foo > transform1 | log
+  :foo > transform2 | log
+  :foo > transform3 | log
+
+Channel names can be qualified with the stream name to avoid clashes:
+
+  mystream1 = http | filter1 > :foo
+  mystream2 = http | filter2 > :foo
+  :mystream1.foo > transform1 | log
+  :mystream2.foo > transform2 | log
+
+
 === Tap
 
 A Tap can be used to "listen in" to data from another stream and process the data in a separate stream. A tap can consume data from any point along the target stream’s processing pipeline. The format of tap is:
@@ -43,6 +117,32 @@ The output of the filter step can be tapped:
 
   tap mystream.filter | sink2
 
+It is also possible to tap into a named channel:
 
+  http | filter > :foo
+  :foo > transform | log
+  tap :foo > log2
 
-The Spring XD M2 release will provide a DSL for non-linear flows, e.g. a directed graph.
+=== Labels
+
+Labels provide a means to alias or group modules.  Labels are simply a name followed by a `:`
+When used as an alias a label can provide a more descriptive name for a 
+particular configuration of a module and possibly something easier to refer to in other streams.
+
+  mystream = http | obfuscator: transform --expression=payload.replaceAll('password','*') | file
+  tap mystream.obfuscator > log
+
+A module may have multiple labels:
+
+  mystream = http | foo: bar: transform --expression=payload.replaceAll('password','*') | file
+
+When used for grouping a series of modules might share the same label:
+
+  mystream = http | group1: filter | group1: transform | file
+
+Refering to the label `group1` then effectively refers to all the labeled modules. This is not
+yet exploited in XD but in future may be used for something like configuring deployment options:
+
+  // Ensure all modules in group1 are on the same machine
+  group1.colocation = true
+
