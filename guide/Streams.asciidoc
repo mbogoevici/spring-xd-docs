@@ -60,8 +60,8 @@ which will produce the following output from the server
 
 Note that we don't see any other output this time until we actually post some data (using shell command)
 
-  http://localhost:8080:>post httpsource --target http://localhost:9000 --data "hello"
-  http://localhost:8080:>post httpsource --target http://localhost:9000 --data "goodbye"
+  http://localhost:8080:> http post --target http://localhost:9000 --data "hello"
+  http://localhost:8080:> http post --target http://localhost:9000 --data "goodbye"
 
 and the stream will then funnel the data from the http source to the output log implemented by the log sink
 
@@ -82,7 +82,7 @@ To create this stream enter the following command in the shell
 
 Posting some data (using shell command)
 
-  http://localhost:8080:>post httpsource --target http://localhost:9000 --data "hello"
+  http://localhost:8080:> http post --target http://localhost:9000 --data "hello"
 
 Will result in an uppercased 'hello' in the log
 
