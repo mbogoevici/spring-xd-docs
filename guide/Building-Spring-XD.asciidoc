@@ -14,7 +14,7 @@ To build and bundle the distribution of Spring XD
 ./gradlew dist
 ----
 
-The above gradle task creates spring-xd-<version>.zip binary distribution archive and spring-xd-<version>-docs.zip documentation archive files under build/distributions. This will also create a 'build/dist/spring-xd' directory which is the expanded version of the binary distribution archive.
+The above gradle task creates spring-xd-<version>.zip binary distribution archive and spring-xd-<version>-docs.zip documentation archive files under 'build/distributions'. This will also create a 'build/dist/spring-xd' directory which is the expanded version of the binary distribution archive.
 
 To just create the Spring XD expanded binary distribution directory
 
