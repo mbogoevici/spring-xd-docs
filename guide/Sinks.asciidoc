@@ -287,7 +287,7 @@ The command line argument is the location of a Spring file with a configured cac
 There are 2 implementation of the gemfire sink: _gemfire-server_ and _gemfire-json-server_. They are identical except the latter converts JSON string payloads to a JSON document format  proprietary to GemFire and provides JSON field access and query capabilities. If you are not using JSON, the gemfire-server module will write the payload using java serialization to the configured region. Either of these modules accepts the following attributes:
 
 regionName:: the name of the GemFire region. This must be the name of a region configured for the cache server. This module creates the corresponding client region. *(default: `<streamname>`)*
-keyExpression:: A SpEL expression which is evaluated to create a cache key. Typically, the key value is derived from the payload. *(default: `<streamname>`, which will overwrite the same entry for every message received on the stream)*
+keyExpression:: A SpEL expression which is evaluated to create a cache key. Typically, the key value is derived from the payload. *(default: `<streamname>`*, which will overwrite the same entry for every message received on the stream)
 gemfireHost:: The host name or IP address of the cache server *(default: `localhost`)*
 gemfirePort:: The TCP port number of the cache server *(default: `40404`)*
 
@@ -304,7 +304,7 @@ The keyExpression is a SpEL expression that depends on the payload type. In this
 
     http://localhost:8080:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')"
     
-    http://localhost:8080:> http post --target http://localhost:9090 --data "{\"symbol\":\"VMW\", \"price\":73}"
+    http://localhost:8080:> http post --target http://localhost:9090 --data "{"symbol":"VMW", "price":73}"
 
 This will write an entry to the GemFire _Stocks_ region with the key _VMW_. You should see a message on STDOUT for the process running the GemFire server like:
 
