@@ -172,9 +172,9 @@ Here is an example. Create two streams: One to write http messages to a Gemfire 
 
 Now send some messages to the stocks stream.
 
-     http://localhost:8080:> http post --target http://localhost:9090 --data "{\"symbol\":\"VMW\", \"price\":73}"
-     http://localhost:8080:> http post --target http://localhost:9090 --data "{\"symbol\":\"VMW\", \"price\":78}"
-     http://localhost:8080:> http post --target http://localhost:9090 --data "{\"symbol\":\"VMW\", \"price\":80}"
+     http://localhost:8080:> http post --target http://localhost:9090 --data "{"symbol":"VMW", "price":73}"
+     http://localhost:8080:> http post --target http://localhost:9090 --data "{"symbol":"VMW", "price":78}"
+     http://localhost:8080:> http post --target http://localhost:9090 --data "{"symbol":"VMW", "price":80}"
 
 The _cqtest_ stream is now listening for any stock quote updates for VMW. Presumably, another process is updating the cache. You may create a separate stream to test this (see https://github.com/SpringSource/spring-xd/wiki/GemfireServer[GemfireServer] for instructions).
 
