@@ -32,9 +32,9 @@ If the parameter value needs to embed a single quote, use two single quotes:
 === Stream composition
 
 As an aid to avoiding individual stream definitions getting too complex and hard to follow, XD allows stream composition
-where more basic abstract streams can be combined into a larger and more sophisticated stream.
-An abstract stream represents a reusable module sequence that can include module customization or even parameterization
-which can then be reused simply by referring to it. They are called abstract because they are not deployable by themselves.
+where more basic stream templates can be used as building blocks for a more sophisticated stream.
+An stream template represents a reusable module sequence that can include module customization or even parameterization
+which can then be reused simply by referring to it. Stream templates are not deployable by themselves.
 This is easiest to understand by example.
 
 (Note: The `name =` is just a convenience here to indicate the name the stream is being given when
