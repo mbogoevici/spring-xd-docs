@@ -168,7 +168,7 @@ gemfirePort:: The port on which the GemFire server is running. *(default: `40404
 Here is an example. Create two streams: One to write http messages to a Gemfire region named _Stocks_, and another to execute the CQ.
 
     http://localhost:8080:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')" 
-    http://localhost:8080:> stream create --name cqtest --definition "gemfire-cq --query=Select * from /Stocks where symbol='VMW' | file"
+    http://localhost:8080:> stream create --name cqtest --definition "gemfire-cq --query='Select * from /Stocks where symbol=''VMW''' | file"
 
 Now send some messages to the stocks stream.
 
