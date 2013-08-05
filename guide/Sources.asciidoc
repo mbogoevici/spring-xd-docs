@@ -3,7 +3,7 @@ In this section we will show some variations on input sources.  As a prerequisit
 as instructed in the link:Getting-Started#getting-started[Getting Started] page.
 
 The Sources covered are
-
+https://github.com/SpringSource/spring-xd/wiki/Sources
 * <<http, HTTP>>
 * <<tail, Tail>>
 * <<twittersearch, Twitter Search>>
@@ -182,9 +182,9 @@ As updates are posted to the cache you should see them captured in the output fi
 
     $cat /tmp/xd/output/cqtest
 
-   {price=73, symbol=VMW}
-   {price=78, symbol=VMW}
-   {price=80, symbol=VMW}
+   {"symbol":"VMW","price":73}
+   {"symbol":"VMW","price":78}
+   {"symbol":"VMW","price":80}
 
 [[syslog]]
 === Syslog
