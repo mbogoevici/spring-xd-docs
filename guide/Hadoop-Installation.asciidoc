@@ -2,7 +2,7 @@
 
 If you don't have a local Hadoop cluster available already, you can do a local http://hadoop.apache.org/docs/r1.1.2/single_node_setup.html[single node installation] and use that to try out Hadoop with Spring XD. The examples have been run with Hadoop 1.1.2, the stable release at the time of writing.
 
-First, http://www.apache.org/dyn/closer.cgi/hadoop/common/:[download an installation archive] and unpack it locally. Linux users can also install Hadoop through the system package manager and on Mac OS X, you can use homebrew, but the installation is self-contained and it's easier to see what's going on if you just unpack it to a known location.
+First, http://www.apache.org/dyn/closer.cgi/hadoop/common/[download an installation archive] and unpack it locally. Linux users can also install Hadoop through the system package manager and on Mac OS X, you can use homebrew, but the installation is self-contained and it's easier to see what's going on if you just unpack it to a known location.
 
 Change into the directory and have a look around
 
