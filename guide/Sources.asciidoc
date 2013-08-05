@@ -23,7 +23,7 @@ The following sections show a mix of Spring XD shell and plain Unix shell comman
 
 To create a stream definition in the server using the XD shell
 
-    http://localhost:8080:> stream create --name httptest --definition "http | file"
+    xd:> stream create --name httptest --definition "http | file"
 
 Make sure the default output directory exists
 
@@ -31,7 +31,7 @@ Make sure the default output directory exists
 
 Post some data to the http server on the default port of 9000
 
-     http://localhost:8080:> http post --target http://localhost:9000 --data "hello world"
+     xd:> http post --target http://localhost:9000 --data "hello world"
 
 See if the data ended up in the file
 
@@ -45,11 +45,11 @@ port:: The http port where data will be posted *(default: `9000`)*
 
 Here is an example 
 
-    http://localhost:8080:> stream create --name httptest9020 --definition "http --port=9020 | file"
+    xd:> stream create --name httptest9020 --definition "http --port=9020 | file"
 
 Post some data to the new port
 
-    http://localhost:8080:> http post --target http://localhost:9020 --data "hello world"
+    xd:> http post --target http://localhost:9020 --data "hello world"
 
     $ cat /tmp/xd/output/httptest9020
 
@@ -66,7 +66,7 @@ Create an empty file to tail (this is not needed on some platforms such as Linux
 
 To create a stream definition using the XD shell
 
-    http://localhost:8080:> stream create --name tailtest --definition "tail | file"
+    xd:> stream create --name tailtest --definition "tail | file"
 
 Send some text into the file being monitored 
 
@@ -86,7 +86,7 @@ delay:: on platforms that don't wait for a missing file to appear, how often (ms
 
 Here is an example 
 
-     http://localhost:8080:> stream create --name tailtest --definition "tail --name=/tmp/foo | file --name=bar"
+     xd:> stream create --name tailtest --definition "tail --name=/tmp/foo | file --name=bar"
 
      $ echo blah >> /tmp/foo
 
@@ -117,7 +117,7 @@ To get a `consumerKey` and `consumerSecret` you need to register a twitter appli
 
 To create a stream definition in the server using the XD shell
 
-    http://localhost:8080:> stream create --name springone2gx --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query='#springone2gx' | file"
+    xd:> stream create --name springone2gx --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query='#springone2gx' | file"
 
 Make sure the default output directory for the `file` sink exists
 
@@ -137,7 +137,7 @@ This source ingests data from Twitter's https://dev.twitter.com/docs/streaming-a
 
 You need to supply all keys and secrets (both consumer and accessToken) to authenticate for this source, so it is easiest if you just add these to the `conf/twitter.properties` file. Stream creation is then straightforward:
 
-    http://localhost:8080:> stream create --name tweets --definition "twitterstream | file"
+    xd:> stream create --name tweets --definition "twitterstream | file"
 
 The parameters available are pretty much the same as those listed in the https://dev.twitter.com/docs/streaming-apis/parameters[API docs] and unless otherwise stated, the accepted formats are the same.
 
@@ -167,14 +167,14 @@ gemfirePort:: The port on which the GemFire server is running. *(default: `40404
 
 Here is an example. Create two streams: One to write http messages to a Gemfire region named _Stocks_, and another to execute the CQ.
 
-    http://localhost:8080:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')" 
-    http://localhost:8080:> stream create --name cqtest --definition "gemfire-cq --query='Select * from /Stocks where symbol=''VMW''' | file"
+    xd:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')" 
+    xd:> stream create --name cqtest --definition "gemfire-cq --query='Select * from /Stocks where symbol=''VMW''' | file"
 
 Now send some messages to the stocks stream.
 
-     http://localhost:8080:> http post --target http://localhost:9090 --data "{"symbol":"VMW", "price":73}"
-     http://localhost:8080:> http post --target http://localhost:9090 --data "{"symbol":"VMW", "price":78}"
-     http://localhost:8080:> http post --target http://localhost:9090 --data "{"symbol":"VMW", "price":80}"
+     xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW", "price":73}"
+     xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW", "price":78}"
+     xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW", "price":80}"
 
 The _cqtest_ stream is now listening for any stock quote updates for VMW. Presumably, another process is updating the cache. You may create a separate stream to test this (see https://github.com/SpringSource/spring-xd/wiki/GemfireServer[GemfireServer] for instructions).
 
@@ -196,11 +196,11 @@ port:: the port on which the system will listen for syslog messages *(default: `
 
 To create a stream definition (using shell command)
 
-    http://localhost:8080:> stream create --name syslogtest --definition "syslog-udp --port=1514 | file"
+    xd:> stream create --name syslogtest --definition "syslog-udp --port=1514 | file"
 
 or
 
-    http://localhost:8080:> stream create --name syslogtest --definition "syslog-tcp --port=1514 | file"
+    xd:> stream create --name syslogtest --definition "syslog-tcp --port=1514 | file"
 
 Send a test message to the syslog
 
@@ -229,7 +229,7 @@ Restart the syslog daemon after reconfiguring.
 
 To create a stream definition in the server, use the following XD shell command
 
-    http://localhost:8080:> stream create --name tcptest --definition "tcp | file"
+    xd:> stream create --name tcptest --definition "tcp | file"
 
 This will create the default TCP source and send data read from it to the `tcptest` file.
 
@@ -288,7 +288,7 @@ The echo options `-en` allows echo to interpret escape sequences and not send a 
 
 .CRLF Decoder
 
-    http://localhost:8080:> stream create --name tcptest --definition "tcp | file"
+    xd:> stream create --name tcptest --definition "tcp | file"
 
 This uses the default (CRLF) decoder and port 1234; send some data
 
@@ -300,7 +300,7 @@ See if the data ended up in the file
 
 .LF Decoder
 
-     http://localhost:8080:> stream create --name tcptest2 --definition "tcp --decoder=LF | file"
+     xd:> stream create --name tcptest2 --definition "tcp --decoder=LF | file"
 
      $ echo -en 'foobar\n' | netcat localhost 1235
 
@@ -308,7 +308,7 @@ See if the data ended up in the file
 
 .NULL Decoder
 
-     http://localhost:8080:> stream create --name tcptest3 --definition "tcp --decoder=NULL | file"
+     xd:> stream create --name tcptest3 --definition "tcp --decoder=NULL | file"
 
      $ echo -en 'foobar\x00' | netcat localhost 1236
 
@@ -316,7 +316,7 @@ See if the data ended up in the file
 
 .STXETX Decoder
 
-     http://localhost:8080:> stream create --name tcptest4 --definition "tcp --decoder=STXETX | file"
+     xd:> stream create --name tcptest4 --definition "tcp --decoder=STXETX | file"
 
      $ echo -en '\x02foobar\x03' | netcat localhost 1237
 
@@ -324,7 +324,7 @@ See if the data ended up in the file
 
 .RAW Decoder
 
-     http://localhost:8080:> stream create --name tcptest5 --definition "tcp --decoder=RAW | file"
+     xd:> stream create --name tcptest5 --definition "tcp --decoder=RAW | file"
 
      $ echo -n 'foobar' | netcat localhost 1238
 
@@ -332,7 +332,7 @@ See if the data ended up in the file
 
 .L1 Decoder
 
-     http://localhost:8080:> stream create --name tcptest6 --definition "tcp --decoder=L1 | file"
+     xd:> stream create --name tcptest6 --definition "tcp --decoder=L1 | file"
 
      $ echo -en '\x06foobar' | netcat localhost 1239
 
@@ -340,7 +340,7 @@ See if the data ended up in the file
 
 .L2 Decoder
 
-     http://localhost:8080:> stream create --name tcptest7 --definition "tcp --decoder=L2 | file"
+     xd:> stream create --name tcptest7 --definition "tcp --decoder=L2 | file"
 
      $ echo -en '\x00\x06foobar' | netcat localhost 1240
 
@@ -348,7 +348,7 @@ See if the data ended up in the file
 
 .L4 Decoder
 
-     http://localhost:8080:> stream create --name tcptest8 --definition "tcp --decoder=L4 | file"
+     xd:> stream create --name tcptest8 --definition "tcp --decoder=L4 | file"
 
      $ echo -en '\x00\x00\x00\x06foobar' | netcat localhost 1241
 
@@ -356,7 +356,7 @@ See if the data ended up in the file
 
 ==== Binary Data Example
 
-     http://localhost:8080:> stream create --name tcptest9 --definition "tcp --decoder=L1 | file --binary=true"
+     xd:> stream create --name tcptest9 --definition "tcp --decoder=L1 | file --binary=true"
 
 Note that we configure the `file` sink with `binary=true` so that a newline is not appended.
 

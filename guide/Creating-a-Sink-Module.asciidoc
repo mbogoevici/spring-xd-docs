@@ -178,7 +178,7 @@ Simply drop _redis-store.xml_ into the _modules/sink_ directory and fire up the 
 === Test the deployed module
 Once the XD server is running, create a stream to test it out. This stream will write tweets containing the word "java" to Redis as a JSON string:
 
-    http://localhost:8080:> stream create --name javasearch --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=java | redis-store --key=javatweets"
+    xd:> stream create --name javasearch --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=java | redis-store --key=javatweets"
 
 Note that you need to have a consumer key and secret to use the `twittersearch` module. See the description in the link:Streams#streams[streams] section for more information.
 

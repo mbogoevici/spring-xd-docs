@@ -11,8 +11,8 @@ The DSL syntax for creating a tap is:
 To create a tap using the shell, use the following command (assuming you want to tap into the "foo1" stream, which we'll create first):
 
 ----
-http://localhost:8080:> stream create --name foo1 --definition "time | log"
-http://localhost:8080:> stream tap --name tapname --definition "tap @ foo1 | log"
+xd:> stream create --name foo1 --definition "time | log"
+xd:> stream tap --name tapname --definition "tap @ foo1 | log"
 ----
 
 A tap can consume data from any point along the target stream's processing pipeline. For example, if you have a stream called `mystream`, defined as

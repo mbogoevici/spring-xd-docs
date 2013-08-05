@@ -23,11 +23,11 @@ Here's an example:
 
 Start by creating a data ingestion stream. Something like:
 
-   http://localhost:8080:> stream create --name springtweets --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file --dir=/tweets/"
+   xd:> stream create --name springtweets --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file --dir=/tweets/"
 
 Next, create a tap on the _springtweets_ stream that sets a message counter named _tweetcount_
 
-   http://localhost:8080:> tap create --name tweettap --definition "tap @ springtweets | counter --name=tweetcount"
+   xd:> tap create --name tweettap --definition "tap @ springtweets | counter --name=tweetcount"
 
 The results are written to redis under the key counter.${name}. To retrieve the count:
   
@@ -82,11 +82,11 @@ counterName:: A key used to access the counter values. *(default: $\{fieldName\}
 
 To try this out, create a stream to ingest twitter feeds containing the word _spring_ and output to a file:
 
-   http://localhost:8080:> stream create --name springtweets --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file"
+   xd:> stream create --name springtweets --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file"
 
 Now create a tap for a field value counter:
 
-   http://localhost:8080:> tap create --name tweettap --definition "tap@springtweets | field-value-counter --fieldName=fromUser"
+   xd:> tap create --name tweettap --definition "tap@springtweets | field-value-counter --fieldName=fromUser"
 
 The _twittersearch_ source produces JSON strings which contain the user id of the tweeter in the _fromUser_ field. The _field_value_counter_ sink parses the tweet and updates a field value counter named _fromUser_ in Redis. To view the counts:
 
@@ -100,11 +100,11 @@ The aggregate counter differs from a simple counter in that it not only keeps a 
 
 Creating an aggregate counter is very similar to a simple counter. For example, to obtain an aggregate count for our spring tweets stream:
    
-    http://localhost:8080:> stream create --name springtweets --definition "twittersearch --query=spring | file"
+    xd:> stream create --name springtweets --definition "twittersearch --query=spring | file"
 
 you'd simply create a tap which pipes the input to `aggregatecounter`:
 
-   http://localhost:8080:> tap create --name tweettap --definition "tap @ springtweets | aggregatecounter --name=tweetcount"
+   xd:> tap create --name tweettap --definition "tap @ springtweets | aggregatecounter --name=tweetcount"
 
 The Redis back-end stores the aggregate counts in buckets prefixed with `aggregatecounters.${name}`. The rest of the string contains the date information. So for our `tweetcount` counter you might see something like the following keys appearing in Redis:
 
@@ -142,15 +142,15 @@ Here is an example of creating a tap for a gauge:
 
 Create an ingest stream
 
-    http://localhost:8080:> stream create --name test --definition "http --port=9090 | file"
+    xd:> stream create --name test --definition "http --port=9090 | file"
 
 Next create the tap:
 
-    http://localhost:8080:> tap create --name simplegauge --definition "tap@test | gauge"
+    xd:> tap create --name simplegauge --definition "tap@test | gauge"
 
 Now Post a message to the ingest stream:
 
-    http://localhost:8080:> http post --target http://localhost:9090 --data "10"
+    xd:> http post --target http://localhost:9090 --data "10"
 
 Check the gauge:
 
@@ -175,17 +175,17 @@ Here are some examples of creating a tap for a rich gauge:
 
 Create an ingest stream
 
-      http://localhost:8080:> stream create --name test --definition "http --port=9090 | file"
+      xd:> stream create --name test --definition "http --port=9090 | file"
 
 Next create the tap:
 
-      http://localhost:8080:> tap create --name testgauge --definition "tap@test | richgauge"
+      xd:> tap create --name testgauge --definition "tap@test | richgauge"
 
 Now Post some messages to the ingest stream:
 
-    http://localhost:8080:> http post --target http://localhost:9090 --data "10"
-    http://localhost:8080:> http post --target http://localhost:9090 --data "13"
-    http://localhost:8080:> http post --target http://localhost:9090 --data "16"
+    xd:> http post --target http://localhost:9090 --data "10"
+    xd:> http post --target http://localhost:9090 --data "13"
+    xd:> http post --target http://localhost:9090 --data "16"
 
 Check the gauge:
 
@@ -202,17 +202,17 @@ In this example, we will track stock prices, which is a more practical example. 
 
 Create an ingest stream
 
-     http://localhost:8080:> stream create --name stocks --definition "http --port=9090 | file"
+     xd:> stream create --name stocks --definition "http --port=9090 | file"
 
 Next create the tap, using the json-field-extractor to extract the stock price from the payload: 
 
-     http://localhost:8080:> tap create --name stockprice --definition "tap@stocks | json-field-extractor --fieldName=price | richgauge"
+     xd:> tap create --name stockprice --definition "tap@stocks | json-field-extractor --fieldName=price | richgauge"
 
 Now Post some messages to the ingest stream:
 
-    http://localhost:8080:> http post --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.04}"
-    http://localhost:8080:> http post --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.06}"
-    http://localhost:8080:> http post --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.08}"
+    xd:> http post --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.04}"
+    xd:> http post --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.06}"
+    xd:> http post --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.08}"
 
 Check the gauge:
 
@@ -232,22 +232,22 @@ The previous example would feed these prices to a single gauge. What we really w
 
 Create an ingest stream
 
-     http://localhost:8080:> stream create --name stocks --definition "http --port=9090 | file"
+     xd:> stream create --name stocks --definition "http --port=9090 | file"
 
 Next create the taps, using the json-field-extractor to extract the stock price from the payload: 
 
-     http://localhost:8080:> stream create --name vmwprice --definition "tap@stocks |json-field-value-filter --fieldName=symbol --fieldValue=VMW| json-field-extractor --fieldName=price | richgauge"
-     http://localhost:8080:> stream create --name emcprice --definition "tap@stocks |json-field-value-filter --fieldName=symbol --fieldValue=EMC| json-field-extractor --fieldName=price | richgauge"
+     xd:> stream create --name vmwprice --definition "tap@stocks |json-field-value-filter --fieldName=symbol --fieldValue=VMW| json-field-extractor --fieldName=price | richgauge"
+     xd:> stream create --name emcprice --definition "tap@stocks |json-field-value-filter --fieldName=symbol --fieldValue=EMC| json-field-extractor --fieldName=price | richgauge"
 
 Now Post some messages to the ingest stream:
 
-    http://localhost:8080:> http post --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.04}"
-    http://localhost:8080:> http post --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.06}"
-    http://localhost:8080:> http post --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.08}"
+    xd:> http post --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.04}"
+    xd:> http post --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.06}"
+    xd:> http post --target http://localhost:9000 --data "{\"symbol\":\"VMW\",\"price\":72.08}"
 
-    http://localhost:8080:> http post --target http://localhost:9000 --data "{\"symbol\":\"EMC\",\"price\":24.92}"
-    http://localhost:8080:> http post --target http://localhost:9000 --data "{\"symbol\":\"EMC\",\"price\":24.90}"
-    http://localhost:8080:> http post --target http://localhost:9000 --data "{\"symbol\":\"EMC\",\"price\":24.96}"
+    xd:> http post --target http://localhost:9000 --data "{\"symbol\":\"EMC\",\"price\":24.92}"
+    xd:> http post --target http://localhost:9000 --data "{\"symbol\":\"EMC\",\"price\":24.90}"
+    xd:> http post --target http://localhost:9000 --data "{\"symbol\":\"EMC\",\"price\":24.96}"
 
 Check the gauge:
 

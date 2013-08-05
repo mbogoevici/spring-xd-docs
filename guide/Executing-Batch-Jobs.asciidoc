@@ -74,13 +74,13 @@ In order to execute the Batch Job, several options exist:
 ==== Execute the Batch Job Once (Immediately)
 
 ----
-http://localhost:8080:> job create --name helloSpringXD --definition "myjob"
+xd:> job create --name helloSpringXD --definition "myjob"
 ----
 
 ==== Execute the Batch Job using an AdHoc Cron Expression
 
 ----
-http://localhost:8080:> job create --name helloSpringXD --definition "myjob --cron='*/10 * * * * *'"
+xd:> job create --name helloSpringXD --definition "myjob --cron='*/10 * * * * *'"
 ----
 
 ==== Execute the Batch using a named Cron-Trigger
@@ -88,7 +88,7 @@ http://localhost:8080:> job create --name helloSpringXD --definition "myjob --cr
 You can explicitly create a named Trigger using:
 
 ----
-http://localhost:8080:> trigger create --name mytrigger --definition "trigger --cron='*/10 * * * * *'"
+xd:> trigger create --name mytrigger --definition "trigger --cron='*/10 * * * * *'"
 
 ----
 
@@ -97,14 +97,14 @@ http://localhost:8080:> trigger create --name mytrigger --definition "trigger --
 You can explicitly create a named Trigger using:
 
 ----
-http://localhost:8080:> trigger create --name mytrigger --definition "trigger --fixedRate='5000'"
+xd:> trigger create --name mytrigger --definition "trigger --fixedRate='5000'"
 
 ----
 ==== Using a named trigger with the job
 The trigger will be added to the Common Context, which is shared across Plugins. Once the Trigger is created, we can reference the trigger when setting up the Batch Job:
 
 ----
-http://localhost:8080:> job create --name helloWorldJob --definition "myjob --trigger=mytrigger"
+xd:> job create --name helloWorldJob --definition "myjob --trigger=mytrigger"
 ----
 
 === Removing Batch Jobs and Triggers 
@@ -114,13 +114,13 @@ http://localhost:8080:> job create --name helloWorldJob --definition "myjob --tr
 Batch Jobs can be deleted by executing:
 
 ----
-http://localhost:8080:> job destroy --name helloSpringXD
+xd:> job destroy --name helloSpringXD
 ----
 
 Alternatively, one can just undeploy the job, keeping its definition around for a future redeployment:
 
 ----
-http://localhost:8080:> job undeploy --name helloSpringXD
+xd:> job undeploy --name helloSpringXD
 ----
 
 
@@ -130,7 +130,7 @@ http://localhost:8080:> job undeploy --name helloSpringXD
 Cron Triggers can be deleted by executing:
 
 ----
-http://localhost:8080:> trigger destroy --name mytrigger
+xd:> trigger destroy --name mytrigger
 ----
 
 NOTE: Be advised that when removing Triggers from the Context they may still be referenced by running Batch Jobs.  Batch jobs that were created to use a trigger will continue to run on the schedule defined by the trigger even though it was destroyed.
