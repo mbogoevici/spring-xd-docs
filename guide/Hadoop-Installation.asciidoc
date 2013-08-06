@@ -1,10 +1,18 @@
 === Installing Hadoop
 
-If you don't have a local Hadoop cluster available already, you can do a local http://hadoop.apache.org/docs/r1.1.2/single_node_setup.html[single node installation] and use that to try out Hadoop with Spring XD. The examples have been run with `Hadoop 1.1.2` but should also work with the latest stable release `Hadoop 1.2.1`.
+If you don't have a local _Hadoop_ cluster available already, you can do a local http://hadoop.apache.org/docs/r1.1.2/single_node_setup.html[single node installation (v1.1.2)] and use that to try out _Hadoop_ with _Spring XD_. The examples have been run with `Hadoop 1.1.2` but should also work with the latest stable release `Hadoop 1.2.1`.
 
-TIP: This guide is intended to serve as a quick guide to get you started in the context of Spring XD. For more complete documentation please refer back to the documentation provided by your respective Hadoop distribution.
+TIP: This guide is intended to serve as a quick guide to get you started in the context of _Spring XD_. For more complete documentation please refer back to the documentation provided by your respective _Hadoop_ distribution.
 
-First, http://www.apache.org/dyn/closer.cgi/hadoop/common/[download an installation archive] and unpack it locally. Linux users can also install Hadoop through the system package manager and on Mac OS X, you can use homebrew, but the installation is self-contained and it's easier to see what's going on if you just unpack it to a known location.
+First, http://archive.apache.org/dist/hadoop/common/[download an installation archive] and unpack it locally. Linux users can also install _Hadoop_ through the system package manager and on Mac OS X, you can use http://brew.sh/[Homebrew]. However, the manual installation is self-contained and it's easier to see what's going on if you just unpack it to a known location.
+
+If you have `wget` available on your system, you can also execute:
+
+  $ wget http://archive.apache.org/dist/hadoop/common/hadoop-1.1.2/hadoop-1.1.2.tar.gz
+
+Unpack the distribution with:
+
+  $ tar xzf hadoop-1.1.2.tar.gz
 
 Change into the directory and have a look around
 
@@ -18,30 +26,37 @@ Change into the directory and have a look around
     namenode             run the DFS namenode
     ...
 
-The `bin` directory contains the start and stop scripts as well as the `hadoop` script which allows us to interact with hadoop from the command line. The next place to look is the `conf` directory. Following the Hadoop installation guide, edit the files in there for use in a http://hadoop.apache.org/docs/r1.1.2/single_node_setup.html#PseudoDistributed[Pseudo-Distributed Operation] configuration. Use the same ports given in that configuration. Our examples assume the HDFS daemon is running on port 9000.
+The `bin` directory contains the start and stop scripts as well as the `hadoop` script which allows us to interact with _Hadoop_ from the command line. The next place to look at is the `conf` directory.
 
-Next make sure that you set `JAVA_HOME` in the `conf/hadoop-env.sh` script, or you will get an error when you start Hadoop. For example
+Make sure that you set `JAVA_HOME` in the `conf/hadoop-env.sh` script, or you will get an error when you start _Hadoop_. For example:
 
   # The java implementation to use.  Required.
   # export JAVA_HOME=/usr/lib/j2sdk1.5-sun
   
   export JAVA_HOME/Library/Java/Home
 
-IMPORTANT: Currently you CANNOT use Java 7. If you do accidentally point to a Java 7 directory you may encounter an error such as `Unable to load realm info from SCDynamicStore` when starting the Hadoop node.
+IMPORTANT: You should use *Java 6*. Currently you cannot use _Java 7_. If you do accidentally point to a _Java 7_ directory you may encounter an error such as `Unable to load realm info from SCDynamicStore` when starting the _Hadoop_ node.
 
-As described in the installation guide, you also need to set up SSH login to localhost without a passphrase. On Linux, you may need to install the `ssh` package and ensure the `sshd` daemon is running. On Mac OS X, ssh is already installed but the `sshd` daemon isn't usually running. To start it, you need to enable "Remote Login" in the "Sharing" section of the control panel. Then you can carry on and setup SSH keys as described in the installation guide. Make sure you can log in at the command line using `ssh localhost` before trying to start Hadoop:
+TIP: When using _Mac OS X_ you can determine the _Java 6_ home directory by executing `$ /usr/libexec/java_home -v 1.6`
+
+As described in the installation guide, you also need to set up http://en.wikipedia.org/wiki/Secure_Shell[SSH] login to `localhost` without a passphrase. On Linux, you may need to install the `ssh` package and ensure the `sshd` daemon is running. On Mac OS X, ssh is already installed but the `sshd` daemon isn't usually running. To start it, you need to enable "Remote Login" in the "Sharing" section of the control panel. Then you can carry on and setup SSH keys as described in the installation guide:
+
+    $ ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa 
+    $ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+
+Make sure you can log in at the command line using `ssh localhost` before trying to start _Hadoop_:
 
   $ ssh localhost
   Last login: Thu May 30 12:52:47 2013
 
-You also need to decide where in your local filesystem you want Hadoop to store its data. Let's say you decide to use `/data`.
+You also need to decide where in your local filesystem you want _Hadoop_ to store its data. Let's say you decide to use `/data`.
 
 First create the directory and make sure it is writeable:
 
   $ mkdir /data
   $ chmod 777 /data
 
-Then edit `conf/core-site.xml` again to add the following property
+Now edit `conf/core-site.xml` and add the following property:
 
    <property>
        <name>hadoop.tmp.dir</name>
@@ -52,9 +67,9 @@ You're then ready to format the filesystem for use by HDFS
 
   $ bin/hadoop namenode -format
 
-=== Setting the Namenode Port
+==== Setting the Namenode Port
 
-By default Spring XD will use a Namenode setting of `hdfs://localhost:8020` which is defined in `${xd.home}/config/hadoop.properties`, depending on the used Hadoop distribution and version the defined port `8020` may be different. For Apache Hadoop, please ensure you have the following setting in `conf/core-site.xml`:
+By default Spring XD will use a _Namenode_ setting of `hdfs://localhost:8020` which is defined in `${xd.home}/config/hadoop.properties`, depending on the used _Hadoop_ distribution and version the by-default-defined port `8020` may be different, e.g. port `9000`. Therefore, please ensure you have the following setting in `conf/core-site.xml`:
 
    <property>
        <name>fs.default.name</name>
@@ -63,7 +78,7 @@ By default Spring XD will use a Namenode setting of `hdfs://localhost:8020` whic
 
 === Running Hadoop
 
-You should now finally be ready to run hadoop. Run the `start-all.sh` script 
+You should now finally be ready to run _Hadoop_. Run the `start-all.sh` script 
 
   $ bin/start-all.sh
 
@@ -91,8 +106,13 @@ Try a few commands with `hadoop dfs` to make sure the basic system works
   
   $ bin/hadoop dfs -rmr /test
   Deleted hdfs://localhost:9000/test
- 
-At this point you should be good to create a Spring XD link:Streams#streams[stream] using a Hadoop link:Sinks#sinks[sink].
+
+Lastly, you can also browse the web interface for _NameNode_ and _JobTracker_ at:
+
+* NameNode: http://localhost:50070/
+* JobTracker: http://localhost:50030/
+
+At this point you should be good to create a _Spring XD_ link:Streams#streams[stream] using a _Hadoop_ link:Sinks#sinks[sink].
  
 
   
