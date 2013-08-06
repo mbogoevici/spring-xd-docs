@@ -33,7 +33,7 @@ Make sure that you set `JAVA_HOME` in the `conf/hadoop-env.sh` script, or you wi
   # The java implementation to use.  Required.
   # export JAVA_HOME=/usr/lib/j2sdk1.5-sun
   
-  export JAVA_HOME/Library/Java/Home
+  export JAVA_HOME=/Library/Java/Home
 
 IMPORTANT: You should use *Java 6*. Currently you cannot use _Java 7_. If you do accidentally point to a _Java 7_ directory you may encounter an error such as `Unable to load realm info from SCDynamicStore` when starting the _Hadoop_ node.
 
