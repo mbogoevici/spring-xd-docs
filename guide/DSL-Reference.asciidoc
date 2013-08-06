@@ -33,7 +33,7 @@ If the parameter value needs to embed a single quote, use two single quotes:
 
 As an aid to avoiding individual stream definitions getting too complex and hard to follow, XD allows stream composition
 where more basic stream templates can be used as building blocks for a more sophisticated stream.
-An stream template represents a reusable module sequence that can include module customization or even parameterization
+A stream template represents a reusable module sequence that can include module customization or even parameterization
 which can then be reused simply by referring to it. Stream templates are not deployable by themselves.
 This is easiest to understand by example.
 
