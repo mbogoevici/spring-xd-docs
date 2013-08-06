@@ -151,7 +151,15 @@ The parameters available are pretty much the same as those listed in the https:/
 Continuous query allows client applications to create a GemFire query using Object Query Language(OQL) and register a CQ listener which subscribes to the query and is notified every time the query 's result set changes. The _gemfire_cq_ source registers a CQ which will post CQEvent messages to the stream. 
 
 ==== Launching the XD GemFire Server
-This source requires a cache server to be running in a separate process and its host and port must be known (NOTE: GemFire locators are not supported yet). The XD distribution includes a GemFire server executable suitable for development and test purposes. This is a Java main class that runs with a Spring configured cache server. The configuration is passed as a command line argument to the server's main method. The configuration includes a cache server port and one or more configured region. XD includes a sample cache configuration called  https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[cq-demo]. This starts a server on port 40404 and creates a region named _Stocks_. A Logging cache listener is configured  for the region to log region events.  (TBD: describe launch script)
+This source requires a cache server to be running in a separate process and its host and port must be known (NOTE: GemFire locators are not supported yet). The XD distribution includes a GemFire server executable suitable for development and test purposes. This is a Java main class that runs with a Spring configured cache server. The configuration is passed as a command line argument to the server's main method. The configuration includes a cache server port and one or more configured region. XD includes a sample cache configuration called  https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[cq-demo]. This starts a server on port 40404 and creates a region named _Stocks_. A Logging cache listener is configured  for the region to log region events.  
+
+Run Gemfire cache server by changing to the gemfire/bin directory and execute
+
+[source,sh]
+----
+$ ./gemfire-server ../config/cq-demo.xml
+----
+
 
 ==== Options
 
@@ -168,9 +176,9 @@ Here is an example. Create two streams: One to write http messages to a Gemfire 
 
 Now send some messages to the stocks stream.
 
-     xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW", "price":73}"
-     xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW", "price":78}"
-     xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW", "price":80}"
+     xd:> http post --target http://localhost:9090 --data "{'symbol':'VMW', 'price':73}"
+     xd:> http post --target http://localhost:9090 --data "{'symbol':'VMW', 'price':78}"
+     xd:> http post --target http://localhost:9090 --data "{'symbol':'VMW', 'price':80}"
 
 The _cqtest_ stream is now listening for any stock quote updates for VMW. Presumably, another process is updating the cache. You may create a separate stream to test this (see https://github.com/SpringSource/spring-xd/wiki/GemfireServer[GemfireServer] for instructions).
 
