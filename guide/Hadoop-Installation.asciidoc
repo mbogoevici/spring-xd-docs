@@ -1,6 +1,8 @@
 === Installing Hadoop
 
-If you don't have a local Hadoop cluster available already, you can do a local http://hadoop.apache.org/docs/r1.1.2/single_node_setup.html[single node installation] and use that to try out Hadoop with Spring XD. The examples have been run with Hadoop 1.1.2, the stable release at the time of writing.
+If you don't have a local Hadoop cluster available already, you can do a local http://hadoop.apache.org/docs/r1.1.2/single_node_setup.html[single node installation] and use that to try out Hadoop with Spring XD. The examples have been run with `Hadoop 1.1.2` but should also work with the latest stable release `Hadoop 1.2.1`.
+
+TIP: This guide is intended to serve as a quick guide to get you started in the context of Spring XD. For more complete documentation please refer back to the documentation provided by your respective Hadoop distribution.
 
 First, http://www.apache.org/dyn/closer.cgi/hadoop/common/[download an installation archive] and unpack it locally. Linux users can also install Hadoop through the system package manager and on Mac OS X, you can use homebrew, but the installation is self-contained and it's easier to see what's going on if you just unpack it to a known location.
 
@@ -25,7 +27,9 @@ Next make sure that you set `JAVA_HOME` in the `conf/hadoop-env.sh` script, or y
   
   export JAVA_HOME/Library/Java/Home
 
-As described in the installation guide, you also need to set up SSH login to locahost without a passphrase. On Linux, you may need to install the `ssh` package and ensure the `sshd` daemon is running. On Mac OS X, ssh is already installed but the `sshd` daemon isn't usually running. To start it, you need to enable "Remote Login" in the "Sharing" section of the control panel. Then you can carry on and setup SSH keys as described in the installation guide. Make sure you can log in at the command line using `ssh localhost` before trying to start hadoop:
+IMPORTANT: Currently you CANNOT use Java 7. If you do accidentally point to a Java 7 directory you may encounter an error such as `Unable to load realm info from SCDynamicStore` when starting the Hadoop node.
+
+As described in the installation guide, you also need to set up SSH login to localhost without a passphrase. On Linux, you may need to install the `ssh` package and ensure the `sshd` daemon is running. On Mac OS X, ssh is already installed but the `sshd` daemon isn't usually running. To start it, you need to enable "Remote Login" in the "Sharing" section of the control panel. Then you can carry on and setup SSH keys as described in the installation guide. Make sure you can log in at the command line using `ssh localhost` before trying to start Hadoop:
 
   $ ssh localhost
   Last login: Thu May 30 12:52:47 2013
@@ -44,10 +48,18 @@ Then edit `conf/core-site.xml` again to add the following property
        <value>/data</value>
    </property>
 
-
 You're then ready to format the filesystem for use by HDFS
 
   $ bin/hadoop namenode -format
+
+=== Setting the Namenode Port
+
+By default Spring XD will use a Namenode setting of `hdfs://localhost:8020` which is defined in `${xd.home}/config/hadoop.properties`, depending on the used Hadoop distribution and version the defined port `8020` may be different. For Apache Hadoop, please ensure you have the following setting in `conf/core-site.xml`:
+
+   <property>
+       <name>fs.default.name</name>
+       <value>hdfs://localhost:8020</value>
+   </property>
 
 === Running Hadoop
 
