@@ -65,7 +65,9 @@ You can cutomize the behavior and specify the `name` and `dir` properties of the
 === Hadoop (HDFS)
 
 
-First install and start Hadoop as described in our link:Hadoop-Installation#hadoop-installation[separate guide]. Once Hadoop is up and running, you can then use the `hdfs` sink when creating a link:Streams#streams[stream]
+If you do not have Hadoop installed, you can install Hadoop 1.1.2 as described in our link:Hadoop-Installation#hadoop-installation[separate guide]. Spring XD supports 4 Hadoop distributions, see link:Running-Distributed-Mode#using-hadoop[using Hadoop] for more information on how to start Spring XD to target a specific distribution.
+
+Once Hadoop is up and running, you can then use the `hdfs` sink when creating a link:Streams#streams[stream]
 
   xd:> stream create --name myhdfsstream --definition "http --port=8000 | hdfs --rollover=10"
 
@@ -83,7 +85,7 @@ Repeat the command a few times.
 
 You can then list the contents of the hadoop filesystem using the shell's built in hadoop fs commands.  You will first need to configure the shell to point to your name node using the hadoop config command
 
-    xd:>hadoop config fs --namenode localhost:8020
+    xd:>hadoop config fs --namenode hdfs://localhost:8020
 
 By default the hdfs protocol is used to access hadoop.  then list the contents of the root directory
 
