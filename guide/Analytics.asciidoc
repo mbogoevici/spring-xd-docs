@@ -108,8 +108,8 @@ you'd simply create a tap which pipes the input to `aggregatecounter`:
 
 The Redis back-end stores the aggregate counts in buckets prefixed with `aggregatecounters.${name}`. The rest of the string contains the date information. So for our `tweetcount` counter you might see something like the following keys appearing in Redis:
 
-    redis 127.0.0.1:6379> keys aggregatecounters*
-    1) "aggregatecounters.tweetcount.total"
+    redis 127.0.0.1:6379> keys aggregatecounters.tweetcount*
+    1) "aggregatecounters.tweetcount"
     2) "aggregatecounters.tweetcount.years"
     3) "aggregatecounters.tweetcount.2013"
     4) "aggregatecounters.tweetcount.201307"
