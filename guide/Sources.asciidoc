@@ -3,14 +3,14 @@ In this section we will show some variations on input sources.  As a prerequisit
 as instructed in the link:Getting-Started#getting-started[Getting Started] page.
 
 The Sources covered are
-https://github.com/SpringSource/spring-xd/wiki/Sources
+
 * <<http, HTTP>>
 * <<tail, Tail>>
 * <<twittersearch, Twitter Search>>
 * <<twitterstream, Twitter Stream>>
 * <<gemfire-cq,Gemfire CQ>>
 * <<syslog, Syslog>>
-* <<tcp, TCP>>
+* <<tcp, TCP>> 
 * <<time, Time>>
 * <<mqtt, MQTT>>
 
