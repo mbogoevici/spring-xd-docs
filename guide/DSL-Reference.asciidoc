@@ -106,7 +106,7 @@ Channel names can be qualified with the stream name to avoid clashes:
 
 === Tap
 
-A Tap can be used to "listen in" to data from another stream and process the data in a separate stream. A tap can consume data from any point along the target stream’s processing pipeline. The format of tap is:
+A Tap can be used to "listen in" to data from another stream and process the data in a separate stream. A tap can consume data from any point along the target stream's processing pipeline. The format of tap is:
 
   tap <stream>.<module>
 
