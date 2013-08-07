@@ -40,3 +40,5 @@ For IntelliJ IDEA
 ----
 ./gradlew idea
 ----
+
+Then just import the project as an existing project.
