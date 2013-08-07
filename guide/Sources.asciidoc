@@ -335,7 +335,7 @@ See if the data ended up in the file
 
 .L1 Decoder
 
-     xd:> stream create --name tcptest6 --definition "tcp --decoder=L1 | file"
+     xd:> stream create --name tcptest6 --definition "tcp --decoder=L1 --port=1239 | file"
 
      $ echo -en '\x06foobar' | netcat localhost 1239
 
@@ -343,7 +343,7 @@ See if the data ended up in the file
 
 .L2 Decoder
 
-     xd:> stream create --name tcptest7 --definition "tcp --decoder=L2 | file"
+     xd:> stream create --name tcptest7 --definition "tcp --decoder=L2 --port=1240 | file"
 
      $ echo -en '\x00\x06foobar' | netcat localhost 1240
 
@@ -351,7 +351,7 @@ See if the data ended up in the file
 
 .L4 Decoder
 
-     xd:> stream create --name tcptest8 --definition "tcp --decoder=L4 | file"
+     xd:> stream create --name tcptest8 --definition "tcp --decoder=L4 --port=1241 | file"
 
      $ echo -en '\x00\x00\x00\x06foobar' | netcat localhost 1241
 
@@ -359,7 +359,7 @@ See if the data ended up in the file
 
 ==== Binary Data Example
 
-     xd:> stream create --name tcptest9 --definition "tcp --decoder=L1 | file --binary=true"
+     xd:> stream create --name tcptest9 --definition "tcp --decoder=L1 --port=1242 | file --binary=true"
 
 Note that we configure the `file` sink with `binary=true` so that a newline is not appended.
 
