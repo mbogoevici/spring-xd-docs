@@ -303,7 +303,7 @@ See if the data ended up in the file
 
 .LF Decoder
 
-     xd:> stream create --name tcptest2 --definition "tcp --decoder=LF | file"
+     xd:> stream create --name tcptest2 --definition "tcp --decoder=LF --port=1235 | file"
 
      $ echo -en 'foobar\n' | netcat localhost 1235
 
@@ -311,7 +311,7 @@ See if the data ended up in the file
 
 .NULL Decoder
 
-     xd:> stream create --name tcptest3 --definition "tcp --decoder=NULL | file"
+     xd:> stream create --name tcptest3 --definition "tcp --decoder=NULL --port=1236 | file"
 
      $ echo -en 'foobar\x00' | netcat localhost 1236
 
@@ -319,7 +319,7 @@ See if the data ended up in the file
 
 .STXETX Decoder
 
-     xd:> stream create --name tcptest4 --definition "tcp --decoder=STXETX | file"
+     xd:> stream create --name tcptest4 --definition "tcp --decoder=STXETX --port=1237 | file"
 
      $ echo -en '\x02foobar\x03' | netcat localhost 1237
 
@@ -327,7 +327,7 @@ See if the data ended up in the file
 
 .RAW Decoder
 
-     xd:> stream create --name tcptest5 --definition "tcp --decoder=RAW | file"
+     xd:> stream create --name tcptest5 --definition "tcp --decoder=RAW --port=1238 | file"
 
      $ echo -n 'foobar' | netcat localhost 1238
 
