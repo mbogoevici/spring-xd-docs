@@ -73,10 +73,32 @@ You're then ready to format the filesystem for use by HDFS
 
 By default Spring XD will use a _Namenode_ setting of `hdfs://localhost:8020` which is defined in `${xd.home}/config/hadoop.properties`, depending on the used _Hadoop_ distribution and version the by-default-defined port `8020` may be different, e.g. port `9000`. Therefore, please ensure you have the following setting in `conf/core-site.xml`:
 
-   <property>
-       <name>fs.default.name</name>
-       <value>hdfs://localhost:8020</value>
-   </property>
+   <configuration>
+       <property>
+           <name>fs.default.name</name>
+           <value>hdfs://localhost:8020</value>
+       </property>
+   </configuration>
+
+==== Further Configuration File Changes
+
+In `conf/hdfs-site.xml` add:
+
+   <configuration>
+       <property>
+           <name>dfs.replication</name>
+           <value>1</value>
+       </property>
+   </configuration>
+
+In `conf/mapred-site.xml` add:
+
+   <configuration>
+       <property>
+           <name>mapred.job.tracker</name>
+           <value>localhost:9001</value>
+       </property>
+   </configuration>
 
 === Running Hadoop
 
