@@ -39,7 +39,7 @@ and you should see the following output in the XD container console.
 
 The logger name is the sink name prefixed with the string "logger.". The sink name is the same as the stream name by default, but you can set it by passing the `--name` parameter 
 
-  xd:> stream create --name myotherlogstream --definition "http --port=8000 | log --name=mylogger"
+  xd:> stream create --name myotherlogstream --definition "http --port=8001 | log --name=mylogger"
 
 [[file_sinks]]
 === File Sink
