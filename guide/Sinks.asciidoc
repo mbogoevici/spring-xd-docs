@@ -134,7 +134,7 @@ rollover:: when to roll files over, expressed in bytes *(default: `1000000`, rou
 
 The JDBC sink can be used to insert message payload data into a relational database table. By default it inserts the entire payload into an in-memory HSQLDB database table named after the stream name. To alter this behavior you should modify the 'config/jdbc.properties' file with the connection parameters you want to use. There is also a 'config/init_db.sql' file that contains the SQL statements used to initialize the database table. You can modify this file if you'd like to create the table when the sink starts or change the 'initializeDatabase' property to 'false' if the table already exists.
 
-The payload data will be inserted as is if the columns to be used is specified as 'payload'. This is the default behavior. If you specify any other column names the payload data will be assumed to be a JSON document that will be converted to a hash map. This hash map will be used to populate the data values for the SQL insert statement. There will be one insert statement executed for each message.
+The payload data will be inserted as-is if the 'columns' option is set to 'payload'. This is the default behavior. If you specify any other column names the payload data will be assumed to be a JSON document that will be converted to a hash map. This hash map will be used to populate the data values for the SQL insert statement. There will be one insert statement executed for each message.
 
 To create a stream using a `jdbc` sink relying on all defaults you would use a command like
 
