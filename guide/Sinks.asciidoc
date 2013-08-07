@@ -174,7 +174,7 @@ Fetched 10 rows.
 The JDBC Sink has the following options:
 
 configProperties:: base name of properties file containing configuration options for the sink. This file should contain the usual JDBC properties - driverClass, url, username, password *(default: `jdbc`)*
-initializeDatabase:: whether to initialize the database using theinitializer script (the default propertry file jdbc.properties has this set to true) *(default: `false`)*
+initializeDatabase:: whether to initialize the database using theinitializer script (the default property file jdbc.properties has this set to true) *(default: `false`)*
 initializerScript:: the file name for the script containing SQL statements used to initialize the database when the sink starts (will search config directory for this file) *(default: `init_db.sql`)*
 tablename:: the name of the table to insert payload data into *(default: `<streamname>`)*
 columns:: comma separated list of column names to include in the insert statement. Use 'payload' to include the entire message payload into a payload column. *(default: `payload`)*
