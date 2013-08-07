@@ -11,6 +11,7 @@ The Sources covered are
 * <<gemfire-cq,Gemfire CQ>>
 * <<syslog, Syslog>>
 * <<tcp, TCP>> 
+* <<rabbit, RabbitMQ>>
 * <<time, Time>>
 * <<mqtt, MQTT>>
 
@@ -370,6 +371,37 @@ $ hexdump -C /tmp/xd/output/tcptest9
 00000000  66 6f 6f 00 62 61 72 0b                           |foo.bar.|
 00000008
 ----
+
+[[rabbit]]
+=== RabbitMQ
+
+The "rabbit" source enables receiving messaging from RabbitMQ.
+
+The following example shows the default settings.
+
+Configure a stream:
+
+     xd:> stream create --name rabbittest --definition "rabbit --queue=testQueue | file --binary=true"
+
+This receives messages from a queue named `testQueue` and writes them to the default file sink (/tmp/xd/output/rabbittest)/ It uses the default RabbitMQ broker running on localhost, port 5672.
+
+The queue must exist before the stream is deployed. We do not create that Queue automatically. However, you can easily create a Queue using the RabbitMQ web UI. Then, using that same UI, you can navigate to the "rabbittest" Queue and publish test messages to it.
+
+Notice that the `file` sink has `--binary=true`; this is because, by default, the data arriving at the source will be bytes. This can be modified by setting the `content_type` header on messages to `text/plain`. In that case, the source will convert the message to a `String`; in which case you can omit the `--binary=true` and the file sink will then append a newline after each message.
+
+To destroy the stream, enter the following at the shell prompt:
+
+    xd:> stream destroy --name rabbittest
+
+==== RabbitMQ with Options
+
+The RabbitMQ Source has the following options
+
+host:: the host (or IP Address) to connect to *(default: `localhost` unless `rabbit.hostname` has been overridden in `rabbit.properties`)*
+port:: the port on the `host` *(default: `5672` unless `rabbit.port` has been overridden in `rabbit.properties`)*
+queue:: the queue from which messages will be received
+
+Note: the `rabbit.properties` file referred to above is located within the `XD_HOME/config` directory.
 
 [[time]]
 === Time
