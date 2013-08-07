@@ -45,7 +45,7 @@ TIP: When using _Mac OS X_ you can determine the _Java 6_ home directory by exec
 
 IMPORTANT: When using _MAC OS X_ (Other systems possible also) you may still encounter `Unable to load realm info from SCDynamicStore` (For details see https://issues.apache.org/jira/browse/HADOOP-7489[Hadoop Jira HADOOP-7489]). In that case, please also add to `conf/hadoop-env.sh` the following line: `export HADOOP_OPTS="-Djava.security.krb5.realm= -Djava.security.krb5.kdc="`.
 
-==== Setup passphraseless ssh
+==== Setup SSH
 
 As described in the installation guide, you also need to set up http://en.wikipedia.org/wiki/Secure_Shell[SSH] login to `localhost` without a passphrase. On Linux, you may need to install the `ssh` package and ensure the `sshd` daemon is running. On Mac OS X, ssh is already installed but the `sshd` daemon isn't usually running. To start it, you need to enable "Remote Login" in the "Sharing" section of the control panel. Then you can carry on and setup SSH keys as described in the installation guide:
 
