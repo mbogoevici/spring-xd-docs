@@ -375,7 +375,7 @@ $ hexdump -C /tmp/xd/output/tcptest9
 [[rabbit]]
 === RabbitMQ
 
-The "rabbit" source enables receiving messaging from RabbitMQ.
+The "rabbit" source enables receiving messages from RabbitMQ.
 
 The following example shows the default settings.
 
