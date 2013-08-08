@@ -166,6 +166,7 @@ A rich gauge is a Metric that holds a double value associated with a unique name
 The _richgauge_ sink provided with XD expects a numeric value as a payload, typically this would be a decimal formatted string, and keeps its value in a store. The richgauge includes the following attributes:
 
  name:: The name for the gauge *(default: `<streamname>`)*
+ alpha:: A smoothing factor between 0 and 1, that if set will compute an http://en.wikipedia.org/wiki/Exponential_smoothing[exponential moving average] *(default: `-1, simple average`)* 
 
 When stored in Redis, the values are kept as a space delimited string, formatted as _value_ _mean_ _max_ _min_ _count_
 
@@ -191,7 +192,7 @@ Check the gauge:
 
     $ redis-cli
     redis 127.0.0.1:6379> get richgauges.testgauge
-    "16.0 13.0 16.0 10.0 3"
+    "16.0 -1 13.0 16.0 10.0 3"
 
 ==== Stock Price Example
 
@@ -218,7 +219,7 @@ Check the gauge:
 
     $ redis-cli
     redis 127.0.0.1:6379> get richgauges.stockprice
-    "72.08 72.04 72.08 72.02 3"
+    "72.08 -1 72.04 72.08 72.02 3"
 
 
 ==== Improved Stock Price Example
@@ -253,7 +254,7 @@ Check the gauge:
 
     $ redis-cli
     redis 127.0.0.1:6379> get richgauges.emcprice
-    "24.96 24.926666666666666 24.96 24.9 3"
+    "24.96 -1 24.926666666666666 24.96 24.9 3"
     
     redis 127.0.0.1:6379> get richgauges.vmwprice
-    "72.08 72.04 72.08 72.02 3"
+    "72.08 -1 72.04 72.08 72.02 3"
