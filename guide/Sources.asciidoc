@@ -6,6 +6,7 @@ The Sources covered are
 
 * <<http, HTTP>>
 * <<tail, Tail>>
+* <<file, File>>
 * <<twittersearch, Twitter Search>>
 * <<twitterstream, Twitter Stream>>
 * <<gemfire-cq,Gemfire CQ>>
@@ -99,6 +100,28 @@ Some platforms, such as linux, send status messages to `stderr`. The tail module
 [message=tail: cannot open `/tmp/xd/input/tailtest' for reading: No such file or directory, file=/tmp/xd/input/tailtest]
 [message=tail: `/tmp/xd/input/tailtest' has become accessible, file=/tmp/xd/input/tailtest]
 ----
+
+[[file]]
+=== File
+
+The file source takes the content of a File and converts it to a String.    
+
+To log the contents of a file create a stream defintion using the XD shell
+
+    xd:> stream create --name filetest --definition "file | log"
+
+The file source by default will look into a directory named after the stream, in this case /tmp/xd/input/filetest
+
+Copy a file into the directory `/tmp/xd/input/filetest` and observe its contents being logged in the XD Container.
+
+==== File with options
+
+The tail source has 4 optins
+
+name:: the absolute path to the directory to monitor for files *(default: `/tmp/xd/input/<streamName>`)*
+duplicates:: Default value is `true` to prevent the same file from being processed twice.  The list of processed files kept in memory
+pattern:: A filter expression (Ant style) that accepts only file that match the pattern.
+interval:: The fixed delay polling interval specified in seconds
 
 [[twittersearch]]
 === Twitter Search
