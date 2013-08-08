@@ -15,7 +15,7 @@ The Sources covered are
 * <<time, Time>>
 * <<mqtt, MQTT>>
 
-Future releases will provide support for RabbitMQ, JMS, and other currently available Spring Integration Adapters.  For information on how to adapt an existing Spring Integration Adapter for use in Spring XD see the section link:Creating-a-Source-Module#creating-a-source-module[Creating a Source Module].
+Future releases will provide support for other currently available Spring Integration Adapters.  For information on how to adapt an existing Spring Integration Adapter for use in Spring XD see the section link:Creating-a-Source-Module#creating-a-source-module[Creating a Source Module].
 
 The following sections show a mix of Spring XD shell and plain Unix shell commands, so if you are trying them out, you should open two separate terminal prompts, one running the XD shell and one to enter the standard commands for sending HTTP data, creating directories, reading files and so on.
 
@@ -381,13 +381,13 @@ The following example shows the default settings.
 
 Configure a stream:
 
-     xd:> stream create --name rabbittest --definition "rabbit --queue=testQueue | file --binary=true"
+     xd:> stream create --name rabbittest --definition "rabbit | file --binary=true"
 
-This receives messages from a queue named `testQueue` and writes them to the default file sink (`/tmp/xd/output/rabbittest`). It uses the default RabbitMQ broker running on localhost, port 5672.
+This receives messages from a queue named `rabbittest` and writes them to the default file sink (`/tmp/xd/output/rabbittest`). It uses the default RabbitMQ broker running on localhost, port 5672.
 
-The queue must exist before the stream is deployed. We do not create that Queue automatically. However, you can easily create a Queue using the RabbitMQ web UI. Then, using that same UI, you can navigate to the "testQueue" Queue and publish test messages to it.
+The queue(s) must exist before the stream is deployed. We do not create the queue(s) automatically. However, you can easily create a Queue using the RabbitMQ web UI. Then, using that same UI, you can navigate to the "rabbittest" Queue and publish test messages to it.
 
-Notice that the `file` sink has `--binary=true`; this is because, by default, the data arriving at the source will be bytes. This can be modified by setting the `content_type` header on messages to `text/plain`. In that case, the source will convert the message to a `String`; and you can then omit the `--binary=true` and the file sink will then append a newline after each message.
+Notice that the `file` sink has `--binary=true`; this is because, by default, the data emitted by the source will be bytes. This can be modified by setting the `content_type` header on messages to `text/plain`. In that case, the source will convert the message to a `String`; you can then omit the `--binary=true` and the file sink will then append a newline after each message.
 
 To destroy the stream, enter the following at the shell prompt:
 
@@ -399,7 +399,7 @@ The RabbitMQ Source has the following options
 
 host:: the host (or IP Address) to connect to *(default: `localhost` unless `rabbit.hostname` has been overridden in `rabbit.properties`)*
 port:: the port on the `host` *(default: `5672` unless `rabbit.port` has been overridden in `rabbit.properties`)*
-queue:: the queue from which messages will be received
+queues:: the queue(s) from which messages will be received; use a comma-delimited list to receive messages from multiple queues
 
 Note: the `rabbit.properties` file referred to above is located within the `XD_HOME/config` directory.
 
