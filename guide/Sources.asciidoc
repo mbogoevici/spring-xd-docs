@@ -11,6 +11,7 @@ The Sources covered are
 * <<gemfire-cq,Gemfire CQ>>
 * <<syslog, Syslog>>
 * <<tcp, TCP>> 
+* <<jms, JMS>>
 * <<rabbit, RabbitMQ>>
 * <<time, Time>>
 * <<mqtt, MQTT>>
@@ -402,6 +403,57 @@ port:: the port on the `host` *(default: `5672` unless `rabbit.port` has been ov
 queues:: the queue(s) from which messages will be received; use a comma-delimited list to receive messages from multiple queues *(default: the stream name)*
 
 Note: the `rabbit.properties` file referred to above is located within the `XD_HOME/config` directory.
+
+[[jms]]
+=== JMS
+
+The "jms" source enables receiving messages from JMS.
+
+The following example shows the default settings.
+
+Configure a stream:
+
+     xd:> stream create --name jmstest --definition "jms | file"
+
+This receives messages from a queue named `jmstest` and writes them to the default file sink (`/tmp/xd/output/jmstest`). It uses the default ActiveMQ broker running on localhost, port 61616.
+
+To destroy the stream, enter the following at the shell prompt:
+
+    xd:> stream destroy --name jmstest
+
+To test the above stream, you can use something like the following...
+
+----
+public class Broker {
+
+	public static void main(String[] args) throws Exception {
+		BrokerService broker = new BrokerService();
+		broker.setBrokerName("broker");
+		String brokerURL = "tcp://localhost:61616";
+		broker.addConnector(brokerURL);
+		broker.start();
+		ConnectionFactory cf = new ActiveMQConnectionFactory(brokerURL);
+		JmsTemplate template = new JmsTemplate(cf);
+		while (System.in.read() >= 0) {
+			template.convertAndSend("jmstest", "testFoo");
+		}
+	}
+}
+----
+
+and `tail -f /tmp/xd/output/jmstest`
+
+Run this as a Java application; each time you hit <enter> in the console, it will send a message to queue `jmstest`.
+
+
+==== JMS with Options
+
+The JMS Source has the following options
+
+provider:: the JMS provider *(default: `activemq`)*
+queue:: the queue from which messages will be received; use a comma-delimited list to receive messages from multiple queues
+
+Note: the selected broker requires an infrastructure configuration file `jms-<provider>-infrastructure-context.xml` in `modules/common`. This is used to declare any infrastructure beans needed by the provider. See the default (`jms-activemq-infrastructure-context.xml`) for an example. Typically, all that is required is a `ConnectionFactory`. The activemq provider uses a properties file `jms-activemq.properties` which can be found in the `config` directory. This contains the broker URL.
 
 [[time]]
 === Time
