@@ -168,7 +168,7 @@ The _richgauge_ sink provided with XD expects a numeric value as a payload, typi
  name:: The name for the gauge *(default: `<streamname>`)*
  alpha:: A smoothing factor between 0 and 1, that if set will compute an http://en.wikipedia.org/wiki/Exponential_smoothing[exponential moving average] *(default: `-1, simple average`)* 
 
-When stored in Redis, the values are kept as a space delimited string, formatted as _value_ _mean_ _max_ _min_ _count_
+When stored in Redis, the values are kept as a space delimited string, formatted as _value_ _alpha_ _mean_ _max_ _min_ _count_
 
 Here are some examples of creating a tap for a rich gauge:
 
