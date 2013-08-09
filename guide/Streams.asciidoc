@@ -98,4 +98,4 @@ In the examples above, we connected a source to a sink using the pipe symbol `|`
 
 If you know a bit about Spring configuration files, you can inspect the module definition to see which properties it exposes. Alternatively, you can read more in the link:Sources#sources[source] and link:Sinks#sinks[sink] documentation.
 
-The Spring XD M2 release will provide a DSL for non-linear flows, e.g. a directed graph.
+A future Spring XD release will provide a DSL for non-linear flows, e.g. a directed graph.
