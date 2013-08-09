@@ -81,7 +81,7 @@ The tail source has 3 options:
 
 name:: the absolute path to the file to tail *(default: `/tmp/xd/input/<streamName>`)*
 lines:: the number of lines from the end of an existing file to tail *(default: `0`)*
-delay:: on platforms that don't wait for a missing file to appear, how often (ms) to look for the file *(default: `5000`)*
+fixedDelay:: on platforms that don't wait for a missing file to appear, how often (ms) to look for the file *(default: `5000`)*
 
 Here is an example 
 
@@ -121,18 +121,17 @@ The file source has 4 options
 dir:: The absolute path to the directory to monitor for files *(default: `/tmp/xd/input/<streamName>`)*
 preventDuplicates:: Default value is `true` to prevent the same file from being processed twice.
 pattern:: A filter expression (Ant style) that accepts only files that match the pattern.
-interval:: The fixed delay polling interval specified in seconds
+fixedDelay:: The fixed delay polling interval specified in seconds *(default: 5)*
 
 [[twittersearch]]
 === Twitter Search
 
-The twittersearch source has three required parameters
+The twittersearch source has four parameters
 
 query:: The query that will be run against Twitter *(required)*
-
 consumerKey:: An application consumer key issued by twitter
-
-consumerSecret:: The secret corresponding to the `consumerKey` 
+consumerSecret:: The secret corresponding to the `consumerKey`
+fixedDelay:: The fixed delay polling interval specified in miliseconds *(default: 5000)*
 
 To get a `consumerKey` and `consumerSecret` you need to register a twitter application. If you don't already have one set up, you can create an app at the https://dev.twitter.com/apps[Twitter Developers] site to get these credentials.
 
@@ -484,7 +483,7 @@ Note: the selected broker requires an infrastructure configuration file `jms-<pr
 === Time
 The time source will simply emit a String with the current time every so often. It supports the following options:
 
-interval:: how often to emit a message, expressed in seconds *(default: `1` second)*
+fixedDelay:: how often to emit a message, expressed in seconds *(default: `1` second)*
 format:: how to render the current time, using SimpleDateFormat *(default: `'yyyy-MM-dd HH:mm:ss'`)*
 
 
