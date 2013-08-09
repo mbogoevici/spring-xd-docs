@@ -120,7 +120,7 @@ The file source has 4 options
 
 name:: the absolute path to the directory to monitor for files *(default: `/tmp/xd/input/<streamName>`)*
 duplicates:: Default value is `true` to prevent the same file from being processed twice.  The list of processed files kept in memory
-pattern:: A filter expression (Ant style) that accepts only file that match the pattern.
+pattern:: A filter expression (Ant style) that accepts only files that match the pattern.
 interval:: The fixed delay polling interval specified in seconds
 
 [[twittersearch]]
