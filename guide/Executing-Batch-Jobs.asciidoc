@@ -114,13 +114,13 @@ xd:> job create --name helloWorldJob --definition "myjob --trigger=mytrigger"
 Batch Jobs can be deleted by executing:
 
 ----
-xd:> job destroy --name helloSpringXD
+xd:> job destroy helloSpringXD
 ----
 
 Alternatively, one can just undeploy the job, keeping its definition around for a future redeployment:
 
 ----
-xd:> job undeploy --name helloSpringXD
+xd:> job undeploy helloSpringXD
 ----
 
 
@@ -130,7 +130,7 @@ xd:> job undeploy --name helloSpringXD
 Cron Triggers can be deleted by executing:
 
 ----
-xd:> trigger destroy --name mytrigger
+xd:> trigger destroy mytrigger
 ----
 
 NOTE: Be advised that when removing Triggers from the Context they may still be referenced by running Batch Jobs.  Batch jobs that were created to use a trigger will continue to run on the schedule defined by the trigger even though it was destroyed.
