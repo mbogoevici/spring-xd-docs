@@ -33,7 +33,7 @@ In a separate terminal, `cd` into the `shell` directory and start the XD shell, 
 
 [source]
 ----
-shell/bin>$ ./spring-xd-shell
+shell/bin>$ ./xd-shell
  _____                           __   _______
 /  ___|          (-)             \ \ / /  _  \
 \ `--. _ __  _ __ _ _ __   __ _   \ V /| | | |
