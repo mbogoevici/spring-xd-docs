@@ -29,47 +29,6 @@ If the parameter value needs to embed a single quote, use two single quotes:
   // Query is: Select * from /Customers where name='Smith'
   scan --query='Select * from /Customers where name=''Smith'''
 
-=== Stream composition
-
-As an aid to avoiding individual stream definitions getting too complex and hard to follow, XD allows stream composition
-where more basic stream templates can be used as building blocks for a more sophisticated stream.
-A stream template represents a reusable module sequence that can include module customization or even parameterization
-which can then be reused simply by referring to it. Stream templates are not deployable by themselves.
-This is easiest to understand by example.
-
-(Note: The `name =` is just a convenience here to indicate the name the stream is being given when
-it is defined, the name is typically supplied as a separate parameter in the shell)
-
-  // Define myhttp, a reusable version of http configured to use a non-default prot
-  myhttp = http --port=7261
-  // Refer to myhttp to use it in constructing a deployable stream
-  myhttp | log
- 
-For the single module case, on reuse it is possible to add further configuration:
-
-  // In addition to using port 7261, the http instance will have the specified timeout
-  myhttp --timeout=300 | log
-
-A sequence of modules can reused:
-
-  // Sequence of modules that work on a string
-  stringProcessor = transform --expression=payload.trim() | transform --expression=payload.toUpperCase()
-  // Use that as a building block
-  http | stringProcessor | log
-
-Modules can be parameterized using `${variablename}` syntax:
-
-  obfuscator = transform --expression=payload.replaceAll('${word}','*');
-  // Supply the parameter value when using that stream:
-  http | obfuscator --word='password' | file
-
-Parameters can be given default values too:
-
-  userfilter = filter --expression=payload.contains('${user:guest}')
-  // Filter messages containing 'guest'
-  http | userfilter | log
-  // Filter messages containing 'Andy'
-  http | userfilter --user=Andy | log
 
 === Named channels
 
