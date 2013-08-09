@@ -118,7 +118,7 @@ Copy a file into the directory `/tmp/xd/input/filetest` and observe its contents
 
 The file source has 4 options
 
-dir:: the absolute path to the directory to monitor for files *(default: `/tmp/xd/input/<streamName>`)*
+dir:: The absolute path to the directory to monitor for files *(default: `/tmp/xd/input/<streamName>`)*
 preventDuplicates:: Default value is `true` to prevent the same file from being processed twice.
 pattern:: A filter expression (Ant style) that accepts only files that match the pattern.
 interval:: The fixed delay polling interval specified in seconds
