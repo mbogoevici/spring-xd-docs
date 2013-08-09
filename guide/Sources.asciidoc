@@ -106,7 +106,7 @@ Some platforms, such as linux, send status messages to `stderr`. The tail module
 
 The file source takes the content of a File and converts it to a String.    
 
-To log the contents of a file create a stream defintion using the XD shell
+To log the contents of a file create a stream definition using the XD shell
 
     xd:> stream create --name filetest --definition "file | log"
 
@@ -116,7 +116,7 @@ Copy a file into the directory `/tmp/xd/input/filetest` and observe its contents
 
 ==== File with options
 
-The tail source has 4 optins
+The file source has 4 options
 
 name:: the absolute path to the directory to monitor for files *(default: `/tmp/xd/input/<streamName>`)*
 duplicates:: Default value is `true` to prevent the same file from being processed twice.  The list of processed files kept in memory
