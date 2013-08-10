@@ -55,14 +55,6 @@ What makes this powerful is that additional streams can use the same channel as 
   :foo > transform2 | log
   :foo > transform3 | log
 
-Channel names can be qualified with the stream name to avoid clashes:
-
-  mystream1 = http | filter1 > :foo
-  mystream2 = http | filter2 > :foo
-  :mystream1.foo > transform1 | log
-  :mystream2.foo > transform2 | log
-
-
 === Tap
 
 A Tap can be used to "listen in" to data from another stream and process the data in a separate stream. A tap can consume data from any point along the target stream's processing pipeline. The format of tap is:
@@ -77,11 +69,7 @@ The output of the filter step can be tapped:
 
   tap mystream.filter | sink2
 
-It is also possible to tap into a named channel:
-
-  http | filter > :foo
-  :foo > transform | log
-  tap :foo > log2
+If the module name is not specified, the tap is into the output of the source for that stream.
 
 === Labels
 
