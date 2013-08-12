@@ -37,23 +37,18 @@ by anonymous internal channels (represented by the pipes), but by using explicit
 possible to construct more sophisticated flows. In keeping with the unix theme, sourcing/sinking data
 from/to a particular channel uses the `>` character. A channel name is prefixed with a `:`
 
-Here is a typical stream:
+Here is an example that shows how you can use a named channel to share a data pipeline driven by different input sources.  
 
-  http | filter | transform | log
+  :foo > file 
 
-It can be broken into pieces using named channels:
+  http > :foo"
 
-  // Use the 'foo' channel as a sink
-  http | filter > :foo
-  // Use the foo channel as a source
-  :foo > transform | log
+  time > :foo"
 
-What makes this powerful is that additional streams can use the same channel as a source:
+Now if you post data to the http source, you will see that data intermingled with the time value in the file.
 
-  http | filter > :foo
-  :foo > transform1 | log
-  :foo > transform2 | log
-  :foo > transform3 | log
+The opposite case, he fanout of a message to multiple streams as well as support for routing messages to different streams based on message content is planned for a future release.
+
 
 === Tap
 
