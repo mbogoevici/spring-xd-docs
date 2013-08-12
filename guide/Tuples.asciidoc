@@ -61,7 +61,7 @@ Object[] tokens = new String[] { "TestString", "true", "C", "10", "-472", "35422
 String[] nameArray = new String[] { "String", "Boolean", "Char", "Byte", "Short", "Integer", "Long", "Float", "Double",
 				"BigDecimal", "Null", "Date", "DatePattern", "BlankInput" };
 
-Li]st<String> names = Arrays.asList(nameArray);
+List<String> names = Arrays.asList(nameArray);
 List<Object> values = Arrays.asList(tokens);
 tuple = tuple().ofNamesAndValues(names, values);
 ----
