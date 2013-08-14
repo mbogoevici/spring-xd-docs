@@ -4,13 +4,13 @@ To get started, make sure your system has as a minimum  http://www.oracle.com/te
 
 === Download Spring XD
 
-Download http://www.springsource.org/download/community?project=Spring%20XD[*spring-xd-1.0.0.M1-dist.zip*]
+Download http://www.springsource.org/download/community?project=Spring%20XD[*spring-xd-1.0.0.M2-dist.zip*]
 
-Unzip the distribution. This will yield the installation directory *spring-xd-1.0.0.M1*. All the commands below are executed from this directory, so change into it before proceeding
+Unzip the distribution. This will yield the installation directory *spring-xd-1.0.0.M2*. All the commands below are executed from this directory, so change into it before proceeding
 
 [source,sh]
 ----
-$ cd spring-xd-1.0.0.M1
+$ cd spring-xd-1.0.0.M2
 ----
 
 Set the environment variable `XD_HOME` to the installation directory `<root-install-dir>\spring-xd\xd`
