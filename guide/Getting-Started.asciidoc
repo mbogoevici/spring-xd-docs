@@ -43,7 +43,7 @@ shell/bin>$ ./xd-shell
       | |                  __/ |
       |_|                 |___/
 eXtreme Data
-1.0.0.BUILD-SNAPSHOT | Admin Server Target: http://localhost:8080
+1.0.0.M2 | Admin Server Target: http://localhost:8080
 Welcome to the Spring XD shell. For assistance hit TAB or type "help".
 xd:>
 ----
