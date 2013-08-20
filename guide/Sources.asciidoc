@@ -408,7 +408,7 @@ Configure a stream:
 
      xd:> stream create --name rabbittest --definition "rabbit | file --binary=true"
 
-This receives messages from a queue named `rabbittest` and writes them to the default file sink (`/tmp/xd/output/rabbittest`). It uses the default RabbitMQ broker running on localhost, port 5672.
+This receives messages from a queue named `rabbittest` and writes them to the default file sink (`/tmp/xd/output/rabbittest.out`). It uses the default RabbitMQ broker running on localhost, port 5672.
 
 The queue(s) must exist before the stream is deployed. We do not create the queue(s) automatically. However, you can easily create a Queue using the RabbitMQ web UI. Then, using that same UI, you can navigate to the "rabbittest" Queue and publish test messages to it.
 
