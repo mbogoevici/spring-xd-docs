@@ -302,6 +302,7 @@ The RabbitMQ Sink has the following options
 
 host:: the host (or IP Address) to connect to *(default: `localhost` unless `rabbit.hostname` has been overridden in `rabbit.properties`)*
 port:: the port on the `host` *(default: `5672` unless `rabbit.port` has been overridden in `rabbit.properties`)*
+vhost:: the virtual host *(default: `/` unless `rabbit.vhost` has been overridden in `rabbit.properties`)*
 exchange:: the Exchange on the RabbitMQ broker to which messages should be sent *(default: `` (empty: therefore, the default no-name Exchange))*
 routingKey:: the routing key to be passed with the message *(default: <streamname>)*
 
