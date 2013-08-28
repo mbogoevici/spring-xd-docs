@@ -83,16 +83,31 @@ In order to execute the Batch Job, several options exist:
 xd:> job create --name helloSpringXD --definition "myjob"
 ----
 
-In the logging output of the XDContainer you should see the follwoing
+In the logging output of the XDContainer you should see the following
 ----
 22:26:24,794  INFO http-bio-8080-exec-3 job.JobPlugin:76 - Configuring module with the following properties: {xd.stream.name=helloSpring, xd.trigger.execute_on_startup=true}
 22:26:25,117  INFO http-bio-8080-exec-3 module.SimpleModule:130 - initialized module: SimpleModule [name=myjob, type=job, group=helloSpring, index=0]
 Hello Spring XD!
 ----
+==== Execute job from a stream
+You can execute a batch job in the flow of a stream.
+----
+ stream create --name jobStream --definition "http > :myjob"
+----
+Where "myjob" is the name of the job.
 
+==== Retrieve notification from job upon completion
+----
+stream create --name jobNotifications --definition ":myjob-notifications >log"
+----
+In this example, the job will send a notification to the log upon completion with its status. 
+In the logging output of the container you should see something like the following:
+----
+15:26:30,029  WARN task-scheduler-5 logger.jobNotifications:145 - JobExecution: id=1, version=2, startTime=Wed Aug 28 15:26:30 EDT 2013, endTime=Wed Aug 28 15:26:30 EDT 2013, lastUpdated=Wed Aug 28 15:26:30 EDT 2013, status=COMPLETED, exitStatus=exitCode=COMPLETED;exitDescription=, job=[JobInstance: id=1, version=0, Job=[myjob.job]], jobParameters=[{random=0.49881213192780494}]
+----
 ==== Execute the Batch using Cron-Trigger
 
-You can execute a job based on a cron scheduler by creating a stream using the cron-trigger source.  
+You can execute a batch job based on a cron scheduler by creating a stream using the cron-trigger source.  
 
 ----
 xd:> stream create --name cronStream --definition "cron-trigger --cron='0/5 * * * * *'  > :myjob" 
