@@ -138,7 +138,5 @@ Cron Triggers can be deleted by executing:
 xd:> stream destroy cronStream
 ----
 
-NOTE: Be advised that when removing Triggers from the Context they may still be referenced by running Batch Jobs.  Batch jobs that were created to use a trigger will continue to run on the schedule defined by the trigger even though it was destroyed.
-
 
  
