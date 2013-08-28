@@ -90,21 +90,19 @@ In the logging output of the XDContainer you should see the follwoing
 Hello Spring XD!
 ----
 
-==== Execute the Batch Job using an AdHoc Cron Expression
+==== Execute the Batch using Cron-Trigger
+
+You can execute a job based on a cron scheduler by creating a stream using the cron-trigger source.  
 
 ----
-xd:> job create --name helloSpringXD --definition "myjob --cron='*/10 * * * * *'"
-----
-
-==== Execute the Batch using a named Cron-Trigger
-
-You can explicitly create a named Trigger using:
+xd:> stream create --name cronStream --definition "cron-trigger --cron='0/5 * * * * *'  > :myjob" 
 
 ----
-xd:> trigger create --name mytrigger --definition "trigger --cron='*/10 * * * * *'"
+You can also pass in parameters to the batch job by using the --payload expression.
+----
+xd:> stream create --name cronStream --definition "cron-trigger --cron='0/5 * * * * *'  --payload='{"param1":"Kenny"}' > :myjob"  
 
 ----
-
 ==== Execute the Batch using a named Fixed-Rate-Trigger
 
 You can explicitly create a named Trigger using:
