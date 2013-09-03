@@ -73,20 +73,33 @@ If you are bulding from the sample repository do the following in the directory 
 
 In order to execute the Batch Job, several options exist:
 
-* Execute the Batch Job Once (Immediately)
+* Execute the Batch Job Once
 * Execute the Batch Job using an AdHoc Cron Expression
 * Execute the Batch using a named Cron-Trigger
 
-==== Execute the Batch Job Once (Immediately)
-
+==== Execute the Batch Job Once 
+There are 2 steps executing any job:
+1) Create the job 
 ----
 xd:> job create --name helloSpringXD --definition "myjob"
 ----
-
+In the logging output of the XDContainer you should see the following:
+----
+14:17:46,793  INFO http-bio-8080-exec-5 job.JobPlugin:87 - Configuring module with the following properties: {numberFormat=, dateFormat=, makeUnique=true, xd.stream.name=helloSpringXD}
+14:17:46,837  INFO http-bio-8080-exec-5 module.SimpleModule:140 - initialized module: SimpleModule [name=myjob, type=job, group=helloSpringXD, index=0]
+14:17:46,840  INFO http-bio-8080-exec-5 module.SimpleModule:154 - started module: SimpleModule [name=job, type=job, group=helloSpringXD, index=0]
+14:17:46,840  INFO http-bio-8080-exec-5 module.ModuleDeployer:152 - launched job module: helloSpringXD:myjob:0
+----
+2) Triggering the job.
+----
+xd:> stream create --name myTriggerStream --definition "trigger > :helloSpringXD"
+----
 In the logging output of the XDContainer you should see the following
 ----
-22:26:24,794  INFO http-bio-8080-exec-3 job.JobPlugin:76 - Configuring module with the following properties: {xd.stream.name=helloSpring, xd.trigger.execute_on_startup=true}
-22:26:25,117  INFO http-bio-8080-exec-3 module.SimpleModule:130 - initialized module: SimpleModule [name=myjob, type=job, group=helloSpring, index=0]
+14:21:04,719  INFO http-bio-8080-exec-7 job.JobPlugin:87 - Configuring module with the following properties: {numberFormat=, dateFormat=, makeUnique=true, xd.stream.name=myTriggerStream}
+14:21:04,763  INFO http-bio-8080-exec-7 module.SimpleModule:140 - initialized module: SimpleModule [name=trigger, type=source, group=myTriggerStream, index=0]
+14:21:04,765  INFO http-bio-8080-exec-7 module.SimpleModule:154 - started module: SimpleModule [name=trigger, type=source, group=myTriggerStream, index=0]
+14:21:04,767  INFO http-bio-8080-exec-7 module.ModuleDeployer:152 - launched source module: myTriggerStream:trigger:0
 Hello Spring XD!
 ----
 ==== Execute job from a stream
