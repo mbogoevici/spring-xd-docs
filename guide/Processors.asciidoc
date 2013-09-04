@@ -9,6 +9,8 @@ The Processors covered are
 * <<transform, Transform>>
 * <<json-field-extractor, JSON Field Extractor>>
 * <<script, Script>>
+* <<splitter, Splitter>>
+* <<aggregator, Aggregator>>
 
 See the section link:Creating-a-Processor-Module#creating-a-processor-module[Creating a Processor Module] for information on how to create custom processor modules.
 
@@ -46,7 +48,7 @@ This filter will only pass Messages to the log sink if the JSON payload contains
 
 Alternatively, if you send a different _firstName_, you shouldn't see the log entry.
 
-[[transform]]
+[[transform]] 
 === Transform
 Use the transform module in a link:Streams#streams[stream] to convert a Message's content or structure.
 
@@ -85,3 +87,34 @@ To use the module, pass the location of a Groovy script using the _location_ att
     xd:> stream create --name groovyprocessortest --definition "http --port=9006 | script --location=custom-processor.groovy --properties-location=custom-processor.properties | log"
 
 By default, Spring XD will search the classpath for _custom-processor.groovy_ and _custom-processor.properties_. You can place the script in _${xd.home}/modules/processor/scripts_ and the properties file in _${xd.home}/config_ to make them available on the classpath.  Alternatively, you can prefix the _location_ and _properties-location_ values with _file:_ to load from the file system.
+
+[[splitter]]
+=== Splitter
+The splitter module builds upon the concept of the same name in Spring Integration and allows the splitting of a single message into several distinct messages.
+
+The splitter module accepts the following options:
+
+expression:: a SpEL expression which should evaluate to an array or collection. Each element will then be emitted as a separate message *(default: `payload`, which actually does not split, unless the message is already a collection)*
+
+[[aggregator]]
+=== Aggregator
+The aggregator module does the opposite of the splitter, and builds upon the concept of the same name found in Spring Integration. By default, it will consider all incoming messages from a stream to belong to the same group:
+
+  xd:> stream create --name aggregates --definition "http | aggregator --count=3 --aggregation=T(org.springframework.util.StringUtils).collectionToDelimitedString(#this.![payload],' ') | log"
+
+This uses a SpEL expression that will basically concatenate all payloads together, inserting a space character in between. As such,
+
+  xd:> http post --data Hello
+  xd:> http post --data World
+  xd:> http post --data !
+
+would emit a single message whose contents is "Hello World !". This is because we set the aggregator release strategy to accumulate 3 messages.
+
+The aggregator modules comes with many more options, as shown below:
+
+correlation:: a SpEL expression to be evaluated against all incoming message and that should evaluate to the "key" used to group messages together *(default: `<streamname>`, which means that all messages from the same stream are actually considered correlated)*
+release:: a SpEL expression to be evaluated against a group of messages accumulated so far (a collection) and that should return true when such a group is ready to be released. Using this overrides the 'count' option. *(default: use the `'count'` approach)*
+count:: the number of messages to group together before emitting a group *(default: `50`)*
+aggregation:: a SpEL expression, to be evaluated against the list of accumulated messages. This should return what the new message will be made of. *(default: `#this.![payload]`, which uses the list of message payloads to form the new message)*
+timeout:: the delay (in milliseconds) after which messages should be released and aggregated, even though the completion criteria was not met. Due to the way this is implemented (see MessageGroupStoreReaper in the Spring Integration documentation), the actual observed delay may vary between `timeout` and `2xtimeout`. *(default: `60000`, _i.e._ one minute)*
+
