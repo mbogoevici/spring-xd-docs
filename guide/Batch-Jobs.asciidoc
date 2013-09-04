@@ -132,8 +132,9 @@ xd:> stream create --name cronStream --definition "cron-trigger --cron='0/5 * * 
 You can also pass in parameters to the batch job by using the --payload expression.
 ----
 xd:> stream create --name cronStream --definition "cron-trigger --cron='0/5 * * * * *'  --payload='{"param1":"Kenny"}' > :job:myCronJob"  
-
 ----
+NOTE: The payload content must be in a JSON-based map representation.
+
 ==== Execute the Batch using a Fixed-Delay-Trigger
 
 You can explicitly create a Fixed Delay Trigger by creating a stream that uses the trigger source:
