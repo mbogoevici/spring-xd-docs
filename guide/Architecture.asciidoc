@@ -10,7 +10,7 @@ The key components in Spring XD are the XD Admin and XD Container Servers. Using
 
 ===== DIRT Runtime
 
-A simple distributed runtime, called Distributed Integration Runtime, aka DIRT, will distribute the processing tasks across multiple XD Container instances. The distribution strategy in the M1 release is extremely simple.  The XD Admin server breaks up a processing task into individual module defintions and publishes them to a shared Redis queue.  Each container picks up a module definition off the queue, in a round-robin like manner, and creates a Spring ApplicationContext to run that module. This is a very simple strategy and not optimal for many use-cases, so support for defining grouping of modules will be introduced in later releases.
+A simple distributed runtime, called Distributed Integration Runtime, aka DIRT, will distribute the processing tasks across multiple XD Container instances.  The XD Admin server breaks up a processing task into individual module defintions and publishes them to a shared Redis queue.  Each container picks up a module definition off the queue, in a round-robin like manner, and creates a Spring ApplicationContext to run that module. This is a very simple strategy and not optimal for many use-cases, so support for defining grouping of modules will be introduced in later releases.
 
 [[simple-distributed-runtime]]
 .The XD Admin Server sending module definitions to each XD Container
@@ -20,7 +20,7 @@ How the processing task is broken down into modules is discussed in the section 
 
 ===== Support for other distributed runtimes
 
-In the M1 release, you are responsible for starting up a single XD Admin server and one or more XD Containers.  As we progress towards a final release, the goal is to support running XD on top of other distributed runtime environments such as Hadoop's YARN architecture and CloudFoundry.  
+In the 1.0 release, you are responsible for starting up a single XD Admin server and one or more XD Containers.  The 1.1 release will support running XD on top of other distributed runtime environments such as Hadoop's YARN architecture and CloudFoundry.  
 
 [[single-node-runtime]]
 ==== Single Node Runtime
@@ -33,7 +33,7 @@ image::images/local-mode.png[]
 [[admin-server-arch]]
 ==== Admin Server Architecture
 
-The Admin Server in the M1 release uses an embedded servlet container and exposes two endpoints for creating and deleting the modules required to perform data processing tasks as declared in the DSL. For the M2 release, the Admin Server will be implemented using Spring’s MVC framework and the https://github.com/SpringSource/spring-hateoas[Spring HATEOAS] library to create REST representations that follow the http://en.wikipedia.org/wiki/HATEOAS[HATEOAS] principle. The Admin Server communicates with the Container Servers using a pluggable transport based, the default uses Redis queues.
+The Admin Server uses an embedded servlet container and exposes two endpoints for creating and deleting the modules required to perform data processing tasks as declared in the DSL. For the M2 release, the Admin Server will be implemented using Spring’s MVC framework and the https://github.com/SpringSource/spring-hateoas[Spring HATEOAS] library to create REST representations that follow the http://en.wikipedia.org/wiki/HATEOAS[HATEOAS] principle. The Admin Server communicates with the Container Servers using a pluggable transport based, the default uses Redis queues.
 
 
 [[container-server-arch]]
@@ -66,7 +66,7 @@ Streams consist of the following types of modules:
 * Processing steps
 * Output sinks
 
-Input sources produce messages from a variety of sources, e.g. syslog, tcp, http. A message contains a payload of data and a collection of key-value headers. Messages flow through message channels from the source, through optional processing steps, to the output sink. The output sink will often write the message to a file system, such as HDFS, but may also forward the message over tcp, http, or another type of middleware. The M1 release supports message forwarding over tcp. Subsequent releases will support forwarding over RabbitMQ, HTTP, JMS, and the many other transports supported by Spring Integration. A guide to extending Spring XD for other transports is shown here. 
+Input sources produce messages from a variety of sources, e.g. syslog, tcp, http. A message contains a payload of data and a collection of key-value headers. Messages flow through message channels from the source, through optional processing steps, to the output sink. The output sink will often write the message to a file system, such as HDFS, but may also forward the message over tcp, http, or another type of middleware.
 
 A stream that consists of a input source and a output sink is shown below
 
@@ -88,7 +88,7 @@ A simple stream definition using UNIX pipes and filters syntax that takes data s
 http | file
 ----
 
-The pipe symbol represents a message channel that passes data from the HTTP source to the File sink. In the M1 release, the message channel implementation can either be backed with a local in-memory transport or use Redis queues.  Future releases will support backing the message channel with other transports such as RabbitMQ and JMS.
+The pipe symbol represents a message channel that passes data from the HTTP source to the File sink. In the M2 release, the message channel implementation can either be backed with a local in-memory transport, Redis queues, or RabbitMQ.  Future releases will support backing the message channel with other transports such as JMS.
 
 Note that the UNIX pipes and filter syntax is the basis for the DSL that Spring XD uses to describe simple linear flows, but we will significantly extend the syntax to cover non-linear flow in a subsequent release.
 
@@ -117,7 +117,7 @@ For more information on processing modules, refer to the section link:Processors
 
 The Container Server listens for module deployment requests sent from the Admin Server. In the `http | file` example, a module deployment request sent for the http module and another request is sent for the file module.  The definition of a module is stored in a Module Registry, which is a Spring XML configuration file.  The module definition contains variable placeholders that allow you to customize the behavior of the module. For example, setting the http listening port would be done by passing in the option `--port`, e.g. `http --port=8090 | file`, which is in turn used to substitute a placeholder value in the module definition. 
 
-The Module Registry is backed by the filesystem in the M1 release and corresponds to the directory `<xd-install-directory>/modules`.  When a module deployment request is processed by the Container, the module definition is loaded from the registry and a Spring ApplicationContext is created. 
+The Module Registry is backed by the filesystem and corresponds to the directory `<xd-install-directory>/modules`.  When a module deployment request is processed by the Container, the module definition is loaded from the registry and a Spring ApplicationContext is created. 
 
 Using the DIRT runtime, the http | file example would map onto the following runtime architecture
 
@@ -133,7 +133,7 @@ image::images/http2filter2file.png[]
 
 === Jobs
 
-The creation and execution of Jobs is not part of the M1 release and will be included in the M2 release.  Spring XD’s job functionality builds on the Spring Batch project and also the Spring for Apache Hadoop project that adds support for Hadoop based workflows. 
+The creation and execution of Batch jobs builds upon the functionality available in the Spring Batch and Spring for Apache Hadoop projects.  See the link:Batch-Jobs[Batch Jobs] section for more information.
 
 === Taps
 

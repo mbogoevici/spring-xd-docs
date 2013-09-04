@@ -34,8 +34,7 @@ If the parameter value needs to embed a single quote, use two single quotes:
 
 Instead of a source or sink it is possible to use a named channel. Normally the modules in a stream are connected
 by anonymous internal channels (represented by the pipes), but by using explicitly named channels it becomes 
-possible to construct more sophisticated flows. In keeping with the unix theme, sourcing/sinking data
-from/to a particular channel uses the `>` character. A channel name is prefixed with a `:`
+possible to construct more sophisticated flows. In keeping with the unix theme, sourcing/sinking data from/to a particular channel uses the `>` character. A channel name is prefixed with a `:`
 
 Here is an example that shows how you can use a named channel to share a data pipeline driven by different input sources.  
 

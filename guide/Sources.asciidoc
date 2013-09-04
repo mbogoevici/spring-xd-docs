@@ -408,7 +408,7 @@ Configure a stream:
 
      xd:> stream create --name rabbittest --definition "rabbit | file --binary=true"
 
-This receives messages from a queue named `rabbittest` and writes them to the default file sink (`/tmp/xd/output/rabbittest`). It uses the default RabbitMQ broker running on localhost, port 5672.
+This receives messages from a queue named `rabbittest` and writes them to the default file sink (`/tmp/xd/output/rabbittest.out`). It uses the default RabbitMQ broker running on localhost, port 5672.
 
 The queue(s) must exist before the stream is deployed. We do not create the queue(s) automatically. However, you can easily create a Queue using the RabbitMQ web UI. Then, using that same UI, you can navigate to the "rabbittest" Queue and publish test messages to it.
 
@@ -424,6 +424,7 @@ The RabbitMQ Source has the following options
 
 host:: the host (or IP Address) to connect to *(default: `localhost` unless `rabbit.hostname` has been overridden in `rabbit.properties`)*
 port:: the port on the `host` *(default: `5672` unless `rabbit.port` has been overridden in `rabbit.properties`)*
+vhost:: the virtual host *(default: `/` unless `rabbit.vhost` has been overridden in `rabbit.properties`)*
 queues:: the queue(s) from which messages will be received; use a comma-delimited list to receive messages from multiple queues *(default: the stream name)*
 
 Note: the `rabbit.properties` file referred to above is located within the `XD_HOME/config` directory.

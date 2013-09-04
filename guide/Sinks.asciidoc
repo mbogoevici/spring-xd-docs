@@ -22,6 +22,8 @@ The Sinks covered are
 
 * <<mqtt_sink, MQTT>>
 
+* <<router_sink, Dynamic Router>>
+
 See the section link:Creating-a-Sink-Module#creating-a-sink-module[Creating a Sink Module] for information on how to create sink modules using other Spring Integration Adapters.
 
 [[log_sinks]]
@@ -302,6 +304,7 @@ The RabbitMQ Sink has the following options
 
 host:: the host (or IP Address) to connect to *(default: `localhost` unless `rabbit.hostname` has been overridden in `rabbit.properties`)*
 port:: the port on the `host` *(default: `5672` unless `rabbit.port` has been overridden in `rabbit.properties`)*
+vhost:: the virtual host *(default: `/` unless `rabbit.vhost` has been overridden in `rabbit.properties`)*
 exchange:: the Exchange on the RabbitMQ broker to which messages should be sent *(default: `` (empty: therefore, the default no-name Exchange))*
 routingKey:: the routing key to be passed with the message *(default: <streamname>)*
 
@@ -408,3 +411,109 @@ clientId:: Identifies the client - overrides the default above.
 topic:: The topic to which the sink will publish - overrides the default above.
 qos:: The Quality of Service (default: 1)
 retained:: Whether the retained flag is set (default: false)
+
+[[router_sink]]
+=== Dynamic Router
+
+The Dynamic Router support allows for routing Spring XD messages to *named channels* based on the evaluation of SpEL expressions or Groovy Scripts.
+
+==== SpEL-based Routing
+
+In the following example, 2 streams are created that listen for message on the *foo* and the *bar* channel. Furthermore, we create a stream that receives messages via HTTP and then delegates the received messages to a router:
+
+----
+xd:>stream create f --definition ":foo > transform --expression=payload+'-foo' | log"
+Created new stream 'f'
+
+xd:>stream create b --definition ":bar > transform --expression=payload+'-bar' | log"
+Created new stream 'b'
+
+xd:>stream create r --definition "http | router --expression=payload.contains('a')?':foo':':bar'"
+Created new stream 'r'
+----
+
+Now we make 2 requests to the HTTP source:
+
+----
+xd:>http post --data "a"
+> POST (text/plain;Charset=UTF-8) http://localhost:9000 a
+> 200 OK
+
+xd:>http post --data "b"
+> POST (text/plain;Charset=UTF-8) http://localhost:9000 b
+> 200 OK
+----
+
+In the server log you should see the following output:
+
+----
+11:54:19,868  WARN ThreadPoolTaskScheduler-1 logger.f:145 - a-foo
+11:54:25,669  WARN ThreadPoolTaskScheduler-1 logger.b:145 - b-bar
+----
+
+For more information, please also consult the Spring Integration Reference manual: http://static.springsource.org/spring-integration/reference/html/messaging-routing-chapter.html#router-namespace particularly the section "Routers and the Spring Expression Language (SpEL)".	
+
+==== Groovy-based Routing
+
+Instead of SpEL expressions, Groovy scripts can also be used. Let's create a Groovy script in the file system at "/my/path/router.groovy"
+
+[source,groovy]
+----
+println("Groovy processing payload '" + payload +"'");
+if (payload.contains('a')) {
+	return ":foo"
+}
+else {
+	return ":bar"
+}
+----
+
+Now we create the following streams:
+
+----
+xd:>stream create f --definition ":foo > transform --expression=payload+'-foo' | log"
+Created new stream 'f'
+
+xd:>stream create b --definition ":bar > transform --expression=payload+'-bar' | log"
+Created new stream 'b'
+
+xd:>stream create g --definition "http | router --script='file:/my/path/router.groovy'"
+----
+
+Now post some data to the HTTP source:
+
+----
+xd:>http post --data "a"
+> POST (text/plain;Charset=UTF-8) http://localhost:9000 a
+> 200 OK
+
+xd:>http post --data "b"
+> POST (text/plain;Charset=UTF-8) http://localhost:9000 b
+> 200 OK
+----
+
+In the server log you should see the following output:
+
+----
+Groovy processing payload 'a'
+11:29:27,274  WARN ThreadPoolTaskScheduler-1 logger.f:145 - a-foo
+Groovy processing payload 'b'
+11:34:09,797  WARN ThreadPoolTaskScheduler-1 logger.b:145 - b-bar
+----
+
+[NOTE]
+===============================
+You can also use Groovy scripts located on your classpath by specifying:
+----
+--script='org/my/package/router.groovy'
+----
+===============================
+
+For more information, please also consult the Spring Integration Reference manual: "Groovy support"
+http://static.springsource.org/spring-integration/reference/html/messaging-endpoints-chapter.html#groovy
+
+==== Options
+
+expression:: The SpEL expression to use for routing
+script:: Indicates that Groovy Script based routing is used. If this property is set, then the "Expression" attribute will be ignored. The groovy script is checked for updates every 60 seconds. The script can be loaded from the classpath or from the file system e.g. "--script='org/springframework/springxd/samples/batch/router.groovy'" or "--script='file:/my/path/router.groovy'"
+properties-location:: Will be made available as script variables for Groovy Script based routing. Will only be evaluated once at initialization time. By default the following script variables will be made available: "payload" and "headers".

@@ -10,7 +10,7 @@ Let's see how to install those first, before diving into the specifics of runnin
 === Using Redis
 ==== Installing Redis
 
-If you already have a running instance of *Redis* it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*.
+If you already have a running instance of *Redis* it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*. You can change that in the `redis.properties` file residing in the `config/` directory.
 
 If you don't have a pre-existing installation of _Redis_, you can use the _Spring XD_ provided instance (For Linux and Mac). Inside the _Spring XD_ installation directory (spring-xd) do:
 [source,sh]
@@ -95,7 +95,7 @@ If you don't have a _RabbitMQ_ installation already, head over to http://www.rab
 
 ==== Launching RabbitMQ
 
-Start the *RabbitMQ* broker by running the rabbit-server script:
+Start the *RabbitMQ* broker by running the rabbitmq-server script:
 [source,sh]
 ----
 $ rabbitmq-server
@@ -128,6 +128,7 @@ xd/bin>$ ./xd-admin
 xd/bin>$ ./xd-container
 ----
 
+==== Choosing a Transport
 The --transport option drives the choice of middleware to use. As stated previously, *Redis* is currently the default, so the above example is equivalent to 
 [source,sh]
 ----
@@ -142,7 +143,19 @@ xd/bin>$ ./xd-admin --transport rabbit
 xd/bin>$ ./xd-container --transport rabbit
 ----
 
+[NOTE]
+=====================================================================
+If you have multiple XD systems (i.e. an xd-admin server and 0+ containers) using different Redis instances for storage but sharing a single RabbitMQ server for transport, you may encounter issues if each system contains streams of the same name. We recommend using a different RabbitMQ virtual host for each system. Update the `rabbit.vhost` property in `rabbit.properties` to point XD at the correct virtual host.
+=====================================================================
 
+==== Choosing a Store
+By default, the xd-admin server stores stream definitions and other information in Redis, using the connection parameters specified in `redis.properties`. Use the --store option to specify another storage type. Currently, only "redis" and "memory" are available.
+[source,sh]
+----
+xd/bin>$ ./xd-admin --store memory
+----
+
+==== Other Options
 There are additional configuration options available for these scripts:
  
 To specify the location of the Spring XD install,

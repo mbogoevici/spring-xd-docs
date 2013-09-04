@@ -73,51 +73,71 @@ If you are bulding from the sample repository do the following in the directory 
 
 In order to execute the Batch Job, several options exist:
 
-* Execute the Batch Job Once (Immediately)
+* Execute the Batch Job Once
 * Execute the Batch Job using an AdHoc Cron Expression
 * Execute the Batch using a named Cron-Trigger
 
-==== Execute the Batch Job Once (Immediately)
-
+==== Execute the Batch Job Once 
+There are 2 steps executing any job:
+1) Create the job 
 ----
 xd:> job create --name helloSpringXD --definition "myjob"
 ----
-
-In the logging output of the XDContainer you should see the follwoing
+In the logging output of the XDContainer you should see the following:
 ----
-22:26:24,794  INFO http-bio-8080-exec-3 job.JobPlugin:76 - Configuring module with the following properties: {xd.stream.name=helloSpring, xd.trigger.execute_on_startup=true}
-22:26:25,117  INFO http-bio-8080-exec-3 module.SimpleModule:130 - initialized module: SimpleModule [name=myjob, type=job, group=helloSpring, index=0]
+14:17:46,793  INFO http-bio-8080-exec-5 job.JobPlugin:87 - Configuring module with the following properties: {numberFormat=, dateFormat=, makeUnique=true, xd.stream.name=helloSpringXD}
+14:17:46,837  INFO http-bio-8080-exec-5 module.SimpleModule:140 - initialized module: SimpleModule [name=myjob, type=job, group=helloSpringXD, index=0]
+14:17:46,840  INFO http-bio-8080-exec-5 module.SimpleModule:154 - started module: SimpleModule [name=job, type=job, group=helloSpringXD, index=0]
+14:17:46,840  INFO http-bio-8080-exec-5 module.ModuleDeployer:152 - launched job module: helloSpringXD:myjob:0
+----
+2) Triggering the job.
+----
+xd:> stream create --name myTriggerStream --definition "trigger > :helloSpringXD"
+----
+In the logging output of the XDContainer you should see the following
+----
+14:21:04,719  INFO http-bio-8080-exec-7 job.JobPlugin:87 - Configuring module with the following properties: {numberFormat=, dateFormat=, makeUnique=true, xd.stream.name=myTriggerStream}
+14:21:04,763  INFO http-bio-8080-exec-7 module.SimpleModule:140 - initialized module: SimpleModule [name=trigger, type=source, group=myTriggerStream, index=0]
+14:21:04,765  INFO http-bio-8080-exec-7 module.SimpleModule:154 - started module: SimpleModule [name=trigger, type=source, group=myTriggerStream, index=0]
+14:21:04,767  INFO http-bio-8080-exec-7 module.ModuleDeployer:152 - launched source module: myTriggerStream:trigger:0
 Hello Spring XD!
 ----
+==== Execute job from a stream
+You can execute a batch job in the flow of a stream.
+----
+ stream create --name jobStream --definition "http > :myHttpJob"
+----
+Where "myHttpJob" is the name of the job.
 
-==== Execute the Batch Job using an AdHoc Cron Expression
+==== Retrieve notification from job upon completion
+----
+stream create --name jobNotifications --definition ":myHttpJob-notifications >log"
+----
+In this example, the job will send a notification to the log upon completion with its status. 
+In the logging output of the container you should see something like the following:
+----
+15:26:30,029  WARN task-scheduler-5 logger.jobNotifications:145 - JobExecution: id=1, version=2, startTime=Wed Aug 28 15:26:30 EDT 2013, endTime=Wed Aug 28 15:26:30 EDT 2013, lastUpdated=Wed Aug 28 15:26:30 EDT 2013, status=COMPLETED, exitStatus=exitCode=COMPLETED;exitDescription=, job=[JobInstance: id=1, version=0, Job=[myHttpJob.job]], jobParameters=[{random=0.49881213192780494}]
+----
+==== Execute the Batch using Cron-Trigger
+
+You can execute a batch job based on a cron scheduler by creating a stream using the cron-trigger source.  
 
 ----
-xd:> job create --name helloSpringXD --definition "myjob --cron='*/10 * * * * *'"
-----
-
-==== Execute the Batch using a named Cron-Trigger
-
-You can explicitly create a named Trigger using:
+xd:> stream create --name cronStream --definition "cron-trigger --cron='0/5 * * * * *'  > :myCronJob" 
 
 ----
-xd:> trigger create --name mytrigger --definition "trigger --cron='*/10 * * * * *'"
+You can also pass in parameters to the batch job by using the --payload expression.
+----
+xd:> stream create --name cronStream --definition "cron-trigger --cron='0/5 * * * * *'  --payload='{"param1":"Kenny"}' > :myCronJob"  
 
 ----
+==== Execute the Batch using a Fixed-Delay-Trigger
 
-==== Execute the Batch using a named Fixed-Rate-Trigger
-
-You can explicitly create a named Trigger using:
-
-----
-xd:> trigger create --name mytrigger --definition "trigger --fixedRate='5000'"
+You can explicitly create a Fixed Delay Trigger by creating a stream that uses the trigger source:
 
 ----
-==== Using a named trigger with the job
-The trigger will be added to the Common Context, which is shared across Plugins. Once the Trigger is created, we can reference the trigger when setting up the Batch Job:
+xd:> stream create --name fdStream --definition "trigger --payload='{"param1":"fixedDelayKenny"}' --fixedDelay=10 > :myXDJob" 
 
-----
-xd:> job create --name helloWorldJob --definition "myjob --trigger=mytrigger"
 ----
 
 === Removing Batch Jobs and Triggers 
@@ -143,10 +163,8 @@ xd:> job undeploy helloSpringXD
 Cron Triggers can be deleted by executing:
 
 ----
-xd:> trigger destroy mytrigger
+xd:> stream destroy cronStream
 ----
-
-NOTE: Be advised that when removing Triggers from the Context they may still be referenced by running Batch Jobs.  Batch jobs that were created to use a trigger will continue to run on the schedule defined by the trigger even though it was destroyed.
 
 
  
