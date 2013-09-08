@@ -65,7 +65,16 @@ Under *modules/job*, in the Spring XD home directory, please create the followin
 </beans>
 ----
 
-This context file must contain single batch job whose id is `job`.
+Please note that this context file *must contain single batch job whose id is `job`.*
+
+[source,xml]
+----
+        <batch:job id="job">
+		<batch:step id="helloSpringXDStep">
+			<batch:tasklet ref="helloSpringXDTasklet" />
+		</batch:step>
+	</batch:job>
+----
 
 If you are bulding from the sample repository do the following in the directory `spring-xd-samples/batch-simple`
 
