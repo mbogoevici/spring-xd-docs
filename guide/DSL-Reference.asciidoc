@@ -29,7 +29,7 @@ If the parameter value needs to embed a single quote, use two single quotes:
   // Query is: Select * from /Customers where name='Smith'
   scan --query='Select * from /Customers where name=''Smith'''
 
-
+[[named-channels]]
 === Named channels
 
 Instead of a source or sink it is possible to use a named channel. Normally the modules in a stream are connected
