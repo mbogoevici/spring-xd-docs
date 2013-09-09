@@ -27,7 +27,7 @@ Start by creating a data ingestion stream. Something like:
 
 Next, create a tap on the _springtweets_ stream that sets a message counter named _tweetcount_
 
-   xd:> tap create --name tweettap --definition "tap springtweets | counter --name=tweetcount"
+   xd:> stream create --name tweettap --definition "tap:springtweets > counter --name=tweetcount"
 
 The results are written to redis under the key counter.${name}. To retrieve the count:
   
@@ -86,7 +86,7 @@ To try this out, create a stream to ingest twitter feeds containing the word _sp
 
 Now create a tap for a field value counter:
 
-   xd:> tap create --name tweettap --definition "tap springtweets | field-value-counter --fieldName=fromUser"
+   xd:> stream create --name tweettap --definition "tap:springtweets > field-value-counter --fieldName=fromUser"
 
 The _twittersearch_ source produces JSON strings which contain the user id of the tweeter in the _fromUser_ field. The _field_value_counter_ sink parses the tweet and updates a field value counter named _fromUser_ in Redis. To view the counts:
 
@@ -104,7 +104,7 @@ Creating an aggregate counter is very similar to a simple counter. For example, 
 
 you'd simply create a tap which pipes the input to `aggregatecounter`:
 
-   xd:> tap create --name tweettap --definition "tap springtweets | aggregatecounter --name=tweetcount"
+   xd:> stream create --name tweettap --definition "tap:springtweets > aggregatecounter --name=tweetcount"
 
 The Redis back-end stores the aggregate counts in buckets prefixed with `aggregatecounters.${name}`. The rest of the string contains the date information. So for our `tweetcount` counter you might see something like the following keys appearing in Redis:
 
@@ -146,7 +146,7 @@ Create an ingest stream
 
 Next create the tap:
 
-    xd:> tap create --name simplegauge --definition "tap test | gauge"
+    xd:> stream create --name simplegauge --definition "tap:test > gauge"
 
 Now Post a message to the ingest stream:
 
@@ -180,7 +180,7 @@ Create an ingest stream
 
 Next create the tap:
 
-      xd:> tap create --name testgauge --definition "tap test | richgauge"
+      xd:> stream create --name testgauge --definition "tap:test > richgauge"
 
 Now Post some messages to the ingest stream:
 
@@ -207,7 +207,7 @@ Create an ingest stream
 
 Next create the tap, using the json-field-extractor to extract the stock price from the payload: 
 
-     xd:> tap create --name stockprice --definition "tap stocks | json-field-extractor --fieldName=price | richgauge"
+     xd:> stream create --name stockprice --definition "tap:stocks > json-field-extractor --fieldName=price | richgauge"
 
 Now Post some messages to the ingest stream:
 
@@ -237,8 +237,8 @@ Create an ingest stream
 
 Next create the taps, using the json-field-extractor to extract the stock price from the payload: 
 
-     xd:> stream create --name vmwprice --definition "tap stocks |json-field-value-filter --fieldName=symbol --fieldValue=VMW| json-field-extractor --fieldName=price | richgauge"
-     xd:> stream create --name emcprice --definition "tap stocks |json-field-value-filter --fieldName=symbol --fieldValue=EMC| json-field-extractor --fieldName=price | richgauge"
+     xd:> stream create --name vmwprice --definition "tap:stocks > json-field-value-filter --fieldName=symbol --fieldValue=VMW | json-field-extractor --fieldName=price | richgauge"
+     xd:> stream create --name emcprice --definition "tap:stocks > json-field-value-filter --fieldName=symbol --fieldValue=EMC | json-field-extractor --fieldName=price | richgauge"
 
 Now Post some messages to the ingest stream:
 
