@@ -129,6 +129,7 @@ fixedDelay:: The fixed delay polling interval specified in seconds *(default: 5)
 Spring XD provides two modules for receiving emails. Both have very similar options so they'll be described together here. The first one is named `imap` and only supports the imap protocol, using the `IDLE` command. As such, it does not use polling. Instead messages are pushed as soon as they arrive. The other module is named `mail` and supports all protocols (pop & imap), but it uses polling.
 
 Let's see an example:
+
   xd:> stream create --name mailstream --definition "mail --host=imap.gmail.com --username=your.user@gmail.com --password=secret | file"
 
 Then send an email to yourself and you should see it appear inside a file at `/tmp/xd/output/mailstream`
