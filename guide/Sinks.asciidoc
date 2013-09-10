@@ -291,11 +291,12 @@ Here is a simple example of how the mail module is used:
   xd:> stream create mystream --definition "http | mail --to='"your.email@gmail.com"' --host=your.imap.server --subject=payload+' world'"
 
 Then,
+
   xd:> http post --data Hello 
 
 You would then receive an email whose body contains "Hello" and whose subject is "Hellow world". Of special attention here is the way you need to escape strings for most of the parameters, because they're actually SpEL expressions (so here for example, we used a String literal for the `to` parameter).
 
-The full list of options available to the mail module is below:
+The full list of options available to the mail module is below (note that most of these options can be set once and for all in the `mail.properties` file):
 
   to:: The primary recipient(s) of the email. *(default: `null`, SpEL Expression)*
   from:: The sender address of the email. *(default: `null`, SpEL Expression)*
@@ -304,10 +305,10 @@ The full list of options available to the mail module is below:
   bcc:: The recipient(s) that should receive a blind carbon copy. *(default: `null`, SpEL Expression)*
   replyTo:: The address that will become the recipient if the original recipient decides to "reply to" the email. *(default: `null`, SpEL Expression)*
   contentType:: The content type to use when sending the email. *(default: `null`, SpEL Expression)*
-  host:: The hostname of the sending server to use. *(default: look it up under the `mail.sink.host` key in the `mail.properties` file, with default `localhost`)*
-  port:: The port of the sending server. *(default: look it up under the `mail.sink.port` key in the `mail.properties` file, with default `25`)*
-  username:: The username to use for authentication against the sending server. *(default: look it up under the `mail.sink.username` key in the `mail.properties` file, with no default)*
-  password:: The password to use for authentication against the sending server. *(default: look it up under the `mail.sink.password` key in the `mail.properties` file, with no default)*
+  host:: The hostname of the sending server to use. *(default: `localhost`)*
+  port:: The port of the sending server. *(default: `25`)*
+  username:: The username to use for authentication against the sending server. *(default: none)*
+  password:: The password to use for authentication against the sending server. *(default: none)*
     
 
 
