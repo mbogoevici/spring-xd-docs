@@ -79,10 +79,32 @@ Upon closer inspection, you will notice that modules adhere to some important co
 
 === Registering a Module
 
-XD provides a strategy interface https://github.com/SpringSource/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/module/ModuleRegistry.java[ModuleRegistry] which it uses to find a module of a given name and type. Currently XD provides RedisModuleRegistry and FileModuleRegistry, The ModuleRegistry is a required component for the XD Server. By default the XD Server is configured with the FileModuleRegistry which looks for modules in ${xd.home:..}/modules. Where xd.home is a Java System Property or may be passed as a command line argument to the container launcher. So out of the box, the modules are contained in the XD modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
+XD provides a strategy interface https://github.com/SpringSource/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/module/ModuleRegistry.java[ModuleRegistry] which it uses to find a module of a given name and type. Currently XD provides RedisModuleRegistry and FileModuleRegistry, The ModuleRegistry is a required component for the XD Server. By default the XD Server is configured with the FileModuleRegistry which looks for modules in `${xd.home:..}/modules`. Where `xd.home` is a Java System Property or may be passed as a command line argument to the container launcher. So out of the box, the modules are contained in the XD modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
 
       modules/processor
       modules/sink
       modules/source
 
 Using the default server configuration, you simply drop your module file into the modules directory and deploy a stream to the server.
+
+==== Modules with isolated classpath
+
+In addition to the simple format described above, where you would have a `foo` source module implemented as a `modules/source/foo.xml` file, there is also preliminary support for modules that wish to bring their own library dependencies, in an isolated fashion.
+
+This is accomplished by creating a __folder__ named after your module name and moving the xml file to a `config` subdirectory. As an example, the `foo.xml` file would then reside in 
+
+  modules/source/foo/config/foo.xml
+
+Additional jar files can then be added to a sibling `lib` directory, like so:
+
+  modules/source/foo/
+                     config/
+                            foo.xml
+                     lib/
+                         commons-foo.jar
+                         foo-ext.jar
+
+Classes will first be loaded from any of the aforementioned jar files and, only if they're not found will they be loaded from the parent, global ClassLoader that Spring XD normally uses. Still, there are a couple of caveats that one should be aware of:
+
+1. refrain from putting into the `lib/` folder jar files that are also part of Spring XD, or you'll likely end up with ClassCastExceptions
+2. any class that is directly or indirectly referenced from the payload type of your messages (__i.e.__ the types that transit from module to module) must not belong to a particular module `lib/` folder but should rather be loaded by the global Spring XD classloader
