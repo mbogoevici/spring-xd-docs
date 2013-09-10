@@ -133,7 +133,7 @@ image::images/http2filter2file.png[]
 
 === Jobs
 
-The creation and execution of Batch jobs builds upon the functionality available in the Spring Batch and Spring for Apache Hadoop projects.  See the link:Batch-Jobs[Batch Jobs] section for more information.
+The creation and execution of Batch jobs builds upon the functionality available in the Spring Batch and Spring for Apache Hadoop projects.  See the link:Batch-Jobs#batch[Batch Jobs] section for more information.
 
 === Taps
 

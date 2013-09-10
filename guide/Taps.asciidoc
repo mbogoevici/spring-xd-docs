@@ -4,15 +4,13 @@ A Tap allows you to "listen in" to data from another stream and process the data
 
 A tap acts like a source in that it occurs as the first module within a stream and can pipe its output to a sink (and/or one or more processors added to a chain before the ultimate sink), but for a tap the messages are actually those being processed by some other stream.  
 
-The DSL syntax for creating a tap is:
-
-   tap <target stream>
+Taps are specified as link:DSL-Reference#named-channels[named channels] in a stream definition, where the channel name always begins with `tap:`.
 
 To create a tap using the shell, use the following command (assuming you want to tap into the "foo1" stream, which we'll create first):
 
 ----
 xd:> stream create --name foo1 --definition "time | log"
-xd:> tap create --name tapname --definition "tap foo1 | log"
+xd:> stream create --name tapname --definition "tap:foo1 > log"
 ----
 
 A tap can consume data from any point along the target stream's processing pipeline. For example, if you have a stream called `mystream`, defined as
@@ -23,15 +21,17 @@ source | filter | transformer | sink
 
 Then creating a tap using
   
-  tap mystream.<filter module name> | sink2
+  tap:mystream.<filter module name> > sink2
 
 would tap into the stream's data after the filter has been applied but before the transformer. So the untransformed data would be sent to `sink2`.
 
 
-A primary use case is to perform realtime analytics at the same time as data is being ingested via its primary stream. For example, consider a Stream of data that is consuming Twitter search results and writing them to HDFS. A tap can be created before the data is written to HDFS, and the data piped from the tap to a counter that correspond to the number of times specific hashtags were mentioned in the tweets.  
+A primary use case is to perform realtime analytics at the same time as data is being ingested via its primary stream. For example, consider a Stream of data that is consuming Twitter search results and writing them to HDFS. A tap can be created before the data is written to HDFS, and the data piped from the tap to a counter that correspond to the number of times specific hashtags were mentioned in the tweets.
+
+Creating a tap on a named channel, a stream whose source is a named channel, or a label is not yet supported. This is planned for a future release.   
 
 You'll find specific examples of creating taps on existing streams in the link:Analytics#analytics[Analytics] section.
 
 === Tap Lifecycle
 
-A side effect of a stream being unaware of any taps on its pipeline, is that deleting the stream will not automatically delete the taps. The taps have to be deleted separately.
+A side effect of a stream being unaware of any taps on its pipeline is that deleting the stream will not automatically delete the taps. The taps have to be deleted separately. However if the tapped stream is re-created, the existing tap will continue to function.

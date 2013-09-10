@@ -29,7 +29,7 @@ If the parameter value needs to embed a single quote, use two single quotes:
   // Query is: Select * from /Customers where name='Smith'
   scan --query='Select * from /Customers where name=''Smith'''
 
-
+[[named-channels]]
 === Named channels
 
 Instead of a source or sink it is possible to use a named channel. Normally the modules in a stream are connected
@@ -40,30 +40,21 @@ Here is an example that shows how you can use a named channel to share a data pi
 
   :foo > file 
 
-  http > :foo"
+  http > :foo
 
-  time > :foo"
+  time > :foo
 
 Now if you post data to the http source, you will see that data intermingled with the time value in the file.
 
-The opposite case, he fanout of a message to multiple streams as well as support for routing messages to different streams based on message content is planned for a future release.
+The opposite case, the fanout of a message to multiple streams, is planned for a future release. However, link:Taps[taps] are a specialization of named channels that do allow publishing data to multiple sinks. For example:
 
+  tap:mystream > file 
 
-=== Tap
+  tap:mystream > log
 
-A Tap can be used to "listen in" to data from another stream and process the data in a separate stream. A tap can consume data from any point along the target stream's processing pipeline. The format of tap is:
+Once data is received on `mystream`, it will be written to both file and log. Note that, unlike other named channels, references to a tap do not contain a leading `:`.
 
-  tap <stream>.<module>
-
-For example, here is a stream called 'mystream':
-
-  source | filter | transform | sink
-
-The output of the filter step can be tapped:
-
-  tap mystream.filter | sink2
-
-If the module name is not specified, the tap is into the output of the source for that stream.
+Support for routing messages to different streams based on message content is also planned for a future release.
 
 === Labels
 
@@ -72,7 +63,6 @@ When used as an alias a label can provide a more descriptive name for a
 particular configuration of a module and possibly something easier to refer to in other streams.
 
   mystream = http | obfuscator: transform --expression=payload.replaceAll('password','*') | file
-  tap mystream.obfuscator > log
 
 A module may have multiple labels:
 
@@ -87,4 +77,3 @@ yet exploited in XD but in future may be used for something like configuring dep
 
   // Ensure all modules in group1 are on the same machine
   group1.colocation = true
-

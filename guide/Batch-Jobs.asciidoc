@@ -53,16 +53,27 @@ Under *modules/job*, in the Spring XD home directory, please create the followin
 		http://www.springframework.org/schema/batch
 		http://www.springframework.org/schema/batch/spring-batch.xsd">
 
-	<batch:job id="helloSpringXD">
+	<batch:job id="job">
 		<batch:step id="helloSpringXDStep">
 			<batch:tasklet ref="helloSpringXDTasklet" />
 		</batch:step>
 	</batch:job>
 
 	<bean id="helloSpringXDTasklet"
-		class="org.springframework.xd.dirt.plugins.job.HelloSpringXDTasklet" />
+		class="org.springframework.springxd.samples.batch.HelloSpringXDTasklet" />
 
 </beans>
+----
+
+Please note that this context file *must contain single batch job whose id is `job`.*
+
+[source,xml]
+----
+        <batch:job id="job">
+		<batch:step id="helloSpringXDStep">
+			<batch:tasklet ref="helloSpringXDTasklet" />
+		</batch:step>
+	</batch:job>
 ----
 
 If you are bulding from the sample repository do the following in the directory `spring-xd-samples/batch-simple`
@@ -79,6 +90,7 @@ In order to execute the Batch Job, several options exist:
 
 ==== Execute the Batch Job Once 
 There are 2 steps executing any job:
+
 1) Create the job 
 ----
 xd:> job create --name helloSpringXD --definition "myjob"
@@ -92,7 +104,7 @@ In the logging output of the XDContainer you should see the following:
 ----
 2) Triggering the job.
 ----
-xd:> stream create --name myTriggerStream --definition "trigger > :helloSpringXD"
+xd:> stream create --name myTriggerStream --definition "trigger > job:helloSpringXD"
 ----
 In the logging output of the XDContainer you should see the following
 ----
@@ -105,7 +117,7 @@ Hello Spring XD!
 ==== Execute job from a stream
 You can execute a batch job in the flow of a stream.
 ----
- stream create --name jobStream --definition "http > :myHttpJob"
+ stream create --name jobStream --definition "http > job:myHttpJob"
 ----
 Where "myHttpJob" is the name of the job.
 
@@ -123,20 +135,21 @@ In the logging output of the container you should see something like the followi
 You can execute a batch job based on a cron scheduler by creating a stream using the cron-trigger source.  
 
 ----
-xd:> stream create --name cronStream --definition "cron-trigger --cron='0/5 * * * * *'  > :myCronJob" 
+xd:> stream create --name cronStream --definition "cron-trigger --cron='0/5 * * * * *'  > job:myCronJob" 
 
 ----
 You can also pass in parameters to the batch job by using the --payload expression.
 ----
-xd:> stream create --name cronStream --definition "cron-trigger --cron='0/5 * * * * *'  --payload='{"param1":"Kenny"}' > :myCronJob"  
-
+xd:> stream create --name cronStream --definition "cron-trigger --cron='0/5 * * * * *'  --payload='{"param1":"Kenny"}' > job:myCronJob"  
 ----
+NOTE: The payload content must be in a JSON-based map representation.
+
 ==== Execute the Batch using a Fixed-Delay-Trigger
 
 You can explicitly create a Fixed Delay Trigger by creating a stream that uses the trigger source:
 
 ----
-xd:> stream create --name fdStream --definition "trigger --payload='{"param1":"fixedDelayKenny"}' --fixedDelay=10 > :myXDJob" 
+xd:> stream create --name fdStream --definition "fixed-delay-trigger --payload='{"param1":"fixedDelayKenny"}' --fixedDelay=10 > job:myXDJob" 
 
 ----
 
