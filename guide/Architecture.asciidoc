@@ -33,7 +33,7 @@ image::images/local-mode.png[]
 [[admin-server-arch]]
 ==== Admin Server Architecture
 
-The Admin Server uses an embedded servlet container and exposes two endpoints for creating and deleting the modules required to perform data processing tasks as declared in the DSL. For the M2 release, the Admin Server will be implemented using Spring’s MVC framework and the https://github.com/SpringSource/spring-hateoas[Spring HATEOAS] library to create REST representations that follow the http://en.wikipedia.org/wiki/HATEOAS[HATEOAS] principle. The Admin Server communicates with the Container Servers using a pluggable transport based, the default uses Redis queues.
+The Admin Server uses an embedded servlet container and exposes two endpoints for creating and deleting the modules required to perform data processing tasks as declared in the DSL. The Admin Server is implemented using Spring's MVC framework and the https://github.com/SpringSource/spring-hateoas[Spring HATEOAS] library to create REST representations that follow the http://en.wikipedia.org/wiki/HATEOAS[HATEOAS] principle. The Admin Server communicates with the Container Servers using a pluggable transport based, the default uses Redis queues.
 
 
 [[container-server-arch]]
@@ -88,7 +88,7 @@ A simple stream definition using UNIX pipes and filters syntax that takes data s
 http | file
 ----
 
-The pipe symbol represents a message channel that passes data from the HTTP source to the File sink. In the M2 release, the message channel implementation can either be backed with a local in-memory transport, Redis queues, or RabbitMQ.  Future releases will support backing the message channel with other transports such as JMS.
+The pipe symbol represents a message channel that passes data from the HTTP source to the File sink. The message channel implementation can either be backed with a local in-memory transport, Redis queues, or RabbitMQ.  Future releases will support backing the message channel with other transports such as JMS.
 
 Note that the UNIX pipes and filter syntax is the basis for the DSL that Spring XD uses to describe simple linear flows, but we will significantly extend the syntax to cover non-linear flow in a subsequent release.
 
