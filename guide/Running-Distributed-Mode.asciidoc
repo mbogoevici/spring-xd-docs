@@ -3,7 +3,7 @@ The Spring XD distributed runtime (DIRT) supports distribution of processing tas
 
 Spring XD can use several middlewares when running in distributed mode. At the time of writing, http://redis.io/[*Redis*] and http://www.rabbitmq.com/[*RabbitMQ*] are available options.
 
-Let's see how to install those first, before diving into the specifics of running Spring XD. Again, those are alternatives when in comes to transport middleware used, so you need only one (although practically, Redis may be required for other purposes, for example storage of definitions or link:Analytics#analytics[Analytics]).
+Let's see how to install those first, before diving into the specifics of running Spring XD. Again, those are alternatives when it comes to transport middleware used, so you need only one (although practically, Redis may be required for other purposes, for example storage of definitions or link:Analytics#analytics[Analytics]).
 
 *Redis* is actually the default when it comes to running in distributed mode, so let's start with that.
 
