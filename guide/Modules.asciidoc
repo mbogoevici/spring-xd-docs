@@ -22,40 +22,41 @@ At the core, a module is any component that may be implemented using a Spring ap
 
 A module is typically configured using property placeholders which are bound to the module's attributes. Attributes may be required or optional and this coincides with whether a default value is provided for the placeholder.
 
-For example, here is part of Spring configuration for a _counter_ sink that counts messages and stores the result in Redis:
+For example, here is part of the Spring configuration for a _twittersearch_ source that runs a query against Twitter:
 
 [source,xml]
 ----
 <beans>
   ...
-  <bean id="handler"
-    class="org.springframework.xd.analytics.metrics.integration.MessageCounterHandler">
-    <constructor-arg ref="service"/>
-    <constructor-arg value="${name}"/>
+  <int:inbound-channel-adapter id="results" auto-startup="false"
+	ref="twitterSearchMessageSource" method="getTweets">
+	<int:poller fixed-delay="${fixedDelay:5000}"/>
+  </int:inbound-channel-adapter>
+
+  <bean id="twitterSearchMessageSource" class="org.springframework.integration.x.twitter.TwitterSearchMessageSource">
+	<constructor-arg ref="oauth2Template"/>
+	<constructor-arg value="${query}"/>
   </bean>
-  <bean id="service"
-    class="org.springframework.xd.analytics.metrics.redis.RedisCounterService">
-    <constructor-arg ref="repository"/>
-  </bean>
-  <bean id="repository"
-    class="org.springframework.xd.analytics.metrics.redis.RedisCounterRepository">
-    <constructor-arg ref="connectionFactory"/>
-  </bean>
-  <bean id="connectionFactory"
-    class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory">
-    <constructor-arg index="0" value="${redis.hostname:localhost}"/>
-    <constructor-arg index="1" value="${redis.port:6379}"/>
+
+  <bean id="oauth2Template" class="org.springframework.social.oauth2.OAuth2Template">
+	<constructor-arg index="0" value="${consumerKey:${twitter.oauth.consumerKey}}" />
+	<constructor-arg index="1" value="${consumerSecret:${twitter.oauth.consumerSecret}}" />
+	<constructor-arg index="2" value="http://notused" />
+	<constructor-arg index="3" value="http://notused" />
+	<constructor-arg index="4" value="https://api.twitter.com/oauth2/token" />
   </bean>
 </beans>
 ----
 
-Note the property placeholders for _name_, _redis.hostname_ and _redis.port_. The _name_ property defines no default value, so it is a required attribute for this module. _redis.hostname_ and _redis.port_ default to _localhost_ and _6379_ respectively. So these are optional attributes. In either case, the XD server will substitute values for these properties as configured for each module instance.  For example, we can create two streams each creating an instance of the _counter_ module with a different configuration.
+Note the property placeholders for _query_, _fixedDelay_, _consumerKey_ and _consumerSecret_. The _query_ property defines no default value, so it is a required attribute for this module. _fixedDelay_ defaults to 5000, so it is an optional attribute. Note the defaults for _consumerKey_ and _consumerSecret_. The property names prefixed by _twitter_ are globally defined for the entire XD system in _config/twitter.properties_. So if the user does not specify a _consumerKey_ or _consumerSecret_ when creating the stream, XD's twitter configuration will be used instead.
 
-    xd:> stream create --name counttest --definition "time | counter --name=test"
+The XD server will substitute values for all of these properties as configured for each module instance.  For example, we can create two streams each creating an instance of the _twittersearch_ module with a different configuration.
+
+    xd:> stream create --name tweettest --definition "twittersearch --query='java' | file"
 
 or
 
-    xd:> stream create --name counttest2 --definition "time | counter --name=test2 --redis.host=redis.example.com --redis.port=63710"
+    xd:> stream create --name tweettest2 --definition "twittersearch --query-'java' --consumerKey='mykey' --consumerSecret='mysecret' | file"
 
 In addition to properties, modules may reference Spring beans which are defined externally such that each module instance may inject a different implementation of a bean. The ability to configure each module instance differently is only possible if each module is created in its own application context. The module may be configured with a parent context, but this should be done with care. In the simplest case, the module context is completely separate. This results in some very useful features, such as being able to create multiple bean instances with the same id, possibly with different configurations. More generally, this allows modules to adhere to the KISS principle.
 
