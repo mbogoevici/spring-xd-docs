@@ -1,4 +1,4 @@
-=== Introdution
+=== Introduction
 
 Spring XD Analytics provides support for real-time analysis of data using metrics such as counters and gauges.  Spring XD intends to support a wide range of these metrics and analytical data structures as a general purpose class library that works with several backend storage technologies.
 
