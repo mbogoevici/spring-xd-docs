@@ -13,6 +13,7 @@ link:Sources[Sources] +
 link:Processors[Processors] +
 link:Sinks[Sinks] +
 link:Taps[Taps] +
+link:Type-Conversion[Type Conversion]+
 link:Batch-Jobs[Batch Jobs] +
 link:Analytics[Analytics] +
 link:DSL-Reference[DSL Reference] +
