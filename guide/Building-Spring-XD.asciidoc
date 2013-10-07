@@ -42,3 +42,39 @@ For IntelliJ IDEA
 ----
 
 Then just import the project as an existing project.
+
+=== Running JavaScript UI Tests
+
+In order to run the UI tests, `phantomjs` must be installed on your system. On a Mac using brew execute:
+----
+brew install phantomjs
+----
+
+Alternatively, you can also install `phantomjs` using the Node Package Manager:
+----
+npm install -g phantomjs
+----
+
+Afterwards, execute:
+
+----
+./gradlew build
+./gradlew jsTest
+----
+
+As a result you should see console output similar to the following:
+
+----
+:spring-xd-ui:jsTest
+Opening: http://localhost:9393/admin-ui/test/SpecRunnerPhantomJS.html
+Starting...
+
+Finished
+-----------------
+8 specs, 0 failures in 0.073s.
+
+ConsoleReporter finished: success
+Stopped the SingleNode server.
+
+BUILD SUCCESSFUL
+----
