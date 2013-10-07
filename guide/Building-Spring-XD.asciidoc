@@ -58,7 +58,6 @@ npm install -g phantomjs
 Afterwards, execute:
 
 ----
-./gradlew build
 ./gradlew jsTest
 ----
 
