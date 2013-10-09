@@ -1,7 +1,7 @@
 XD allows you to declaratively specify type conversion within processing streams using _inputType_ and _outputType_ parameters on module definitions. Currently, XD supports the following type conversions commonly used in streams: 
 
 * JSON <-> [org.springframework.xd.tuple.Tuple] (https://github.com/spring-projects/spring-xd/blob/master/spring-xd-tuple/src/main/java/org/springframework/xd/tuple/Tuple.java) 
-* Object <-> JSON String (NOTE: Reading an object from JSON, using Jackson 2, is subject to limitations of data binding, and is not guaranteed for all object types. XD will attempt the conversion if configured, but YMMV. See the Jackson documentation for more details) 
+* Object <-> JSON String (NOTE: Reading an object from JSON, using [Jackson 2](http://wiki.fasterxml.com/JacksonRelease20), is subject to limitations of data binding, and is not guaranteed for all object types. XD will attempt the conversion if configured, but YMMV. See the Jackson documentation for more details) 
 Object <-> byte[] (Either the raw bytes used for remote transport or converted to bytes using Java serialization (this requires the object to be Serializable))
 * JSON  <-> Map
 * Object <-> plain text (invokes the object's _toString()_ method)
@@ -51,5 +51,4 @@ Internally, XD implements type conversion using Spring Integration's [datatype c
 
 ## Caveats
 Note that that inputType and outputType parameters only apply to payloads that require type conversion. For example, if a module produces an XML string and outputType=application/json, the payload will not be converted from XML to JSON. This is because the payload at the module's output channel is already a String so no conversion will be applied at runtime.
-
 
