@@ -354,9 +354,9 @@ Currently XD supports GemFire's client-server topology. A sink that writes data 
 A GemFire Server is included in the Spring XD distribution. To start the server. Go to the XD install directory:
 
    $cd gemfire/bin
-   $./gemfire-server cqdemo.xml
+   $./gemfire-server ../config/cq-demo.xml
 
-The command line argument is the location of a Spring file with a configured cache server. A sample cache configuration is provided https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[cq-demo.xml]. This starts a server on port 40404 and creates a region named _Stocks_. A Logging cache listener is configured for the region to log region events. 
+The command line argument is the location of a Spring file with a configured cache server. A sample cache configuration is provided https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[cq-demo.xml] located in the `config` directory. This starts a server on port 40404 and creates a region named _Stocks_. A Logging cache listener is configured for the region to log region events. 
 
 ==== Gemfire sinks
 
