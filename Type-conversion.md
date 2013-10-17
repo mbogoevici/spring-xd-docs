@@ -2,7 +2,7 @@ XD allows you to declaratively specify type conversion within processing streams
 
 * JSON <-> [org.springframework.xd.tuple.Tuple] (https://github.com/spring-projects/spring-xd/blob/master/spring-xd-tuple/src/main/java/org/springframework/xd/tuple/Tuple.java) 
 * Object -> JSON String (Object to JSON is supported. NOTE: It is not possible to convert a JSON string to an arbitrary object without knowing the target class) 
-Object <-> byte[] (Either the raw bytes used for remote transport or converted to bytes using Java serialization (this requires the object to be Serializable))
+* Object <-> byte[] (Either the raw bytes used for remote transport or converted to bytes using Java serialization (this requires the object to be Serializable))
 * JSON  <-> Map
 * Object <-> plain text (invokes the object's _toString()_ method)
 
