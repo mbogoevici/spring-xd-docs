@@ -105,7 +105,7 @@ Some platforms, such as linux, send status messages to `stderr`. The tail module
 [[file]]
 === File
 
-The file source takes the content of a File and converts it to a String.    
+The file source provides the contents of a File as a byte array by default but may be configured to provide the file reference itself.    
 
 To log the contents of a file create a stream definition using the XD shell
 
@@ -113,16 +113,23 @@ To log the contents of a file create a stream definition using the XD shell
 
 The file source by default will look into a directory named after the stream, in this case /tmp/xd/input/filetest
 
+Note the above will log the raw bytes. For text files, it is normally desirable to output the contents as plain text. To do this, set the _outputType_ parameter: 
+
+    xd:> stream create --name filetest --definition "file --outputType=text/plain | log"
+
+For more details on the use of the _outputType_ parameter see [/Type-Conversion](Type Conversion).
+
 Copy a file into the directory `/tmp/xd/input/filetest` and observe its contents being logged in the XD Container.
 
 ==== File with options
 
-The file source has 4 options
+The file source has 5 options
 
 dir:: The absolute path to the directory to monitor for files *(default: `/tmp/xd/input/<streamName>`)*
 preventDuplicates:: Default value is `true` to prevent the same file from being processed twice.
 pattern:: A filter expression (Ant style) that accepts only files that match the pattern.
 fixedDelay:: The fixed delay polling interval specified in seconds *(default: 5)*
+ref:: Set to true to output the File object itself. This is useful in some cases in which the file contents are large and it would be more efficient to send the file path across the network than the contents. This option requires that the file be in a shared file system.
 
 [[mail_source]]
 === Mail sources
