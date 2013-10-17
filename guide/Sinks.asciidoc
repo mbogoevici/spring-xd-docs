@@ -409,13 +409,13 @@ tcp-port::
 The TCP port number to where XD will send the data *(default: `9500`)*
 
 ==== Setup Splunk for TCP Input
-. From the Manager page select `Data inputs` link
-. Click the `Add Data` Button
-. Click the `TCP` link
-. Click the 'New' Button
+. From the Manager page select `Manage Inputs` link
+. Click the `Add data` Button
+. Click the `From a TCP port` link
 . `TCP Port` enter the port you want Splunk to monitor
-. `Set Source Type` select `manual`
+. `Set Source Type` select `Manual`
 . `Source Type` enter `tcp-raw`
+. Click `Save`
 
 ==== Example
 An example stream would be to take data from a twitter search and push it through to a splunk instance.
