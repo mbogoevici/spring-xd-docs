@@ -1,10 +1,10 @@
 XD allows you to declaratively specify type conversion within processing streams using _inputType_ and _outputType_ parameters on module definitions. Currently, XD supports the following type conversions commonly used in streams: 
 
-* JSON <-> [org.springframework.xd.tuple.Tuple] (https://github.com/spring-projects/spring-xd/blob/master/spring-xd-tuple/src/main/java/org/springframework/xd/tuple/Tuple.java) 
-* Object -> JSON String (Object to JSON is supported. NOTE: It is not possible to convert a JSON string to an arbitrary object without knowing the target class) 
-* Object <-> byte\[] (Either the raw bytes used for remote transport or converted to bytes using Java serialization (this requires the object to be Serializable))
-* JSON  <-> Map
-* Object <-> plain text (invokes the object's _toString()_ method)
+* __JSON <-> [org.springframework.xd.tuple.Tuple](https://github.com/spring-projects/spring-xd/blob/master/spring-xd-tuple/src/main/java/org/springframework/xd/tuple/Tuple.java)__
+* __Object -> JSON String__ (JSON to Object is supported. NOTE: It is not possible to convert a JSON string to an arbitrary object without knowing the target class) 
+* __Object <-> byte\[]__ (Either the raw bytes used for remote transport or converted to bytes using Java serialization -- this requires the object to be Serializable)
+* __JSON  <-> Map__
+* __Object <-> plain text__ (invokes the object's _toString()_ method)
 
 Where _JSON_ represents JSON content in the form of a String. Registration of custom type converters will likely be supported in a future release.
 
@@ -19,7 +19,7 @@ The _twittersearch_ module produces [Tweet](https://github.com/spring-projects/s
 
 org.springframework.social.twitter.api.Tweet@6e878e7c
 
-Arguably, this output is not as useful as the JSON representation. Setting the outputType to application/json causes XD to convert the default type to a JSON string before piping it to the next module. This almost equivalent to:
+Arguably, this output is not as useful as the JSON representation. Setting the outputType to application/json causes XD to convert the default type to a JSON string before piping it to the next module. This is almost equivalent to:
 
            twittersearch | file --inputType=application/json
 
