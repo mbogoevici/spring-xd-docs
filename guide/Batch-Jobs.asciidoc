@@ -88,7 +88,7 @@ In the logging output of the XDContainer you should see the following:
 14:17:46,840  INFO http-bio-8080-exec-5 module.SimpleModule:154 - started module: SimpleModule [name=job, type=job, group=helloSpringXD, index=0]
 14:17:46,840  INFO http-bio-8080-exec-5 module.ModuleDeployer:152 - launched job module: helloSpringXD:myjob:0
 ----
-=== Executing a job
+=== Launching a job
 XD uses triggers as well as regular event flow to launch the batch jobs.  So in this section we will cover how to:
 
 * Launch the Batch Job Ad-hoc
