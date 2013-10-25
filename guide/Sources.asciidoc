@@ -10,6 +10,7 @@ The Sources covered are
 * <<mail_source, Mail>>
 * <<twittersearch, Twitter Search>>
 * <<twitterstream, Twitter Stream>>
+* <<gemfire, Gemfire>>
 * <<gemfire-cq,Gemfire CQ>>
 * <<syslog, Syslog>>
 * <<tcp, TCP>> 
@@ -204,6 +205,17 @@ The parameters available are pretty much the same as those listed in the https:/
  * https://dev.twitter.com/docs/streaming-apis/parameters#follow[follow]
  * https://dev.twitter.com/docs/streaming-apis/parameters#track[track]
  * https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]
+
+[[gemfire]]
+=== GemFire Cache Listener
+This source configures a cache and replicated region in the XD container process along with a Spring Integration GemFire inbound channel adapter that outputs messages triggered by an external entry event on the region. By default the payload contains the updated entry value, but may be controlled by passing in a SpEL expression that uses the http://www.vmware.com/support/developer/vfabric-gemfire/700-api/com/gemstone/gemfire/cache/EntryEvent.html[EntryEvent] as the evaluation context.
+
+==== Options
+
+The qemfire source has the following options
+
+region:: The name of the region for which events are to be monitored *(required, String)*
+cacheEventExpression:: An optional SpEL expression referencing the event. *(default: `newValue`)*
 
 [[gemfire-cq]]
 === GemFire Continuous Query (CQ)
