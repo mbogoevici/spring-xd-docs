@@ -197,18 +197,23 @@ You need to supply all keys and secrets (both consumer and accessToken) to authe
 
 The parameters available are pretty much the same as those listed in the https://dev.twitter.com/docs/streaming-apis/parameters[API docs] and unless otherwise stated, the accepted formats are the same.
 
- * https://dev.twitter.com/docs/streaming-apis/parameters#delimited[delimited] - set to `true` to get length delimiters in the stream data (defaults to `false`).
+https://dev.twitter.com/docs/streaming-apis/parameters#delimited[delimited]:: set to `true` to get length delimiters in the stream data (defaults to `false`)
 
- * https://dev.twitter.com/docs/streaming-apis/parameters#stall_warnings[stallWarnings] - set to `true` to enable stall warnings (defaults to `false`).
- * https://dev.twitter.com/docs/streaming-apis/parameters#filter_level[filterLevel]
- * https://dev.twitter.com/docs/streaming-apis/parameters#language[language]
- * https://dev.twitter.com/docs/streaming-apis/parameters#follow[follow]
- * https://dev.twitter.com/docs/streaming-apis/parameters#track[track]
- * https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]
+https://dev.twitter.com/docs/streaming-apis/parameters#stall_warnings[stallWarnings]:: set to `true` to enable stall warnings (defaults to `false`)
+
+https://dev.twitter.com/docs/streaming-apis/parameters#filter_level[filterLevel]::
+
+https://dev.twitter.com/docs/streaming-apis/parameters#language[language]::
+
+https://dev.twitter.com/docs/streaming-apis/parameters#follow[follow]::
+
+https://dev.twitter.com/docs/streaming-apis/parameters#track[track]::
+
+https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]::
 
 [[gemfire]]
-=== GemFire Cache Listener
-This source configures a cache and replicated region in the XD container process along with a Spring Integration GemFire inbound channel adapter that outputs messages triggered by an external entry event on the region. By default the payload contains the updated entry value, but may be controlled by passing in a SpEL expression that uses the http://www.vmware.com/support/developer/vfabric-gemfire/700-api/com/gemstone/gemfire/cache/EntryEvent.html[EntryEvent] as the evaluation context.
+=== GemFire
+This source configures a cache and replicated region in the XD container process along with a Spring Integration GemFire inbound channel adapter, backed by a CacheListener that outputs messages triggered by an external entry event on the region. By default the payload contains the updated entry value, but may be controlled by passing in a SpEL expression that uses the http://www.vmware.com/support/developer/vfabric-gemfire/700-api/com/gemstone/gemfire/cache/EntryEvent.html[EntryEvent] as the evaluation context.
 
 ==== Options
 
