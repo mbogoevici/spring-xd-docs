@@ -213,14 +213,21 @@ https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]::
 
 [[gemfire]]
 === GemFire
-This source configures a cache and replicated region in the XD container process along with a Spring Integration GemFire inbound channel adapter, backed by a CacheListener that outputs messages triggered by an external entry event on the region. By default the payload contains the updated entry value, but may be controlled by passing in a SpEL expression that uses the http://www.vmware.com/support/developer/vfabric-gemfire/700-api/com/gemstone/gemfire/cache/EntryEvent.html[EntryEvent] as the evaluation context.
+This source configures a cache and replicated region in the XD container process along with a Spring Integration GemFire inbound channel adapter, backed by a CacheListener that outputs messages triggered by an external entry event on the region. By default the payload contains the updated entry value, but may be controlled by passing in a SpEL expression that uses the http://www.vmware.com/support/developer/vfabric-gemfire/700-api/com/gemstone/gemfire/cache/EntryEvent.html[EntryEvent] as the evaluation context. 
 
 ==== Options
 
 The qemfire source has the following options
 
-region:: The name of the region for which events are to be monitored *(required, String)*
+regionName:: The name of the region for which events are to be monitored *(required, String)*
 cacheEventExpression:: An optional SpEL expression referencing the event. *(default: `newValue`)*
+
+==== Example
+Use of the gemfire source requires an external process that creates or updates entries in a GemFire region. Such events may trigger an XD process. For example, suppose a sales application creating and updating orders in a replicated GemFire region named `orders` . To trigger an XD stream, the XD container must join the GemFire distributed system and create a replica of the region, to which a cache listener is bound via the GemFire inbound channel adapter.
+
+     xd:>stream create --name orderStream --definition "gemfire --regionName=orders | file --inputType=application/json"
+
+In the above example, it is presumed the cache entries are Order POJOs. In this case, it may be convenient to convert to JSON before writing to the file. 
 
 [[gemfire-cq]]
 === GemFire Continuous Query (CQ)
