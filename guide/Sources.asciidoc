@@ -10,7 +10,7 @@ The Sources covered are
 * <<mail_source, Mail>>
 * <<twittersearch, Twitter Search>>
 * <<twitterstream, Twitter Stream>>
-* <<gemfire, Gemfire>>
+* <<gemfire-source, Gemfire>>
 * <<gemfire-cq,Gemfire CQ>>
 * <<syslog, Syslog>>
 * <<tcp, TCP>> 
@@ -211,7 +211,7 @@ https://dev.twitter.com/docs/streaming-apis/parameters#track[track]::
 
 https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]::
 
-[[gemfire]]
+[[gemfire-source]]
 === GemFire
 This source configures a cache and replicated region in the XD container process along with a Spring Integration GemFire inbound channel adapter, backed by a CacheListener that outputs messages triggered by an external entry event on the region. By default the payload contains the updated entry value, but may be controlled by passing in a SpEL expression that uses the http://www.vmware.com/support/developer/vfabric-gemfire/700-api/com/gemstone/gemfire/cache/EntryEvent.html[EntryEvent] as the evaluation context. 
 
