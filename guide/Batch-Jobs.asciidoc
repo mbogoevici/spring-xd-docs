@@ -1,6 +1,6 @@
 === Introduction
 One of the features that XD offers is the ability to launch and monitor batch jobs using  http://www.springsource.org/spring-batch[Spring Batch].
-This purpose of this wiki is to show you how to create a sample tasklet as well as create, schedule and monitor a job.
+This purpose of this section is to show you how to create a sample tasklet as well as create, schedule and monitor a job.
 
 === Setting up a simple Batch Job
 
