@@ -51,6 +51,3 @@ Internally, XD implements type conversion using Spring Integration's [datatype c
 
 ## Caveats
 Note that that inputType and outputType parameters only apply to payloads that require type conversion. For example, if a module produces an XML string and outputType=application/json, the payload will not be converted from XML to JSON. This is because the payload at the module's output channel is already a String so no conversion will be applied at runtime.
-
-****
-****
