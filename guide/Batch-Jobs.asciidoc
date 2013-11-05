@@ -184,4 +184,51 @@ xd:> job undeploy helloSpringXD
 ----
 
 
- 
+=== Pre-Packaged Batch Jobs
+
+Spring XD comes with several batch import and export modules. You can run them out of the box or use them as a basis for building your own custom modules.
+
+==== Import Files to HDFS (`filehdfs`)
+
+This module is designed to be driven by a stream. It imports data from CSV files and requires that you supply a list of named columns for the data using the `names` parameter. For example:
+
+----
+xd:> job create myjob --definition "filehdfs --names=forename,surname,address"
+----
+
+You would then use a stream with a file source to scan a directory for files and drive the job. A separate file will be started for each job found:
+
+----
+xd:> stream create csvStream --definition "file --ref=true --dir=/mycsvdir --pattern=*.csv > job:myjob"
+----
+
+==== Import Files to JDBC (`filejdbc`)
+
+A module which loads CSV files from a directory into a JDBC table using a single batch job. By default it uses the file `config/batch-jdbc-import.properties` to configure the module and stores data in the internal HSQL DB which is used by Spring Batch. The job should be defined with the `resources` parameter defining the files which should be loaded. It also requires a `names` parameter (for the CSV field names) and these should match the database column names into which the data should be stored. You can either pre-create the database table or the module will try to create it for you when it is loaded. The table intitialization is configured in a similar way to the JDBC sink and uses the same parameters. The default table name is the job name and can be cumstomized by setting the `tableName` parameter. As an example, if you run the command
+
+----
+xd:> job create myjob --definition "filejdbc --resources=/mycsvdir/*.csv --names=forename,surname,address --tableName=people"
+----
+
+it will create the table "people" in the database with three varchar columns called "forename", "surname" and "address". When you launch the job it will load the files matching the resources pattern and write the data to this table.
+
+==== HDFS to JDBC Export (`hdfsjdbc`)
+
+This module functions very similarly to the `filejdbc` one except that the resources you specify should actually be in HDFS, rather than the OS filesystem. Other than that the syntax is the same
+
+----
+xd:> job create myjob --definition "hdfsjdbc --resources=/data/*.log --names=forename,surname,address --tableName=people"
+----
+
+there is also a limitation in that the database table must be created manually. This is due to a bug in Spring Hadoop and will be fixed in the future.
+
+==== HDFS to MongoDB Export (`hdfsmongodb`)
+
+Exports CSV data from HDFS and stores it in a MongoDB collection which defaults to the stream name. This can be overridden with the `collectionName` parameter. The job is configured using the file `config/batch-mongo-import.properties`. Once again, the field names should be defined by supplying the `names` parameter. The data is converted internally to a Spring XD `Tuple` and the collection items will have an `id` matching the tuple's UUID. You can override this by setting the `idField` parameter to one of the field names if desired.
+
+An example:
+
+----
+xd:> job create myjob --definition "hdfsmongodb --resources=/data/*.log --names=employeeId,forename,surname,address --idField=employeeId --collectionName=people"
+----
+
