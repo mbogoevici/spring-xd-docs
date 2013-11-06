@@ -4,9 +4,11 @@ To get started, make sure your system has as a minimum  http://www.oracle.com/te
 
 === Download Spring XD
 
-Download http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M3/spring-xd-1.0.0.M3.zip[*spring-xd-1.0.0.M3-dist.zip*]
+If you want to try out Spring XD, we'd recommend downloading a snapshot build, since things are changing quite fast. A snapshot distribution can be downloaded from http://repo.springsource.org/libs-snapshot-local/org/springframework/xd/spring-xd/1.0.0.BUILD-SNAPSHOT/[the spring snapshots repository]. You can also link:Building-Spring-XD[build the project from source] if you wish. The wiki content should also be kept up to date with the current snapshot so if you are reading this on the github website, things may have changed since the last milestone.
 
-Unzip the distribution. This will yield the installation directory *spring-xd-1.0.0.M3*. All the commands below are executed from this directory, so change into it before proceeding
+Unzip the distribution which will unpack to a single installation directory. All the commands below are executed from this directory, so change into it before proceeding.
+
+If you are sure you want the previous miletsone release, you can also download the distribution http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M3/spring-xd-1.0.0.M3.zip[*spring-xd-1.0.0.M3-dist.zip*] and http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M3/spring-xd-1.0.0.M3-docs.zip[its accompanying documentation]. 
 
 [source,sh]
 ----
