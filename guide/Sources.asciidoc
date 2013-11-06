@@ -14,6 +14,7 @@ The Sources covered are
 * <<gemfire-cq,Gemfire CQ>>
 * <<syslog, Syslog>>
 * <<tcp, TCP>> 
+* <<tcp-client, TCP Client>> 
 * <<jms, JMS>>
 * <<rabbit, RabbitMQ>>
 * <<time, Time>>
@@ -314,6 +315,7 @@ Restart the syslog daemon after reconfiguring.
 
 [[tcp]]
 === TCP
+The `tcp` source acts as a server and allows a remote party to connect to XD and submit data over a raw tcp socket.
 
 To create a stream definition in the server, use the following XD shell command
 
@@ -455,6 +457,50 @@ $ hexdump -C /tmp/xd/output/tcptest9
 00000000  66 6f 6f 00 62 61 72 0b                           |foo.bar.|
 00000008
 ----
+
+[[tcp-client]]
+=== TCP Client
+The `tcp-client` source module uses raw tcp sockets, as does the `tcp` module but contrary to the `tcp` module, acts as a client. Whereas the `tcp` module will open a listening socket and wait for connections from a remote party, the `tcp-client` will initiate the connection to a remote server and emit as messages what that remote server sends over the wire. As an optional feature, the `tcp-client` can itself emit messages to the remote server, so that a simple conversation can take place.
+
+==== TCP Client options
+The following options are supported:
+
+host:: the host to connect to *(default: `localhost`)*
+port:: the port to connect to *(default: `1234`)*
+reverse-lookup:: whether to attempt to resolve the host address *(default: `false`)*
+nio:: whether to use NIO *(default: `false`)*
+encoder:: the encoder to use when sending messages *(default: `LF`, see <<tcp, TCP module>>)*
+decoder:: the decoder to use when receiving messages *(default: `LF`, see <<tcp, TCP module>>)*
+charset:: the charset to use when converting bytes to String *(default: `UTF-8`)*
+bufferSize:: the size of the emitting/receiving buffers *(default: `2048`, _i.e._ 2KB)*
+fixedDelay:: the rate at which 'stimulus' messages will be emitted *(default: `5` seconds)*
+script:: reference to a script that should transform the counter stimulus to messages to send *(default: use `expression`)*
+expression:: a SpEL expression to convert the counter stimulus to a message *(default: `payload.toString()`, _i.e._ emit "1", "2", "3", _etc._)*
+
+==== Implementing a simple conversation
+That "stimulus" counter concept bears some explanation. By default, the module will emit (at interval set by `fixedDelay`) an incrementing number, starting at 1. Given that the default is to use an `expression` of `payload.toString()`, this results in the module sending `1, 2, 3, ...` to the remote server.
+
+By using another expression, or more certainly a `script`, one can implement a simple conversation, assuming it is time based. As an example, let's assume we want to join some kind of chat server where one first needs to authenticate, then specify which rooms to join. Lastly, all clients are supposed to send some keepalive commands to make sure that the connection is open.
+
+The following groovy script could be used to that effect:
+```groovy
+def commands = ['', // index 0 is not used
+'LOGIN user=johndoe', // first command sent
+'JOIN weather',
+'JOIN news',
+'JOIN gossip'
+]
+
+
+// payload will contain an incrementing counter, starting at 1
+if (commands.size > payload)
+  return commands[payload] + "\n"
+else 
+  return "PING\n"  // send keep alive after 4th 'real' command
+
+```
+
+
 
 [[rabbit]]
 === RabbitMQ
