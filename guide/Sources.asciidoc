@@ -218,7 +218,7 @@ This source configures a cache and replicated region in the XD container process
 
 ==== Options
 
-The qemfire source has the following options
+The Gemfire CacheListener source has the following options
 
 regionName:: The name of the region for which events are to be monitored *(required, String)*
 cacheEventExpression:: An optional SpEL expression referencing the event. *(default: `newValue`)*
