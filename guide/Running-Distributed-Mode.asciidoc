@@ -155,6 +155,13 @@ By default, the xd-admin server stores stream definitions and other information 
 xd/bin>$ ./xd-admin --store memory
 ----
 
+==== Choosing an Analytics provider
+By default, the xd-container will store Analytics data in redis.  Use the --analytics option to specify another backing store for Analytics data.  currently only "redis" and "memory are available.
+[source,sh]
+----
+xd/bin>$ ./xd-admin --analytics memory
+----
+
 ==== Other Options
 There are additional configuration options available for these scripts:
  
