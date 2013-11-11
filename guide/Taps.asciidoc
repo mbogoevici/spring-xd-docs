@@ -10,7 +10,7 @@ To create a tap using the shell, use the following command (assuming you want to
 
 ----
 xd:> stream create --name foo1 --definition "time | log"
-xd:> stream create --name tapname --definition "tap:foo1 > log"
+xd:> stream create --name tapname --definition "tap:stream:foo1 > log"
 ----
 
 A tap can consume data from any point along the target stream's processing pipeline. For example, if you have a stream called `mystream`, defined as
