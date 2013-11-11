@@ -156,8 +156,8 @@ To test the "httpfoo" stream, try the following:
 The first message should have been ignored due to the filter, but the second one should exist in the file:
 
     xd:> ! cat /tmp/xd/output/httpfoo.out
-	command is:cat /tmp/xd/output/httpfoo.out
-	hifoo
+    command is:cat /tmp/xd/output/httpfoo.out
+    hifoo
 
 To test the "filefoo" stream, echo "foo" to a file in the /tmp/xd/input/filefoo directory, then verify:
 
