@@ -115,7 +115,17 @@ For more information on processing modules, refer to the section link:Processors
 
 ==== Stream Deployment
 
-The Container Server listens for module deployment requests sent from the Admin Server. In the `http | file` example, a module deployment request sent for the http module and another request is sent for the file module.  The definition of a module is stored in a Module Registry, which is a Spring XML configuration file.  The module definition contains variable placeholders that allow you to customize the behavior of the module. For example, setting the http listening port would be done by passing in the option `--port`, e.g. `http --port=8090 | file`, which is in turn used to substitute a placeholder value in the module definition. 
+The Container Server listens for module deployment requests sent from the Admin Server via the control bus. When the container node receives a module deployment request, it connects the module's input and output channels to the data bus used to transport messages during stream processing.  In a single node configuration, both the control bus and data bus use in-memory direct channels. In a distributed configuration, control bus and data bus communications are backed by the configured transport middleware. Redis and Rabbit are both provided with the Spring XD distrubution, but other transports are envisioned for future releases. Currently, the control bus and the data bus use the same transport middleware. Future releases will allow separate configuration of the control bus and data bus (e.g., Redis for control and Rabbit for data).
+
+.A Stream Deployed in a single node server
+image::images/anatomyOfAStreamSingleNode.jpg[]
+
+
+
+.A Stream Deployed in a distributed runtime 
+image::images/anatomyOfAStreamv2.jpg[]
+
+In the `http | file` example, a module deployment request sent for the http module and another request is sent for the file module.  The definition of a module is stored in a Module Registry, which is a Spring XML configuration file.  The module definition contains variable placeholders that allow you to customize the behavior of the module. For example, setting the http listening port would be done by passing in the option `--port`, e.g. `http --port=8090 | file`, which is in turn used to substitute a placeholder value in the module definition. 
 
 The Module Registry is backed by the filesystem and corresponds to the directory `<xd-install-directory>/modules`.  When a module deployment request is processed by the Container, the module definition is loaded from the registry and a Spring ApplicationContext is created. 
 
