@@ -109,3 +109,76 @@ Classes will first be loaded from any of the aforementioned jar files and, only 
 
 1. refrain from putting into the `lib/` folder jar files that are also part of Spring XD, or you'll likely end up with ClassCastExceptions
 2. any class that is directly or indirectly referenced from the payload type of your messages (__i.e.__ the types that transit from module to module) must not belong to a particular module `lib/` folder but should rather be loaded by the global Spring XD classloader
+
+=== Composing Modules
+
+As described above, a stream is defined as a sequence of modules, minimally a source module followed by a sink module. One or more processor modules may be added in between the source and sink, but they are not mandatory. Sometimes streams are similar for a subset of their modules. For example, consider the following two streams:
+
+    stream1 = http | filter --expression=payload.contains('foo') | file
+    stream2 = file | filter --expression=payload.contains('foo') | file
+
+Other than the source module, the definitions of those two streams are the same. It would be better to avoid this degree of duplication. This is the first problem that composed modules address.
+
+Each module within a stream represents a unit of deployment. Therefore, in each of the streams defined above, there would be 3 such units (the source, the processor, and the sink). In a singlenode runtime, it doesn't make much of a difference since the communication between each module would be a bridge between in-memory channels. When deploying a stream to a distributed runtime environment, however, the communication between each module occurs over messaging middleware. That decoupling between modules is useful in that it promotes loose-coupling and thus enables load-balancing and buffering of messages when the consuming module(s) are temporarily busy or down. Nevertheless, at times the individual module boundaries are more fine-grained than necessary for these middleware "hops". Overhead may be avoided by reducing the overall number of deployment units and therefore the number of hops. In such cases, it's convenient to be able to wrap multiple modules together so that they act as a single "black box" unit for deployment. In other words, if "foo | bar" are composed together as a new module named "baz", the input and/or output to "baz" would still occur as a hop over the middleware, but the communication from foo to bar would occur directly, in-process. This is the second problem that composed modules address.
+
+Now let's look at an example. Returning to the two similar streams above, the filter processor and file sink could be combined into a single module. In the shell, the following command would take care of that:
+
+    xd:> module compose foo --definition "filter --expression=payload.contains('foo') | file"
+
+Then, to verify the new module composition was successful, check if it exists:
+
+    xd:> module list --type sink
+    Module Name          Module Type
+    -------------------  -----------
+    ...
+    foo                  sink
+
+Notice that the composed module shows up in the list of *sink* modules. That is because logically, it has the structure of a sink: it provides an input channel (which is bridged to the filter processor's input channel), but it provides no output channel (since the file sink has no output).
+
+If a module were composed of two processors, it would be classified as a processor itself:
+
+    xd:> module compose myprocessor --definition "splitter | filter --expression=payload.contains('foo')"
+
+If a module were composed of a source and a processor, it would be classified as a source itself:
+
+   xd:> module compose mysource --definition "http | filter --expression=payload.contains('foo')"
+
+Based on the logical type of the composed module, it may be used in a stream as if it were a simple module instance. For example, to redefine the two streams from the first problem case above, now that the "foo" sink module has been composed, you would issue the following shell commands:
+
+    xd:> stream create httpfoo --definition "http | foo"
+    xd:> stream create filefoo --definition "file --outputType=text/plain | foo"
+
+To test the "httpfoo" stream, try the following:
+
+    xd:> http post --data hi
+    xd:> http post --data hifoo
+
+The first message should have been ignored due to the filter, but the second one should exist in the file:
+
+    xd:> ! cat /tmp/xd/output/httpfoo.out
+	command is:cat /tmp/xd/output/httpfoo.out
+	hifoo
+
+To test the "filefoo" stream, echo "foo" to a file in the /tmp/xd/input/filefoo directory, then verify:
+
+    xd:> ! cat /tmp/xd/output/filefoo.out
+    command is:cat /tmp/xd/output/filefoo.out
+    foo
+
+When you no longer need a composed module, you may delete it with the "module delete" command in the shell. However, if that composed module is currently being used by one or more streams, the deletion will fail as shown below:
+
+    xd:> module delete --name foo --type sink
+    16:51:37,349  WARN Spring Shell client.RestTemplate:566 - DELETE request for "http://localhost:9393/modules/sink/foo" resulted in 500 (Internal Server Error); invoking error handler
+    Command failed org.springframework.xd.rest.client.impl.SpringXDException: Cannot delete module sink:foo because it is used by [stream:filefoo, stream:httpfoo]
+
+As you can see, the failure message shows which stream(s) depend upon the composed module you are trying to delete.
+
+If you destroy both of those streams and try again, it will work:
+
+    xd:> stream destroy --name filefoo
+    Destroyed stream 'filefoo'
+    xd:> stream destroy --name httpfoo
+    Destroyed stream 'httpfoo'
+    xd:> module delete --name foo --type sink
+    Successfully destroyed module 'foo' with type sink
+
