@@ -8,7 +8,7 @@ If you want to try out Spring XD, we'd recommend downloading a snapshot build, s
 
 Unzip the distribution which will unpack to a single installation directory. All the commands below are executed from this directory, so change into it before proceeding.
 
-If you are sure you want the previous milestone release, you can also download the distribution http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M4/spring-xd-1.0.0.M4.zip[*spring-xd-1.0.0.M4-dist.zip*] and http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M4/spring-xd-1.0.0.M4-docs.zip[its accompanying documentation]. 
+If you are sure you want the previous milestone release, you can also download the distribution http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M4/spring-xd-1.0.0.M4-dist.zip[*spring-xd-1.0.0.M4-dist.zip*] and http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M4/spring-xd-1.0.0.M4-docs.zip[its accompanying documentation]. 
 
 [source,sh]
 ----
