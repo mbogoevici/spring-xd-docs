@@ -10,7 +10,9 @@ The key components in Spring XD are the XD Admin and XD Container Servers. Using
 
 ===== DIRT Runtime
 
-A simple distributed runtime, called Distributed Integration Runtime, aka DIRT, will distribute the processing tasks across multiple XD Container instances.  The XD Admin server breaks up a processing task into individual module defintions and publishes them to a shared Redis queue.  Each container picks up a module definition off the queue, in a round-robin like manner, and creates a Spring ApplicationContext to run that module. This is a very simple strategy and not optimal for many use-cases, so support for defining grouping of modules will be introduced in later releases.
+A simple distributed runtime, called Distributed Integration Runtime, aka DIRT, will distribute the processing tasks across multiple XD Container instances.  The XD Admin server breaks up a processing task into individual module definitions and publishes them to a shared queue (backed by Redis or RabbitMQ depending upon the provided 'transport' option).  Each container picks up a module definition off the queue, in a round-robin like manner, and creates a Spring ApplicationContext to run that module.
+
+To reduce the number of hops across messaging middleware between them, multiple modules may be composed into larger deployment units that act as a single module. To learn more about that feature, refer to the link:Modules#composing-modules[Composing Modules] section.
 
 [[simple-distributed-runtime]]
 .The XD Admin Server sending module definitions to each XD Container
@@ -111,7 +113,7 @@ The payload of the incoming Message is passed as a string to the method process.
 http | transformer --expression=payload.toUpperCase() | file
 ----
 
-For more information on processing modules, refer to the section link:Processors#processors[Processors]
+For more information on processing modules, refer to the link:Processors#processors[Processors] section.
 
 ==== Stream Deployment
 

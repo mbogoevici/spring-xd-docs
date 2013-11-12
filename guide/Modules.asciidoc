@@ -182,3 +182,12 @@ If you destroy both of those streams and try again, it will work:
     xd:> module delete --name foo --type sink
     Successfully destroyed module 'foo' with type sink
 
+Finally, it's worth mentioning that in some cases duplication may be avoided by reusing an actual stream rather than a composed module. That is possible when named channels are used in the source and/or sink position of a stream definition. For example, the same overall functionality as provided by the two streams above could also be achieved as follows:
+
+    xd:> stream create foofilteredfile --definition "queue:foo > filter --expression=payload.contains('foo') | file"
+    xd:> stream create httpfoo --definition "http > queue:foo"
+    xd:> stream create filefoo --definition "file > queue:foo"
+
+This approach is more appropriate for use-cases where individual streams on either side of the named channel may need to be deployed or undeployed independently. Whereas the queue typed channel will load-balance across multiple downstream consumers, the "topic:" prefix may be used if broadcast behavior is needed instead. For more information about named channels, refer to the link:DSL-Reference#named-channels[Named Channels] section.
+
+

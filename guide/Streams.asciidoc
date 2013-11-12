@@ -98,4 +98,8 @@ In the examples above, we connected a source to a sink using the pipe symbol `|`
 
 If you know a bit about Spring configuration files, you can inspect the module definition to see which properties it exposes. Alternatively, you can read more in the link:Sources#sources[source] and link:Sinks#sinks[sink] documentation.
 
-A future Spring XD release will provide a DSL for non-linear flows, e.g. a directed graph.
+=== Advanced Features
+
+In the examples above, simple module definitions are used to construct each stream. However, modules may be grouped together in order to avoid duplication and/or reduce the amount of chattiness over the messaging middleware. To learn more about that feature, refer to the link:Modules#composing-modules[Composing Modules] section.
+
+If directed graphs are needed instead of the simple linear streams described above, two features are relevant. First, named channels may be used as a way to combine multiple flows upstream and/or downstream from the channel. The behavior of that channel may either be queue-based or topic-based depending on what prefix is used ("queue:myqueue" or "topic:mytopic", respectively). To learn more, refer to the link:DSL-Reference#named-channels[Named Channels] section. Second, you may need to determine the output channel of a stream based on some information that is only known at runtime. To learn about such content-based routing, refer to the link:Sinks#wiki-router_sink[Dynamic Router] section.
