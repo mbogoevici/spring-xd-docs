@@ -21,7 +21,7 @@ source | filter | transformer | sink
 
 Then creating a tap using
   
-  tap:mystream.<filter module name> > sink2
+  tap:stream:mystream.<filter module name> > sink2
 
 would tap into the stream's data after the filter has been applied but before the transformer. So the untransformed data would be sent to `sink2`.
 

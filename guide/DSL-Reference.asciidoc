@@ -34,25 +34,30 @@ If the parameter value needs to embed a single quote, use two single quotes:
 
 Instead of a source or sink it is possible to use a named channel. Normally the modules in a stream are connected
 by anonymous internal channels (represented by the pipes), but by using explicitly named channels it becomes 
-possible to construct more sophisticated flows. In keeping with the unix theme, sourcing/sinking data from/to a particular channel uses the `>` character. A channel name is prefixed with a `:`
+possible to construct more sophisticated flows. In keeping with the unix theme, sourcing/sinking data from/to a particular channel uses the `>` character. A named channel is specified by using a channel type, followed by a `:` followed by a name. The channel types available are:
+
+  `queue` This type of channel has point-to-point (p2p) semantics
+
+  `topic` This type of channel has pub/sub semantics
 
 Here is an example that shows how you can use a named channel to share a data pipeline driven by different input sources.  
 
-  :foo > file 
+  queue:foo > file 
 
-  http > :foo
+  http > queue:foo
 
-  time > :foo
+  time > queue:foo
+
 
 Now if you post data to the http source, you will see that data intermingled with the time value in the file.
 
 The opposite case, the fanout of a message to multiple streams, is planned for a future release. However, link:Taps[taps] are a specialization of named channels that do allow publishing data to multiple sinks. For example:
 
-  tap:mystream > file 
+  tap:stream:mystream > file 
 
-  tap:mystream > log
+  tap:stream:mystream > log
 
-Once data is received on `mystream`, it will be written to both file and log. Note that, unlike other named channels, references to a tap do not contain a leading `:`.
+Once data is received on `mystream`, it will be written to both file and log. 
 
 Support for routing messages to different streams based on message content is also planned for a future release.
 
