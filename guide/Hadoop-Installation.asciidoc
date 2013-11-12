@@ -36,7 +36,6 @@ Make sure that you set `JAVA_HOME` in the `conf/hadoop-env.sh` script, or you wi
 
   # The java implementation to use.  Required.
   # export JAVA_HOME=/usr/lib/j2sdk1.5-sun
-  
   export JAVA_HOME=/usr/lib/jdk1.6.0_45
 
 TIP: When using _Mac OS X_ you can determine the _Java 6_ home directory by executing `$ /usr/libexec/java_home -v 1.6`
