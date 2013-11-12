@@ -1,6 +1,6 @@
 === Installing Hadoop
 
-If you don't have a local _Hadoop_ cluster available already, you can do a local http://hadoop.apache.org/docs/r1.1.2/single_node_setup.html[single node installation (v1.1.2)] and use that to try out _Hadoop_ with _Spring XD_. The examples have been run with `Hadoop 1.1.2` but should also work with the latest stable release `Hadoop 1.2.1`.
+If you don't have a local _Hadoop_ cluster available already, you can do a local http://hadoop.apache.org/docs/r1.2.1/single_node_setup.html[single node installation (v1.2.1)] and use that to try out _Hadoop_ with _Spring XD_. 
 
 TIP: This guide is intended to serve as a quick guide to get you started in the context of _Spring XD_. For more complete documentation please refer back to the documentation provided by your respective _Hadoop_ distribution.
 
@@ -10,15 +10,15 @@ First, http://archive.apache.org/dist/hadoop/common/[download an installation ar
 
 If you have `wget` available on your system, you can also execute:
 
-  $ wget http://archive.apache.org/dist/hadoop/common/hadoop-1.1.2/hadoop-1.1.2.tar.gz
+  $ wget http://archive.apache.org/dist/hadoop/common/hadoop-1.2.1/hadoop-1.2.1.tar.gz
 
 Unpack the distribution with:
 
-  $ tar xzf hadoop-1.1.2.tar.gz
+  $ tar xzf hadoop-1.2.1.tar.gz
 
 Change into the directory and have a look around
 
-  $ cd hadoop-1.1.2
+  $ cd hadoop-1.2.1
   $ ls
   $ bin/hadoop
   Usage: hadoop [--config confdir] COMMAND
@@ -37,9 +37,7 @@ Make sure that you set `JAVA_HOME` in the `conf/hadoop-env.sh` script, or you wi
   # The java implementation to use.  Required.
   # export JAVA_HOME=/usr/lib/j2sdk1.5-sun
   
-  export JAVA_HOME=/Library/Java/Home
-
-IMPORTANT: You should use *Java 6*. Currently you cannot use _Java 7_. If you do accidentally point to a _Java 7_ directory you may encounter an error such as `Unable to load realm info from SCDynamicStore` when starting the _Hadoop_ node.
+  export JAVA_HOME=/usr/lib/jdk1.6.0_45
 
 TIP: When using _Mac OS X_ you can determine the _Java 6_ home directory by executing `$ /usr/libexec/java_home -v 1.6`
 
@@ -135,7 +133,7 @@ Try a few commands with `hadoop dfs` to make sure the basic system works
   drwxr-xr-x   - luke supergroup          0 2013-05-30 17:31 /test
   
   $ bin/hadoop dfs -rmr /test
-  Deleted hdfs://localhost:9000/test
+  Deleted hdfs://localhost:8020/test
 
 Lastly, you can also browse the web interface for _NameNode_ and _JobTracker_ at:
 
@@ -143,6 +141,3 @@ Lastly, you can also browse the web interface for _NameNode_ and _JobTracker_ at
 * JobTracker: http://localhost:50030/
 
 At this point you should be good to create a _Spring XD_ link:Streams#streams[stream] using a _Hadoop_ link:Sinks#sinks[sink].
- 
-
-  
