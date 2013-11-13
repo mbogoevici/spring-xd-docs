@@ -198,4 +198,43 @@ Finally, it's worth mentioning that in some cases duplication may be avoided by 
 
 This approach is more appropriate for use-cases where individual streams on either side of the named channel may need to be deployed or undeployed independently. Whereas the queue typed channel will load-balance across multiple downstream consumers, the "topic:" prefix may be used if broadcast behavior is needed instead. For more information about named channels, refer to the link:DSL-Reference#named-channels[Named Channels] section.
 
+=== Listing Modules
 
+To view the available modules use the the `module list` command.  To filter the module result set you can use the --type option.  For example:
+```
+xd:>module list --type sink
+  Module Name          Module Type
+  -------------------  -----------
+  file                 sink
+  gemfire-json-server  sink
+  gemfire-server       sink
+  jdbc                 sink
+```
+To display the configuration of a module use the `module display --name <module name> --type <module type>  for example:
+```
+xd:>module display --name tcp --type source
+Configuration file contents for module definiton 'tcp' (source):
+
+-------------------------------------------------------------------------------
+...
+    <int-ip:tcp-connection-factory id="connectionFactory"
+        type="server"
+        port="${port:1234}"
+        lookup-host="${reverse-lookup:false}"
+        so-timeout="${socket-timeout:120000}"
+        using-nio="${nio:false}"
+        using-direct-buffers="${nio:false}"
+        deserializer="${decoder:CRLF}"/>
+
+    <int-ip:tcp-inbound-channel-adapter id="adapter" channel="toString"
+            auto-startup="false"
+            connection-factory="connectionFactory"/>
+
+    <!-- Binary payloads are not currently supported; see XD-145 -->
+<!--     <int:router input-channel="toStringIfNeeded" expression="${binary:false} ? 'output' : 'toString'"/> -->
+
+    <int:transformer input-channel="toString" output-channel="output" expression="new String(payload, '${charset:UTF-8}')"/>
+
+    <int:channel id="output"/>
+...
+```
