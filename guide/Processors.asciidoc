@@ -29,6 +29,13 @@ This filter will only pass Messages to the log sink if the payload is the word "
 
 Alternatively, if you send the word "bad" (or anything else), you shouldn't see the log entry.
 
+As part of the SpEL expression you can make use of the pre-registered JSON Path function.  Here is some example usage
+
+    filter --expression=#jsonPath(payload,'$.entities.hashTags[*].text').contains('obama') 
+
+This is an example that is operating on a JSON payload of tweets as consumed from the twitter search module.
+
+
 ==== Filter with Groovy Script
 For more complex filtering, you can pass the location of a Groovy script using the _script_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables. 
 
@@ -62,6 +69,8 @@ The simplest way to use the transform processor is to pass a SpEL expression whe
 This transform will convert all message payloads to the word "FOO". Try sending something to the HTTP endpoint and you should see "FOO" in the XD log:
 
     xd:> http post --target http://localhost:9003 --data "some message"
+
+As part of the SpEL expression you can make use of the pre-registered JSON Path function.  The syntax is #jsonPath(payload,'<json path expression>')
 
 ==== Transform with Groovy Script
 For more complex transformations, you can pass the location of a Groovy script using the _script_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
@@ -97,6 +106,8 @@ The splitter module builds upon the concept of the same name in Spring Integrati
 The splitter module accepts the following options:
 
 expression:: a SpEL expression which should evaluate to an array or collection. Each element will then be emitted as a separate message *(default: `payload`, which actually does not split, unless the message is already a collection)*
+
+As part of the SpEL expression you can make use of the pre-registered JSON Path function.  The syntax is #jsonPath(payload,'<json path expression>')2
 
 [[aggregator]]
 === Aggregator
