@@ -30,7 +30,9 @@ This filter will only pass Messages to the log sink if the payload is the word "
 Alternatively, if you send the word "bad" (or anything else), you shouldn't see the log entry.
 
 ==== Filter with Groovy Script
-For more complex filtering, you can pass the location of a Groovy script using the _script_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
+For more complex filtering, you can pass the location of a Groovy script using the _script_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables. 
+
+Note that an implicit variable named _payload_ is available to give you access to the data contained in a message.
 
     xd:> stream create --name groovyfiltertest --definition "http --port=9001 | filter --script=custom-filter.groovy --properties-location=custom-filter.properties | log"
 
