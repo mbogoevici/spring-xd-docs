@@ -17,6 +17,23 @@ $ cd spring-xd-1.0.0.M4
 
 Set the environment variable `XD_HOME` to the installation directory `<root-install-dir>\spring-xd\xd`
 
+=== OSX Homebrew installation
+
+If you are on a Mac and using http://brew.sh/[homebrew], all you need to do to install _Spring XD_ is:
+
+[source,sh]
+----
+$ brew tap pivotal/tap
+$ brew install springxd
+----
+
+Homebrew will install `springxd` to `/usr/local/bin`. Now you can jump straight into using *Spring XD*:
+
+[source,sh]
+----
+$ xd-singlenode
+----
+
 === Install Spring XD
 
 Spring XD can be run in two different modes. There's a single-node runtime option for testing and development, and there's a distributed runtime which supports distribution of processing tasks across multiple nodes. This document will get you up and running quickly with a single-node runtime. See link:Running-Distributed-Mode#running-distributed-mode[Running Distributed Mode] for details on setting up a distributed runtime.
