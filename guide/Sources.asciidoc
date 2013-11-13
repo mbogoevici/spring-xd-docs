@@ -279,7 +279,7 @@ As updates are posted to the cache you should see them captured in the output fi
 [[syslog]]
 === Syslog
 
-Two syslog sources are provided: `syslog-udp` and `syslog-tcp`. They both support the following options:
+Three syslog sources are provided: `syslog-udp`, `syslog-tcp` and `reactor-syslog`.  The reactor-syslog adapter uses tcp and builds upon the functionality available in https://github.com/reactor/reactor[Reactor] project and should provide improved throughput over the syslog-tcp adapter. They all support the following option:
 
 port:: the port on which the system will listen for syslog messages *(default: `11111`)*
 
