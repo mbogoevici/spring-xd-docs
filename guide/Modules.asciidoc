@@ -182,6 +182,14 @@ If you destroy both of those streams and try again, it will work:
     xd:> module delete --name foo --type sink
     Successfully destroyed module 'foo' with type sink
 
+When creating a module, if you duplicate the name of an existing module for the same type, you will receive an error.  In the example below the user tried to compose a tcp module, however one already exists:
+```
+xd:>module compose tcp --definition "filter --expression=payload.contains('foo') | file"
+14:52:27,781  WARN Spring Shell client.RestTemplate:566 - POST request for "http://ec2-50-16-24-31.compute-1.amazonaws.com:9393/modules" resulted in 409 (Conflict); invoking error handler
+Command failed org.springframework.xd.rest.client.impl.SpringXDException: There is already a module named 'tcp' with type 'sink'
+```
+However, you can create a module for a given type even though a module of that name exists but as a different type.  For example: I can create a sink module named filter, even though a filter module exists already as a processor.
+
 Finally, it's worth mentioning that in some cases duplication may be avoided by reusing an actual stream rather than a composed module. That is possible when named channels are used in the source and/or sink position of a stream definition. For example, the same overall functionality as provided by the two streams above could also be achieved as follows:
 
     xd:> stream create foofilteredfile --definition "queue:foo > filter --expression=payload.contains('foo') | file"
