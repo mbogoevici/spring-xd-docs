@@ -1,0 +1,27 @@
+=== Introduction
+
+Spring XD provides a browser-based GUI which currently allows you to perform Batch Job related tasks. Upon starting Spring XD, the Admin UI is available at:
+
+http://localhost:9393/admin-ui/index.html
+
+image::spring-xd-admin-ui.png[The Spring XD Admin UI]
+
+By selecting the provided tabs you can
+
+* View created Job Definitions and deploy or un-deploy those Jobs using the _Definitions_ tab
+* Under _Deplopyments_ you can see the deployed jobs. By selecting _Launch_, you can start individual Jobs.
+* The _Executions_ tab provides an overview of launched Jobs and their respective execution status
+
+=== Launching a Batch Job
+
+Once a Job has been deployed, they be launched through the Admin UI as well. Navigate to the _Deployments_ tab. Select the job you want to launch and press `Launch`. The following modal dialog should appear:
+
+image::spring-xd-admin-ui-launch-job.png[Launch a Batch Job with parameters]
+
+Using this screen, one can define one or more job parameters. Job parameters can be typed and the following Data Types are available:
+
+* String (The default)
+* Date (The default date format is: _yyyy/MM/dd_)
+* Long
+* Double
+

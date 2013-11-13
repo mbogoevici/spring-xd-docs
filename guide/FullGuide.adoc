@@ -71,6 +71,10 @@ include::Tuples.asciidoc[]
 == Samples 
 include::Samples.asciidoc[]
 
+[[adminui]]
+== Admin UI 
+include::AdminUI.asciidoc[]
+
 = Appendices
 [[installing-hadoop]]
 [appendix]
