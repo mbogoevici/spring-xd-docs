@@ -17,7 +17,7 @@ _inputType_ and _outputType_ values are parsed as media types, e.g., _applicatio
 [[mimetype-examples]]
 ==== Stream Definition examples
 
-           twittersearch --outputType=application/json |  file
+           twittersearch --query='#springone2gx' --outputType=application/json |  file
 
 The _twittersearch_ module produces [Tweet](https://github.com/spring-projects/spring-social-twitter/blob/master/spring-social-twitter/src/main/java/org/springframework/social/twitter/api/Tweet.java) objects. Producing a domain object is useful in many cases, however writing a Tweet directly to a file would produce something like:
 
@@ -25,12 +25,12 @@ org.springframework.social.twitter.api.Tweet@6e878e7c
 
 Arguably, this output is not as useful as the JSON representation. Setting the outputType to application/json causes XD to convert the default type to a JSON string before piping it to the next module. This is almost equivalent to:
 
-           twittersearch | file --inputType=application/json
+           twittersearch --query='#springone2gx' | file --inputType=application/json
 
 There are some technical differences: In the first case, the transformation is done before the object is marshalled (serialized) for remote transport. In the second case, the transformation follows unmarshalling. Perhaps a more significant difference is that a tap created on the file sink would consume JSON in the first case, and Tweets in the second. 
 
 
-           twittersearch --outputType=application/json |  transform --inputType=application/x-xd-tuple ...
+           twittersearch --query='#springone2gx' --outputType=application/json |  transform --inputType=application/x-xd-tuple ...
 
 The above example illustrates a combination of outputType and inputType conversion. the Tweet is converted to a JSON string which is then converted to a Tuple. XD does not know how to convert an arbitrary type to a Tuple, but it can write an object to JSON and read JSON into a Tuple, so we have effectively performed an Object to Tuple conversion.  In many cases, combining conversion this way is not necessary, and care must be taken since XD does not validate that such combinations are possible.
 
