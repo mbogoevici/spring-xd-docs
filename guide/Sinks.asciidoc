@@ -455,13 +455,13 @@ The Dynamic Router support allows for routing Spring XD messages to *named chann
 In the following example, 2 streams are created that listen for message on the *foo* and the *bar* channel. Furthermore, we create a stream that receives messages via HTTP and then delegates the received messages to a router:
 
 ----
-xd:>stream create f --definition ":foo > transform --expression=payload+'-foo' | log"
+xd:>stream create f --definition "queue:foo > transform --expression=payload+'-foo' | log"
 Created new stream 'f'
 
-xd:>stream create b --definition ":bar > transform --expression=payload+'-bar' | log"
+xd:>stream create b --definition "queue:bar > transform --expression=payload+'-bar' | log"
 Created new stream 'b'
 
-xd:>stream create r --definition "http | router --expression=payload.contains('a')?':foo':':bar'"
+xd:>stream create r --definition "http | router --expression=payload.contains('a')?'queue:foo':'queue:bar'"
 Created new stream 'r'
 ----
 
