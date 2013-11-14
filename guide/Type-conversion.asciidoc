@@ -6,7 +6,7 @@ XD allows you to declaratively specify type conversion within processing streams
 * *Object* to *JSON String* : JSON to Object is supported. NOTE: It is not possible to convert a JSON string to an arbitrary object without knowing the target class
 * *Object* to/from *byte[]* : Either the raw bytes used for remote transport or converted to bytes using Java serialization -- this requires the object to be Serializable
 * *JSON*  to/from *java.util.Map*
-* *Object* to/from *plain text* (invokes the object's _toString()_ method)
+* *Object* to *plain text* (invokes the object's _toString()_ method)
 
 Where _JSON_ represents JSON content in the form of a String. Registration of custom type converters will likely be supported in a future release.
 
