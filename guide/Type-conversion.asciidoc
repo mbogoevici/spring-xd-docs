@@ -19,7 +19,7 @@ _inputType_ and _outputType_ values are parsed as media types, e.g., _applicatio
 
            twittersearch --query='#springone2gx' --outputType=application/json |  file
 
-The _twittersearch_ module produces [Tweet](https://github.com/spring-projects/spring-social-twitter/blob/master/spring-social-twitter/src/main/java/org/springframework/social/twitter/api/Tweet.java) objects. Producing a domain object is useful in many cases, however writing a Tweet directly to a file would produce something like:
+The _twittersearch_ module produces https://github.com/spring-projects/spring-social-twitter/blob/master/spring-social-twitter/src/main/java/org/springframework/social/twitter/api/Tweet.java[Tweet] objects. Producing a domain object is useful in many cases, however writing a Tweet directly to a file would produce something like:
 
 org.springframework.social.twitter.api.Tweet@6e878e7c
 
