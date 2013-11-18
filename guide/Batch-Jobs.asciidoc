@@ -71,6 +71,17 @@ If you are building from the sample repository do the following in the directory
 
 * `cp ./src/main/resources/myjob.xml $XD_HOME/modules/job/`
 
+==== Setting up to use remote containers
+Since XD is built on the premise that you can run jobs on multiple machines, we have to setup the containers, so that they can communicate with the admin to update their statuses.  
+This is done by updating the config/hsqldb.properties file.  The example below shows the default setting when you initially install XD.  
+```
+hsql.server.host=localhost
+hsql.server.port=9101
+hsql.server.dbname=xdjob
+hsql.server.database=xdjobrepo
+```
+Update the hsql.server.host to the DNS or IP of the admin machine.  Also you can change the port that the admin server exposes for its hsqldb by updating the hsql.server.port.  
+
 === Creating your Job
 Now from the XD-Shell let's create a job.  This is done by executing a job create command composed of:
 
