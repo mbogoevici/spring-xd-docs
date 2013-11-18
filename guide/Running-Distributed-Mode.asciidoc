@@ -177,7 +177,7 @@ To specify the http port of the XDAdmin server,
 
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --httpPort <httpPort> 
+xd/bin>$ ./xd-admin --server.port <httpPort> 
 ----
 
 [[using-hadoop]]
