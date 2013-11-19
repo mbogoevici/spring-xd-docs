@@ -207,3 +207,20 @@ xd/bin>$ ./xd-container --hadoopDistro <distribution>
 ----
 
 Pass in the +--help+ option to see other configuration properties.
+
+
+=== XD-Shell in Distributed Mode
+
+If you wish to use a XD-Shell that is on a different machine than where you deployed your admin server.  
+
+1) Open your shell 
+
+```
+shell/bin>$ ./xd-shell
+```
+
+2) From the xd shell use the "admin config server" command i.e. 
+
+```
+admin config server <yourhost>:9393
+```
