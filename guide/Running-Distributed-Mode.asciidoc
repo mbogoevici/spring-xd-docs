@@ -180,6 +180,11 @@ To specify the http port of the XDAdmin server,
 xd/bin>$ ./xd-admin --server.port <httpPort> 
 ----
 
+[NOTE]
+=====================================================================
+If you have multiple XD systems (i.e. an xd-admin server and 0+ containers) , you will need to configure the containers' hsqldb host to point to the admin server.  These instructions can be found https://github.com/spring-projects/spring-xd/wiki/Batch-Jobs#setting-up-to-use-remote-containers[here]. 
+=====================================================================
+
 [[using-hadoop]]
 === Using Hadoop
 
