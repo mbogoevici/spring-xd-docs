@@ -18,7 +18,7 @@ To reduce the number of hops across messaging middleware between them, multiple 
 .The XD Admin Server sending module definitions to each XD Container
 image::images/distributed-node.png[]
 
-How the processing task is broken down into modules is discussed in the section link:Architecture#container-server-architecture[Container Server Architecture].
+How the processing task is broken down into modules is discussed in the section link:Architecture#container-server-arch[Container Server Architecture].
 
 ===== Support for other distributed runtimes
 
