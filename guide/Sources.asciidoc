@@ -119,7 +119,7 @@ Note the above will log the raw bytes. For text files, it is normally desirable 
 
     xd:> stream create --name filetest --definition "file --outputType=text/plain | log"
 
-For more details on the use of the _outputType_ parameter see link:Type-conversion[Type Conversion]
+For more details on the use of the _outputType_ parameter see link:Type-conversion#type-conversion[Type Conversion]
 
 Copy a file into the directory `/tmp/xd/input/filetest` and observe its contents being logged in the XD Container.
 
