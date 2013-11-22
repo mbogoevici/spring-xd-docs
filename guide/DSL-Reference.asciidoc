@@ -51,7 +51,7 @@ Here is an example that shows how you can use a named channel to share a data pi
 
 Now if you post data to the http source, you will see that data intermingled with the time value in the file.
 
-The opposite case, the fanout of a message to multiple streams, is planned for a future release. However, link:Taps[taps] are a specialization of named channels that do allow publishing data to multiple sinks. For example:
+The opposite case, the fanout of a message to multiple streams, is planned for a future release. However, link:Taps#taps[taps] are a specialization of named channels that do allow publishing data to multiple sinks. For example:
 
   tap:stream:mystream > file 
 
