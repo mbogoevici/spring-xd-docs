@@ -110,6 +110,7 @@ Classes will first be loaded from any of the aforementioned jar files and, only 
 1. refrain from putting into the `lib/` folder jar files that are also part of Spring XD, or you'll likely end up with ClassCastExceptions
 2. any class that is directly or indirectly referenced from the payload type of your messages (__i.e.__ the types that transit from module to module) must not belong to a particular module `lib/` folder but should rather be loaded by the global Spring XD classloader
 
+[[composing-modules]]
 === Composing Modules
 
 As described above, a stream is defined as a sequence of modules, minimally a source module followed by a sink module. One or more processor modules may be added in between the source and sink, but they are not mandatory. Sometimes streams are similar for a subset of their modules. For example, consider the following two streams:
