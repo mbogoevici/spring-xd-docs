@@ -51,6 +51,10 @@ include::Sinks.asciidoc[]
 == Taps
 include::Taps.asciidoc[]
 
+[[type-conversion]]
+== Type Conversion
+include::Type-conversion.asciidoc[]
+
 [[batch]]
 == Batch Jobs
 include::Batch-Jobs.asciidoc[]
