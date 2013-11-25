@@ -132,15 +132,15 @@ xd/bin>$ ./xd-container
 The --transport option drives the choice of middleware to use. As stated previously, *Redis* is currently the default, so the above example is equivalent to 
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --transport redis
-xd/bin>$ ./xd-container --transport redis
+xd/bin>$ ./xd-admin --transport=redis
+xd/bin>$ ./xd-container --transport=redis
 ----
 
 To run using *RabbitMQ*, simply issue the following commands:
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --transport rabbit
-xd/bin>$ ./xd-container --transport rabbit
+xd/bin>$ ./xd-admin --transport=rabbit
+xd/bin>$ ./xd-container --transport=rabbit
 ----
 
 [NOTE]
@@ -159,7 +159,7 @@ xd/bin>$ ./xd-admin --store memory
 By default, the xd-container will store Analytics data in redis.  Use the --analytics option to specify another backing store for Analytics data.  currently only "redis" and "memory are available.
 [source,sh]
 ----
-xd/bin>$ ./xd-container --analytics memory
+xd/bin>$ ./xd-container --analytics=memory
 ----
 
 ==== Other Options
@@ -169,16 +169,18 @@ To specify the location of the Spring XD install,
 
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --xdHomeDir <xd-install-directory>
-xd/bin>$ ./xd-container --xdHomeDir <xd-install-directory>
+xd/bin>$ ./xd-admin --xdHomeDir=<xd-install-directory>
+xd/bin>$ ./xd-container --xdHomeDir=<xd-install-directory>
 ----
 
 To specify the http port of the XDAdmin server,
 
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --server.port <httpPort> 
+xd/bin>$ ./xd-admin --server.port=<httpPort> 
 ----
+
+The XDContainer nodes by default start up with --server.port=0 (which means they will scan for an available HTTP port). You can disable the HTTP endpoints for the XDContainer by setting --server.port=-1. Note that in this case HTTP source support will not work in a PaaS environment because typically it would require XD to bind to a specific port. Both the XDAdmin and XDContainer processes bind to --server.port=$PORT (i.e. an environment variable if one is available, as is typical in a PaaS).
 
 [NOTE]
 =====================================================================
