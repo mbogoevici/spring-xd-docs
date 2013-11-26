@@ -131,3 +131,7 @@ count:: the number of messages to group together before emitting a group *(defau
 aggregation:: a SpEL expression, to be evaluated against the list of accumulated messages. This should return what the new message will be made of. *(default: `#this.![payload]`, which uses the list of message payloads to form the new message)*
 timeout:: the delay (in milliseconds) after which messages should be released and aggregated, even though the completion criteria was not met. Due to the way this is implemented (see MessageGroupStoreReaper in the Spring Integration documentation), the actual observed delay may vary between `timeout` and `2xtimeout`. *(default: `60000`, _i.e._ one minute)*
 
+Additionally, the message store used to retain messages can be configured using the `store` option. Valid options are `memory` (the default), `redis` and `jdbc`.
+
+* When using `redis`, additional options are available: `hostname`, `port` and `password` with defaults pointing to the default redis install on localhost.
+* When using `jdbc`, one must configure the datasource access, using `driverClass`, `url`, `username` and `password` with no defaults. On first use, the database tables must be created. To that effect, one can use set the `initdb` option to `true`. The database kind should be auto-detected, but one can always provide `dbkind` to override.
