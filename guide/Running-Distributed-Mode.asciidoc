@@ -193,7 +193,7 @@ If you have multiple XD systems (i.e. an xd-admin server and 0+ containers) , yo
 Spring XD supports the following Hadoop distributions:
 
 * hadoop12 - Apache Hadoop 1.2.1 (default)
-* hadoop20 - Apache Hadoop 2.0.6-alpha
+* hadoop22 - Apache Hadoop 2.2.0
 * phd1 - Pivotal HD 1.1
 * cdh4 - Cloudera CDH 4.3.1 
 * hdp13 - Hortonworks Data Platform 1.3
