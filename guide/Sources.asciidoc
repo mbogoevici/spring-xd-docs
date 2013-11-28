@@ -346,8 +346,8 @@ See if the data ended up in the file
 The TCP source has the following options
 
 port:: the port on which to listen *(default: `1234`)*
-reverse-lookup:: perform a reverse DNS lookup on the remote IP Address *(default: `false`)*
-socket-timeout:: the timeout (ms) before closing the socket when no data received *(default: `120000`)*
+reverseLookup:: perform a reverse DNS lookup on the remote IP Address *(default: `false`)*
+socketTimeout:: the timeout (ms) before closing the socket when no data received *(default: `120000`)*
 nio:: whether or not to use NIO. NIO is more efficient when there are many connections. *(default: `false`)*
 decoder:: how to decode the stream - see below. *(default: `CRLF`)*
 binary:: whether the data is binary (true) or text (false). *(default: `false`)*
@@ -467,7 +467,7 @@ The following options are supported:
 
 host:: the host to connect to *(default: `localhost`)*
 port:: the port to connect to *(default: `1234`)*
-reverse-lookup:: whether to attempt to resolve the host address *(default: `false`)*
+reverseLookup:: whether to attempt to resolve the host address *(default: `false`)*
 nio:: whether to use NIO *(default: `false`)*
 encoder:: the encoder to use when sending messages *(default: `LF`, see <<tcp, TCP module>>)*
 decoder:: the decoder to use when receiving messages *(default: `LF`, see <<tcp, TCP module>>)*
