@@ -585,7 +585,7 @@ destination:: the destination (default is a `queue`) from which messages will be
 pubSub:: when true, indicates that the destination is a `topic` *(default: `false`)*
 durableSubScription:: when true, indicates the subscription to a topic is durable *(default: `false`)*
 subscriptionName:: a name that will be assigned to the topic subscription *(default: `[none]`)*
-clientId:: an identifier for the client, to be associated with a durable topic subscription
+clientId:: an identifier for the client, to be associated with a durable topic subscription *(default: `[none]`)*
 
 Note: the selected broker requires an infrastructure configuration file `jms-<provider>-infrastructure-context.xml` in `modules/common`. This is used to declare any infrastructure beans needed by the provider. See the default (`jms-activemq-infrastructure-context.xml`) for an example. Typically, all that is required is a `ConnectionFactory`. The activemq provider uses a properties file `jms-activemq.properties` which can be found in the `config` directory. This contains the broker URL.
 
