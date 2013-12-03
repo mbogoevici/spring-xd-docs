@@ -581,7 +581,7 @@ Run this as a Java application; each time you hit <enter> in the console, it wil
 The JMS Source has the following options
 
 provider:: the JMS provider *(default: `activemq`)*
-destination:: the destination (default is a `queue`) from which messages will be received
+destination:: the destination name (a `queue` by default) from which messages will be received *(default: `[stream name]`)*
 pubSub:: when true, indicates that the destination is a `topic` *(default: `false`)*
 durableSubScription:: when true, indicates the subscription to a topic is durable *(default: `false`)*
 subscriptionName:: a name that will be assigned to the topic subscription *(default: `[none]`)*
