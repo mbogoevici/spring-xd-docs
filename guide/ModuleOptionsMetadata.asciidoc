@@ -64,7 +64,7 @@ then in `foo.xml`:
 The only case(s) where using a default in the `${}` construct is necessary are
 
 . when the default is computed from a value known only at deployment time. This is typically the case of `${xd.stream.name}`
-. when the default should be source from some configuration file. There will then typically be a `PropertyPlaceholderConfigurer` defined in the module and the default will read like `${<option>:<key-in-thefile>}`
+. when the default should be sourced from some configuration file. There will then typically be a `PropertyPlaceholderConfigurer` defined in the module and the default will read like `${<option>:<key-in-thefile>}`
 
 ==== Exposing the option type
 Lastly, one can document the option type using a construct like
