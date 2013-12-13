@@ -28,7 +28,7 @@ In that file, each option `<option>` is declared by adding a line of the form
 options.<option>.description = the description
 ----
 
-The description for the option is the only required part, and is a very important piece of information for the end user, so pay special attention to it (see also <<options_metadata_style>>[Style remarks])
+The description for the option is the only required part, and is a very important piece of information for the end user, so pay special attention to it (see also link:ModuleOptionsMetadata#options_metadata_style[Style remarks])
 
 That sole line in the properties file makes a `--<option>=` construct available in the definition of a stream using your module.
 
