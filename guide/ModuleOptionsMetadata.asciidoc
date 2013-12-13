@@ -148,6 +148,7 @@ This can be used to validate a set of options passed in (some are often mutually
 === Metadata style remarks
 To provide a uniform user experience, it is better if your options metadata information adheres to the following style:
 
+- option names should follow the `camelCase` syntax, as this is easier with the POJO approach. If we later decide to switch to a more `unix-style`, this will be taken care of by XD itself, with no change to the metadata artifacts described here
 - description sentences should be concise
 - descriptions should start with a **lowercase** letter and should **not** end with a dot
 - use primitive types for required numbers
