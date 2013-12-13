@@ -102,7 +102,7 @@ Until XD-1050 is implemented, you would typically have your POJO inherit from on
 
 For each option you want available using the `--<option>=` syntax, you must write a public setter annotated with `@ModuleOption`, providing the option description in the annotation.
 
-The type accepter by that setter will be used as the documented type.
+The type accepted by that setter will be used as the documented type.
 
 That setter will typically be used to store the value in a private field. How the module application can get ahold of the value is the topic of the next section.
 
