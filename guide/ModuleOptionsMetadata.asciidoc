@@ -80,7 +80,7 @@ or
 options.<option>.type = Integer
 ----
 
-Note that there is support for both wrapper types (_e.g._ Integer) and primitive type (_e.g._ int). Although this is used for documentation purposes only, the primitive type would typically be used to indicate a **required** option (`null` being prohibited).
+Note that there is support for both wrapper types (_e.g._ Integer) and primitive types (_e.g._ int). Although this is used for documentation purposes only, the primitive type would typically be used to indicate a **required** option (`null` being prohibited).
 
 === Using the "POJO" approach
 To use advanced features such as profile activation driven by the values provided by the end user, one would need to leverage the "POJO" approach.
