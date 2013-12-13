@@ -112,7 +112,7 @@ For a provided value to be used in the module definition (using the `${foo}` syn
 At runtime, an instance of the POJO class will be created (it requires a no-arg constructor, by the way) and values given by the user will be bound (using setters). The POJO class thus acts as an intermediate `PropertySource` to provide values to `${foo}` constructs.
 
 ==== Providing defaults
-To provide default values, one would typically simply store a default value in the backing field of a getter/setter pair. That value (actually, the result of invoking the matching getter to a setter on a newly instanciated object) is what is advertised as the default.
+To provide default values, one would most certainly simply store a default value in the backing field of a getter/setter pair. That value (actually, the result of invoking the matching getter to a setter on a newly instanciated object) is what is advertised as the default.
 
 ==== Encapsulating options
 Although one would typically use the combination of a `foo` field and a `getFoo(), setFoo(x)` pair, one does not have to.
