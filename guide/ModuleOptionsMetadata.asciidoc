@@ -136,7 +136,7 @@ public class MyOptions {
 
 This would expose a `--extension=` option, being surfaced as a `${suffix}` placeholder construct.
 
-The astute reader will have realized that the default can not be computed then, because there is no `getExtension()` (and there should not be, as this could be mistakenly used in `${extension}`). To provide the default value, you should use the `defaultValue` attribute of the `@ModuleOption`
+The astute reader will have realized that the default can not be computed then, because there is no `getExtension()` (and there should not be, as this could be mistakenly used in `${extension}`). To provide the default value, you should use the `defaultValue` attribute of the `@ModuleOption` annotation.
 
 ==== Using profiles
 The real benefit of using a POJO class for options metadata comes with advanced features though, one of which is dynamic profile activation.
