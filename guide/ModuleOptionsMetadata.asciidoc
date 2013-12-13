@@ -32,6 +32,12 @@ The description for the option is the only required part, and is a very importan
 
 That sole line in the properties file makes a `--<option>=` construct available in the definition of a stream using your module.
 
+[NOTE]
+.For the time being
+====
+Until XD-1050 is implemented, you will need to copy/paste lines to document the inputType/outputType (depending on whether your module is a source, processor or a sink). This requirement will be lifted in a future version.
+====
+
 ==== Advertising default values
 In addition to this, one can also provide a default value for the option, using
 ----
