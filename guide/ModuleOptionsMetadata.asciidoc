@@ -141,7 +141,7 @@ The astute reader will have realized that the default can not be computed then, 
 ==== Using profiles
 The real benefit of using a POJO class for options metadata comes with advanced features though, one of which is dynamic profile activation.
 
-If the set of beans (or xml namespaced elements) you would define in the module definition file depends on the value that the user provided for one or several options, then you can make your POJO class implement `ProfileNamesProvider`. That interface brings one contract method, `profilesToActivate()` that you must implement, returning the names of the profiles you want to use (this method is invoked **after** user option values have been bound, so you can use any logic involving those to compute the list of profile names.)
+If the set of beans (or xml namespaced elements) you would define in the module definition file depends on the value that the user provided for one or several options, then you can make your POJO class implement `ProfileNamesProvider`. That interface brings one contract method, `profilesToActivate()` that you must implement, returning the names of the profiles you want to use (this method is invoked **after** user option values have been bound, so you can use any logic involving those to compute the list of profile names).
 
 As an example of this feature, see _e.g._ `TriggerSourceOptionsMetadata`.
 
