@@ -25,5 +25,6 @@ link:Hadoop-Installation[Appendix A: Installing Hadoop] +
 link:Creating-a-Source-Module[Appendix B: Creating a Source Module]
 link:Creating-a-Processor-Module[Appendix C: Creating a Processor Module]
 link:Creating-a-Sink-Module[Appendix D: Creating a Sink Module]
-link:Building-Spring-XD[Appendix E: Building Spring XD]
+link:ModuleOptionsMetadata[Appendix E: Providing Module Options Metadata]
+link:Building-Spring-XD[Appendix F: Building Spring XD]
 ****

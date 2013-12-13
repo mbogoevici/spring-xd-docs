@@ -101,6 +101,11 @@ include::Creating-a-Processor-Module.asciidoc[]
 include::Creating-a-Sink-Module.asciidoc[]
 
 [appendix]
+[[module-options-metadata]]
+== Providing Module Options Metadata
+include::ModuleOptionsMetadata.asciidoc[]
+
+[appendix]
 [[building-spring-xd]]
 == Building Spring XD 
 include::Building-Spring-XD.asciidoc[]
