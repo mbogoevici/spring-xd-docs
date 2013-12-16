@@ -609,12 +609,18 @@ The folllowing options are configured in mqtt.properties in XD_HOME/config
     mqtt.default.client.id=xd.mqtt.client.id
     mqtt.username=guest
     mqtt.password=guest
-    mqtt.default.topic=xd.mqtt.test
+    mqtt.default.topics=xd.mqtt.test
 
 The defaults are set up to connect to the RabbitMQ MQTT adapter on localhost.
 
 Note that the client id must be no more than 19 characters; this is because `.src` is added and the id must be no more than 23 characters.
 
-clientId:: Identifies the client - overrides the default above.
-topics:: The topics to which the source will subscribe - overrides the default above.
+The mqtt module accepts the following options, which override the defaults defined above
+
+clientId:: Identifies the client
+topics:: The topic(s) to which the source will subscribe
+url:: Location of the mqtt broker
+username:: The username to use when connecting to the broker
+password:: The password to use when connecting to the broker
+
 
