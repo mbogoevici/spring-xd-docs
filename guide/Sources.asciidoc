@@ -250,8 +250,8 @@ $ ./gemfire-server ../config/cq-demo.xml
 The qemfire-cq source has the following options
 
 query:: The query string in Object Query Language(OQL) *(required, String)*
-gemfireHost:: The host on which the GemFire server is running. *(default: `localhost`)*
-gemfirePort:: The port on which the GemFire server is running. *(default: `40404`)*
+host:: The host on which the GemFire server is running. *(default: `localhost`)*
+port:: The port on which the GemFire server is running. *(default: `40404`)*
 
 Here is an example. Create two streams: One to write http messages to a Gemfire region named _Stocks_, and another to execute the CQ.
 
