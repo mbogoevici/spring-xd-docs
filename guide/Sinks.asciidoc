@@ -81,11 +81,80 @@ If you do not have Hadoop installed, you can install Hadoop 1.1.2 as described i
 
 Once Hadoop is up and running, you can then use the `hdfs` sink when creating a link:Streams#streams[stream]
 
-  xd:> stream create --name myhdfsstream --definition "http --port=8000 | hdfs --rollover=10"
+  xd:> stream create --name myhdfsstream1 --definition "time | hdfs"
 
-Note that we've set the `rollover` parameter to a small value for this exercise. This is just to avoid buffering, so that we can actually see the data has made it into HDFS.
+In the above example, we've scheduled `time` source to automatically send ticks to `hdfs` once in every second. 
 
-As in the above examples, we've used the `http` source on port 8000, so we can post some data using the shell's built int http post command
+Wait a stream to run a while. You can then list the contents of the hadoop filesystem using the shell's built in hadoop fs commands. You will first need to configure the shell to point to your name node using the hadoop config command.
+
+    xd:>hadoop config fs --namenode hdfs://localhost:8020
+
+By default the hdfs protocol is used to access hadoop, then list the contents of the stream root directory.
+
+  xd:>hadoop fs ls /xd/myhdfsstream1
+  Found 1 items
+  -rw-r--r--   3 jvalkealahti supergroup          0 2013-12-18 18:10 /xd/myhdfsstream1/myhdfsstream1-0.txt.tmp
+
+If stream is still running you're able to see that file is suffixed with `tmp` extension. This means that file is still in use. We also support prefix for file which is currently being written to. For these, you can use options `--inUsePrefix` and `--inUseSuffix`.
+
+Now destroy a stream. 
+
+  xd:>stream destroy --name myhdfsstream1
+
+If you list the stream directory again, in use file suffix doesn't exist anymore.
+
+  xd:>hadoop fs ls /xd/myhdfsstream1
+  Found 1 items
+  -rw-r--r--   3 jvalkealahti supergroup        380 2013-12-18 18:10 /xd/myhdfsstream1/myhdfsstream1-0.txt
+
+You can list the contents of a file directly from a shell
+
+  xd:>hadoop fs cat /xd/myhdfsstream1/myhdfsstream1-0.txt
+  2013-12-18 18:10:07
+  2013-12-18 18:10:08
+  2013-12-18 18:10:09
+  ...
+
+In the above examples we didn't yet go through why the file was written in a specific directory and why it was named in this specific way. Default location of a file is defined as `/xd/<stream name>/<stream name>-<rolling part>.txt`. These can be changed using options `--directory` and `--fileName` respectively. Example is shown below. 
+
+  xd:>stream create --name myhdfsstream2 --definition "time | hdfs --directory=/xd/tmp --fileName=data"
+  xd:>stream destroy --name myhdfsstream2
+  xd:>hadoop fs ls /xd/tmp
+  Found 1 items
+  -rw-r--r--   3 jvalkealahti supergroup        120 2013-12-18 18:31 /xd/tmp/data-0.txt
+
+It is also possible to control the size of a files written into hdfs. Option `--rollover` can be used to control when file currently being written is rolled over and a new file opened. Option takes in a number of bytes when file should be closed. For convenience it's also possible to define option as kilos, megas, gigas and teras. 
+ 
+  xd:>stream create --name myhdfsstream3 --definition "time | hdfs --rollover=100"
+  xd:>stream destroy --name myhdfsstream3
+  xd:>hadoop fs ls /xd/myhdfsstream3
+  Found 3 items
+  -rw-r--r--   3 jvalkealahti supergroup        100 2013-12-18 18:41 /xd/myhdfsstream3/myhdfsstream3-0.txt
+  -rw-r--r--   3 jvalkealahti supergroup        100 2013-12-18 18:41 /xd/myhdfsstream3/myhdfsstream3-1.txt
+  -rw-r--r--   3 jvalkealahti supergroup        100 2013-12-18 18:41 /xd/myhdfsstream3/myhdfsstream3-2.txt
+
+Option for rollover could also be written as `--rollover=64M`, `--rollover=512G` or `--rollover=1T`.
+
+Stream can also be compressed automatically during the write operation. Example of this is shown below.
+
+  xd:>stream create --name myhdfsstream4 --definition "time | hdfs --codec=gzip"
+  xd:>stream destroy --name myhdfsstream4
+  xd:>hadoop fs ls /xd/myhdfsstream4
+  Found 1 items
+  -rw-r--r--   3 jvalkealahti supergroup         80 2013-12-18 18:48 /xd/myhdfsstream4/myhdfsstream4-0.txt.gzip
+
+From a native os shell we can use hadoop's fs commands and pipe data into gunzip. 
+
+  # bin/hadoop fs -cat /xd/myhdfsstream4/myhdfsstream4-0.txt.gzip | gunzip
+  2013-12-18 18:48:10
+  2013-12-18 18:48:11
+  ...
+
+Working with a hdfs filesystem is a little tricky compared to a normal files you'd use in your computer. For example we really can't append to a file because file needs to be open and after closed we can write to it anymore. This is imposing a catch-22 because we really can't keep a file open indefinitely and if someone wants to read the stream data while stream is running, file needs to be closed. While this can be partly handled with a small rollover setting, we can also use timeout in a writer so that a file will be automatically closed. This is also useful in cases where burst of data is written into a stream and you'd like that to become visible in hdfs.
+
+  xd:> stream create --name myhdfsstream5 --definition "http --port=8000 | hdfs --rollover=20 --idleTimeout=10000"
+
+In the above example we changed a source to `http` order to control what we write into a `hdfs` sink. We defined a small rollover size and a timeout of 10 seconds. Now we can simply post data into this stream via source end point using a below command.
 
   xd:> http post --target http://localhost:8000 --data "hello"
 
@@ -93,47 +162,32 @@ Which is the equivalent to using curl
 
   $ curl -d "hello" http://localhost:8000
 
-Repeat the command a few times.
+If we repeat commands first in fast and then wait for the timeout we should be able to see that some files are closed before rollover size was met and some were simply rolled because of a rollover size.
 
-You can then list the contents of the hadoop filesystem using the shell's built in hadoop fs commands.  You will first need to configure the shell to point to your name node using the hadoop config command
+  xd:>hadoop fs ls /xd/myhdfsstream5
+  Found 4 items
+  -rw-r--r--   3 jvalkealahti supergroup         12 2013-12-18 19:02 /xd/myhdfsstream5/myhdfsstream5-0.txt
+  -rw-r--r--   3 jvalkealahti supergroup         24 2013-12-18 19:03 /xd/myhdfsstream5/myhdfsstream5-1.txt
+  -rw-r--r--   3 jvalkealahti supergroup         24 2013-12-18 19:03 /xd/myhdfsstream5/myhdfsstream5-2.txt
+  -rw-r--r--   3 jvalkealahti supergroup         18 2013-12-18 19:03 /xd/myhdfsstream5/myhdfsstream5-3.txt
 
-    xd:>hadoop config fs --namenode hdfs://localhost:8020
 
-By default the hdfs protocol is used to access hadoop.  then list the contents of the root directory
 
-    xd:>hadoop fs ls /
-    Found 1 items
-    drwxr-xr-x   - mpollack supergroup          0 2013-07-30 02:34 /xd
 
-You should see that an `xd` directory has appeared in the root with a sub-directory named after our stream.  This is equivalent to using the hadoop command line utility
-
-  $ hadoop dfs -ls /xd
-  Found 1 items
-  drwxr-xr-x   - mpollack supergroup          0 2013-07-30 02:34 /xd
-
-And there will be one or more log files in there depending how many times you ran the command to post the data
-
-  xd:>hadoop fs ls /xd/myhdfsstream
-  Found 3 items
-  -rw-r--r--   3 mpollack supergroup         12 2013-07-30 02:34 /xd/myhdfsstream/myhdfsstream-0.log
-  -rw-r--r--   3 mpollack supergroup         12 2013-07-30 02:39 /xd/myhdfsstream/myhdfsstream-1.log
-  -rw-r--r--   3 mpollack supergroup          0 2013-07-30 02:39 /xd/myhdfsstream/myhdfsstream-2.log
-
-You can examine the file contents using the shell's `hadoop fs cat` command
-
-  xd:>hadoop fs cat /xd/myhdfsstream/myhdfsstream-0.log
-  hello
-  hello
 
 ==== HDFS with Options
 
 The HDFS Sink has the following options:
 
-newline:: whether to append a newline to the message payload *(default: `true`)*
-directory:: where to output the files in the Hadoop FileSystem *(default: `/xd/<streamname>`)*
-filename:: the base filename to use for the created files (a counter will be appended before the file extension). *(default: `<streamname>`)*
-suffix:: the file extension to use *(default: `log`)*
-rollover:: when to roll files over, expressed in bytes *(default: `1000000`, roughly 1MB)*
+directory:: Where to output the files in the Hadoop FileSystem *(default: `/xd/<streamname>`)*
+fileName:: The base filename to use for the created files (a counter will be appended before the file extension). *(default: `<streamname>`)*
+fileExtension:: The file extension to use *(default: `txt`)*
+rollover:: When to roll files over, expressed in bytes. Option can also expressed with a pattern as, `1M`, `1G`, `512G`, `1T` *(default: `1G`)*
+codec:: If compression is used for stream. Possible values are `gzip`, `snappy`, `bzip2`, `lzo`. *(default: `no compression`)* 
+idleTimeout::  Idle timeout in millis when Hadoop file resource is automatically closed. *(default: `0`, no timeout)*
+inUseSuffix:: Temporary file suffix indicating that file is currently written and in use. *(default: `.tmp`)*
+inUsePrefix:: Temporary file prefix indicating that file is currently written and in use. *(default: `none`)*
+overwrite:: Flag indicating if file resources in Hadoop is allowed to be overwritten. *(default: `false`)*
 
 [[jdbc_sink]]
 === JDBC
