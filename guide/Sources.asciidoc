@@ -165,7 +165,7 @@ Of special attention are the `markAsRead` and `delete` options, which by default
 
 The twittersearch source has four parameters
 
-query:: The query that will be run against Twitter *(required)*
+query:: The query that will be run against Twitter *(required)*  For information on how to construct a query, visit https://dev.twitter.com/docs/using-search[Using Search].
 consumerKey:: An application consumer key issued by twitter
 consumerSecret:: The secret corresponding to the `consumerKey`
 fixedDelay:: The fixed delay polling interval specified in miliseconds *(default: 5000)*
@@ -192,7 +192,7 @@ TIP: For both `twittersearch` and `twitterstream` you can fill in in the `conf/t
 
 This source ingests data from Twitter's https://dev.twitter.com/docs/streaming-apis/streams/public[streaming] API. It uses the https://dev.twitter.com/docs/streaming-apis/streams/public[sample and filter] stream endpoints rather than the full "firehose" which needs special access. The endpoint used will depend on the parameters you supply in the stream definition (some are specific to the filter endpoint).
 
-You need to supply all keys and secrets (both consumer and accessToken) to authenticate for this source, so it is easiest if you just add these to the `conf/twitter.properties` file. Stream creation is then straightforward:
+You need to supply all keys and secrets (both consumer and accessToken) to authenticate for this source, so it is easiest if you just add these to the `XD_HOME/config/twitter.properties` file. Stream creation is then straightforward:
 
     xd:> stream create --name tweets --definition "twitterstream | file"
 
@@ -202,15 +202,15 @@ https://dev.twitter.com/docs/streaming-apis/parameters#delimited[delimited]:: se
 
 https://dev.twitter.com/docs/streaming-apis/parameters#stall_warnings[stallWarnings]:: set to `true` to enable stall warnings (defaults to `false`)
 
-https://dev.twitter.com/docs/streaming-apis/parameters#filter_level[filterLevel]::
+https://dev.twitter.com/docs/streaming-apis/parameters#filter_level[filterLevel]:: controls which tweets make it through to the stream (defaults to `null`)
 
-https://dev.twitter.com/docs/streaming-apis/parameters#language[language]::
+https://dev.twitter.com/docs/streaming-apis/parameters#language[language]:: comma delimited set of languages to retain (defaults to `null`)
 
-https://dev.twitter.com/docs/streaming-apis/parameters#follow[follow]::
+https://dev.twitter.com/docs/streaming-apis/parameters#follow[follow]:: comma delimited set of user ids whose tweets should be sent to the stream (defaults to `null`)
 
-https://dev.twitter.com/docs/streaming-apis/parameters#track[track]::
+https://dev.twitter.com/docs/streaming-apis/parameters#track[track]:: which terms to look for in tweets (defaults to `null`)
 
-https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]::
+https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]:: a comma-separated list of longitude,latitude pairs specifying a set of bounding boxes to filter Tweets (defaults to `null`)
 
 [[gemfire-source]]
 === GemFire
