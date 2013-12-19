@@ -10,6 +10,8 @@ The Sinks covered are
 
 * <<hdfs, HDFS>>
 
+* <<avro, Avro>>
+
 * <<jdbc_sink, JDBC>>
 
 * <<tcp_sinks, TCP>>
@@ -188,6 +190,50 @@ idleTimeout::  Idle timeout in millis when Hadoop file resource is automatically
 inUseSuffix:: Temporary file suffix indicating that file is currently written and in use. *(default: `.tmp`)*
 inUsePrefix:: Temporary file prefix indicating that file is currently written and in use. *(default: `none`)*
 overwrite:: Flag indicating if file resources in Hadoop is allowed to be overwritten. *(default: `false`)*
+
+[[avro]]
+=== Hadoop Dataset (Avro)
+
+The Avro sink is used to store POJO classes that are sent as the payload on the stream. It uses the http://kitesdk.org/[Kite SDK Dataset] implementation to store the Datasets.
+
+The Hadoop Dataset Avro sink requires that you have a Hadoop installation that is based on Hadoop v2 (Hadoop 2.2.0, Pivotal HD 1.0, Cloudera CDH4 or Hortonworks HDP 2.0), see link:Running-Distributed-Mode#using-hadoop[using Hadoop] for more information on how to start Spring XD to target a specific distribution.
+
+Once Hadoop is up and running, you can then use the `avro` sink when creating a link:Streams#streams[stream]
+
+  xd:>stream create --name mydataset --definition "time | avro --batchSize=20"
+
+In the above example, we've scheduled `time` source to automatically send ticks to the `avro` sink once every second. 
+
+Let the stream run for a minute or so. You can then list the contents of the hadoop filesystem using the shell's built in hadoop fs commands. You will first need to configure the shell to point to your name node using the hadoop config command.
+
+    xd:>hadoop config fs --namenode hdfs://localhost:8020
+
+By default the hdfs protocol is used to access hadoop, then list the contents of the stream root directory.
+
+  xd:>hadoop fs ls /xd/mydataset/string
+  Found 2 items
+  drwxr-xr-x   - trisberg supergroup          0 2013-12-19 12:23 /xd/mydataset/string/.metadata
+  -rw-r--r--   3 trisberg supergroup        202 2013-12-19 12:23 /xd/mydataset/string/1387473825754-63.avro
+
+You can see that the sink has created one file containing the first batch of 20 stream payloads. The Avro files are stored in a directory named after the payload class, in this example the stream payload is a String. There is also a .metadata directory created that contains the metadata that the Kite SDK Dataset implementation uses as well as the generated Avro schema for the persisted type. 
+
+  xd:>hadoop fs ls /xd/mydataset/string/.metadata
+  Found 2 items
+  -rw-r--r--   3 trisberg supergroup        136 2013-12-19 12:23 /xd/mydataset/string/.metadata/descriptor.properties
+  -rw-r--r--   3 trisberg supergroup          8 2013-12-19 12:23 /xd/mydataset/string/.metadata/schema.avsc
+
+
+Now destroy the stream. 
+
+  xd:>stream destroy --name mydataset
+
+==== Avro with Options
+
+The Avro Sink has the following options:
+
+batchSize:: The number of payload objects that will be stored in each write operation. *(default: `100000`)*
+directory:: Where the files will be written in the Hadoop FileSystem *(default: `/xd/<streamname>`)*
+idleTimeout::  Idle timeout in milliseconds when Hadoop file resource is automatically closed. *(default: `0`, no timeout)*
 
 [[jdbc_sink]]
 === JDBC
