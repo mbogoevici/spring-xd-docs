@@ -234,7 +234,7 @@ The Avro Sink has the following options:
 
 batchSize:: The number of payload objects that will be stored in each write operation. *(default: `10000`)*
 directory:: Where the files will be written in the Hadoop FileSystem *(default: `/xd/<streamname>`)*
-idleTimeout::  Idle timeout in milliseconds when Hadoop file resource is automatically closed. *(default: `0`, no timeout)*
+idleTimeout::  Idle timeout in milliseconds when Hadoop file resource is automatically closed. *(default: `-1`, no timeout)*
 
 [[jdbc_sink]]
 === JDBC
