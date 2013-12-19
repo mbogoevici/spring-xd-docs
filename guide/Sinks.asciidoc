@@ -194,7 +194,7 @@ overwrite:: Flag indicating if file resources in Hadoop is allowed to be overwri
 [[avro]]
 === Hadoop Dataset (Avro)
 
-The Hadoop Dataset Avro sink is used to store POJO classes that are sent as the payload on the stream. It uses the http://kitesdk.org/[Kite SDK Dataset] implementation to store the Datasets.
+The Hadoop Dataset Avro sink is used to store Java classes that are sent as the payload on the stream. It uses the http://kitesdk.org/[Kite SDK Dataset] implementation to store the Datasets serialized in Avro format. The Avro schema is generated from the Java class that is persisted.
 
 The Hadoop Dataset Avro sink requires that you have a Hadoop installation that is based on Hadoop v2 (Hadoop 2.2.0, Pivotal HD 1.0, Cloudera CDH4 or Hortonworks HDP 2.0), see link:Running-Distributed-Mode#using-hadoop[using Hadoop] for more information on how to start Spring XD to target a specific distribution.
 
@@ -211,12 +211,12 @@ Let the stream run for a minute or so. You can then list the contents of the had
 By default the hdfs protocol is used to access hadoop, then list the contents of the stream root directory.
 
   xd:>hadoop fs ls /xd/mydataset/string
-  Found 2 items
+  Found 3 items
   drwxr-xr-x   - trisberg supergroup          0 2013-12-19 12:23 /xd/mydataset/string/.metadata
   -rw-r--r--   3 trisberg supergroup        202 2013-12-19 12:23 /xd/mydataset/string/1387473825754-63.avro
   -rw-r--r--   3 trisberg supergroup        216 2013-12-19 12:24 /xd/mydataset/string/1387473846708-80.avro
 
-You can see that the sink has created two files containing the first two batches of 20 stream payloads each. The Avro files are stored in a directory named after the payload class, in this example the stream payload is a String so the name of the directory is `string`. There is also a .metadata directory created that contains the metadata that the Kite SDK Dataset implementation uses as well as the generated Avro schema for the persisted type. 
+You can see that the sink has created two files containing the first two batches of 20 stream payloads each. The Avro files are stored in a directory named after the payload Java class, in this example the stream payload is a String so the name of the directory is `string`. There is also a .metadata directory created that contains the metadata that the Kite SDK Dataset implementation uses as well as the generated Avro schema for the persisted type. 
 
   xd:>hadoop fs ls /xd/mydataset/string/.metadata
   Found 2 items
