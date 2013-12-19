@@ -202,7 +202,7 @@ Once Hadoop is up and running, you can then use the `avro` sink when creating a 
 
   xd:>stream create --name mydataset --definition "time | avro --batchSize=20"
 
-In the above example, we've scheduled `time` source to automatically send ticks to the `avro` sink once every second. The data will be stored in a directory named `\xd\<streamname>` by default, so in this example it will be `/xd/mydataset`. You can change this by supplying a `––directory` parameter. The Avro data files are stored in a sub-directory named after the payload Java class, in this example the stream payload is a String so the name of the data sub-directory is `string`. If you have multiple Java classes as payloads, each class will get its own sub-directory.
+In the above example, we've scheduled `time` source to automatically send ticks to the `avro` sink once every second. The data will be stored in a directory named `\xd\<streamname>` by default, so in this example it will be `/xd/mydataset`. You can change this by supplying a `‑‑directory` parameter. The Avro data files are stored in a sub-directory named after the payload Java class, in this example the stream payload is a String so the name of the data sub-directory is `string`. If you have multiple Java classes as payloads, each class will get its own sub-directory.
 
 Let the stream run for a minute or so. You can then list the contents of the hadoop filesystem using the shell's built in hadoop fs commands. You will first need to configure the shell to point to your name node using the hadoop config command.
 
