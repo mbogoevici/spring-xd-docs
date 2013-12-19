@@ -194,7 +194,7 @@ overwrite:: Flag indicating if file resources in Hadoop is allowed to be overwri
 [[avro]]
 === Hadoop Dataset (Avro)
 
-The Hadoop Dataset Avro sink is used to store Java classes that are sent as the payload on the stream. It uses the http://kitesdk.org/[Kite SDK Dataset] implementation to store the Datasets serialized in Avro format. The Avro schema is generated from the Java class that is persisted.
+The Hadoop Dataset Avro sink is used to store Java classes that are sent as the payload on the stream. It uses the http://kitesdk.org/[Kite SDK Data Module]'s Dataset implementation to store the payload data serialized in Avro format. The Avro schema is generated from the Java class that is persisted.
 
 The Hadoop Dataset Avro sink requires that you have a Hadoop installation that is based on Hadoop v2 (Hadoop 2.2.0, Pivotal HD 1.0, Cloudera CDH4 or Hortonworks HDP 2.0), see link:Running-Distributed-Mode#using-hadoop[using Hadoop] for more information on how to start Spring XD to target a specific distribution.
 
