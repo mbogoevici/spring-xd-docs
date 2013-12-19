@@ -216,7 +216,7 @@ Then list the contents of the stream's data directory.
   -rw-r--r--   3 trisberg supergroup        202 2013-12-19 12:23 /xd/mydataset/string/1387473825754-63.avro
   -rw-r--r--   3 trisberg supergroup        216 2013-12-19 12:24 /xd/mydataset/string/1387473846708-80.avro
 
-You can see that the sink has created two files containing the first two batches of 20 stream payloads each. There is also a .metadata directory created that contains the metadata that the Kite SDK Dataset implementation uses as well as the generated Avro schema for the persisted type. 
+You can see that the sink has created two files containing the first two batches of 20 stream payloads each. There is also a `.metadata` directory created that contains the metadata that the Kite SDK Dataset implementation uses as well as the generated Avro schema for the persisted type. 
 
   xd:>hadoop fs ls /xd/mydataset/string/.metadata
   Found 2 items
