@@ -156,10 +156,10 @@ xd/bin>$ ./xd-admin --store memory
 ----
 
 ==== Choosing an Analytics provider
-By default, the xd-container will store Analytics data in redis.  Use the --analytics option to specify another backing store for Analytics data.  currently only "redis" and "memory are available.
+By default, the xd-container will store Analytics data in redis. At the time of writing, this is the only supported option (when running in distributed mode). Use the --analytics option to specify another backing store for Analytics data.
 [source,sh]
 ----
-xd/bin>$ ./xd-container --analytics=memory
+xd/bin>$ ./xd-container --analytics=redis
 ----
 
 ==== Other Options
