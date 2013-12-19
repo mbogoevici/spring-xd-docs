@@ -214,8 +214,9 @@ By default the hdfs protocol is used to access hadoop, then list the contents of
   Found 2 items
   drwxr-xr-x   - trisberg supergroup          0 2013-12-19 12:23 /xd/mydataset/string/.metadata
   -rw-r--r--   3 trisberg supergroup        202 2013-12-19 12:23 /xd/mydataset/string/1387473825754-63.avro
+  -rw-r--r--   3 trisberg supergroup        216 2013-12-19 12:24 /xd/mydataset/string/1387473846708-80.avro
 
-You can see that the sink has created one file containing the first batch of 20 stream payloads. The Avro files are stored in a directory named after the payload class, in this example the stream payload is a String. There is also a .metadata directory created that contains the metadata that the Kite SDK Dataset implementation uses as well as the generated Avro schema for the persisted type. 
+You can see that the sink has created two files containing the first two batches of 20 stream payloads each. The Avro files are stored in a directory named after the payload class, in this example the stream payload is a String so the name of the directory is `string`. There is also a .metadata directory created that contains the metadata that the Kite SDK Dataset implementation uses as well as the generated Avro schema for the persisted type. 
 
   xd:>hadoop fs ls /xd/mydataset/string/.metadata
   Found 2 items
@@ -231,7 +232,7 @@ Now destroy the stream.
 
 The Avro Sink has the following options:
 
-batchSize:: The number of payload objects that will be stored in each write operation. *(default: `100000`)*
+batchSize:: The number of payload objects that will be stored in each write operation. *(default: `10000`)*
 directory:: Where the files will be written in the Hadoop FileSystem *(default: `/xd/<streamname>`)*
 idleTimeout::  Idle timeout in milliseconds when Hadoop file resource is automatically closed. *(default: `0`, no timeout)*
 
