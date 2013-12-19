@@ -14,20 +14,21 @@ Configure the external hosts’ syslog daemons forward their messages to the xd-
 
 ==== A sample configuration using syslog-ng
 
-Edit /etc/syslog-ng/syslog-ng.conf :
+Edit syslog-ng configuration (for example: /etc/syslog-ng/syslog-ng.conf):
 
 1) Add destination
  
-  Add destination <destinationName> {
-        tcp("<xd-container-host>" port("<tcp-port>"));
+  destination <destinationName> {
+        tcp("<host>" port("<tcp-port>"));
   };
 
 or,
 
-  Add destination <destinationName> {
-        udp("<xd-container-host>" port("<udp-port>"));
+  destination <destinationName> {
+        udp("<host>" port("<udp-port>"));
   };
 
+where "host" is the container(launcher) host where the syslog module is deployed.
 
 2) Add log rule to log message sources:
 
@@ -35,12 +36,10 @@ or,
     source(<message_source>); destination(<destinationName>);
   };
 
-We can use “s_all” as message source to try this example.
-
 3) Make sure to restart the service after the change:
 
   sudo service syslog-ng restart
 
-Now, the syslog messages are written into HDFS /xd/<stream-name>/
+Now, the syslog messages from the syslog message sources are written into HDFS /xd/<stream-name>/
 
 
