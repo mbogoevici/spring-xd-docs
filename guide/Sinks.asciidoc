@@ -85,31 +85,29 @@ Once Hadoop is up and running, you can then use the `hdfs` sink when creating a 
 
   xd:> stream create --name myhdfsstream1 --definition "time | hdfs"
 
-In the above example, we've scheduled `time` source to automatically send ticks to `hdfs` once in every second. 
-
-Wait a stream to run a while. You can then list the contents of the hadoop filesystem using the shell's built in hadoop fs commands. You will first need to configure the shell to point to your name node using the hadoop config command.
+In the above example, we've scheduled `time` source to automatically send ticks to `hdfs` once in every second. If you wait a little while for data to accumuluate you can then list can then list the files in the hadoop filesystem using the shell's built in hadoop fs commands.  Before making any access to HDFS in the shell you first need to configure the shell to point to your name node.  This is done using the `hadoop config` command.
 
     xd:>hadoop config fs --namenode hdfs://localhost:8020
 
-By default the hdfs protocol is used to access hadoop, then list the contents of the stream root directory.
+In this example the hdfs protocol is used but you may also use the webhdfs protocol.  Listing the contents in the output directory (named by default after the stream name) is done by issuing the following command.
 
   xd:>hadoop fs ls /xd/myhdfsstream1
   Found 1 items
   -rw-r--r--   3 jvalkealahti supergroup          0 2013-12-18 18:10 /xd/myhdfsstream1/myhdfsstream1-0.txt.tmp
 
-If stream is still running you're able to see that file is suffixed with `tmp` extension. This means that file is still in use. We also support prefix for file which is currently being written to. For these, you can use options `--inUsePrefix` and `--inUseSuffix`.
+While the file is being written to it will have the `tmp` suffix.  When the data written exceeds the rollover size (default 1GB) it will be renamed to remove the `tmp` suffix.  There are several options to control the in use file file naming options.  These are `--inUsePrefix` and `--inUseSuffix` set the file name prefix and suffix respectfully.  
 
-Now destroy a stream. 
+When you destroy a stream
 
   xd:>stream destroy --name myhdfsstream1
 
-If you list the stream directory again, in use file suffix doesn't exist anymore.
+and list the stream directory again, in use file suffix doesn't exist anymore.
 
   xd:>hadoop fs ls /xd/myhdfsstream1
   Found 1 items
   -rw-r--r--   3 jvalkealahti supergroup        380 2013-12-18 18:10 /xd/myhdfsstream1/myhdfsstream1-0.txt
 
-You can list the contents of a file directly from a shell
+To list the list the contents of a file directly from a shell execute the hadoop cat command.
 
   xd:>hadoop fs cat /xd/myhdfsstream1/myhdfsstream1-0.txt
   2013-12-18 18:10:07
@@ -125,7 +123,7 @@ In the above examples we didn't yet go through why the file was written in a spe
   Found 1 items
   -rw-r--r--   3 jvalkealahti supergroup        120 2013-12-18 18:31 /xd/tmp/data-0.txt
 
-It is also possible to control the size of a files written into hdfs. Option `--rollover` can be used to control when file currently being written is rolled over and a new file opened. Option takes in a number of bytes when file should be closed. For convenience it's also possible to define option as kilos, megas, gigas and teras. 
+It is also possible to control the size of a files written into HDFS. The `--rollover` option can be used to control when file currently being written is rolled over and a new file opened by providing the rollover size in bytes, kilobytes, megatypes, gigabytes, and terabytes.
  
   xd:>stream create --name myhdfsstream3 --definition "time | hdfs --rollover=100"
   xd:>stream destroy --name myhdfsstream3
@@ -135,9 +133,9 @@ It is also possible to control the size of a files written into hdfs. Option `--
   -rw-r--r--   3 jvalkealahti supergroup        100 2013-12-18 18:41 /xd/myhdfsstream3/myhdfsstream3-1.txt
   -rw-r--r--   3 jvalkealahti supergroup        100 2013-12-18 18:41 /xd/myhdfsstream3/myhdfsstream3-2.txt
 
-Option for rollover could also be written as `--rollover=64M`, `--rollover=512G` or `--rollover=1T`.
+Shortcuts to specify sizes other than bytes are written as `--rollover=64M`, `--rollover=512G` or `--rollover=1T`.
 
-Stream can also be compressed automatically during the write operation. Example of this is shown below.
+The stream can also be compressed during the write operation. Example of this is shown below.
 
   xd:>stream create --name myhdfsstream4 --definition "time | hdfs --codec=gzip"
   xd:>stream destroy --name myhdfsstream4
@@ -152,7 +150,7 @@ From a native os shell we can use hadoop's fs commands and pipe data into gunzip
   2013-12-18 18:48:11
   ...
 
-Working with a hdfs filesystem is a little tricky compared to a normal files you'd use in your computer. For example we really can't append to a file because file needs to be open and after closed we can write to it anymore. This is imposing a catch-22 because we really can't keep a file open indefinitely and if someone wants to read the stream data while stream is running, file needs to be closed. While this can be partly handled with a small rollover setting, we can also use timeout in a writer so that a file will be automatically closed. This is also useful in cases where burst of data is written into a stream and you'd like that to become visible in hdfs.
+Often a stream of data may not have a high enough rate to roll over files frequently, leaving the file in an opened state.  This prevents users from reading a consistent set of data when running mapreduce jobs.  While one can alleviate this problem by using a small rollover value, a better way is to use the `idleTimeout`  option that will automatically close the file if there was no writes during the specified period of time.   This feature is also useful in cases where burst of data is written into a stream and you'd like that data to become visible in HDFS.
 
   xd:> stream create --name myhdfsstream5 --definition "http --port=8000 | hdfs --rollover=20 --idleTimeout=10000"
 
@@ -160,11 +158,7 @@ In the above example we changed a source to `http` order to control what we writ
 
   xd:> http post --target http://localhost:8000 --data "hello"
 
-Which is the equivalent to using curl
-
-  $ curl -d "hello" http://localhost:8000
-
-If we repeat commands first in fast and then wait for the timeout we should be able to see that some files are closed before rollover size was met and some were simply rolled because of a rollover size.
+If we repeat the command very quickly and then wait for the timeout we should be able to see that some files are closed before rollover size was met and some were simply rolled because of a rollover size.
 
   xd:>hadoop fs ls /xd/myhdfsstream5
   Found 4 items
@@ -172,9 +166,6 @@ If we repeat commands first in fast and then wait for the timeout we should be a
   -rw-r--r--   3 jvalkealahti supergroup         24 2013-12-18 19:03 /xd/myhdfsstream5/myhdfsstream5-1.txt
   -rw-r--r--   3 jvalkealahti supergroup         24 2013-12-18 19:03 /xd/myhdfsstream5/myhdfsstream5-2.txt
   -rw-r--r--   3 jvalkealahti supergroup         18 2013-12-18 19:03 /xd/myhdfsstream5/myhdfsstream5-3.txt
-
-
-
 
 
 ==== HDFS with Options
