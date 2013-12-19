@@ -202,13 +202,13 @@ Once Hadoop is up and running, you can then use the `avro` sink when creating a 
 
   xd:>stream create --name mydataset --definition "time | avro --batchSize=20"
 
-In the above example, we've scheduled `time` source to automatically send ticks to the `avro` sink once every second. 
+In the above example, we've scheduled `time` source to automatically send ticks to the `avro` sink once every second. The data will be stored in a directory named `\xd\<streamname>' by default, so in this example it will be `/xd/mydataset`. You can change this by supplying a `--directory` parameter. The Avro data files are stored in a sub-directory named after the payload Java class, in this example the stream payload is a String so the name of the data sub-directory is `string`. If you have multiple Java classes as payloads, each class will get its own sub-directory.
 
 Let the stream run for a minute or so. You can then list the contents of the hadoop filesystem using the shell's built in hadoop fs commands. You will first need to configure the shell to point to your name node using the hadoop config command.
 
     xd:>hadoop config fs --namenode hdfs://localhost:8020
 
-By default the hdfs protocol is used to access hadoop, then list the contents of the stream root directory.
+By default the hdfs protocol is used to access hadoop, then list the contents of the stream's data directory.
 
   xd:>hadoop fs ls /xd/mydataset/string
   Found 3 items
@@ -216,7 +216,7 @@ By default the hdfs protocol is used to access hadoop, then list the contents of
   -rw-r--r--   3 trisberg supergroup        202 2013-12-19 12:23 /xd/mydataset/string/1387473825754-63.avro
   -rw-r--r--   3 trisberg supergroup        216 2013-12-19 12:24 /xd/mydataset/string/1387473846708-80.avro
 
-You can see that the sink has created two files containing the first two batches of 20 stream payloads each. The Avro files are stored in a directory named after the payload Java class, in this example the stream payload is a String so the name of the directory is `string`. There is also a .metadata directory created that contains the metadata that the Kite SDK Dataset implementation uses as well as the generated Avro schema for the persisted type. 
+You can see that the sink has created two files containing the first two batches of 20 stream payloads each. There is also a .metadata directory created that contains the metadata that the Kite SDK Dataset implementation uses as well as the generated Avro schema for the persisted type. 
 
   xd:>hadoop fs ls /xd/mydataset/string/.metadata
   Found 2 items
