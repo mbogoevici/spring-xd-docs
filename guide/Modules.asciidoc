@@ -211,7 +211,24 @@ xd:>module list --type sink
   gemfire-server       sink
   jdbc                 sink
 ```
-To display the configuration of a module use the `module display --name <module name> --type <module type>  for example:
+
+To get information about a particular module (such as what options it accepts), use the `module info --<module type>:<module name>` command. For example:
+```
+xd:>module info --name source:file
+Information about source module 'file':
+
+  Option Name        Description                                                                  Default  Type
+  -----------------  ---------------------------------------------------------------------------  -------  ---------
+  dir                the absolute path to the directory to monitor for files                      <none>   String
+  pattern            a filter expression (Ant style) to accept only files that match the pattern  *        String
+  outputType         how this module should emit messages it produces                             <none>   MediaType
+  preventDuplicates  whether to prevent the same file from being processed twice                  true     boolean
+  ref                set to true to output the File object itself                                 false    boolean
+  fixedDelay         the fixed delay polling interval specified in seconds                        5        int
+
+```
+
+To display the actual definition file of a module use the `module display --name <module type>:<module name>` command. For example:
 ```
 xd:>module display --name tcp --type source
 Configuration file contents for module definiton 'tcp' (source):
