@@ -601,6 +601,10 @@ format:: how to render the current time, using SimpleDateFormat *(default: `'yyy
 === MQTT
 The mqtt source connects to an mqtt server and receives telemetry messages.
 
+Configure a stream:
+
+     xd:> stream create tcptest --definition "mqtt --url='tcp://localhost:1883' --topics='xd.mqtt.test' |log"
+
 ==== Options
 
 The folllowing options are configured in mqtt.properties in XD_HOME/config
