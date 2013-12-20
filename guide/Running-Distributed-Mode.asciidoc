@@ -286,7 +286,6 @@ When you are running in distributed mode where the admin server or containers ar
 ```
 ---
 spring:
- data:
   redis:
    port: 6379
    host: localhost
