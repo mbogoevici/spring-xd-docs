@@ -79,7 +79,7 @@ This can be disabled by using `--binary=true`.
 === Hadoop (HDFS)
 
 
-If you do not have Hadoop installed, you can install Hadoop 1.1.2 as described in our link:Hadoop-Installation#installing-hadoop[separate guide]. Spring XD supports 4 Hadoop distributions, see link:Running-Distributed-Mode#using-hadoop[using Hadoop] for more information on how to start Spring XD to target a specific distribution.
+If you do not have Hadoop installed, you can install Hadoop 1.2.1 as described in our link:Hadoop-Installation#installing-hadoop[separate guide]. Spring XD supports 4 Hadoop distributions, see link:Running-Distributed-Mode#using-hadoop[using Hadoop] for more information on how to start Spring XD to target a specific distribution.
 
 Once Hadoop is up and running, you can then use the `hdfs` sink when creating a link:Streams#streams[stream]
 
