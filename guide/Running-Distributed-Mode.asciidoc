@@ -129,18 +129,30 @@ xd/bin>$ ./xd-container
 ----
 
 ==== Choosing a Transport
-The --transport option drives the choice of middleware to use. As stated previously, *Redis* is currently the default, so the above example is equivalent to 
+XD has 2 types of transports: data and control.
+The control transports are used for control messages (between admin and nodes).  While the data transports are used for transmitting data between nodes.
+Since the admin server only uses the control transport the command line argument is --controlTransport.
+If you wish to set both transports to another middleware (e.g. Rabbit) on the node you can use the --transport argument.
+However, if you wish to set the data transport on the node you can use the --dataTransport.  To set the control transport on the node use the --controlTransport argument.
+As stated previously, *Redis* is currently the default, so the above example is equivalent to 
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --transport=redis
+xd/bin>$ ./xd-admin --controlTransport=redis
 xd/bin>$ ./xd-container --transport=redis
 ----
 
 To run using *RabbitMQ*, simply issue the following commands:
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --transport=rabbit
+xd/bin>$ ./xd-admin --controlTransport=rabbit
 xd/bin>$ ./xd-container --transport=rabbit
+----
+
+To run using *RabbitMQ* as your control transport and *Redis* as your data transport, simply issue the following commands:
+[source,sh]
+----
+xd/bin>$ ./xd-admin --controlTransport=rabbit
+xd/bin>$ ./xd-container --dataTransport=redis --controlTransport=rabbit
 ----
 
 [NOTE]
