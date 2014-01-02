@@ -605,6 +605,11 @@ Configure a stream:
 
      xd:> stream create tcptest --definition "mqtt --url='tcp://localhost:1883' --topics='xd.mqtt.test' |log"
 
+If you wish to use the MQTT Source defaults you can execute the command as follows:
+
+     xd:> stream create tcptest --definition "mqtt | log"
+
+
 ==== Options
 
 The folllowing options are configured in mqtt.properties in XD_HOME/config
