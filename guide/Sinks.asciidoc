@@ -438,27 +438,32 @@ Note: the `rabbit.properties` file referred to above is located within the `XD_H
 [[gemfire]]
 === GemFire Server
 
-Currently XD supports GemFire's client-server topology. A sink that writes data to a GemFire cache requires a cache server to be running in a separate process and its host and port must be known (NOTE: GemFire locators are not supported yet).  The XD distribution includes a GemFire server executable suitable for development and test purposes. It is made available under GemFire's development license and is limited to 3 nodes. Modules that write to GemFire create a client cache and client region. No data is cached on the client.
+Currently XD supports GemFire's client-server topology. A sink that writes data to a GemFire cache requires at least one  cache server to be running in a separate process and may also be configured to use a Locator. While Gemfire configuration is outside of the scope of this document, details are covered in the https://www.vmware.com/support/pubs/vfabric-gemfire.html[GemFire Product documentation]. The XD distribution includes a standalone GemFire server executable suitable for development and test purposes and bootstrapped using a Spring configuration file provided as a command line argument. The GemFire jar is distributed freely under GemFire's development license and is subject to the license's terms and conditions. Sink modules provided with the XD distrubution that write data to GemFire create a client cache and client region. No data is cached on the client.
 
 ==== Launching the XD GemFire Server
 
-
-A GemFire Server is included in the Spring XD distribution. To start the server. Go to the XD install directory:
+To start the GemFire cache server GemFire Server included in the Spring XD distribution, go to the XD install directory:
 
    $cd gemfire/bin
    $./gemfire-server ../config/cq-demo.xml
 
-The command line argument is the location of a Spring file with a configured cache server. A sample cache configuration is provided https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[cq-demo.xml] located in the `config` directory. This starts a server on port 40404 and creates a region named _Stocks_. A Logging cache listener is configured for the region to log region events. 
+The command line argument is the path of a Spring Data Gemfire configuration file with including a configured cache server and one or more regions. A sample cache configuration is provided https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[cq-demo.xml] located in the `config` directory. Note that Spring interprets the path as a relative path unless it is explicitly preceded by `file:`. The sample configuration starts a server on port 40404 and creates a region named _Stocks_. 
 
 ==== Gemfire sinks
 
-There are 2 implementation of the gemfire sink: _gemfire-server_ and _gemfire-json-server_. They are identical except the latter converts JSON string payloads to a JSON document format  proprietary to GemFire and provides JSON field access and query capabilities. If you are not using JSON, the gemfire-server module will write the payload using java serialization to the configured region. Either of these modules accepts the following attributes:
+There are 2 implementation of the gemfire sink: _gemfire-server_ and _gemfire-json-server_. They are identical except the latter converts JSON string payloads to a JSON document format proprietary to GemFire and provides JSON field access and query capabilities. If you are not using JSON, the gemfire-server module will write the payload using java serialization to the configured region. Either of these modules accepts the following attributes:
 
 regionName:: the name of the GemFire region. This must be the name of a region configured for the cache server. This module creates the corresponding client region. *(default: `<streamname>`)*
 keyExpression:: A SpEL expression which is evaluated to create a cache key. Typically, the key value is derived from the payload. *(default: `<streamname>`*, which will overwrite the same entry for every message received on the stream)
-gemfireHost:: The host name or IP address of the cache server *(default: `localhost`)*
-gemfirePort:: The TCP port number of the cache server *(default: `40404`)*
+gemfireHost:: The host name or IP address of the cache server or locator *(default: `localhost`)*
+gemfirePort:: The TCP port number of the cache server or locator *(default: `40404`)*
+useLocator:: A boolean flag indicating that the above host and port refer to a locator. 
 
+[NOTE]
+.Using a Locator
+=====================================================================
+ The locator option is mostly intended for integration with an existing GemFire installation in which the cache servers are configured to use locators in accordance with best practice. While GemFire supports configuration of multiple locators for failover, this is currently not supported in XD. However, using a single virtual IP backed by hardware routers for failover has proven to be an effective and simpler alternative. 
+=====================================================================
 ==== Example
 Suppose we have a JSON document containing a stock price:
 
