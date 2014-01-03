@@ -527,9 +527,11 @@ To destroy the stream, enter the following at the shell prompt:
 
 The RabbitMQ Source has the following options
 
-host:: the host (or IP Address) to connect to *(default: `localhost` unless `rabbit.hostname` has been overridden in `rabbit.properties`)*
-port:: the port on the `host` *(default: `5672` unless `rabbit.port` has been overridden in `rabbit.properties`)*
-vhost:: the virtual host *(default: `/` unless `rabbit.vhost` has been overridden in `rabbit.properties`)*
+username:: the username to connect to the RabbitMQ broker *(default: `guest` unless `spring.rabbitmq.username` has been overridden in `rabbit.properties`)*
+password:: the password to connect to the RabbitMQ broker *(default: `guest` unless `spring.rabbitmq.password` has been overridden in `rabbit.properties`)*
+host:: the host (or IP Address) to connect to *(default: `localhost` unless `spring.rabbitmq.host` has been overridden in `rabbit.properties`)*
+port:: the port on the `host` *(default: `5672` unless `spring.rabbitmq.port` has been overridden in `rabbit.properties`)*
+vhost:: the virtual host *(default: `/` unless `spring.rabbitmq.virtual_host` has been overridden in `rabbit.properties`)*
 queues:: the queue(s) from which messages will be received; use a comma-delimited list to receive messages from multiple queues *(default: the stream name)*
 
 Note: the `rabbit.properties` file referred to above is located within the `XD_HOME/config` directory.
