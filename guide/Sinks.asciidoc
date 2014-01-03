@@ -427,11 +427,11 @@ To destroy the stream, enter the following at the shell prompt:
 
 The RabbitMQ Sink has the following options
 
-host:: the host (or IP Address) to connect to *(default: `localhost` unless `rabbit.hostname` has been overridden in `rabbit.properties`)*
-port:: the port on the `host` *(default: `5672` unless `rabbit.port` has been overridden in `rabbit.properties`)*
-vhost:: the virtual host *(default: `/` unless `rabbit.vhost` has been overridden in `rabbit.properties`)*
+host:: the host (or IP Address) to connect to *(default: `localhost` unless `spring.rabbitmq.host` has been overridden in `rabbit.properties`)*
+port:: the port on the `host` *(default: `5672` unless `spring.rabbitmq.port` has been overridden in `rabbit.properties`)*
+vhost:: the virtual host *(default: `/` unless `spring.rabbitmq.virtual_host` has been overridden in `rabbit.properties`)*
 exchange:: the Exchange on the RabbitMQ broker to which messages should be sent *(default: `` (empty: therefore, the default no-name Exchange))*
-routingKey:: the routing key to be passed with the message *(default: <streamname>)*
+routingKey:: the routing key to be passed with the message. Note: If the routing key is not passed with the message and simply be a string literal (like the queue name), please make sure to specify it as SpEL literal. *(default: <streamname>)*
 
 Note: the `rabbit.properties` file referred to above is located within the `XD_HOME/config` directory.
 
