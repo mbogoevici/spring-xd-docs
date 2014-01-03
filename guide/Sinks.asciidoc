@@ -427,6 +427,8 @@ To destroy the stream, enter the following at the shell prompt:
 
 The RabbitMQ Sink has the following options
 
+username:: the username to connect to the RabbitMQ broker *(default: `guest` unless `spring.rabbitmq.username` has been overridden in `rabbit.properties`)*
+password:: the password to connect to the RabbitMQ broker *(default: `guest` unless `spring.rabbitmq.password` has been overridden in `rabbit.properties`)*
 host:: the host (or IP Address) to connect to *(default: `localhost` unless `spring.rabbitmq.host` has been overridden in `rabbit.properties`)*
 port:: the port on the `host` *(default: `5672` unless `spring.rabbitmq.port` has been overridden in `rabbit.properties`)*
 vhost:: the virtual host *(default: `/` unless `spring.rabbitmq.virtual_host` has been overridden in `rabbit.properties`)*
