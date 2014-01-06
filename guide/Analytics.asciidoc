@@ -215,6 +215,8 @@ Now Post some messages to the ingest stream:
     xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.06}"
     xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.08}"
 
+Note: JSON fields should be separated by a comma without any spaces.
+
 Check the gauge:
 
     $ redis-cli
