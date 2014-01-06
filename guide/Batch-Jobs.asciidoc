@@ -99,6 +99,16 @@ In the logging output of the XDContainer you should see the following:
 14:17:46,840  INFO http-bio-8080-exec-5 module.SimpleModule:154 - started module: SimpleModule [name=job, type=job, group=helloSpringXD, index=0]
 14:17:46,840  INFO http-bio-8080-exec-5 module.ModuleDeployer:152 - launched job module: helloSpringXD:myjob:0
 ----
+
+==== Creating Jobs - Additional Options
+
+When creating jobs, the following options are available:
+
+deploy:: If true, depploys the stream immediately *(default: `true`)*
+dateFormat:: The optional date format for job parameters *(default: `yyyy/MM/dd`)*
+numberFormat:: Defines the numberformat when parsing numeric parameters *(default: `NumberFormat.getInstance(Locale.US)`)*
+makeUnique:: Shall job parameters be made unique? *(default: `true`)*
+
 === Launching a job
 XD uses triggers as well as regular event flow to launch the batch jobs.  So in this section we will cover how to:
 
