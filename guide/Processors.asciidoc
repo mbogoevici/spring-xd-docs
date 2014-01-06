@@ -87,7 +87,9 @@ This processor converts a JSON message payload to the value of a specific JSON f
 
 Try sending this payload to the HTTP endpoint and you should see just the value "John" in the XD log:
 
-    xd:> http post --target http://localhost:9005 --data "{\"firstName\":\"John\", \"lastName\":\"Smith\"}"
+    xd:> http post --target http://localhost:9005 --data "{"firstName":"John","lastName":"Smith"}"
+
+Note: JSON fields should be separated by a comma without any spaces.
 
 [[script]]
 === Script
