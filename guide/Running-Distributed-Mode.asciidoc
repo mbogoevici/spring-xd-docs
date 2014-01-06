@@ -214,6 +214,7 @@ To specify the distribution to use for Hadoop client connections,
 
 [source,sh]
 ----
+xd/bin>$ ./xd-shell --hadoopDistro <distribution> 
 xd/bin>$ ./xd-admin --hadoopDistro <distribution> 
 xd/bin>$ ./xd-container --hadoopDistro <distribution> 
 ----
