@@ -211,9 +211,9 @@ Next create the tap, using the json-field-extractor to extract the stock price f
 
 Now Post some messages to the ingest stream:
 
-    xd:> http post --target http://localhost:9090 --data "{\"symbol\":\"VMW\",\"price\":72.04}"
-    xd:> http post --target http://localhost:9090 --data "{\"symbol\":\"VMW\",\"price\":72.06}"
-    xd:> http post --target http://localhost:9090 --data "{\"symbol\":\"VMW\",\"price\":72.08}"
+    xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.04}"
+    xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.06}"
+    xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.08}"
 
 Check the gauge:
 
@@ -242,13 +242,13 @@ Next create the taps, using the json-field-extractor to extract the stock price 
 
 Now Post some messages to the ingest stream:
 
-    xd:> http post --target http://localhost:9090 --data "{\"symbol\":\"VMW\",\"price\":72.04}"
-    xd:> http post --target http://localhost:9090 --data "{\"symbol\":\"VMW\",\"price\":72.06}"
-    xd:> http post --target http://localhost:9090 --data "{\"symbol\":\"VMW\",\"price\":72.08}"
+    xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.04}"
+    xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.06}"
+    xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.08}"
 
-    xd:> http post --target http://localhost:9090 --data "{\"symbol\":\"EMC\",\"price\":24.92}"
-    xd:> http post --target http://localhost:9090 --data "{\"symbol\":\"EMC\",\"price\":24.90}"
-    xd:> http post --target http://localhost:9090 --data "{\"symbol\":\"EMC\",\"price\":24.96}"
+    xd:> http post --target http://localhost:9090 --data "{"symbol":"EMC","price":24.92}"
+    xd:> http post --target http://localhost:9090 --data "{"symbol":"EMC","price":24.90}"
+    xd:> http post --target http://localhost:9090 --data "{"symbol":"EMC","price":24.96}"
 
 Check the gauge:
 
