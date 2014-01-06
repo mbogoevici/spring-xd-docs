@@ -230,42 +230,41 @@ idleTimeout::  Idle timeout in milliseconds for when the aggregated batch of pay
 [[jdbc_sink]]
 === JDBC
 
-The JDBC sink can be used to insert message payload data into a relational database table. By default it inserts the entire payload into an in-memory HSQLDB database table named after the stream name. To alter this behavior you should modify the 'config/jdbc.properties' file with the connection parameters you want to use. There is also a 'config/init_db.sql' file that contains the SQL statements used to initialize the database table. You can modify this file if you'd like to create the table when the sink starts, you also should change the 'initializeDatabase' property to 'true' to have this script execute when the sink starts up.
+The JDBC sink can be used to insert message payload data into a relational database table. By default it inserts the entire payload into a table named after the stream name in the HSQLDB database that XD uses to store metadata for batch jobs.  To alter this behavior you should modify the 'config/jdbc.properties' file with the connection parameters you want to use. There is also a 'config/init_db.sql' file that contains the SQL statements used to initialize the database table. You can modify this file if you'd like to create a table with your specific layout when the sink starts. You should also change the 'initializeDatabase' property to 'true' to have this script execute when the sink starts up.
 
 The payload data will be inserted as-is if the 'columns' option is set to 'payload'. This is the default behavior.  If you specify any other column names the payload data will be assumed to be a JSON document that will be converted to a hash map. This hash map will be used to populate the data values for the SQL insert statement. A matching of column names with underscores like 'user_name' will match onto camel case style keys like 'userName' in the hash map.  There will be one insert statement executed for each message.
 
 To create a stream using a `jdbc` sink relying on all defaults you would use a command like
 
-  xd:> stream create --name myjdbc --definition "time | jdbc --initializeDatabase=true"
+  xd:> stream create --name mydata --definition "time | jdbc --initializeDatabase=true"
 
-This will insert the time messages into a 'payload' column in a table named 'myjdbc'. Since the default is using an in-memory HSQLDB database we can't connect to this database instance from an external tool. In order to do that we need to alter the connection properties. We can either modify the 'config/jdbc.properties' file or provide the 'url' property when we create the stream. Here is an example of the latter:
+This will insert the time messages into a 'payload' column in a table named 'myjdbc'. Since the default is using the XD batch metadata HSQLDB database we can connect to this database instance from an external tool. After we let the stream run for a little while, we can connect to the database and look at the data stored in the database.
 
-  xd:> stream create --name mydata --definition "time | jdbc --url='jdbc:hsqldb:file:/tmp/xd/test'"
+You can query the database with your favorite SQL tool using the following database URL: `jdbc:hsqldb:hsql://localhost:9101/xdjob` with `sa` as the user name and a blank password. You can also use the HSQL provided SQL Tool (download from link:http://hsqldb.org/[HSQLDB]) to run a quick query from the command line:
  
-We let the stream run for a little while and then destroy it so we can look at the data stored in the database.
-
-  xd:> stream destroy --name mydata
-
-You can use the above database URL from your favorite SQL tool or we can use the HSQL provided SQL Tool to run a quick query from the command line:
- 
-  $ java -cp $XD_HOME/lib/hsqldb-1.8.0.10.jar org.hsqldb.util.SqlTool --inlineRc url=jdbc:hsqldb:file:/tmp/xd/test,user=sa,password= --sql "select payload from mydata;"
+  $ java -cp ~/Downloads/hsqldb-2.3.0/hsqldb/lib/sqltool.jar org.hsqldb.cmdline.SqlTool --inlineRc url=jdbc:hsqldb:hsql://localhost:9101/xdjob,user=sa,password= --sql "select payload from mydata;"
 
 This should result in something similar to the following output:
 
 ----
-2013-07-29 12:05:48
-2013-07-29 12:05:49
-2013-07-29 12:05:50
-2013-07-29 12:05:51
-2013-07-29 12:05:52
-2013-07-29 12:05:53
-2013-07-29 12:05:54
-2013-07-29 12:05:55
-2013-07-29 12:05:56
-2013-07-29 12:05:57	
-
-Fetched 10 rows.
+2014-01-06 09:33:25
+2014-01-06 09:33:26
+2014-01-06 09:33:27
+2014-01-06 09:33:28
+2014-01-06 09:33:29
+2014-01-06 09:33:30
+2014-01-06 09:33:31
+2014-01-06 09:33:32
+2014-01-06 09:33:33
+2014-01-06 09:33:34
+2014-01-06 09:33:35
+2014-01-06 09:33:36
+2014-01-06 09:33:37
 ----
+
+Now we can destroy the stream using:
+
+  xd:> stream destroy --name mydata
 
 ==== JDBC with Options
 
