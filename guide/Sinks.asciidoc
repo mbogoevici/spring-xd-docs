@@ -238,7 +238,7 @@ To create a stream using a `jdbc` sink relying on all defaults you would use a c
 
   xd:> stream create --name mydata --definition "time | jdbc --initializeDatabase=true"
 
-This will insert the time messages into a 'payload' column in a table named 'myjdbc'. Since the default is using the XD batch metadata HSQLDB database we can connect to this database instance from an external tool. After we let the stream run for a little while, we can connect to the database and look at the data stored in the database.
+This will insert the time messages into a 'payload' column in a table named 'mydata'. Since the default is using the XD batch metadata HSQLDB database we can connect to this database instance from an external tool. After we let the stream run for a little while, we can connect to the database and look at the data stored in the database.
 
 You can query the database with your favorite SQL tool using the following database URL: `jdbc:hsqldb:hsql://localhost:9101/xdjob` with `sa` as the user name and a blank password. You can also use the HSQL provided SQL Tool (download from link:http://hsqldb.org/[HSQLDB]) to run a quick query from the command line:
  
