@@ -129,7 +129,7 @@ xd/bin>$ ./xd-container
 ----
 
 ==== Choosing a Transport
-Spring XD uses two types of transports: control and data.  The control transport is used for sending control messages between the admin server and container nodes while the data transport is used for sending data between container nodes.  Since the admin server only uses the control transport, you can use either the command line argument `--transport` or `--controlTransport` to specify which transport to use.  For the container nodes, if you specify only the --transport option then the specified transport will be used for both control and data.  If you want to set them to different values, then use the `--dataTransport` and `--controlTransport` command line options.
+Spring XD uses two types of transports: control and data.  The control transport is used for sending control messages between the admin server and container nodes while the data transport is used for sending data between container nodes.  Since the admin server only uses the control transport, you can use either the command line argument `--transport` or `--controlTransport` to specify which transport to use.  For the container nodes, if you specify only the --transport option then the specified transport will be used for both control and data.  If you want to set them to different values, then use the `--transport` option to set the data transport and `--controlTransport` to set the control transport.
 
 Since Redis is the default transport, the previous example is equivalent to passing in the --transport option with `redis` as the value.
 [source,sh]
@@ -149,7 +149,7 @@ To run using RabbitMQ as your control transport and Redis as your data transport
 [source,sh]
 ----
 xd/bin>$ ./xd-admin --controlTransport rabbit
-xd/bin>$ ./xd-container --dataTransport redis --controlTransport rabbit
+xd/bin>$ ./xd-container --transport redis --controlTransport rabbit
 ----
 
 One could have also used the `--transport` option the admin node, but when mixing control and data transports it is recommended to be more explicit in your settings.
