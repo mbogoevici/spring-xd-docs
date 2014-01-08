@@ -1,94 +1,61 @@
 === Introduction
-One of the features that XD offers is the ability to launch and monitor batch jobs using  http://www.springsource.org/spring-batch[Spring Batch].
-This purpose of this section is to show you how to create a sample tasklet as well as create, schedule and monitor a job.
+One of the features that XD offers is the ability to launch and monitor batch jobs based on http://www.springsource.org/spring-batch[Spring Batch].  The Spring Batch project was started in 2007 as a collaboration between SpringSource and Accenture to provide a comprehensive framework to support the development of robust batch applications.  Batch jobs have their own set of best practices and domain concepts which have been incorporated into Spring Batch building upon Accenture's consulting business.  Since then Spring Batch has been used in thousands of enterprise applications and is the basis for the recent JSR standardization of batch processing, https://jcp.org/en/jsr/detail?id=352[JSR-352].
 
-=== Setting up a simple Batch Job
+Spring XD builds upon Spring Batch to simplify creating batch workflow solutions that span traditional use-cases such as moving data between flat files and relational databases as well as Hadoop use-cases where analysis logic is broken up into several steps that run on a Hadoop cluster.  Steps specific to Hadoop in a workflow can be MapReduce jobs, executing Hive/Pig scripts or HDFS operations.
 
-==== Creating the Tasklet
+=== Workflow
+The concept of a workflow translates to a Job, not to be confused with a MapReduce job. A Job is a directed graph, each node of the graph is a processing Step. Steps can be executed sequentially or in parallel, depending on the configuration. Jobs can be started, stopped, and restarted. Restarting
+jobs is possible since the progress of executed steps in a Job is persisted in a database via a JobRepository.  The following figures shows the basic components of a workflow.
 
-We will create a very simple http://static.springsource.org/spring-batch/reference/html/configureStep.html#taskletStep[Tasklet]. The sole purpose of this Tasklet is to print out "Hello Spring XD!".  Note, you can find the the source code and the maven build files for this example in the https://github.com/SpringSource/spring-xd-samples[Spring XD Samples] repository.
+image::images/batch-overview.png[The Spring XD Workflow overview, scaledwidth="75%"]
 
-[source,java]
-----
-package org.springframework.springxd.samples.batch;
+A Job that has steps specific to Hadoop is shown below.
 
-import org.springframework.batch.core.StepContribution;
-import org.springframework.batch.core.scope.context.ChunkContext;
-import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.springframework.batch.repeat.RepeatStatus;
+image::images/batch-hadoop-overview.png[Steps in a workflow that execute Hadoop HDFS operations and run Pig, MapReduce and Hive jobs, scaledwidth="75%"]
 
-public class HelloSpringXDTasklet implements Tasklet {
+A JobLauncher is responsible for starting a job and is often triggered via a scheduler.  Other options to launch a job are through Spring XD's RESTful administration API, the XD web application, or in response to an external event from and XD stream defintion, e.g file polling using the file source.
 
-	public RepeatStatus execute(StepContribution contribution,
-			ChunkContext chunkContext) throws Exception {
+=== Features
 
-		System.out.println("Hello Spring XD!");
+Spring XD allows you to create and launch jobs.  The launching of a job can be trigger using a cron expression or in reaction to data on a stream. When jobs are executing, they are also a souce of event data that can be subscribed to by a stream.  There are several type of events sent during a job's execution, the most common being the status of the job and the steps taken within the job.  This bi-direction communication between stream processing and batch processing allows for more complex chains of processing to be developed.
 
-		return RepeatStatus.FINISHED;
-	}
-}
-----
+As a starting point, jobs for the following cases are provided to use out of the box
 
-Please ensure that you deploy this class as part of a Jar file to the Spring XD *${xd.home}/lib* folder. Once you restart the Spring XD container the class will be automatically added to the classpath and thus made available.  If you are building from the sample repository do the following in the directory `spring-xd-samples/batch-simple`
+* Poll a Directory and import CSV files to HDFS
+* Import CSV files to JDBC
+* HDFS to JDBC Export
+* JDBC to HDFS Import
+* HDFS to MongoDB Export
 
-* `mvn package`
-* `cp ./target/springxd-batch-simple-1.0.0.BUILD-SNAPSHOT.jar $XD_HOME/lib`
+These are described in the section below.  
 
-==== Setting Up the Application Context
+This purpose of this section is to show you how to create, schedule and monitor a job.
 
-Under *modules/job*, in the Spring XD home directory, please create the following XML application context file named *myjob.xml*:
+=== Developing your Job
 
-[source,xml]
-----
+The Jobs definitions provided as part of the Spring XD distribution as well as those included in the https://github.com/spring-projects/spring-xd-samples[Spring XD Samples] repository can be used a basis for building your own custom Jobs.  The development of a Job largely follows the development of a Spring Batch job, for which there are several references.
 
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:int="http://www.springframework.org/schema/integration"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:batch="http://www.springframework.org/schema/batch"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-		http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/integration
-		http://www.springframework.org/schema/integration/spring-integration.xsd
-		http://www.springframework.org/schema/batch
-		http://www.springframework.org/schema/batch/spring-batch.xsd">
+* http://projects.spring.io/spring-batch/[Spring Batch home page]
+* http://www.manning.com/templier/[Spring Batch In Action - Manning]
+* http://www.apress.com/9781430234524[Pro Spring Batch - APress]
 
-	<batch:job id="job">
-		<batch:step id="helloSpringXDStep">
-			<batch:tasklet ref="helloSpringXDTasklet" />
-		</batch:step>
-	</batch:job>
+For help developing Job steps specific to Hadoop, e.g. HDFS, Pig, Hive, the https://github.com/spring-projects/spring-xd-samples[Spring XD Samples] is useful as wella s the following resources
 
-	<bean id="helloSpringXDTasklet"
-		class="org.springframework.springxd.samples.batch.HelloSpringXDTasklet" />
+* http://projects.spring.io/spring-hadoop/[Spring for Apache Hadoop home page]
+* http://shop.oreilly.com/product/0636920024767.do[Spring Data - O'Reilly - Chapter 13]
 
-</beans>
-----
+Once your Jobs have been developed and unit tested, they are integrated into Spring XD by copying the resulting .jar file and Job XML definition to $XD_HOME/lib and $XD_HOME/modules/jobs.
 
-This context file must contain single batch job whose id is `job`.
+=== Creating a Job
 
-If you are building from the sample repository do the following in the directory `spring-xd-samples/batch-simple`
+To describe the creation of a job we will use the job definition that is part of the https://github.com/spring-projects/spring-xd-samples/tree/master/batch-simple[batch-simple example].
 
-* `cp ./src/main/resources/myjob.xml $XD_HOME/modules/job/`
-
-==== Setting up to use remote containers
-Since XD is built on the premise that you can run jobs on multiple machines, we have to setup the containers, so that they can communicate with the admin to update their statuses.
-This is done by updating the config/hsqldb.properties file.  The example below shows the default setting when you initially install XD.
-```
-hsql.server.host=localhost
-hsql.server.port=9101
-hsql.server.dbname=xdjob
-hsql.server.database=xdjobrepo
-```
-Update the hsql.server.host to the DNS or IP of the admin machine.  Also you can change the port that the admin server exposes for its hsqldb by updating the hsql.server.port.
-
-=== Creating your Job
-Now from the XD-Shell let's create a job.  This is done by executing a job create command composed of:
+To create a job in the XD shell, execute the job create command composed of:
 
 * name - the "name" that will be associated with the Job
 * definition - the name of the context file that describes the tasklet.
 
-So using our example above where we declared a myjob.xml that contains the context for our task, so to create the job will look like:
+So using our example above where we have a myjob.xml job definiton file in the $XD_HOME/modules/jobs directory, this will look like:
 ----
 xd:> job create --name helloSpringXD --definition "myjob"
 ----
