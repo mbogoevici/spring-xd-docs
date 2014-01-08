@@ -129,35 +129,34 @@ xd/bin>$ ./xd-container
 ----
 
 ==== Choosing a Transport
-XD has 2 types of transports: data and control.
-The control transports are used for control messages (between admin and nodes).  While the data transports are used for transmitting data between nodes.
-Since the admin server only uses the control transport the command line argument is --controlTransport.
-If you wish to set both transports to another middleware (e.g. Rabbit) on the node you can use the --transport argument.
-However, if you wish to set the data transport on the node you can use the --dataTransport.  To set the control transport on the node use the --controlTransport argument.
-As stated previously, *Redis* is currently the default, so the above example is equivalent to 
+Spring XD uses two types of transports: control and data.  The control transport is used for sending control messages between the admin server and container nodes while the data transport is used for sending data between container nodes.  Since the admin server only uses the control transport, you can use either the command line argument `--transport` or `--controlTransport` to specify which transport to use.  For the container nodes, if you specify only the --transport option then the specified transport will be used for both control and data.  If you want to set them to different values, then use the `--dataTransport` and `--controlTransport` command line options.
+
+Since Redis is the default transport, the previous example is equivalent to passing in the --transport option with `redis` as the value.
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --controlTransport=redis
-xd/bin>$ ./xd-container --transport=redis
+xd/bin>$ ./xd-admin --transport redis
+xd/bin>$ ./xd-container --transport redis
 ----
 
-To run using *RabbitMQ*, simply issue the following commands:
+To run using RabbitMQ, simply issue the following commands:
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --controlTransport=rabbit
-xd/bin>$ ./xd-container --transport=rabbit
+xd/bin>$ ./xd-admin --transport rabbit
+xd/bin>$ ./xd-container --transport rabbit
 ----
 
-To run using *RabbitMQ* as your control transport and *Redis* as your data transport, simply issue the following commands:
+To run using RabbitMQ as your control transport and Redis as your data transport, simply issue the following commands:
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --controlTransport=rabbit
-xd/bin>$ ./xd-container --dataTransport=redis --controlTransport=rabbit
+xd/bin>$ ./xd-admin --controlTransport rabbit
+xd/bin>$ ./xd-container --dataTransport redis --controlTransport rabbit
 ----
+
+One could have also used the `--transport` option the admin node, but when mixing control and data transports it is recommended to be more explicit in your settings.
 
 [NOTE]
 =====================================================================
-If you have multiple XD systems (i.e. an xd-admin server and 0+ containers) using different Redis instances for storage but sharing a single RabbitMQ server for transport, you may encounter issues if each system contains streams of the same name. We recommend using a different RabbitMQ virtual host for each system. Update the `rabbit.vhost` property in `rabbit.properties` to point XD at the correct virtual host.
+If you have multiple XD instances running that use different Redis instances for storage but share a single RabbitMQ server for transport, you may encounter issues if each system contains streams of the same name.  We recommend using a different RabbitMQ virtual host for each system. Update the `spring.rabbitmq.virtual_host` property in `$XD_HOME/config/rabbit.properties` to point XD at the correct virtual host.
 =====================================================================
 
 ==== Choosing a Store
@@ -171,7 +170,7 @@ xd/bin>$ ./xd-admin --store memory
 By default, the xd-container will store Analytics data in redis. At the time of writing, this is the only supported option (when running in distributed mode). Use the --analytics option to specify another backing store for Analytics data.
 [source,sh]
 ----
-xd/bin>$ ./xd-container --analytics=redis
+xd/bin>$ ./xd-container --analytics redis
 ----
 
 ==== Other Options
@@ -181,18 +180,18 @@ To specify the location of the Spring XD install,
 
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --xdHomeDir=<xd-install-directory>
-xd/bin>$ ./xd-container --xdHomeDir=<xd-install-directory>
+xd/bin>$ ./xd-admin --xdHomeDir <xd-install-directory>
+xd/bin>$ ./xd-container --xdHomeDir <xd-install-directory>
 ----
 
 To specify the http port of the XDAdmin server,
 
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --server.port=<httpPort> 
+xd/bin>$ ./xd-admin --server.port <httpPort> 
 ----
 
-The XDContainer nodes by default start up with --server.port=0 (which means they will scan for an available HTTP port). You can disable the HTTP endpoints for the XDContainer by setting --server.port=-1. Note that in this case HTTP source support will not work in a PaaS environment because typically it would require XD to bind to a specific port. Both the XDAdmin and XDContainer processes bind to --server.port=$PORT (i.e. an environment variable if one is available, as is typical in a PaaS).
+The XDContainer nodes by default start up with --server.port 0 (which means they will scan for an available HTTP port). You can disable the HTTP endpoints for the XDContainer by setting --server.port=-1. Note that in this case HTTP source support will not work in a PaaS environment because typically it would require XD to bind to a specific port. Both the XDAdmin and XDContainer processes bind to --server.port $PORT (i.e. an environment variable if one is available, as is typical in a PaaS).
 
 [NOTE]
 =====================================================================
