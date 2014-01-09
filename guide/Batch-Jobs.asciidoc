@@ -200,12 +200,24 @@ xd:> job create myjob --definition "filejdbc --resources=file:///mycsvdir/*.csv 
 
 it will create the table "people" in the database with three varchar columns called "forename", "surname" and "address". When you launch the job it will load the files matching the resources pattern and write the data to this table.
 
+Launch the job using:
+
+----
+xd:> job launch myjob
+----
+
 ==== HDFS to JDBC Export (`hdfsjdbc`)
 
 This module functions very similarly to the `filejdbc` one except that the resources you specify should actually be in HDFS, rather than the OS filesystem. 
 
 ----
 xd:> job create myjob --definition "hdfsjdbc --resources=/xd/data/*.csv --names=forename,surname,address --tableName=people --initializeDatabase=true"
+----
+
+Launch the job using:
+
+----
+xd:> job launch myjob
 ----
 
 ==== JDBC to HDFS Import (`jdbchdfs`)
@@ -220,6 +232,11 @@ xd:> job create myjob --definition "jdbchdfs --sql='select col1,col2,col3 from s
 
 You can customize how the data is written to HDFS by supplying the options `basePath` (defaults to `/data/`), `filename` (defaults to job name), `rollover` (in bytes, default 1000000) and `suffix` (defaults to 'log').
 
+Launch the job using:
+
+----
+xd:> job launch myjob
+----
 
 ==== HDFS to MongoDB Export (`hdfsmongodb`)
 
