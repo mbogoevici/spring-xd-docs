@@ -187,6 +187,8 @@ if some data ended up in the file
 
 TIP: For both `twittersearch` and `twitterstream` you can fill in in the `conf/twitter.properties` file instead of using the DSL parameters to supply keys and secrets.
 
+NOTE: `twittersearch` by default emits http://docs.spring.io/spring-social-twitter/docs/1.0.5.RELEASE/api/org/springframework/social/twitter/api/Tweet.html[Spring Social Tweet] objects. You may easily configure `twittersearch` to emit JSON by setting --output=application/json. This will cause XD to transform the objects JSON internally, resulting in properties corresponding to the Java type. This yields a format slightly different than the native Twitter JSON emitted by `twitterstream`. While logically identical, property names and types, notably dates, are different. Thus the JSON strings produced by `twittersearch` and `twitterstream` are generally incompatible.   
+
 [[twitterstream]]
 === Twitter Stream
 
@@ -211,6 +213,8 @@ https://dev.twitter.com/docs/streaming-apis/parameters#follow[follow]:: comma de
 https://dev.twitter.com/docs/streaming-apis/parameters#track[track]:: which terms to look for in tweets (defaults to `null`)
 
 https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]:: a comma-separated list of longitude,latitude pairs specifying a set of bounding boxes to filter Tweets (defaults to `null`)
+
+NOTE: `twitterstream` emits JSON in a native Twitter format. This format is incompatible with content produced by `twittersearch` (see note above regarding `twittersearch`)
 
 [[gemfire-source]]
 === GemFire
