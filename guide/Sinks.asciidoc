@@ -232,7 +232,7 @@ idleTimeout::  Idle timeout in milliseconds for when the aggregated batch of pay
 
 The JDBC sink can be used to insert message payload data into a relational database table. By default it inserts the entire payload into a table named after the stream name in the HSQLDB database that XD uses to store metadata for batch jobs.  To alter this behavior you should modify the 'config/jdbc.properties' file with the connection parameters you want to use. There is also a 'config/init_db.sql' file that contains the SQL statements used to initialize the database table. You can modify this file if you'd like to create a table with your specific layout when the sink starts. You should also change the 'initializeDatabase' property to 'true' to have this script execute when the sink starts up.
 
-The payload data will be inserted as-is if the 'columns' option is set to 'payload'. This is the default behavior.  If you specify any other column names the payload data will be assumed to be a JSON document that will be converted to a hash map. This hash map will be used to populate the data values for the SQL insert statement. A matching of column names with underscores like 'user_name' will match onto camel case style keys like 'userName' in the hash map.  There will be one insert statement executed for each message.
+The payload data will be inserted as-is if the 'names' option is set to 'payload'. This is the default behavior.  If you specify any other column names the payload data will be assumed to be a JSON document that will be converted to a hash map. This hash map will be used to populate the data values for the SQL insert statement. A matching of column names with underscores like 'user_name' will match onto camel case style keys like 'userName' in the hash map.  There will be one insert statement executed for each message.
 
 To create a stream using a `jdbc` sink relying on all defaults you would use a command like
 
@@ -274,7 +274,7 @@ configProperties:: base name of properties file (in the config directory) contai
 initializeDatabase:: whether to initialize the database using the initializer script (the default property file jdbc.properties has this set to true) *(default: `false`)*
 initializerScript:: the file name for the script containing SQL statements used to initialize the database when the sink starts (will search config directory for this file) *(default: `init_db.sql`)*
 tableName:: the name of the table to insert payload data into *(default: `<streamname>`)*
-columns:: comma separated list of column names to include in the insert statement. Use 'payload' to include the entire message payload into a payload column. *(default: `payload`)*
+names:: comma separated list of column names to include in the insert statement. Use 'payload' to include the entire message payload into a payload column. *(default: `payload`)*
 
 [[tcp_sinks]]
 === TCP
