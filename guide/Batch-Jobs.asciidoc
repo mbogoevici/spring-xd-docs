@@ -230,7 +230,7 @@ To import data from the database table `some_table`, you could use
 xd:> job create myjob --definition "jdbchdfs --sql='select col1,col2,col3 from some_table'"
 ----
 
-You can customize how the data is written to HDFS by supplying the options `basePath` (defaults to `/data/`), `filename` (defaults to job name), `rollover` (in bytes, default 1000000) and `suffix` (defaults to 'log').
+You can customize how the data is written to HDFS by supplying the options `directory` (defaults to `/xd/(job name)`), `fileName` (defaults to job name), `rollover` (in bytes, default 1000000) and `fileExtension` (defaults to 'csv').
 
 Launch the job using:
 
