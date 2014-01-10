@@ -138,7 +138,7 @@ To test the stream you can execute a http post, like the following:
 xd:> http post --target http://localhost:9000 --data "{"param1":"fixedDelayKenny"}"
 ----
 === Retrieve job notifications
-XD offers the facilities to capture the notifications that are sent from the job as it is executing.
+Spring XD offers the facilities to capture the notifications that are sent from the job as it is executing.
 
 Notifications include:
 
@@ -148,14 +148,27 @@ Notifications include:
 * Step Execution Listener
 * Skip Listener
 
-In this example, the job will send notifications to the log.
+In the following example, we setup a Batch Job called _myHttpJob_. Afterwards we create a stream that will tap into the _notifications_ channel that was implicitly generated when the _myHttpJob_ job was created. The stream receives the notifications and sends those notifications to the log.
 ----
-stream create --name jobNotifications --definition ":myHttpJob-notifications >log"
+job create --name myHttpJob --definition "httpJob"
+stream create --name jobNotifications --definition "queue:job:myHttpJob-notifications >log"
 ----
 In the logging output of the container you should see something like the following when the job completes:
 ----
 15:26:30,029  WARN task-scheduler-5 logger.jobNotifications:145 - JobExecution: id=1, version=2, startTime=Wed Aug 28 15:26:30 EDT 2013, endTime=Wed Aug 28 15:26:30 EDT 2013, lastUpdated=Wed Aug 28 15:26:30 EDT 2013, status=COMPLETED, exitStatus=exitCode=COMPLETED;exitDescription=, job=[JobInstance: id=1, version=0, Job=[myHttpJob.job]], jobParameters=[{random=0.49881213192780494}]
 ----
+
+Spring XD provides a series of pre-defined Batch listeners in order to send job notifications:
+
+* xdChunkListener
+* xdItemListener
+* xdJobExecutionListener
+* xdStepExecutionListener
+* xdSkipListener
+
+You can directly reference those Spring beans from within your Batch jobs. If you need to further customize the provided behavior you can of course create your own Batch listeners and directly inject a reference to the _notifications_ message channel.
+
+For a complete example, please see the https://github.com/spring-projects/spring-xd-samples/tree/master/batch-notifications[Batch Notifications Sample] which is part of the https://github.com/spring-projects/spring-xd-samples[Spring XD Samples] repository.
 
 === Removing Batch Jobs
 
