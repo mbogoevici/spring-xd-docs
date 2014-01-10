@@ -110,4 +110,4 @@ This value can be overridden using an environment variable of the form `server_p
 ===== Batch Jobs accessing JDBC
 
 The provided batch jobs that read from or write to JDBC use a separate `batch-jdbc.properties` file to
-configure the JDBC connection for the data that the job processes. You can find this file in the `$XD_HOME/config` directory. This file is configured to write to the HSQL database that is started by default. If you change to use another database configuration, remember to change this `batch-jdbc.properties` file as well since it doesn't automatically reflect the changes made for storing the batch jobs metadata (this should change in the next XD release).
+configure the JDBC connection for the data that the job processes. You can find this file in the `$XD_HOME/config` directory. This file is configured to write to the HSQL database that is started by default. If you change to use another database configuration, remember to change this `batch-jdbc.properties` file as well since it doesn't automatically reflect the changes made for storing the batch jobs' metadata (this should change in the next XD release).
