@@ -1,80 +1,108 @@
 === Application configuration 
 
-In the XD_HOME/config directory you will see a application.template file.  This file 
-contains all the property settings for a default XD deployment.  
+To change the configuration of the server components you can use environment variables or make changes to the `$XD_HOME/config/xd-config.yml` YAML file.  Alternatively, you can set the environment variable `XD_CONFIG` to point to a file (use a file:// URL). and that file will then be used instead.  The values in this configuration file will overwrite the values of the default https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/resources/application.yml[application.yml] file that is embedded in the XD jar file.
 
-* Rename the application.template to application.yml.
-* Edit application.yml
+The use of YAML is an alternative to using property files.  The support for processing YAML files comes from the underlying use of http://projects.spring.io/spring-boot/[Spring Boot] as the basis for the XD server implementation.  
 
-==== Setting up the Job Repository database    
+To change the configuration of properties used in modules, look into the module defintion file and locate the property file that is being referenced.  The file will often reside in the directory `$XD_HOME/config`. 
 
-XD saves the state of the jobs in a relational database.  By default XD starts an embedded
-HSQLDB.  The HSQLDB should only be used for development and a learning.  But when it comes 
-time to deploy to production, you will need to select another database. XD has only been
-tested on 3 databases: HSQLDB(API Version: 2.3.0), MySql (API Version: 5.1.23) and Postgres (API Version 9.2-1002).
+In this section we will walk through configuring some of the more common properties of Spring XD servers.
 
-===== Setting up Job Repository
+==== Configuring the Job Repository database
 
-In the application.yml file update the datasource:url, username, password, driverClassName to the database you have setup to store job information.  
-```yaml
-    url: <add the jdbc url for your database>
-    username: <the user name>
-    password: <the password>
-    driverClassName: <you database driver>
-```
+Spring XD saves the state of the batch job workflows in a relational database.  By default XD starts an embedded HSQLDB.  The HSQLDB should only be used for development and a learning.  But when it comes time to deploy to production, you will need to select another database. Spring XD is actively tested on 3 databases: HSQLDB (Version: 2.3.0), MySql (Version: 5.1.23) and Postgres (Version 9.2-1002), though many others are supported such as Oracle.
 
-===== MySql
+The file `xd-config.yml` located in `$XD_HOME/config` has commented out sections that you can uncomment and edit for your database environment.  The JDBC driver jars for the HSQLDB, MySql, and Postgres are already on the XD classpath.
 
-```
-    url: jdbc:mysql://yourDB:3306/xdjob
-    username: xdjob
-    password: yourpassword
-    driverClassName: com.mysql.jdbc.Driver
-```
+In cases where you are referencing a database that has not been initialized with the batch tables, spring XD will automatically create and initialize the tables necessary to store job workflow information.
 
-===== Postgres
+===== HSQLDB
 
-```
-    url: jdbc:postgresql://yourDB:5432/xdjob
-    username: xdjob
-    password: yourpassword
-    driverClassName: org.postgresql.Driver
-```
-
-In cases where you are referencing a database that has not been initialized with the batch tables, XD  will automatically create and initialize the tables necessary to store job information.
-
-* Set the profile to use the correct database type.  The valid types are hsqldb, mysql, postgres.
-In the example below we see that hsqldb is the active profile.  
+The default values for the datasource as taken from the default https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/resources/application.yml[application.yml] file that is embedded in the XD jar file are:
 
 ```
 spring:
   profiles:
     active: default,hsqldb
+  datasource:
+    url: jdbc:hsqldb:hsql://${hsql.server.host:localhost}:${hsql.server.port:9101}/${hsql.server.dbname:xdjob}
+    username: sa
+    password:
+    driverClassName: org.hsqldb.jdbc.JDBCDriver
 ```
 
-===== Setting Redis to connect to remote instance
+The expression `${hsql.server.host:localhost}` means that if there is a http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/env/PropertySource.html[PropertySource] that has the key name 'hsql.server.host', the value associated with that key will be used, otherwise the value `localhost` will be used.  
+
+Spring XD maintains an ordered list of `PropertySource`s that are searched through to resolve a property name.  System properties and OS envrionment properties have higher precedence over values in `xd-config.yml`.  In the above example, if you set the enviornment variable `hsql_server_host`, the environment variable's value will be used instead of `localhost`.
+
+There is also a http://gordondickens.com/wordpress/2012/06/12/spring-3-1-environment-profiles/[profile] named 'hsqldb' that is enabled as part of setting this datasource. This allows for grouping together components of the application and loading only if they are associated with an enabled profile.  This useful if you are developing custom modules for Spring XD.
+
+===== MySql
+
+To configure MySql, uncomment the following lines of configuration in `xd-config.yml` and edit to use relevant values for your environment.
+
+```
+spring:
+  datasource:
+    url: jdbc:mysql://yourDBhost:3306/yourDB
+    username: yourUsername
+    password: yourPassword
+    driverClassName: com.mysql.jdbc.Driver
+  profiles:
+    active: default,mysql
+```
+
+These values can be overridden using environemtn variables of the form `spring_datasource_url` etc.
+
+===== Postgres
+
+To configure Postgres, uncomment the following lines of configuration in `xd-config.yml` and edit to use relevant values for your environment.
+
+```
+spring:
+  datasource:
+    url: jdbc:postgresql://yourDBhost:5432/yourDB
+    username: yourUsername
+    password: yourPassword
+    driverClassName: org.postgresql.Driver
+  profiles:
+    active: default,postgresql
+```
+
+These values can be overridden using environemtn variables of the form `spring_datasource_url` etc.
+
+===== Redis
 
 When you are running in distributed mode where the admin server or containers are on different machines than the Redis server, we need to configure XD to reference the redis instance.  So in the application.yml file update the redis with appropriate host and port.
 
 ```
----
 spring:
   redis:
    port: 6379
    host: localhost
 ```
 
-===== Setting XD to connect to remote rabbit instance
+These values can be overridden using environment variables of the form `spring_redis_port` etc.
 
-When you are running in distributed mode where the admin server or containers are on different machines than the Rabbit server, we need to configure XD to reference the rabbit instance.  So in the application.yml file update the rabbit settings with appropriate host and port.
+===== RabbitMQ
+
+When you are running in distributed mode where the admin server or containers are on different machines than the Rabbit server, we need to configure XD to reference the rabbit instance.  In the xd-config.yml file update the rabbit settings with appropriate host and port.
 
 ```
----
 spring:
   rabbitmq:
-   host: ${vcap.services.rabbitmq.credentials.hostname:localhost}
-   port: ${vcap.services.rabbitmq.credentials.port:5672}
-   username: ${vcap.services.rabbitmq.credentials.username:guest}
-   password: ${vcap.services.rabbitmq.credentials.password:guest}
-   virtual_host: ${vcap.services.rabbitmq.credentials.vhost:/}
+   host: localhost
+   port: 5672
+   username: guest
+   password: guest
+   virtual_host: /
 ```
+===== Server Port
+
+The port for the admin sever UI, RESTful API, and general health/monitoring endpoints is set via the configuraiton section.  See http://projects.spring.io/spring-boot/docs/spring-boot-actuator/docs/Features.html[Spring Boot Management Endpoints] for more information about the variety of common non-functional features that help with supporting applications in production. 
+
+```
+server:
+  port: 9393
+```
+This value can be overridden using an environment variable of the form `server_port`.

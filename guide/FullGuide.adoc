@@ -23,6 +23,10 @@ include::Getting-Started.asciidoc[]
 == Running in Distributed Mode
 include::Running-Distributed-Mode.asciidoc[]
 
+[[application-configuration]]
+== Application Configuration
+include::Application-Configuration.asciidoc[]
+
 [[architecture]]
 == Architecture
 include::Architecture.asciidoc[]
