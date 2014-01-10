@@ -10,11 +10,11 @@ In this section we will walk through configuring some of the more common propert
 
 ==== Configuring the Job Repository database
 
-Spring XD saves the state of the batch job workflows in a relational database.  By default XD starts an embedded HSQLDB.  The HSQLDB should only be used for development and a learning.  But when it comes time to deploy to production, you will need to select another database. Spring XD is actively tested on 3 databases: HSQLDB (Version: 2.3.0), MySql (Version: 5.1.23) and Postgres (Version 9.2-1002), though many others are supported such as Oracle.
+Spring XD saves the state of the batch job workflows in a relational database.  By default XD starts an embedded HSQLDB.  The HSQLDB should only be used for development and learning.  But when it comes time to deploy to production, you will need to select another database. Spring XD is actively tested on 3 databases: HSQLDB (Version: 2.3.0), MySql (Version: 5.1.23) and Postgres (Version 9.2-1002), though many others are supported such as Oracle.
 
 The file `xd-config.yml` located in `$XD_HOME/config` has commented out sections that you can uncomment and edit for your database environment.  The JDBC driver jars for the HSQLDB, MySql, and Postgres are already on the XD classpath.
 
-In cases where you are referencing a database that has not been initialized with the batch tables, spring XD will automatically create and initialize the tables necessary to store job workflow information.
+In cases where you are referencing a database that has not been initialized with the batch tables, Spring XD will automatically create and initialize the tables necessary to store job workflow information.
 
 ===== HSQLDB
 
