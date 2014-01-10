@@ -1,4 +1,4 @@
-=== Application configuration 
+=== Introduction
 
 To change the configuration of the server components you can use environment variables or make changes to the `$XD_HOME/config/xd-config.yml` YAML file.  Alternatively, you can set the environment variable `XD_CONFIG` to point to a file (use a file:// URL). and that file will then be used instead.  The values in this configuration file will overwrite the values of the default https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/resources/application.yml[application.yml] file that is embedded in the XD jar file.
 
