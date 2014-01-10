@@ -1,0 +1,80 @@
+=== Application configuration 
+
+In the XD_HOME/config directory you will see a application.template file.  This file 
+contains all the property settings for a default XD deployment.  
+
+* Rename the application.template to application.yml.
+* Edit application.yml
+
+==== Setting up the Job Repository database    
+
+XD saves the state of the jobs in a relational database.  By default XD starts an embedded
+HSQLDB.  The HSQLDB should only be used for development and a learning.  But when it comes 
+time to deploy to production, you will need to select another database. XD has only been
+tested on 3 databases: HSQLDB(API Version: 2.3.0), MySql (API Version: 5.1.23) and Postgres (API Version 9.2-1002).
+
+===== Setting up Job Repository
+
+In the application.yml file update the datasource:url, username, password, driverClassName to the database you have setup to store job information.  
+```yaml
+    url: <add the jdbc url for your database>
+    username: <the user name>
+    password: <the password>
+    driverClassName: <you database driver>
+```
+
+===== MySql
+
+```
+    url: jdbc:mysql://yourDB:3306/xdjob
+    username: xdjob
+    password: yourpassword
+    driverClassName: com.mysql.jdbc.Driver
+```
+
+===== Postgres
+
+```
+    url: jdbc:postgresql://yourDB:5432/xdjob
+    username: xdjob
+    password: yourpassword
+    driverClassName: org.postgresql.Driver
+```
+
+In cases where you are referencing a database that has not been initialized with the batch tables, XD  will automatically create and initialize the tables necessary to store job information.
+
+* Set the profile to use the correct database type.  The valid types are hsqldb, mysql, postgres.
+In the example below we see that hsqldb is the active profile.  
+
+```
+spring:
+  profiles:
+    active: default,hsqldb
+```
+
+===== Setting Redis to connect to remote instance
+
+When you are running in distributed mode where the admin server or containers are on different machines than the Redis server, we need to configure XD to reference the redis instance.  So in the application.yml file update the redis with appropriate host and port.
+
+```
+---
+spring:
+  redis:
+   port: 6379
+   host: localhost
+```
+
+===== Setting XD to connect to remote rabbit instance
+
+When you are running in distributed mode where the admin server or containers are on different machines than the Rabbit server, we need to configure XD to reference the rabbit instance.  So in the application.yml file update the rabbit settings with appropriate host and port.
+
+```
+---
+spring:
+  rabbitmq:
+   host: ${vcap.services.rabbitmq.credentials.hostname:localhost}
+   port: ${vcap.services.rabbitmq.credentials.port:5672}
+   username: ${vcap.services.rabbitmq.credentials.username:guest}
+   password: ${vcap.services.rabbitmq.credentials.password:guest}
+   virtual_host: ${vcap.services.rabbitmq.credentials.vhost:/}
+```
