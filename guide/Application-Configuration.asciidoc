@@ -4,7 +4,7 @@ To change the configuration of the server components you can use environment var
 
 The use of YAML is an alternative to using property files.  The support for processing YAML files comes from the underlying use of http://projects.spring.io/spring-boot/[Spring Boot] as the basis for the XD server implementation.  
 
-To change the configuration of properties used in modules, look into the module defintion file and locate the property file that is being referenced.  The file will often reside in the directory `$XD_HOME/config`. 
+To change the configuration of properties used in modules, look into the module definition file and locate the property file that is being referenced.  The file will often reside in the directory `$XD_HOME/config`. 
 
 In this section we will walk through configuring some of the more common properties of Spring XD servers.
 
@@ -33,7 +33,7 @@ spring:
 
 The expression `${hsql.server.host:localhost}` means that if there is a http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/env/PropertySource.html[PropertySource] that has the key name 'hsql.server.host', the value associated with that key will be used, otherwise the value `localhost` will be used.  
 
-Spring XD maintains an ordered list of `PropertySource`s that are searched through to resolve a property name.  System properties and OS envrionment properties have higher precedence over values in `xd-config.yml`.  In the above example, if you set the enviornment variable `hsql_server_host`, the environment variable's value will be used instead of `localhost`.
+Spring XD maintains an ordered list of `PropertySource`s that are searched through to resolve a property name.  System properties and OS environment properties have higher precedence over values in `xd-config.yml`.  In the above example, if you set the environment variable `hsql_server_host`, the environment variable's value will be used instead of `localhost`.
 
 There is also a http://gordondickens.com/wordpress/2012/06/12/spring-3-1-environment-profiles/[profile] named 'hsqldb' that is enabled as part of setting this datasource. This allows for grouping together components of the application and loading only if they are associated with an enabled profile.  This useful if you are developing custom modules for Spring XD.
 
@@ -52,7 +52,7 @@ spring:
     active: default,mysql
 ```
 
-These values can be overridden using environemtn variables of the form `spring_datasource_url` etc.
+These values can be overridden using environment variables of the form `spring_datasource_url` etc.
 
 ===== Postgres
 
@@ -69,7 +69,7 @@ spring:
     active: default,postgresql
 ```
 
-These values can be overridden using environemtn variables of the form `spring_datasource_url` etc.
+These values can be overridden using environment variables of the form `spring_datasource_url` etc.
 
 ===== Redis
 
@@ -99,7 +99,7 @@ spring:
 ```
 ===== Server Port
 
-The port for the admin sever UI, RESTful API, and general health/monitoring endpoints is set via the configuraiton section.  See http://projects.spring.io/spring-boot/docs/spring-boot-actuator/docs/Features.html[Spring Boot Management Endpoints] for more information about the variety of common non-functional features that help with supporting applications in production. 
+The port for the admin sever UI, RESTful API, and general health/monitoring endpoints is set via the configuration section.  See http://projects.spring.io/spring-boot/docs/spring-boot-actuator/docs/Features.html[Spring Boot Management Endpoints] for more information about the variety of common non-functional features that help with supporting applications in production. 
 
 ```
 server:
