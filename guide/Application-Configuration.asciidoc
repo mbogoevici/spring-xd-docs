@@ -33,7 +33,7 @@ spring:
 
 The expression `${hsql.server.host:localhost}` means that if there is a http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/env/PropertySource.html[PropertySource] that has the key name 'hsql.server.host', the value associated with that key will be used, otherwise the value `localhost` will be used.  
 
-Spring XD maintains an ordered list of `PropertySource`s that are searched through to resolve a property name.  System properties and OS environment properties have higher precedence over values in `xd-config.yml`.  In the above example, if you set the environment variable `hsql_server_host`, the environment variable's value will be used instead of `localhost`.
+Spring XD maintains an ordered list of `PropertySources` that are searched through to resolve a property name.  System properties and OS environment properties have higher precedence over values in `xd-config.yml`.  In the above example, if you set the environment variable `hsql_server_host`, the environment variable's value will be used instead of `localhost`.
 
 There is also a http://gordondickens.com/wordpress/2012/06/12/spring-3-1-environment-profiles/[profile] named 'hsqldb' that is enabled as part of setting this datasource. This allows for grouping together components of the application and loading only if they are associated with an enabled profile.  This useful if you are developing custom modules for Spring XD.
 
@@ -73,7 +73,7 @@ These values can be overridden using environment variables of the form `spring_d
 
 ===== Redis
 
-When you are running in distributed mode where the admin server or containers are on different machines than the Redis server, we need to configure XD to reference the redis instance.  So in the application.yml file update the redis with appropriate host and port.
+When you are running in distributed mode where the admin server or containers are on different machines than the Redis server, you need to configure XD to reference the redis instance.  In the application.yml file, update the redis settings with appropriate host and port.
 
 ```
 spring:
@@ -86,7 +86,7 @@ These values can be overridden using environment variables of the form `spring_r
 
 ===== RabbitMQ
 
-When you are running in distributed mode where the admin server or containers are on different machines than the Rabbit server, we need to configure XD to reference the rabbit instance.  In the xd-config.yml file update the rabbit settings with appropriate host and port.
+When you are running in distributed mode where the admin server or containers are on different machines than the RabbitMQ server, you need to configure XD to reference the rabbit instance.  In the xd-config.yml file, update the rabbit settings with appropriate host and port.
 
 ```
 spring:
@@ -97,6 +97,9 @@ spring:
    password: guest
    virtual_host: /
 ```
+
+These values can be overridden using environment variables of the form `spring_rabbitmq_port` etc.
+
 ===== Server Port
 
 The port for the admin sever UI, RESTful API, and general health/monitoring endpoints is set via the configuration section.  See http://projects.spring.io/spring-boot/docs/spring-boot-actuator/docs/Features.html[Spring Boot Management Endpoints] for more information about the variety of common non-functional features that help with supporting applications in production. 
@@ -110,4 +113,4 @@ This value can be overridden using an environment variable of the form `server_p
 ===== Batch Jobs accessing JDBC
 
 The provided batch jobs that read from or write to JDBC use a separate `batch-jdbc.properties` file to
-configure the JDBC connection for the data that the job processes. You can find this file in the `$XD_HOME/config` directory. This file is configured to write to the HSQL database that is started by default. If you change to use another database configuration, remember to change this `batch-jdbc.properties` file as well since it doesn't automatically reflect the changes made for storing the batch jobs' metadata (this should change in the next XD release).
+configure the JDBC connection for the data that the jobs process. You can find this file in the `$XD_HOME/config` directory. This file is configured to write to the HSQL database that is started by default. If you change to use another database configuration, remember to change this `batch-jdbc.properties` file as well since it doesn't automatically reflect the changes made for storing the batch jobs' metadata (this should change in the next XD release).
