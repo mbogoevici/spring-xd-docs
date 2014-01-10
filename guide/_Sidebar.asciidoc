@@ -5,7 +5,7 @@
 *link:Introduction[Introduction]* +
 link:Getting-Started[*Getting Started*] +
 link:Running-Distributed-Mode[Running in Distributed Mode] + 
-link:Application-Configuration[Application-Configuration] + 
+link:Application-Configuration[Application Configuration] + 
 *link:Technical-Documentation[Technical Documentation]* +
 link:Architecture[Architecture] +
 link:Streams[Streams] +
