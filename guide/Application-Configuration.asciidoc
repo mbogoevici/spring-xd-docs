@@ -37,6 +37,30 @@ Spring XD maintains an ordered list of `PropertySources` that are searched throu
 
 There is also a http://gordondickens.com/wordpress/2012/06/12/spring-3-1-environment-profiles/[profile] named 'hsqldb' that is enabled as part of setting this datasource. This allows for grouping together components of the application and loading only if they are associated with an enabled profile.  This useful if you are developing custom modules for Spring XD.
 
+===== HSQLDB
+
+The HSQLDB database is already configured as part of the default profile.  You can change the host, port and name used by uncommenting the following lines of configuration in `xd-config.yml` and edit the use the relevant values for your environment.
+
+```
+hsql:
+  server:
+    host: localhost
+    port: 9101
+    dbname: xdjob
+```
+To change the datasource url, username and password uncomment and modify the following section
+
+```
+spring:
+  datasource:
+    url: jdbc:hsqldb:hsql://${hsql.server.host:localhost}:${hsql.server.port:9101}/${hsql.server.dbname:xdjob}
+    username: sa
+    password:
+    driverClassName: org.hsqldb.jdbc.JDBCDriver
+```
+
+The full section is shown but you can override as little as necessary, e.g. it is unlikely you would need to specify again the driverClassName.
+
 ===== MySql
 
 To configure MySql, uncomment the following lines of configuration in `xd-config.yml` and edit to use relevant values for your environment.
