@@ -201,15 +201,31 @@ This approach is more appropriate for use-cases where individual streams on eith
 
 === Listing Modules
 
-To view the available modules use the the `module list` command.  To filter the module result set you can use the --type option.  For example:
+To view the available modules use the the `module list` command.  Modules appearing with a `(c)` marker are composed modules.  For example:
 ```
-xd:>module list --type sink
-  Module Name          Module Type
-  -------------------  -----------
-  file                 sink
-  gemfire-json-server  sink
-  gemfire-server       sink
-  jdbc                 sink
+xd:>module list
+      Source              Processor                    Sink                     Job
+  ------------------  ---------------------------  -----------------------  ----------------
+      file                aggregator                   file                     filejdbc
+      gemfire             http-client                  gemfire-json-server      hdfsjdbc
+      gemfire-cq          bridge                       gemfire-server           hdfsmongodb
+      http                filter                       jdbc                     jdbchdfs
+      imap                json-field-extractor         mail                     filepollhdfs
+      jms                 json-field-value-filter      mqtt
+      mail                json-to-tuple                splunk
+      mqtt                object-to-json               tcp
+      post                script                       aggregatecounter
+      reactor-syslog      splitter                     avro
+      syslog-tcp          transform                    counter
+      syslog-udp      (c) myprocessor                  field-value-counter
+      tail                                             gauge
+      tcp                                              hdfs
+      tcp-client                                       log
+      trigger                                          rabbit
+      twittersearch                                    richgauge
+      twitterstream                                    router
+      rabbit
+      time
 ```
 
 To get information about a particular module (such as what options it accepts), use the `module info --<module type>:<module name>` command. For example:
