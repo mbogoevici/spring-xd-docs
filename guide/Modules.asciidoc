@@ -199,9 +199,11 @@ Finally, it's worth mentioning that in some cases duplication may be avoided by 
 
 This approach is more appropriate for use-cases where individual streams on either side of the named channel may need to be deployed or undeployed independently. Whereas the queue typed channel will load-balance across multiple downstream consumers, the "topic:" prefix may be used if broadcast behavior is needed instead. For more information about named channels, refer to the link:DSL-Reference#named-channels[Named Channels] section.
 
-=== Listing Modules
+[[module_info]]
+=== Getting Information about Modules
 
 To view the available modules use the the `module list` command.  Modules appearing with a `(c)` marker are composed modules.  For example:
+
 ```
 xd:>module list
       Source              Processor                    Sink                     Job
@@ -229,6 +231,7 @@ xd:>module list
 ```
 
 To get information about a particular module (such as what options it accepts), use the `module info --<module type>:<module name>` command. For example:
+
 ```
 xd:>module info --name source:file
 Information about source module 'file':
@@ -245,6 +248,7 @@ Information about source module 'file':
 ```
 
 To display the actual definition file of a module use the `module display --name <module type>:<module name>` command. For example:
+
 ```
 xd:>module display --name tcp --type source
 Configuration file contents for module definiton 'tcp' (source):
