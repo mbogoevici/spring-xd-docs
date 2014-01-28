@@ -39,7 +39,7 @@ There is also a http://gordondickens.com/wordpress/2012/06/12/spring-3-1-environ
 
 ===== HSQLDB
 
-The HSQLDB database is already configured as part of the default profile.  You can change the host, port and name used by uncommenting the following lines of configuration in `xd-config.yml` and edit the use the relevant values for your environment.
+The HSQLDB database is already configured as part of the default profile.  You can change the host, port, database name, and database filename used by uncommenting the following lines of configuration in `xd-config.yml` and edit the use the relevant values for your environment.
 
 ```
 hsql:
@@ -47,6 +47,7 @@ hsql:
     host: localhost
     port: 9101
     dbname: xdjob
+    database: xdjobrepotest
 ```
 To change the datasource url, username and password uncomment and modify the following section
 
