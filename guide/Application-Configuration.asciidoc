@@ -139,3 +139,10 @@ This value can be overridden using an environment variable of the form `server_p
 
 The provided batch jobs that read from or write to JDBC use a separate `batch-jdbc.properties` file to
 configure the JDBC connection for the data that the jobs process. You can find this file in the `$XD_HOME/config` directory. This file is configured to write to the HSQL database that is started by default. If you change to use another database configuration, remember to change this `batch-jdbc.properties` file as well since it doesn't automatically reflect the changes made for storing the batch jobs' metadata (this should change in the next XD release).
+
+===== Local transport
+
+Local transport uses a http://docs.spring.io/spring-integration/docs/latest-ga/api/org/springframework/integration/channel/QueueChannel.html[QueueChannel] to pass data between modules.  There are a few properties you can configure on the QueueChannel
+
+* `xd.local.transport.named.queueSize` - The capacity of the queue, the default value is `Integer.MAX_VALUE`
+* `xd.local.transport.named.polling` - Messages that are buffered in a QueueChannel need to be polled to be consumed.  This property contolls the fixed rate at which polling occurs.  The default value is 1000 ms.
