@@ -33,9 +33,29 @@ The description for the option is the only required part, and is a very importan
 That sole line in the properties file makes a `--<option>=` construct available in the definition of a stream using your module.
 
 [NOTE]
-.For the time being
+.About plugin provided options metadata
 ====
-Until XD-1050 is implemented, you will need to copy/paste lines to document the inputType/outputType (depending on whether your module is a source, processor or a sink). This requirement will be lifted in a future version.
+Some options are automatically added to a module, depending on its type. For example, every source module automatically inherits a `outputType` option, that controls the link:Type-Conversion[type conversion] feature between modules. You don't have to do anything for that to happen.
+
+Similarly, every job module benefits from a handful of link:Batch-Jobs#job_options[job specific options].
+
+Here is a recap of those automatically provided options:
+
+|===
+|Module Type|Options 
+
+|Source
+|outputType
+
+|Processor
+|outputType, inputType
+
+|Sink
+|inputType
+
+|Job
+|makeUnique, numberFormat, dateFormat
+|===
 ====
 
 ==== Advertising default values
@@ -93,12 +113,6 @@ For the simplest cases, the class you need to write does not need to implement o
 options_class = fully.qualified.name.of.your.Pojo
 ----
 **Note** that the key is `options_class`, with an 's' and an underscore (not to be confused with `option.<optionname>` that is used in the "simple" approach)
-
-[NOTE]
-.For the time being
-====
-Until XD-1050 is implemented, you would typically have your POJO inherit from one of `SourceModuleOptionsMetadataSupport`, `ProcessorModuleOptionsMetadataSupport` or `SinkModuleOptionsMetadataSupport`. This requirement will be lifted in a future version.
-====
 
 For each option you want available using the `--<option>=` syntax, you must write a public setter annotated with `@ModuleOption`, providing the option description in the annotation.
 

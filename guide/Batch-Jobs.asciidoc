@@ -67,6 +67,7 @@ In the logging output of the XDContainer you should see the following:
 14:17:46,840  INFO http-bio-8080-exec-5 module.ModuleDeployer:152 - launched job module: helloSpringXD:myjob:0
 ----
 
+[[job_options]]
 ==== Creating Jobs - Additional Options
 
 When creating jobs, the following options are available to all job definitions:
