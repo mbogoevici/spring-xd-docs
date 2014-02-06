@@ -212,6 +212,8 @@ You would then use a stream with a file source to scan a directory for files and
 xd:> stream create csvStream --definition "file --ref=true --dir=/mycsvdir --pattern=*.csv > queue:job:myjob"
 ----
 
+The job also supports a boolean `deleteFiles` option if you want the files to be removed after they have been successfully imported.
+
 ==== Import CSV Files to JDBC (`filejdbc`)
 
 A module which loads CSV files into a JDBC table using a single batch job. By default it uses the file `config/batch-jdbc.properties` to configure the module and stores data in the internal HSQL DB which is used by Spring Batch. The job should be defined with the `resources` parameter defining the files which should be loaded. It also requires a `names` parameter (for the CSV field names) and these should match the database column names into which the data should be stored. You can either pre-create the database table or the module will create it for you if you use --initializeDatabase=true when the job is created. The table intitialization is configured in a similar way to the JDBC sink and uses the same parameters. The default table name is the job name and can be customized by setting the `tableName` parameter. As an example, if you run the command
@@ -220,7 +222,7 @@ A module which loads CSV files into a JDBC table using a single batch job. By de
 xd:> job create myjob --definition "filejdbc --resources=file:///mycsvdir/*.csv --names=forename,surname,address --tableName=people --initializeDatabase=true"
 ----
 
-it will create the table "people" in the database with three varchar columns called "forename", "surname" and "address". When you launch the job it will load the files matching the resources pattern and write the data to this table.
+it will create the table "people" in the database with three varchar columns called "forename", "surname" and "address". When you launch the job it will load the files matching the resources pattern and write the data to this table. As with the `filepollhdfs` job, this module also supports the `deleteFiles` parameter which will remove the files defined by the `resources` parameter on successful completion of the job.
 
 Launch the job using:
 
