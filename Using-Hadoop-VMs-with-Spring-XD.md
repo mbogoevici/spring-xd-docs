@@ -19,13 +19,13 @@ We also need to change the hostname settings so we can access HDFS from outside 
 
 2. Change VMs hostname
 
-    sudo hostname cdh4
+    `sudo hostname cdh4`
 
-    sudo vi /etc/sysconfig/network
-    ````
+    `sudo vi /etc/sysconfig/network`
+    ```
     NETWORKING=yes
     HOSTNAME=cdh4
-    ````
+    ```
 
 3. Add /etc/hosts entry:
 
@@ -38,11 +38,11 @@ First find out the IP address for the eth1 network connection
 
 Now edit /etc/hosts
 
-    sudo vi /etc/hosts
-    ````
+    `sudo vi /etc/hosts`
+    ```
     127.0.0.1   localhost.localdomain   localhost
     172.16.87.153   cdh4
-    ````
+    ```
 
 4. Restart VM
 
