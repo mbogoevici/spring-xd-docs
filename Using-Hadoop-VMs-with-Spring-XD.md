@@ -1,7 +1,7 @@
 There are several ready-to-use Hadoop virtual machines that you can download from the major vendors.
 
-## Cloudera QuickStart VM
+### Cloudera QuickStart VM
 
-## Hortonworks Sandbox
+### Hortonworks Sandbox
 
-## Pivotal HD Single Node VM
+### Pivotal HD Single Node VM
