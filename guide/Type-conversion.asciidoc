@@ -5,6 +5,7 @@ XD allows you to declaratively configure type conversion within processing strea
 * *JSON* to/from *POJO* 
 * *JSON* to/from https://github.com/spring-projects/spring-xd/blob/master/spring-xd-tuple/src/main/java/org/springframework/xd/tuple/Tuple.java[org.springframework.xd.tuple.Tuple]
 * *Object* to/from *byte[]* : Either the raw bytes serialized for remote transport, bytes emitted by a module, or converted to bytes using Java serialization(requires the object to be Serializable)
+* *String* to/from *byte[]*
 * *Object* to *plain text* (invokes the object's _toString()_ method)
 
 Where _JSON_ represents JSON content. Currently, Objects may be unmarshalled from a JSON byte array or String. Converting to JSON produces a String. Registration of custom type converters will likely be supported in a future release.
