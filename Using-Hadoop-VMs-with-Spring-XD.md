@@ -50,10 +50,10 @@ Now edit /etc/hosts and add an entry for cdh4 using IP address from above
 
 **Add /etc/hosts cdh4 entry on your local system:**
 
-Add this to /etc/hosts
+Add the IP address from above to /etc/hosts
 `172.16.87.153   cdh4`
 
-You can now target `hdfs://cdh4:8020` in the XD shell and in /config/hadoop.properties
+You can now target `hdfs://cdh4:8020` in the XD shell and in _/config/hadoop.properties_
 
 
 ### Hortonworks Sandbox
