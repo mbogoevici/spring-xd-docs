@@ -2,7 +2,7 @@ There are several ready-to-use Hadoop virtual machines that you can download fro
 
 ## Cloudera QuickStart VM
 
-Download from [Cloudera](http://www.cloudera.com/content/support/en/downloads.html) - for this guid we used version 4.4.0 for VMware.
+Download from [Cloudera](http://www.cloudera.com/content/support/en/downloads.html) - for this guide we used version 4.4.0 for VMware.
 
 Start the VM and open a terminal window. We need to create the `/xd` directory and give us full access rights to it. Enter the following commands:
 
