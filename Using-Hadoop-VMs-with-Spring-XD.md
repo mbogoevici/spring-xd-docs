@@ -49,6 +49,7 @@ Now edit /etc/hosts and add an entry for cdh4 using IP address from above
 **Restart VM**
 
 **Add /etc/hosts cdh4 entry on your local system:**
+
 Add this to /etc/hosts
 `172.16.87.153   cdh4`
 
