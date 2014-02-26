@@ -46,7 +46,7 @@ Now edit /etc/hosts and add an entry for cdh4 using IP address from above
 172.16.87.153   cdh4
 ```
 
-4. Restart VM
+**Restart VM**
 
 
 ### Hortonworks Sandbox
