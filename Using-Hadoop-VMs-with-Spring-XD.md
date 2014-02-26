@@ -55,6 +55,12 @@ Add this to /etc/hosts
 
 You can now target `hdfs://cdh4:8020` in the XD shell and in /config/hadoop.properties
 
+
 ### Hortonworks Sandbox
 
+TBD
+
+
 ### Pivotal HD Single Node VM
+
+TBD
