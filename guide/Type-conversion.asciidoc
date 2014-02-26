@@ -2,8 +2,8 @@
 
 XD allows you to declaratively configure type conversion within processing streams using _inputType_ and _outputType_ parameters on module definitions. Note that general type conversion may be accomplished easily within a transformer or a custom module. Currently, XD natively supports the following type conversions commonly used in streams: 
 
+* *JSON* to/from *POJO* 
 * *JSON* to/from https://github.com/spring-projects/spring-xd/blob/master/spring-xd-tuple/src/main/java/org/springframework/xd/tuple/Tuple.java[org.springframework.xd.tuple.Tuple]
-* *Object* to/from *JSON String* 
 * *Object* to/from *byte[]* : Either the raw bytes serialized for remote transport, bytes emitted by a module, or converted to bytes using Java serialization(requires the object to be Serializable)
 * *Object* to *plain text* (invokes the object's _toString()_ method)
 
