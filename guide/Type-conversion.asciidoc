@@ -1,18 +1,17 @@
 === Introduction
 
-XD allows you to declaratively specify type conversion within processing streams using _inputType_ and _outputType_ parameters on module definitions. Currently, XD supports the following type conversions commonly used in streams: 
+XD allows you to declaratively configure type conversion within processing streams using _inputType_ and _outputType_ parameters on module definitions. Note that general type conversion may be accomplished easily within a transformer or a custom module. Currently, XD natively supports the following type conversions commonly used in streams: 
 
 * *JSON* to/from https://github.com/spring-projects/spring-xd/blob/master/spring-xd-tuple/src/main/java/org/springframework/xd/tuple/Tuple.java[org.springframework.xd.tuple.Tuple]
-* *Object* to *JSON String* : JSON to Object is supported. NOTE: It is not possible to convert a JSON string to an arbitrary object without knowing the target class
-* *Object* to/from *byte[]* : Either the raw bytes used for remote transport or converted to bytes using Java serialization -- this requires the object to be Serializable
-* *JSON*  to/from *java.util.Map*
+* *Object* to/from *JSON String* 
+* *Object* to/from *byte[]* : Either the raw bytes serialized for remote transport, bytes emitted by a module, or converted to bytes using Java serialization(requires the object to be Serializable)
 * *Object* to *plain text* (invokes the object's _toString()_ method)
 
-Where _JSON_ represents JSON content in the form of a String. Registration of custom type converters will likely be supported in a future release.
+Where _JSON_ represents JSON content. Currently, Objects may be unmarshalled from a JSON byte array or String. Converting to JSON produces a String. Registration of custom type converters will likely be supported in a future release.
 
 [[MimeTypes]]
 === MIME media types
-_inputType_ and _outputType_ values are parsed as media types, e.g., _application/json_ or _text/plain;charset=UTF-8_. Media types are especially useful for indicating how to interpret String or byte[] content. XD also uses standard media type format to represent Java types, using the general type _application/x-java-object_ with a _type_ parameter. For example, _application/x-java-object;type=java.util.Map_ or _application/x-java-object;type=com.bar.Foo_ . For convenience, you can specify the class name by itself and XD will map it to the corresponding media type. In addition, XD provides a namespace for internal types, notably, _application/x-xd-tuple_ to specify a Tuple. 
+_inputType_ and _outputType_ values are parsed as media types, e.g., _application/json_ or _text/plain;charset=UTF-8_. Media types are especially useful for indicating how to convert to String or byte[] content. XD also uses standard media type format to represent Java types, using the general type _application/x-java-object_ with a _type_ parameter. For example, _application/x-java-object;type=java.util.Map_ or _application/x-java-object;type=com.bar.Foo_ . For convenience, you can specify the class name by itself and XD will map it to the corresponding media type. In addition, XD provides a namespace for internal types, notably, _application/x-xd-tuple_ to specify a Tuple. 
 
 [[mimetype-examples]]
 ==== Stream Definition examples
@@ -42,34 +41,68 @@ The following serializes a java.io.Serializable object to a file.  Presumably th
 [[mediatypes-javatypes]]
 === Media types and Java types
 
-Internally, XD implements type conversion using Spring Integration's [datatype channels](http://docs.spring.io/spring-integration/docs/latest-ga/reference/htmlsingle/#channel-configuration). The data type channel converts payloads to the configured datatype using Spring's [conversion service](http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/#core-convert). When XD processes a module with a declared type conversion, it modifies the module's input and/or output channel definition to set the required Java type and register Converters targeting the corresponding Java type to the channels conversion service. This requires that the Java type be determined from the specified media type, as shown below.
+Internally, XD implements type conversion using Spring Integration's http://docs.spring.io/spring-integration/docs/latest-ga/reference/htmlsingle/#channel-configuration[datatype channels]. The data type channel converts payloads to the configured datatype using Spring's http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/messaging/converter/MessageConverter.html[MessageConverter]. 
+
+NOTE: The use of _MessageCoverter_ for data type channels was introduced in Spring Integration 4 to pass the Message to the converter method to allow it to access the Message's _content-type_ header. This provides greater flexibility. For example, it is now possible to support multiple strategies for converting a String or byte array to a POJO, depending on the content-type header.
+
+When XD processes a module with a declared type conversion, it modifies the module's input and/or output channel definition to set the required Java type and registers MessageConverters associated with the target media type and Java type to the channel. The type conversions XD provides out of the box are summarized in the following table:
 
 |===
-|Media Type |Java Type |Comments
+|Source Payload |Target Payload |content-type header | outputType/inputType | Comments |
 
+|POJO
+|JSON String
+|ignored
 |application/json
-|String
-|may include a charset parameters
+||
 
-|text/plain
-|String
-|may include a charset parameter
+|Tuple
+|JSON String
+|ignored
+|application/json
+|JSON is tailored for Tuple|
 
+|POJO
+|String (toString())
+|ignored
+|text/plain, java.lang.String
+||
+
+|POJO
+|byte[] (java.io serialized)
+|ignored
 |application/x-java-serialized-object
-|byte[]
-|uses Java serialization
+||
 
-|application/x-java-object;type=<fullyQualifiedClassName>
-|The Specified Class
-|
+|JSON byte[] or String
+|POJO
+|application/json (or none)
+|application/x-java-object
+||
 
+|byte[] or String
+|Serializable
+|application/x-java-serialized-object
+|application/x-java-object
+||
+
+|JSON byte[] or String
+|Tuple
+|application/json (or none)
 |application/x-xd-tuple
-|org.springframework.xd.tuple.DefaultTuple
-|
+||
 
-|other
-|not supported
-|Will throw a ModuleConfigurationException when the module is deployed
+|byte[]
+|String
+|any
+|text/plain, java.lang.String
+|will apply any Charset specified in the content-type header|
+
+|String
+|byte[]
+|any
+|application/octet-stream
+|will apply any Charset specified in the content-type header|
 
 |===
 
