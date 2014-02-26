@@ -1,4 +1,4 @@
-There are several ready-to-use Hadoop virtual machines that you can download from the major vendors.
+There are several ready-to-use Hadoop virtual machines that you can download from the major vendors. They all require a little bit of tweaking to be used from Spring XD running outside of the VM.
 
 ## Cloudera QuickStart VM
 
