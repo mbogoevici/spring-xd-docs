@@ -73,8 +73,29 @@ Remember to use the `--hadoopDistro cdh4` when you start Spring XD and the Sprin
 
 ### Hortonworks Sandbox
 
-TBD
+Download from [Hortonworks](http://hortonworks.com/products/hortonworks-sandbox/) - for this guide we used version Hortonworks Sandbox Version 2.0 for VMware.
 
+Import the VM and start it. The VM will display what IP address it is using. 
+
+**Create `/xd` directory:**
+
+Connect to the VM using ssh loging in as root (instructions are on the banner page of the Sandbox VM).
+
+We need to create the `/xd` directory and give us full access rights to it. Enter the following commands:
+
+```
+sudo -u hdfs hdfs dfs -mkdir /xd
+sudo -u hdfs hdfs dfs -chmod 777 /xd
+``` 
+
+**Add /etc/hosts sandbox entry on your local system:**
+
+Add the IP address from the Sandbox VM banner to /etc/hosts
+`172.16.87.154   sandbox sandbox.hortonworks.com`
+
+You can now target `hdfs://sandbox:8020` in the XD shell and in _/config/hadoop.properties_
+
+Remember to use the `--hadoopDistro hdp20` when you start Spring XD and the Spring XD Shell.
 
 ### Pivotal HD Single Node VM
 
@@ -116,7 +137,7 @@ sudo -u hdfs hdfs dfs -mkdir /xd
 sudo -u hdfs hdfs dfs -chmod 777 /xd
 ``` 
 
-**Add /etc/hosts cdh4 entry on your local system:**
+**Add /etc/hosts pivhdsne entry on your local system:**
 
 Add the IP address from above to /etc/hosts
 `192.168.0.106   pivhdsne pivhdsne.localdomain`
