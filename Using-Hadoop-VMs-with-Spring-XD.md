@@ -79,13 +79,13 @@ Remember to use the `--hadoopDistro cdh4` when you start Spring XD and the Sprin
 
 ### Hortonworks Sandbox
 
-Download from [Hortonworks](http://hortonworks.com/products/hortonworks-sandbox/) - for this guide we used version Hortonworks Sandbox Version 2.0 for VMware.
+Download from [Hortonworks](http://hortonworks.com/products/hortonworks-sandbox/) - for this guide we used Hortonworks Sandbox Version 2.0 for VMware.
 
-Import the VM and start it. The VM will display what IP address it is using. 
+Import the VM and start it. The VM will display a banner page showing what IP address it is using. 
 
 **Create `/xd` directory:**
 
-Connect to the VM using ssh loging in as root (instructions are on the banner page of the Sandbox VM).
+Connect to the VM using ssh, logging in as root (instructions are on the banner page of the Sandbox VM).
 
 We need to create the `/xd` directory and give us full access rights to it. Enter the following commands:
 
