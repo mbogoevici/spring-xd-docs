@@ -21,6 +21,8 @@ You should now have the configuration screen open. Under Category / Default in l
 
     Service-Wide -> Ports and Addresses -> Use DataNode Hostname [✓]
 
+Click "Save Changes", no need to restart the service since we will reboot the system soon any way.
+
 **Change VMs hostname:**
 
 Back to the terminal window, run these commands
