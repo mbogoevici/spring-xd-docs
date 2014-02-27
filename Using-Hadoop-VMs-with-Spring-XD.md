@@ -15,14 +15,21 @@ We also need to change the hostname settings so we can access HDFS from outside 
 
 **In Cloudera Manager change to use hostname:**
 
-Service-Wide -> Ports and Addresses -> Use DataNode Hostname [✓]
+Start the Firefox browser. The home page should have a link to start "Cloudera Manager". Start "Cloudera Manager" and log in. Click on the "hdfs1" service. Now, click on "Configuration" -> "View and Edit".
+
+You should now have the configuration screen open. Under Category / Default in left hand navigation tree navigate to and modify:
+
+    Service-Wide -> Ports and Addresses -> Use DataNode Hostname [✓]
 
 **Change VMs hostname:**
 
+Back to the command line, run these commands
+
 `sudo hostname cdh4`
 
-`sudo vi /etc/sysconfig/network`
 ```
+sudo vi /etc/sysconfig/network
+------------------------------
 NETWORKING=yes
 HOSTNAME=cdh4
 ```
@@ -40,8 +47,9 @@ eth1      Link encap:Ethernet  HWaddr 00:0C:29:9D:18:32
 
 Now edit /etc/hosts and add an entry for cdh4 using IP address from above
 
-`sudo vi /etc/hosts`
 ```
+sudo vi /etc/hosts
+------------------
 127.0.0.1   localhost.localdomain   localhost
 172.16.87.153   cdh4
 ```
