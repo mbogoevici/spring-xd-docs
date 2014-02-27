@@ -23,7 +23,7 @@ You should now have the configuration screen open. Under Category / Default in l
 
 **Change VMs hostname:**
 
-Back to the command line, run these commands
+Back to the terminal window, run these commands
 
 `sudo hostname cdh4`
 
