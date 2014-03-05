@@ -2,7 +2,7 @@
 
 Here are some useful steps to build and run Spring XD.
 
-To build all sub-projects and run tests for Spring XD:
+To build all sub-projects and run tests for Spring XD (please note tests require a running http://redis.io/[Redis] instance):
 
 ----
 ./gradlew build
