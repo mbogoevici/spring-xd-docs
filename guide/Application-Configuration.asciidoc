@@ -22,11 +22,17 @@ and you would enable it using
 export XD_CONFIG=/Users/me/my-xd-config.yml
 ```
 
-whereas in production, you might have a pre-installed configuration in `/var/xd/production-config.xml` and configure it
+whereas in production, you might have a pre-installed configuration in `/var/xd/production-config.xml` with the configuration:
 
 ```
 myenv:
   dir: /data/files
+```
+
+In your production environment you would set
+
+```
+export XD_CONFIG=/var/xd/production-config.yml
 ```
 
 You could then use the variable `myenv.data` in a stream definition which would work across all environments:
