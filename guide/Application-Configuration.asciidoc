@@ -2,11 +2,15 @@
 
 To change the configuration of the server components you can use environment variables or make changes to the `$XD_HOME/config/xd-config.yml` YAML file.  Alternatively, you can set the environment variable `XD_CONFIG` to point to a file (use a file:// URL). and that file will then be used instead.  The values in this configuration file will overwrite the values of the default https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/resources/application.yml[application.yml] file that is embedded in the XD jar file.
 
-The use of YAML is an alternative to using property files.  The support for processing YAML files comes from the underlying use of http://projects.spring.io/spring-boot/[Spring Boot] as the basis for the XD server implementation.  
+The use of YAML is an alternative to using property files.  The support for processing YAML files comes from the underlying use of http://projects.spring.io/spring-boot/[Spring Boot] as the basis for the XD server implementation.
 
-To change the configuration of properties used in modules, look into the module definition file and locate the property file that is being referenced.  The file will often reside in the directory `$XD_HOME/config`. 
+To change the configuration of properties used in modules, look into the module definition file and locate the property file that is being referenced.  The file will often reside in the directory `$XD_HOME/config`.
 
 In this section we will walk through configuring some of the more common properties of Spring XD servers.
+
+==== Configuring Multiple Environments
+
+You may be running Spring XD in different environments (for example test, production) with slightly different configurations for each one. The simplest option is to use a separate configuration file in each environment, external to the XD distro, and set the `XD_CONFIG` environment variable to point to it (as described above).
 
 ==== Configuring the Job Repository database
 
@@ -31,11 +35,11 @@ spring:
     driverClassName: org.hsqldb.jdbc.JDBCDriver
 ```
 
-The expression `${hsql.server.host:localhost}` means that if there is a http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/env/PropertySource.html[PropertySource] that has the key name 'hsql.server.host', the value associated with that key will be used, otherwise the value `localhost` will be used.  
+The expression `${hsql.server.host:localhost}` means that if there is a http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/env/PropertySource.html[PropertySource] that has the key name 'hsql.server.host', the value associated with that key will be used, otherwise the value `localhost` will be used.
 
 Spring XD maintains an ordered list of `PropertySources` that are searched through to resolve a property name.  System properties and OS environment properties have higher precedence over values in `xd-config.yml`.  In the above example, if you set the environment variable `hsql_server_host`, the environment variable's value will be used instead of `localhost`.
 
-There is also a http://gordondickens.com/wordpress/2012/06/12/spring-3-1-environment-profiles/[profile] named 'hsqldb' that is enabled as part of setting this datasource. This allows for grouping together components of the application and loading only if they are associated with an enabled profile.  This useful if you are developing custom modules for Spring XD.
+There is also a http://gordondickens.com/wordpress/2012/06/12/spring-3-1-environment-profiles/[profile] named 'hsqldb' that is enabled as part of setting this datasource. This allows for grouping together components of the application and loading only if they are associated with an enabled profile.  This is useful if you are developing custom modules for Spring XD.
 
 ===== HSQLDB
 
@@ -127,7 +131,7 @@ These values can be overridden using environment variables of the form `spring_r
 
 ===== Server Port
 
-The port for the admin sever UI, RESTful API, and general health/monitoring endpoints is set via the configuration section.  See http://projects.spring.io/spring-boot/docs/spring-boot-actuator/docs/Features.html[Spring Boot Management Endpoints] for more information about the variety of common non-functional features that help with supporting applications in production. 
+The port for the admin sever UI, RESTful API, and general health/monitoring endpoints is set via the configuration section.  See http://projects.spring.io/spring-boot/docs/spring-boot-actuator/docs/Features.html[Spring Boot Management Endpoints] for more information about the variety of common non-functional features that help with supporting applications in production.
 
 ```
 server:
@@ -145,4 +149,5 @@ configure the JDBC connection for the data that the jobs process. You can find t
 Local transport uses a http://docs.spring.io/spring-integration/docs/latest-ga/api/org/springframework/integration/channel/QueueChannel.html[QueueChannel] to pass data between modules.  There are a few properties you can configure on the QueueChannel
 
 * `xd.local.transport.named.queueSize` - The capacity of the queue, the default value is `Integer.MAX_VALUE`
-* `xd.local.transport.named.polling` - Messages that are buffered in a QueueChannel need to be polled to be consumed.  This property contolls the fixed rate at which polling occurs.  The default value is 1000 ms.
+* `xd.local.transport.named.polling` - Messages that are buffered in a QueueChannel need to be polled to be consumed.  This property controls the fixed rate at which polling occurs.  The default value is 1000 ms.
+
