@@ -10,19 +10,30 @@ In this section we will walk through configuring some of the more common propert
 
 ==== Configuring Multiple Environments
 
-You may be running Spring XD in different environments (for example test, production) with slightly different configurations for each one. The simplest option is to use a separate configuration file in each environment, external to the XD distro, and set the `XD_CONFIG` environment variable to point to it (as described above). This allows you not only to set up different databases and so on, but also to configure environment-specific custom variables for use in your stream definitions. For example, you might have the following in one of your custom environment files:
+You may be running Spring XD in different environments (for example test, production) with slightly different configurations for each one. The simplest option is to use a separate configuration file in each environment, external to the XD distro, and set the `XD_CONFIG` environment variable to point to it (as described above). This allows you not only to set up different databases and so on, but also to configure environment-specific custom variables for use in your stream definitions. For example, you might a file called `my-xd-config.yml` stored in your home directory on your local development machine:
 
 ```
 myenv:
-  dir: /some/dir
+  dir: /Users/me/testfiles
+```
+and you would enable it using
+
+```
+export XD_CONFIG=/Users/me/my-xd-config.yml
 ```
 
-You could then use this as a variable in a stream definition which would work across all environments:
+whereas in production, you might have a pre-installed configuration in `/var/xd/production-config.xml` and configure it
+
+```
+myenv:
+  dir: /data/files
+```
+
+You could then use the variable `myenv.data` in a stream definition which would work across all environments:
 
 ```
 http | file --dir=${myenv.dir}
 ```
-
 
 ==== Configuring the Job Repository database
 
