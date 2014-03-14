@@ -1,0 +1,93 @@
+=== Introduction
+The Spring XD distributed runtime (DIRT) supports distribution of processing tasks across multiple nodes. See link:Running-Distributed-Mode[Running Distributed Mode] for information on running Spring XD in distributed mode. One option is to run these nodes on a Hadoop YARN cluster rather than on VMs or physical servers managed by you.
+
+=== What do you need?
+To begin with, you need to have access to a Hadoop cluster running a version based on Apache Hadoop 2.2.0 or later. This includes link:http://www.us.apache.org/dist/hadoop/common/hadoop-2.2.0/[Apache Hadoop 2.2.0], link:http://hortonworks.com/products/hdp-2/[Hortonworks HDP 2.0] and link:http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH5/latest/CDH5-Installation-Guide/cdh5ig_topic_4_2.html[Cloudera CDH5].
+
+You also need a supported transport, see link:Running-Distributed-Mode[Running Distributed Mode] for installation of Redis or Rabbit MQ. Spring XD on YARN currently uses the same transport for both control and data with Redis being the default.
+
+You also need Zookeeper running. If your Hadoop cluster doesn't have Zookeeper installed you need to install and run it specifically for Spring XD. See the link:#[Zookeeper docs???].
+
+=== Download Spring XD on YARN binaries
+In addition to the regular `spring-xd-<version>-dist.zip` files we also distribute a zip file that includes all you need to deploy on YARN. The name of this zip file is `spring-xd-<version>-yarn.zip`. You can download it from the link:http://repo.spring.io/libs-snapshot/org/springframework/xd/spring-xd/1.0.0.BUILD-SNAPSHOT/[Spring Repo]. Unzip the downloaded file and you should see a `spring-xd-<version>-yarn` directory.
+
+=== Configure your deployment
+Configuration options are contained in a `spring-xd-<version>-yarn\config\xd-config.yml` file. You need to configure the transport, redis/rabbit settings and the hadoop options.
+
+==== XD options
+For Spring XD you need to define how many admin servers and containers you need. You also need to define the HDFS location (spring.yarn.applicationDir) where the Spring XD binary and config files will be stored.
+----
+spring:
+    xd:
+        adminServers: 1
+        containers: 3
+    yarn:
+        applicationDir: /xd/app/
+-----
+
+==== Hadoop settings
+You need to specify the host where the YARN Resource Manager is running as well as the HDFS URL.
+----
+# Hadoop configuration
+spring:
+    hadoop:
+        fsUri: hdfs://localhost:8020
+        resourceManagerHost: localhost
+---- 
+==== Transport options
+You should choose either redis (default) or rabbit as the transport and include the host and port for the choice you made.
+----
+# Transport used
+transport: rabbit
+
+---
+# Redis properties
+#spring:
+#  redis:
+#   port: 6379
+#   host: localhost
+
+---
+# RabbitMQ properties
+spring:
+  rabbitmq:
+   host: localhost
+   port: 5672
+   username: guest
+   password: guest
+   virtual_host: /
+----
+
+=== Install and submit the jobs
+
+Change current directory to be the directory that was unzipped (spring-xd-<version>-yarn).
+
+==== Install the Spring XD application binaries and config
+
+Run the command
+----
+./bin/xd-install.sh
+----
+
+==== Submit the Spring XD admin server
+
+Run the command
+----
+./bin/xd-admin.sh
+----
+
+==== Submit the Spring XD container
+
+Run the command
+----
+./bin/xd-container.sh
+----
+
+==== Check the status of the app
+
+You can use the regular `yarn` command to check the status. Simply run:
+----
+yarn application -list
+----
+
+You should see two applications running named xd-admin and xd-container.
