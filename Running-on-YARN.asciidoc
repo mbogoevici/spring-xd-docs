@@ -23,7 +23,7 @@ spring:
         containers: 3
     yarn:
         applicationDir: /xd/app/
------
+----
 
 ==== Hadoop settings
 You need to specify the host where the YARN Resource Manager is running as well as the HDFS URL.
