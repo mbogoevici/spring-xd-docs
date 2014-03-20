@@ -456,8 +456,8 @@ There are 2 implementation of the gemfire sink: _gemfire-server_ and _gemfire-js
 
 regionName:: the name of the GemFire region. This must be the name of a region configured for the cache server. This module creates the corresponding client region. *(default: `<streamname>`)*
 keyExpression:: A SpEL expression which is evaluated to create a cache key. Typically, the key value is derived from the payload. *(default: `<streamname>`*, which will overwrite the same entry for every message received on the stream)
-gemfireHost:: The host name or IP address of the cache server or locator *(default: `localhost`)*
-gemfirePort:: The TCP port number of the cache server or locator *(default: `40404`)*
+host:: The host name or IP address of the cache server or locator *(default: `localhost`)*
+port:: The TCP port number of the cache server or locator *(default: `40404`)*
 useLocator:: A boolean flag indicating that the above host and port refer to a locator *(default: `false`)* 
 
 NOTE: The locator option is mostly intended for integration with an existing GemFire installation in which the cache servers are configured to use locators in accordance with best practice. While GemFire supports configuration of multiple locators for failover, this is currently not supported in XD. However, using a single virtual IP backed by hardware routers for failover has proven to be an effective and simpler alternative. 
