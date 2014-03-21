@@ -78,7 +78,7 @@ The field value counter on the field _users_ will contain:
 field_value_counter has the following options:
 
 fieldName:: The name of the field for which values are counted *(required)*
-counterName:: A key used to access the counter values. *(default: $\{fieldName\})*
+name:: A key used to access the counter values. *(default: stream name)*
 
 To try this out, create a stream to ingest twitter feeds containing the word _spring_ and output to a file:
 
@@ -86,12 +86,12 @@ To try this out, create a stream to ingest twitter feeds containing the word _sp
 
 Now create a tap for a field value counter:
 
-   xd:> stream create --name tweettap --definition "tap:stream:springtweets > field-value-counter --fieldName=fromUser"
+   xd:> stream create --name fromUserCount --definition "tap:stream:springtweets > field-value-counter --fieldName=fromUser"
 
-The _twittersearch_ source produces JSON strings which contain the user id of the tweeter in the _fromUser_ field. The _field_value_counter_ sink parses the tweet and updates a field value counter named _fromUser_ in Redis. To view the counts:
+The _twittersearch_ source produces JSON strings which contain the user id of the tweeter in the _fromUser_ field. The _field_value_counter_ sink parses the tweet and updates a field value counter named _fromUserCount_ in Redis. To view the counts:
 
    $ redis-cli
-   redis 127.0.0.1:6379>zrange fieldvaluecounters.fromUser 0 -1 withscores 
+   redis 127.0.0.1:6379>zrange fieldvaluecounters.fromUserCount 0 -1 withscores 
 
 [[aggregate-counter]]
 === Aggregate Counter
