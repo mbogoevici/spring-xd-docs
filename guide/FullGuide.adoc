@@ -23,6 +23,10 @@ include::Getting-Started.asciidoc[]
 == Running in Distributed Mode
 include::Running-Distributed-Mode.asciidoc[]
 
+[[running-on-YARN]]
+== Running on YARN
+include::Running-on-YARN.asciidoc[]
+
 [[application-configuration]]
 == Application Configuration
 include::Application-Configuration.asciidoc[]
