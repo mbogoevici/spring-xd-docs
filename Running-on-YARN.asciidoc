@@ -58,29 +58,29 @@ spring:
    virtual_host: /
 ----
 
-=== Install and submit the jobs
+=== Push and start the jobs
 
 Change current directory to be the directory that was unzipped (spring-xd-<version>-yarn).
 
-==== Install the Spring XD application binaries and config
+==== Pusj the Spring XD application binaries and config to HDFS
 
 Run the command
 ----
-./bin/xd-install.sh
+./bin/xd-yarn push
 ----
 
 ==== Submit the Spring XD admin server
 
 Run the command
 ----
-./bin/xd-admin.sh
+./bin/xd-yarn start admin
 ----
 
 ==== Submit the Spring XD container
 
 Run the command
 ----
-./bin/xd-container.sh
+./bin/xd-yarn start container
 ----
 
 ==== Check the status of the app
