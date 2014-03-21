@@ -62,7 +62,7 @@ spring:
 
 Change current directory to be the directory that was unzipped (spring-xd-<version>-yarn).
 
-==== Pusj the Spring XD application binaries and config to HDFS
+==== Push the Spring XD application binaries and config to HDFS
 
 Run the command
 ----
