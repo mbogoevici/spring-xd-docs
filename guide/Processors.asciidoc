@@ -5,9 +5,7 @@ as instructed in the link:Getting-Started#getting-started[Getting Started] page.
 The Processors covered are
 
 * <<filter, Filter>>
-* <<json-value-filter, JSON Field Value Filter>>
 * <<transform, Transform>>
-* <<json-field-extractor, JSON Field Extractor>>
 * <<script, Script>>
 * <<splitter, Splitter>>
 * <<aggregator, Aggregator>>
@@ -29,12 +27,27 @@ This filter will only pass Messages to the log sink if the payload is the word "
 
 Alternatively, if you send the word "bad" (or anything else), you shouldn't see the log entry.
 
-As part of the SpEL expression you can make use of the pre-registered JSON Path function.  Here is some example usage
+==== Filter using jsonPath evaluation
+
+As part of the SpEL expression you can make use of the pre-registered JSON Path function.
+
+This filter example shows to pass messages to the output channel if they contain a specific JSON field matching a specific value.
+
+    xd:> stream create --name jsonfiltertest --definition "http --port=9002 | filter --expression=#jsonPath(payload,'$.firstName').contains('John') | log"
+
+*Note:* There is no space between payload JSON and the jsonPath in the expression
+
+This filter will only pass Messages to the log sink if the JSON payload contains the _firstName_ "John". Try sending this payload to the HTTP endpoint and you should see it in the XD log:
+
+    xd:> http post --target http://localhost:9002 --data "{\"firstName\":\"John\", \"lastName\":\"Smith\"}"
+
+Alternatively, if you send a different _firstName_, you shouldn't see the log entry.
+
+Here is another example usage of filter
 
     filter --expression=#jsonPath(payload,'$.entities.hashTags[*].text').contains('obama') 
 
 This is an example that is operating on a JSON payload of tweets as consumed from the twitter search module.
-
 
 ==== Filter with Groovy Script
 For more complex filtering, you can pass the location of a Groovy script using the _script_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables. 
@@ -44,18 +57,6 @@ Note that an implicit variable named _payload_ is available to give you access t
     xd:> stream create --name groovyfiltertest --definition "http --port=9001 | filter --script=custom-filter.groovy --properties-location=custom-filter.properties | log"
 
 By default, Spring XD will search the classpath for _custom-filter.groovy_ and _custom-filter.properties_. You can place the script in _${xd.home}/modules/processor/scripts_ and the properties file in _${xd.home}/config_ to make them available on the classpath.  Alternatively, you can prefix the _script_ and _properties-location_ values with _file:_ to load from the file system.
-
-[[json-value-filter]]
-=== JSON Field Value Filter
-Use this filter to only pass messages to the output channel if they contain a specific JSON field matching a specific value.
-
-    xd:> stream create --name jsonfiltertest --definition "http --port=9002 | json-field-value-filter --fieldName=firstName --fieldValue=John | log"
-
-This filter will only pass Messages to the log sink if the JSON payload contains the _firstName_ "John". Try sending this payload to the HTTP endpoint and you should see it in the XD log:
-
-    xd:> http post --target http://localhost:9002 --data "{\"firstName\":\"John\", \"lastName\":\"Smith\"}"
-
-Alternatively, if you send a different _firstName_, you shouldn't see the log entry.
 
 [[transform]] 
 === Transform
@@ -79,18 +80,6 @@ For more complex transformations, you can pass the location of a Groovy script u
 
 By default, Spring XD will search the classpath for _custom-transform.groovy_ and _custom-transform.properties_. You can place the script in _${xd.home}/modules/processor/scripts_ and the properties file in _${xd.home}/config_ to make them available on the classpath.  Alternatively, you can prefix the _script_ and _properties-location_ values with _file:_ to load from the file system.
 
-[[json-field-extractor]]
-=== JSON Field Extractor
-This processor converts a JSON message payload to the value of a specific JSON field.
-
-    xd:> stream create --name jsontransformtest --definition "http --port=9005 | json-field-extractor --fieldName=firstName | log"
-
-Try sending this payload to the HTTP endpoint and you should see just the value "John" in the XD log:
-
-    xd:> http post --target http://localhost:9005 --data "{"firstName":"John","lastName":"Smith"}"
-
-Note: JSON fields should be separated by a comma without any spaces.
-
 [[script]]
 === Script
 The script processor contains a _Service Activator_ that invokes a specified Groovy script. This is a slightly more generic way to accomplish processing logic, as the provided script may simply terminate the stream as well as transform or filter Messages. 
@@ -109,7 +98,19 @@ The splitter module accepts the following options:
 
 expression:: a SpEL expression which should evaluate to an array or collection. Each element will then be emitted as a separate message *(default: `payload`, which actually does not split, unless the message is already a collection)*
 
-As part of the SpEL expression you can make use of the pre-registered JSON Path function.  The syntax is #jsonPath(payload,'<json path expression>')2
+As part of the SpEL expression you can make use of the pre-registered JSON Path function.  The syntax is #jsonPath(payload,'<json path expression>')
+
+==== Extract the value of a specific field
+
+This splitter converts a JSON message payload to the value of a specific JSON field.
+
+    xd:> stream create --name jsontransformtest --definition "http --port=9005 | splitter --expression=#jsonPath(payload,'$.firstName') | log"
+
+Try sending this payload to the HTTP endpoint and you should see just the value "John" in the XD log:
+
+    xd:> http post --target http://localhost:9005 --data "{\"firstName\":\"John\", \"lastName\":\"Smith\"}"
+
+Note: JSON fields should be separated by a comma without any spaces.
 
 [[aggregator]]
 === Aggregator
