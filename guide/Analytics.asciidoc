@@ -205,17 +205,17 @@ Create an ingest stream
 
      xd:> stream create --name stocks --definition "http --port=9090 | file"
 
-Next create the tap, using the json-field-extractor to extract the stock price from the payload: 
+Next create the tap, using the transform module to extract the stock price from the payload: 
 
-     xd:> stream create --name stockprice --definition "tap:stream:stocks > json-field-extractor --fieldName=price | richgauge"
+     xd:> stream create --name stockprice --definition "tap:stream:stocks > transform --expression=#jsonPath(payload,'$.price') | richgauge"
 
 Now Post some messages to the ingest stream:
 
-    xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.04}"
-    xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.06}"
-    xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.08}"
+    xd:> http post --target http://localhost:9090 --data {"symbol":"VMW","price":72.04}
+    xd:> http post --target http://localhost:9090 --data {"symbol":"VMW","price":72.06}
+    xd:> http post --target http://localhost:9090 --data {"symbol":"VMW","price":72.08}
 
-Note: JSON fields should be separated by a comma without any spaces.
+Note: JSON fields should be separated by a comma without any spaces. Alternatively, enclose the whole argument to `--data` with quotes and escape inner quotes with a backslash.
 
 Check the gauge:
 
@@ -237,20 +237,20 @@ Create an ingest stream
 
      xd:> stream create --name stocks --definition "http --port=9090 | file"
 
-Next create the taps, using the json-field-extractor to extract the stock price from the payload: 
+Next create the tap, using the transform module to extract the stock price from the payload: 
 
-     xd:> stream create --name vmwprice --definition "tap:stream:stocks > json-field-value-filter --fieldName=symbol --fieldValue=VMW | json-field-extractor --fieldName=price | richgauge"
-     xd:> stream create --name emcprice --definition "tap:stream:stocks > json-field-value-filter --fieldName=symbol --fieldValue=EMC | json-field-extractor --fieldName=price | richgauge"
+     xd:> stream create --name vmwprice --definition "tap:stream:stocks > filter --expression=#jsonPath(payload,'$.symbol')==VMW | transform --expression=#jsonPath(payload,'$.price') | richgauge"
+     xd:> stream create --name emcprice --definition "tap:stream:stocks > filter --expression=#jsonPath(payload,'$.symbol')==EMC | transform --expression=#jsonPath(payload,'$.price') | richgauge"
 
 Now Post some messages to the ingest stream:
 
-    xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.04}"
-    xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.06}"
-    xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":72.08}"
+    xd:> http post --target http://localhost:9090 --data {"symbol":"VMW","price":72.04}
+    xd:> http post --target http://localhost:9090 --data {"symbol":"VMW","price":72.06}
+    xd:> http post --target http://localhost:9090 --data {"symbol":"VMW","price":72.08}
 
-    xd:> http post --target http://localhost:9090 --data "{"symbol":"EMC","price":24.92}"
-    xd:> http post --target http://localhost:9090 --data "{"symbol":"EMC","price":24.90}"
-    xd:> http post --target http://localhost:9090 --data "{"symbol":"EMC","price":24.96}"
+    xd:> http post --target http://localhost:9090 --data {"symbol":"EMC","price":24.92}
+    xd:> http post --target http://localhost:9090 --data {"symbol":"EMC","price":24.90}
+    xd:> http post --target http://localhost:9090 --data {"symbol":"EMC","price":24.96}
 
 Check the gauge:
 
