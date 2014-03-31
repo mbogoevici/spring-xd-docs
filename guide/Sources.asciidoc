@@ -135,7 +135,7 @@ ref:: Set to true to output the File object itself. This is useful in some cases
 
 [[mail_source]]
 === Mail sources
-Spring XD provides two modules for receiving emails. Both have very similar options so they'll be described together here. The first one is named `imap` and only supports the imap protocol, using the `IDLE` command. As such, it does not use polling. Instead messages are pushed as soon as they arrive. The other module is named `mail` and supports all protocols (pop & imap), but it uses polling.
+Spring XD provides a source module for receiving emails, named `mail`. Depending on the protocol used, in can work by polling or receive mails as they become available.
 
 Let's see an example:
 
@@ -143,18 +143,21 @@ Let's see an example:
 
 Then send an email to yourself and you should see it appear inside a file at `/tmp/xd/output/mailstream`
 
-The full list of options for the `mail` and `imap` sources is below (most of them can be configured once and for all in the `mail.properties` file):
+The full list of options for the `mail` source is below:
 
-protocol:: the protocol to use amongst pop3, pop3s, imap, imaps (only imap variants for the `imap` module). *(default: `imaps`)*
+protocol:: the protocol to use amongst pop3, pop3s, imap, imaps *(default: `imaps`)*
 username:: the username to use to connect to the mail server *(no default)*
 password:: the password to use to connect to the mail server *(no default)*
 host:: the hostname of the mail server *(default: `localhost`)*
-port:: the port of the mail server *(default: none, use the default port according to the protocol used)*
+port:: the port of the mail server *(default: `25`)*
 folder:: the folder to take emails from *(default: `INBOX`)*
 markAsRead:: whether to mark emails as read once they've been fetched by the module *(default: `false`)*
 delete:: whether to delete the emails once they've been fetched by the module *(default: `true`)*
-fixedDelay:: *Does not apply to the `imap` source*, the polling interval used for looking up messages, expressed in seconds. *(default: `60`)*
+usePolling:: whether to use polling or not (no-polling works with imap(s) only) *(default: `false`)*
+fixedDelay:: the polling interval used for looking up messages, expressed in seconds. *(default: `60`)*
 charset:: the charset used to transform the body of the incoming emails to Strings. *(default: `UTF-8`)*
+expression:: a SpEL expression which filters which mail messages will be processed (non polling imap only) *(no default)*
+
 
 [WARNING]
 Of special attention are the `markAsRead` and `delete` options, which by default will *delete* the emails once they are consumed. It is hard to come up with a sensible default option for this (please refer to the Spring Integration documentation section on mail handling for a discussion about this), so just be aware that the default for XD is to delete incoming messages.
