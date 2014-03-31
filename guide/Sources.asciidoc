@@ -134,7 +134,7 @@ fixedDelay:: The fixed delay polling interval specified in seconds *(default: 5)
 ref:: Set to true to output the File object itself. This is useful in some cases in which the file contents are large and it would be more efficient to send the file path across the network than the contents. This option requires that the file be in a shared file system.
 
 [[mail_source]]
-=== Mail sources
+=== Mail
 Spring XD provides a source module for receiving emails, named `mail`. Depending on the protocol used, in can work by polling or receive mails as they become available.
 
 Let's see an example:
