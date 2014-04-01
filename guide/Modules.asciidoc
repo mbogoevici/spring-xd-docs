@@ -216,7 +216,7 @@ xd:>module list
       jms                 json-field-value-filter      mqtt
       mail                json-to-tuple                splunk
       mqtt                object-to-json               tcp
-      post                script                       aggregatecounter
+      post                script                       aggregate-counter
       reactor-syslog      splitter                     avro
       syslog-tcp          transform                    counter
       syslog-udp      (c) myprocessor                  field-value-counter
