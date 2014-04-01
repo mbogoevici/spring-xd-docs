@@ -184,11 +184,13 @@ If you destroy both of those streams and try again, it will work:
     Successfully destroyed module 'foo' with type sink
 
 When creating a module, if you duplicate the name of an existing module for the same type, you will receive an error.  In the example below the user tried to compose a tcp module, however one already exists:
-```
+
+```bash
 xd:>module compose tcp --definition "filter --expression=payload.contains('foo') | file"
 14:52:27,781  WARN Spring Shell client.RestTemplate:566 - POST request for "http://ec2-50-16-24-31.compute-1.amazonaws.com:9393/modules" resulted in 409 (Conflict); invoking error handler
 Command failed org.springframework.xd.rest.client.impl.SpringXDException: There is already a module named 'tcp' with type 'sink'
 ```
+
 However, you can create a module for a given type even though a module of that name exists but as a different type.  For example: I can create a sink module named filter, even though a filter module exists already as a processor.
 
 Finally, it's worth mentioning that in some cases duplication may be avoided by reusing an actual stream rather than a composed module. That is possible when named channels are used in the source and/or sink position of a stream definition. For example, the same overall functionality as provided by the two streams above could also be achieved as follows:
@@ -206,33 +208,33 @@ To view the available modules use the the `module list` command.  Modules appear
 
 ```
 xd:>module list
-      Source              Processor                    Sink                     Job
-  ------------------  ---------------------------  -----------------------  ----------------
-      file                aggregator                   file                     filejdbc
-      gemfire             http-client                  gemfire-json-server      hdfsjdbc
-      gemfire-cq          bridge                       gemfire-server           hdfsmongodb
-      http                filter                       jdbc                     jdbchdfs
-      imap                json-field-extractor         mail                     filepollhdfs
-      jms                 json-field-value-filter      mqtt
-      mail                json-to-tuple                splunk
-      mqtt                object-to-json               tcp
-      post                script                       aggregate-counter
-      reactor-syslog      splitter                     avro
-      syslog-tcp          transform                    counter
-      syslog-udp      (c) myprocessor                  field-value-counter
-      tail                                             gauge
-      tcp                                              hdfs
-      tcp-client                                       log
-      trigger                                          rabbit
-      twittersearch                                    rich-gauge
-      twitterstream                                    router
-      rabbit
+      Source              Processor           Sink                     Job
+  ------------------  ------------------  -----------------------  ----------------
+      file                aggregator          aggregate-counter        filejdbc
+      gemfire             analytic-pmml       counter                  ftphdfs
+      gemfire-cq          http-client         field-value-counter      hdfsjdbc
+      http                bridge              file                     hdfsmongodb
+      jms                 filter              gauge                    jdbchdfs
+      mail                json-to-tuple       gemfire-json-server      filepollhdfs
+      mqtt                object-to-json      gemfire-server
+      post                script              jdbc
+      reactor-syslog      splitter            mail
+      reactor-tcp         transform           mqtt
+      syslog-tcp      (c) myfilter            rich-gauge
+      syslog-udp                              splunk
+      tail                                    tcp
+      tcp                                     throughput-sampler
+      tcp-client                              avro
+      trigger                                 hdfs
+      twittersearch                           log
+      twitterstream                           rabbit
+      rabbit                                  router
       time
 ```
 
 To get information about a particular module (such as what options it accepts), use the `module info --<module type>:<module name>` command. For example:
 
-```
+```bash
 xd:>module info --name source:file
 Information about source module 'file':
 
@@ -249,7 +251,7 @@ Information about source module 'file':
 
 To display the actual definition file of a module use the `module display --name <module type>:<module name>` command. For example:
 
-```
+```bash
 xd:>module display --name tcp --type source
 Configuration file contents for module definiton 'tcp' (source):
 
@@ -276,3 +278,46 @@ Configuration file contents for module definiton 'tcp' (source):
     <int:channel id="output"/>
 ...
 ```
+
+[[module_values]]
+=== How module options are resolved
+As we've seen so far, a module is a re-usable piece of Spring Integration (or Spring Batch) software that can be dynamically configured thru the use of *module options*.
+
+A module option is any value that the module author has deemed worthy of configuration at deployment time. Preferably, the module author will have provided link:ModuleOptionsMetadata#introduction[metadata] to describe the available options. This section explains how default values are computed for each module option.
+
+In a nutshell, actual values are drawn from the following 3 sources, from most precedent to least precedent:
+
+1. actual values in the stream definition (_e.g._ `--foo=bar`)
+2. platform-wide defaults (appearing _e.g._ in .yml and .properties files, see below)
+3. defaults the module author chose (see link:ModuleOptionsMetadata#introduction[metadata])
+
+Going into more detail, the mid layer above (platform-wide defaults) will resolve like so, assuming option `<optionname>` of module `<modulename>` (which is of type `<moduletype>`):
+
+a. a *system property* named `<moduletype>.<modulename>.<optionname>`
+b. an *environment variable* named `<moduletype>.<modulename>.<optionname>` (or `<MODULETYPE>_<MODULENAME>_<OPTIONNAME>`)
+c. a key named `<optionname>` in the *properties* file `<root>/<moduletype>/<modulename>/<modulename>.properties`
+d. a key named `<moduletype>.<modulename>.<optionname>` in the *YaML* file `<root>/<module-config>.yml`
+
+where 
+
+`<root>`:: is the value of the `xd.module.config.location` system property (driven by the `XD_MODULE_CONFIG_LOCATION` env var when using the canonical Spring XD shell scripts). Defaults to `${xd.config.home}/modules/`
+`<module-config>`:: is the value of the `xd.module.config.name` system property (driven by the `XD_MODULE_CONFIG_NAME` env var). Defaults to `xd-module-config`
+
+Note that YaML is particularly well suited for hierarchical configuration, so for example, instead of
+```yml
+source.file.dir: foo
+source.file.pattern: *.txt
+
+source.http.port: 1234
+```
+
+one can write 
+```yml
+source:
+  file:
+    dir: foo
+    pattern: *.txt
+  http:
+    port: 1234
+```
+
