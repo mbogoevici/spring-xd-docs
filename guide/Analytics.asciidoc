@@ -163,7 +163,7 @@ Check the gauge:
 
 A rich gauge is a Metric that holds a double value associated with a unique name. In addition to the value, the rich gauge keeps a running average, along with the minimum and maximum values and the sample count.
 
-The _richgauge_ sink provided with XD expects a numeric value as a payload, typically this would be a decimal formatted string, and keeps its value in a store. The richgauge includes the following attributes:
+The _richgauge_ sink provided with XD expects a numeric value as a payload, typically this would be a decimal formatted string, and keeps its value in a store. The rich-gauge includes the following attributes:
 
  name:: The name for the gauge *(default: `<streamname>`)*
  alpha:: A smoothing factor between 0 and 1, that if set will compute an http://en.wikipedia.org/wiki/Exponential_smoothing[exponential moving average] *(default: `-1, simple average`)* 
@@ -180,7 +180,7 @@ Create an ingest stream
 
 Next create the tap:
 
-      xd:> stream create --name testgauge --definition "tap:stream:test > richgauge"
+      xd:> stream create --name testgauge --definition "tap:stream:test > rich-gauge"
 
 Now Post some messages to the ingest stream:
 
@@ -207,7 +207,7 @@ Create an ingest stream
 
 Next create the tap, using the transform module to extract the stock price from the payload: 
 
-     xd:> stream create --name stockprice --definition "tap:stream:stocks > transform --expression=#jsonPath(payload,'$.price') | richgauge"
+     xd:> stream create --name stockprice --definition "tap:stream:stocks > transform --expression=#jsonPath(payload,'$.price') | rich-gauge"
 
 Now Post some messages to the ingest stream:
 
@@ -239,8 +239,8 @@ Create an ingest stream
 
 Next create the tap, using the transform module to extract the stock price from the payload: 
 
-     xd:> stream create --name vmwprice --definition "tap:stream:stocks > filter --expression=#jsonPath(payload,'$.symbol')==VMW | transform --expression=#jsonPath(payload,'$.price') | richgauge"
-     xd:> stream create --name emcprice --definition "tap:stream:stocks > filter --expression=#jsonPath(payload,'$.symbol')==EMC | transform --expression=#jsonPath(payload,'$.price') | richgauge"
+     xd:> stream create --name vmwprice --definition "tap:stream:stocks > filter --expression=#jsonPath(payload,'$.symbol')==VMW | transform --expression=#jsonPath(payload,'$.price') | rich-gauge"
+     xd:> stream create --name emcprice --definition "tap:stream:stocks > filter --expression=#jsonPath(payload,'$.symbol')==EMC | transform --expression=#jsonPath(payload,'$.price') | rich-gauge"
 
 Now Post some messages to the ingest stream:
 
@@ -313,8 +313,8 @@ xd:>! wget  -q -S -O - http://localhost:9393/
       "href":"http://localhost:9393/metrics/gauges"
     },
     {
-      "rel":"richgauges",
-      "href":"http://localhost:9393/metrics/richgauges"
+      "rel":"rich-gauges",
+      "href":"http://localhost:9393/metrics/rich-gauges"
     }
   ]
 }

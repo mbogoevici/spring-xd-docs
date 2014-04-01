@@ -224,7 +224,7 @@ xd:>module list
       tcp                                              hdfs
       tcp-client                                       log
       trigger                                          rabbit
-      twittersearch                                    richgauge
+      twittersearch                                    rich-gauge
       twitterstream                                    router
       rabbit
       time
