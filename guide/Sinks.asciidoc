@@ -10,7 +10,7 @@ The Sinks covered are
 
 * <<hdfs, HDFS>>
 
-* <<hdfs-dataset, HDFS Dataset>>
+* <<hdfs_dataset, HDFS Dataset>>
 
 * <<jdbc_sink, JDBC>>
 
@@ -182,7 +182,7 @@ inUseSuffix:: Temporary file suffix indicating that file is currently written an
 inUsePrefix:: Temporary file prefix indicating that file is currently written and in use. *(default: `none`)*
 overwrite:: Flag indicating if file resources in Hadoop is allowed to be overwritten. *(default: `false`)*
 
-[[hdfs-dataset]]
+[[hdfs_dataset]]
 === HDFS Dataset (Avro/Parquet)
 
 The HDFS Dataset sink is used to store Java classes that are sent as the payload on the stream. It uses the http://kitesdk.org/[Kite SDK Data Module]'s Dataset implementation to store the payload data serialized in either Avro or Parquet format. The Avro schema is generated from the Java class that is persisted. For Parquet the Java object must follow JavaBean conventions with properties for any fields to be persisted. The fields can only be simple scalar values like Strings and numbers.
