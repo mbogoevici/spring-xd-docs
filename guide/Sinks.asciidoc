@@ -10,7 +10,7 @@ The Sinks covered are
 
 * <<hdfs, HDFS>>
 
-* <<avro, Avro>>
+* <<hdfs-dataset, HDFS Dataset>>
 
 * <<jdbc_sink, JDBC>>
 
@@ -182,18 +182,18 @@ inUseSuffix:: Temporary file suffix indicating that file is currently written an
 inUsePrefix:: Temporary file prefix indicating that file is currently written and in use. *(default: `none`)*
 overwrite:: Flag indicating if file resources in Hadoop is allowed to be overwritten. *(default: `false`)*
 
-[[avro]]
-=== Hadoop Dataset (Avro)
+[[hdfs-dataset]]
+=== HDFS Dataset (Avro/Parquet)
 
-The Hadoop Dataset Avro sink is used to store Java classes that are sent as the payload on the stream. It uses the http://kitesdk.org/[Kite SDK Data Module]'s Dataset implementation to store the payload data serialized in Avro format. The Avro schema is generated from the Java class that is persisted.
+The HDFS Dataset sink is used to store Java classes that are sent as the payload on the stream. It uses the http://kitesdk.org/[Kite SDK Data Module]'s Dataset implementation to store the payload data serialized in either Avro or Parquet format. The Avro schema is generated from the Java class that is persisted. For Parquet the Java object must follow JavaBean conventions with properties for any fields to be persisted. The fields can only be simple scalar values like Strings and numbers.
 
-The Hadoop Dataset Avro sink requires that you have a Hadoop installation that is based on Hadoop v2 (Hadoop 2.2.0, Pivotal HD 1.0, Cloudera CDH4 or Hortonworks HDP 2.0), see link:Running-Distributed-Mode#using-hadoop[using Hadoop] for more information on how to start Spring XD to target a specific distribution.
+The HDFS Dataset sink requires that you have a Hadoop installation that is based on Hadoop v2 (Hadoop 2.2.0, Pivotal HD 1.0, Cloudera CDH4 or Hortonworks HDP 2.0), see link:Running-Distributed-Mode#using-hadoop[using Hadoop] for more information on how to start Spring XD to target a specific distribution.
 
-Once Hadoop is up and running, you can then use the `avro` sink when creating a link:Streams#streams[stream]
+Once Hadoop is up and running, you can then use the `hdfs-dataset` sink when creating a link:Streams#streams[stream]
 
-  xd:>stream create --name mydataset --definition "time | avro --batchSize=20"
+  xd:>stream create --name mydataset --definition "time | hdfs-dataset --batchSize=20"
 
-In the above example, we've scheduled `time` source to automatically send ticks to the `avro` sink once every second. The data will be stored in a directory named `/xd/<streamname>` by default, so in this example it will be `/xd/mydataset`. You can change this by supplying a `‑‑directory` parameter. The Avro data files are stored in a sub-directory named after the payload Java class, in this example the stream payload is a String so the name of the data sub-directory is `string`. If you have multiple Java classes as payloads, each class will get its own sub-directory.
+In the above example, we've scheduled `time` source to automatically send ticks to the `hdfs-dataset` sink once every second. The data will be stored in a directory named `/xd/<streamname>` by default, so in this example it will be `/xd/mydataset`. You can change this by supplying a `‑‑directory` parameter. The Avro format is usd by default and the data files are stored in a sub-directory named after the payload Java class. In this example the stream payload is a String so the name of the data sub-directory is `string`. If you have multiple Java classes as payloads, each class will get its own sub-directory.
 
 Let the stream run for a minute or so. You can then list the contents of the hadoop filesystem using the shell's built in hadoop fs commands. You will first need to configure the shell to point to your name node using the hadoop config command. We use the hdfs protocol is to access the hadoop name node.
 
@@ -219,13 +219,15 @@ Now destroy the stream.
 
   xd:>stream destroy --name mydataset
 
-==== Avro with Options
+==== HDFS Dataset with Options
 
-The Avro Sink has the following options:
+The HDFS Dataset Sink has the following options:
 
 batchSize:: The number of payload objects that will be stored in each write operation. *(default: `10000`)*
 directory:: Where the files will be written in the Hadoop FileSystem *(default: `/xd/<streamname>`)*
 idleTimeout::  Idle timeout in milliseconds for when the aggregated batch of payload objects will be written even if the batchSize has not been reached. *(default: `-1`, no timeout)*
+allowNullValues:: Whether to allow null values in fields of the Java class to be written to the sink. If this is set to true then each field in the generated schema will use a union of 'null' and the data type of the field. *(default: `true`)*
+format:: The format to sue when writing the dataset data. Options are `avro` and `parquet`. *(default: `avro`)*
 
 [[jdbc_sink]]
 === JDBC
