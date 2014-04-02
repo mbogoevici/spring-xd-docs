@@ -6,7 +6,7 @@ The Sinks covered are
 
 * <<log, Log>>
 
-* <<file, File>>
+* <<file-sink, File>>
 
 * <<hadoop-hdfs, HDFS>>
 
