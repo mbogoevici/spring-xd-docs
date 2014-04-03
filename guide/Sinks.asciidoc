@@ -49,7 +49,7 @@ The logger name is the sink name prefixed with the string "logger.". The sink na
 
   xd:> stream create --name myotherlogstream --definition "http --port=8001 | log --name=mylogger"
 
-[[file]]
+[[file-sink]]
 === File Sink
 
 Another simple option is to stream data to a file on the host OS. This can be done using the `file` sink module to create a link:Streams#streams[stream].
