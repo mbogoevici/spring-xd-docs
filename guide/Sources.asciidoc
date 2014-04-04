@@ -19,6 +19,7 @@ The Sources covered are
 * <<rabbit, RabbitMQ>>
 * <<time, Time>>
 * <<mqtt, MQTT>>
+* <<stdout, Stdout Capture>>
 
 Future releases will provide support for other currently available Spring Integration Adapters.  For information on how to adapt an existing Spring Integration Adapter for use in Spring XD see the section link:Creating-a-Source-Module#creating-a-source-module[Creating a Source Module].
 
@@ -641,4 +642,13 @@ url:: Location of the mqtt broker
 username:: The username to use when connecting to the broker
 password:: The password to use when connecting to the broker
 
+[[stdout]]
+=== Stdout Capture
+There isn't actually a source named "stdin" but it is easy to capture stdin by redirecting it to a `tcp` source. For example if you wanted to capture the output of a command, you would first create the `tcp` stream, as above, using the appropriate sink for your requirements:
+
+     xd:> stream create tcpforstdout --definition "tcp --decoder=LF | log"
+
+You can then capture the output from commands using the `netcat` command:
+
+     $ cat mylog.txt | netcat localhost 1234
 
