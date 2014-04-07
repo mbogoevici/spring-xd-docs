@@ -3,11 +3,55 @@ The Spring XD distributed runtime (DIRT) supports distribution of processing tas
 
 Spring XD can use several middlewares when running in distributed mode. At the time of writing, http://redis.io/[*Redis*] and http://www.rabbitmq.com/[*RabbitMQ*] are available options.
 
-Let's see how to install those first, before diving into the specifics of running Spring XD. Again, those are alternatives when it comes to transport middleware used, so you need only one (although practically, Redis may be required for other purposes, for example storage of definitions or link:Analytics#analytics[Analytics]).
+Again, those are alternatives when it comes to transport middleware used, so you need only one (although practically, Redis may be required for other purposes, for example storage of definitions or link:Analytics#analytics[Analytics]).
+
+Before we start on middleware discussion lets cover the command line args offered by both XD-Admin and XD-Container.  
+
+==== CommandLine
+
+Whether you are running the xd-admin, xd-container or even the xd-standalone you can always get help by typing the command followed by --help.  For example: 
+----
+./bin/xd-admin --help
+
+ _____                           __   _______
+/  ___|          (-)             \ \ / /  _  \
+\ `--. _ __  _ __ _ _ __   __ _   \ V /| | | |
+ `--. \ '_ \| '__| | '_ \ / _` |  / ^ \| | | |
+/\__/ / |_) | |  | | | | | (_| | / / \ \ |/ /
+\____/| .__/|_|  |_|_| |_|\__, | \/   \/___/
+      | |                  __/ |
+      |_|                 |___/
+1.0.0.BUILD-SNAPSHOT             eXtreme Data
+
+
+Started container : AdminServerApplication
+Documentation: https://github.com/SpringSource/spring-xd/wiki
+
+Usage:
+ --analytics [redis]   : How to persist analytics such as counters and gauges
+ --help (-?, -h)       : Show this help screen
+ --httpPort <httpPort> : Http port for the REST API server
+ --mgmtPort <mgmtPort> : The port for the management server
+----
+The commands that are offered for xd-admin include:
+
+* --analytics - The data store that will be used to store the analytics data.  The current default is *redis*
+* --help - Displays help for the command arguments.  Help information may be accessed with a -? or -h.  
+* --httpPort - The http port for the REST API server.  Defaults to 9393.
+* --mgmtPort - The port for the management server.  Defaults to 9393.
+
+The commands that are offered for xd-container include:
+
+* --analytics - How to persist analytics such as counters and gauges. The current default is *redis* 
+* --hadoopDistro - The Hadoop distribution to be used for HDFS access.  HDFS is not available if not set.
+* --help - Displays help for the command arguments.  Help information may be accessed with a -? or -h.  
+* --mgmtPort - The port for the management server.  Defaults to 9393.
+* --transport - The transport to use for data messages (from container to container)
+
+=== Using Redis
 
 *Redis* is actually the default when it comes to running in distributed mode, so let's start with that.
 
-=== Using Redis
 ==== Installing Redis
 
 If you already have a running instance of *Redis* it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*. You can change that in the `redis.properties` file residing in the `config/` directory.
