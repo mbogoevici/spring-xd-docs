@@ -33,20 +33,21 @@ Usage:
  --httpPort <httpPort> : Http port for the REST API server
  --mgmtPort <mgmtPort> : The port for the management server
 ----
-The commands that are offered for xd-admin include:
 
-* --analytics - The data store that will be used to store the analytics data.  The current default is *redis*
-* --help - Displays help for the command arguments.  Help information may be accessed with a -? or -h.  
-* --httpPort - The http port for the REST API server.  Defaults to 9393.
-* --mgmtPort - The port for the management server.  Defaults to 9393.
+===== xd-admin command line args:
 
-The commands that are offered for xd-container include:
+* analytics - The data store that will be used to store the analytics data.  The current default is *redis*
+* help - Displays help for the command arguments.  Help information may be accessed with a -? or -h.  
+* httpPort - The http port for the REST API server.  Defaults to 9393.
+* mgmtPort - The port for the management server.  Defaults to 9393.
 
-* --analytics - How to persist analytics such as counters and gauges. The current default is *redis* 
-* --hadoopDistro - The Hadoop distribution to be used for HDFS access.  HDFS is not available if not set.
-* --help - Displays help for the command arguments.  Help information may be accessed with a -? or -h.  
-* --mgmtPort - The port for the management server.  Defaults to 9393.
-* --transport - The transport to use for data messages (from container to container)
+===== xd-container command line args:
+
+* analytics - How to persist analytics such as counters and gauges. The current default is *redis* 
+* hadoopDistro - The Hadoop distribution to be used for HDFS access.  HDFS is not available if not set.
+* help - Displays help for the command arguments.  Help information may be accessed with a -? or -h.  
+* mgmtPort - The port for the management server.  Defaults to 9393.
+* transport - The transport to use for data messages (from container to container)
 
 === Using Redis
 
