@@ -148,3 +148,14 @@ assertThat(selectedTuple.size(), equalTo(1));
 assertThat(selectedTuple.getFieldNames().get(0), equalTo("brown"));
 assertThat(selectedTuple.getString(0), equalTo("braun"));
 ----
+
+==== Gradle Dependencies
+If you wish to use Spring XD Tuples in you project add the following dependencies:
+[source,groovy]
+----
+//Add this repo to your repositories if it does not already exist.
+maven { url "http://repo.spring.io/libs-snapshot" }
+
+//Add this dependency
+compile 'org.springframework.xd:spring-xd-tuple:1.0.0.M6'
+----
