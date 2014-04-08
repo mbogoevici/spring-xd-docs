@@ -1,6 +1,41 @@
 === Introduction
 
-Spring XD provides support for the real-time evaluation of various machine learning scoring algorithms as well simple real-time data analytics using various types of counters and gauges.  Spring XD provides this functionalty as an extensible class library with a few out of the box implemenations.  For Machine Learning algorithms, we integrate with the JPPML-Evaluator libary that provides support for a wide range of https://github.com/jpmml/jpmml-evaluator#features[model types] and is interopable with models exported from http://www.r-project.org/[R], http://rattle.togaware.com/[Rattle], http://www.knime.org/[KNIME], and http://rapid-i.com/content/view/181/190/[RapidMiner].  For counter and gauge analytics, in-memory and http://redis.io/[Redis] implementations are provided.
+Spring XD provides support for the real-time evaluation of various machine learning scoring algorithms as well simple real-time data analytics using various types of counters and gauges.  Spring XD provides this functionalty as an extensible class library with a few out of the box implemenations.  For Machine Learning algorithms, we integrate with the https://github.com/jpmml/jpmml-evaluator[JPMML-Evaluator] library that provides support for a wide range of https://github.com/jpmml/jpmml-evaluator#features[model types] and is interopable with models exported from http://www.r-project.org/[R], http://rattle.togaware.com/[Rattle], http://www.knime.org/[KNIME], and http://rapid-i.com/content/view/181/190/[RapidMiner].  For counter and gauge analytics, in-memory and http://redis.io/[Redis] implementations are provided.
+
+Incorporating the evaluation of machine learning algorithms into stream processing is as easy as using any other processing module.  Here is a simple example
+
+----
+http --outputType=application/x-xd-tuple | analytic-pmml --location=/models/iris-flower-naive-bayes.pmml.xml
+     	 --inputFieldMapping='sepalLength:Sepal.Length,sepalWidth:Sepal.Width,petalLength:Petal.Length,petalWidth:Petal.Width' 
+	 --outputFieldMapping='Predicted_Species:predictedSpecies' | log"
+----
+
+The `http` source converts posted data to a Tuple.  The `analytic-pmml` processor loads the model from the specifed file and creates two mappings so that fields from the Tuple can be mapped into the input and output model names.  The `log` sink writes the payload of the event message to the log file of the XD container.
+
+Posting the following JSON data to the http source
+----
+{ 
+  "sepalLength": "6.4", 
+  "sepalWidth":  "3.2", 
+  "petalLength": "4.5", 
+  "petalWidth":  "1.5" 
+}
+----
+
+will produce output in the log file as shown below.
+----
+{
+   "id":"1722ec00-baad-11e3-b988-005056c00008",
+   "timestamp":1396473833152,
+   "sepalLength":"6.4",
+   "sepalWidth":"3.2",
+   "petalLength":"4.5",
+   "petalWidth":"1.5",
+   "predictedSpecies":"versicolor"
+}
+----
+
+The next section on analytical models goes into more detail on the general infrastructre 
 
 === Analytical Models
 
