@@ -45,7 +45,7 @@ Alternatively, if you send a different _firstName_, you shouldn't see the log en
 
 Here is another example usage of filter
 
-    filter --expression=#jsonPath(payload,'$.entities.hashTags[*].text').contains('obama') 
+    filter --expression=#jsonPath(payload,'$.entities.hashtags[*].text').contains('obama') 
 
 This is an example that is operating on a JSON payload of tweets as consumed from the twitter search module.
 
