@@ -6,7 +6,7 @@ The servers (`xd-singlenode`, `xd-admin`, `xd-container`) are http://projects.sp
 
 NOTE: The use of YAML is an alternative to using property files. YAML is a superset of JSON, and as such is a very convenient format for specifying hierarchical configuration data.
 
-For modules, each module has its own configuration file located in its own directory, for example `sink/http/http.properties`.  Shared configuration values for modules can be placed in a common `modules.yml` file.  
+For modules, each module has its own configuration file located in its own directory, for example `source/http/http.properties`.  Shared configuration values for modules can be placed in a common `modules.yml` file.  
 
 For both server and module configuration, you can have environment specific settings through the use of application profiles and the ability to override values in files by setting OS environment variables.  
 
@@ -168,12 +168,12 @@ NOTE: The `XD_MODULE_CONFIG_LOCATION` can refernce any any http://docs.spring.io
 
 As an example, if you wanted to configure the twittersearch module, you would create a file 
 ----
-XD_CONFIG_LOCATION\sink\twittersearch\twittersearch.properties
+XD_CONFIG_LOCATION\source\twittersearch\twittersearch.properties
 ----
 
 and the contents of that file would be property names such as `consumerKey` and `consumerSecret`.
 
-NOTE: You *do not* need to prefix these property names with a `sink.twittersearch` prefix.
+NOTE: You *do not* need to prefix these property names with a `source.twittersearch` prefix.
 
 You can override the values in the module property file in various ways.  The following sources of properties are considered in the following order.
 
@@ -195,7 +195,7 @@ sharedAccessToken=llixzchvpiawued
 sharedAccessTokenSecret=ewoqirudhdsldke
 ----
 
-and `XD_CONFIG_LOCATION\sink\twitterstream\twitterstream.properties` contains
+and `XD_CONFIG_LOCATION\source\twitterstream\twitterstream.properties` contains
 ----
 consumerKey=${sharedConsumerKey}
 consumerSecret=${sharedConsumerSecret}
@@ -203,7 +203,7 @@ accessToken=${sharedAccessToken}
 accessTokenSecret=${sharedAccessTokenSecret}
 ----
 
-and `XD_CONFIG_LOCATION\sink\twittersearch\twittersearch.properties` contains
+and `XD_CONFIG_LOCATION\source\twittersearch\twittersearch.properties` contains
 ----
 consumerKey=${sharedConsumerKey}
 consumerSecret=${sharedConsumerSecret}
@@ -213,9 +213,9 @@ consumerSecret=${sharedConsumerSecret}
 
 When resolving property file names, the server will look to load profile specific variants baed on the naming convention `<name>-{profile}.properties`.  For example, if given the OS environment variable `spring_profiles_active=default,qa` the following configuration file names for the twittersearch module would be searched in this order
 
-. `XD_CONFIG_LOCATION\sink\twittersearch\twittersearch.properties`
-. `XD_CONFIG_LOCATION\sink\twittersearch\twittersearch-default.properties`
-. `XD_CONFIG_LOCATION\sink\twittersearch\twittersearch-qa.properties`
+. `XD_CONFIG_LOCATION\source\twittersearch\twittersearch.properties`
+. `XD_CONFIG_LOCATION\source\twittersearch\twittersearch-default.properties`
+. `XD_CONFIG_LOCATION\source\twittersearch\twittersearch-qa.properties`
 
 Also, the shared module configuration file is refernced using profile variants, so given the OS environment variable `spring_profiles_active=default,qa` the following shared module configuration files would be searched for in this order
 
