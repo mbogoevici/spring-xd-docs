@@ -1,137 +1,106 @@
 === Introduction
 
-To change the configuration of the server components you can use environment variables or make changes to the `$XD_HOME/config/xd-config.yml` YAML file.  Alternatively, you can set the environment variable `XD_CONFIG` to point to a file (use a file:// URL). and that file will then be used instead.  The values in this configuration file will overwrite the values of the default https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/resources/application.yml[application.yml] file that is embedded in the XD jar file.
+There are two main parts of Spring XD that can be configured, servers and modules.  
 
-The use of YAML is an alternative to using property files.  The support for processing YAML files comes from the underlying use of http://projects.spring.io/spring-boot/[Spring Boot] as the basis for the XD server implementation.
+The servers (`xd-singlenode`, `xd-admin`, `xd-container`) are http://projects.spring.io/spring-boot/[Spring Boot] applications and are configured as described in the http://docs.spring.io/spring-boot/docs/1.0.1.RELEASE/reference/htmlsingle/[Spring Boot Reference documentation].  In the most simple case this means editing values in the YAML based configuration file `servers.yml`.  The values in this configuration file will overwrite the values in the default https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/resources/application.yml[application.yml] file that is embedded in the XD jar.
 
-To change the configuration of properties used in modules, look into the module definition file and locate the property file that is being referenced.  The file will often reside in the directory `$XD_HOME/config`.
+NOTE: The use of YAML is an alternative to using property files. YAML is a superset of JSON, and as such is a very convenient format for specifying hierarchical configuration data.
 
-In this section we will walk through configuring some of the more common properties of Spring XD servers.
+For modules, each module has its own configuration file located in its own directory, for example `sink/http/http.properties`.  Shared configuration values for modules can be placed in a common `modules.yml` file.  
 
-==== Configuring Multiple Environments
+For both server and module configuration, you can have environment specific settings through the use of application profiles and the ability to override values in files by setting OS environment variables.  
 
-You may be running Spring XD in different environments (for example test, production) with slightly different configurations for each one. The simplest option is to use a separate configuration file in each environment, external to the XD distro, and set the `XD_CONFIG` environment variable to point to it (as described above). This allows you not only to set up different databases and so on, but also to configure environment-specific custom variables for use in your stream definitions. For example, you might a file called `my-xd-config.yml` stored in your home directory on your local development machine:
+In this secton we will walk though how to configure servers and modules.
 
-```
-myenv:
-  dir: /Users/me/testfiles
-```
-and you would enable it using
+=== Server Configuration
 
-```
-export XD_CONFIG=/Users/me/my-xd-config.yml
-```
+The startup scripts for `xd-singlenode`, `xd-admin`, and `xd-container` will by default look for the file `$XD_HOME\config\servers.yml` as a source of externalized configuration information.  
 
-whereas in production, you might have a pre-installed configuration in `/var/xd/production-config.xml` with the configuration:
+The location and name of this resourse can be changed by using the environment variables `XD_CONFIG_LOCATION` and `XD_CONFIG_NAME`.  The start up script takes the value of these environment variables to set the Spring Boot properties `spring.config.location` and `spring.config.name`.  Note, that for `XD_CONFIG_LOCATION` you can reference any http://docs.spring.io/spring/docs/4.0.3.RELEASE/spring-framework-reference/htmlsingle/#resources[Spring Resource] implementation, most commonly denoted using the prefixes `classpath:`, `file:` and `http:`.
 
-```
-myenv:
-  dir: /data/files
-```
+It is common to keep your server configuration seperate form the installation directory of XD itself.  To do this, here is an example environment variable setting 
 
-In your production environment you would set
+----
+export XD_CONFIG_LOCATION=file:/xd/config/
+export XD_CONFIG_NAME=region1-servers
+----
 
-```
-export XD_CONFIG=/var/xd/production-config.yml
-```
+==== Profile support
 
-You could then use the variable `myenv.data` in a stream definition which would work across all environments:
+Profiles provide a way to segregate parts of your application configuration and change their availability and/or values based on the environment.  This lets you have different configuration settings for `qa` and `prod` environments and to easily switch between them.
 
-```
-http | file --dir=${myenv.dir}
-```
+To activiate a profile, set the OS environment variable `SPRING_PROFILES_ACTIVE` to a comma delimited list of profile names.  The server looks to load profile specific variants of the `servers.yml` file based on the naming convention `servers-{profile}.yml`.  For example, if `SPRING_PROFILES_ACTIVE=prod` the following files would be searched for in the following order.
 
-==== Configuring the Job Repository database
+. `XD_CONFIG_LOCATION/servers-prod.yml`
+. `XD_CONFIG_LOCATION/servers.yml`
 
-Spring XD saves the state of the batch job workflows in a relational database.  By default XD starts an embedded HSQLDB.  The HSQLDB should only be used for development and learning.  But when it comes time to deploy to production, you will need to select another database. Spring XD is actively tested on 3 databases: HSQLDB (Version: 2.3.0), MySql (Version: 5.1.23) and Postgres (Version 9.2-1002), though many others are supported such as Oracle.
+You may also put multiple profile specific configuration in a single `servers.yml` file by using the key `spring.profiles` in different sections of the configuration file.  See http://docs.spring.io/spring-boot/docs/1.0.1.RELEASE/reference/htmlsingle/#boot-features-external-config-multi-profile-yaml[Multi-profile YAML documents] for more information.
 
-The file `xd-config.yml` located in `$XD_HOME/config` has commented out sections that you can uncomment and edit for your database environment.  The JDBC driver jars for the HSQLDB, MySql, and Postgres are already on the XD classpath.
+==== Database Configuration
 
-In cases where you are referencing a database that has not been initialized with the batch tables, Spring XD will automatically create and initialize the tables necessary to store job workflow information.
+Spring XD saves the state of the batch job workflows in a relational database.  When running `xd-singlenode` a embedded HSQLDB database is run.  When running in distributed mode a standalone HSQLDB instance can be used, the startup script `hsqldb-server` is in is provided the installation directory under the folder 'hsqldb/bin'.  It is recommended to use HSQLDB only for development and learning. 
 
-===== HSQLDB
+When deploying in a production enviornment, you will need to select another database.  Spring XD is actively tested on MySql (Version: 5.1.23) and Postgres (Version 9.2-1002).  All batch workflow tables are automatically created, if they do not exist, for HSQLDB, MySQL and Postgres.  The JDBC driver jars for the HSQLDB, MySql, and Postgres are already on the XD classpath.
 
-The default values for the datasource as taken from the default https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/resources/application.yml[application.yml] file that is embedded in the XD jar file are:
+NOTE: Until full schema support is added for Oracle, Sybase and other database, you will need to put a .jar file in the `xd/lib` directory that contains the equivalent functionality as these https://github.com/spring-projects/spring-xd/tree/master/spring-xd-batch/src/main/resources/org/springframework/xd/batch/schema[DDL scripts].  
 
-```
-spring:
-  profiles:
-    active: default,hsqldb
-  datasource:
-    url: jdbc:hsqldb:hsql://${hsql.server.host:localhost}:${hsql.server.port:9101}/${hsql.server.dbname:xdjob}
-    username: sa
-    password:
-    driverClassName: org.hsqldb.jdbc.JDBCDriver
-```
+The provided configuration file `servers.yml` located in `$XD_HOME\config` has commented out configuration for some commonly used databases.  You can use these as a basis to support your database environment.
 
-The expression `${hsql.server.host:localhost}` means that if there is a http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/core/env/PropertySource.html[PropertySource] that has the key name 'hsql.server.host', the value associated with that key will be used, otherwise the value `localhost` will be used.
+===== HSQLDB 
 
-Spring XD maintains an ordered list of `PropertySources` that are searched through to resolve a property name.  System properties and OS environment properties have higher precedence over values in `xd-config.yml`.  In the above example, if you set the environment variable `hsql_server_host`, the environment variable's value will be used instead of `localhost`.
+When in distributed mode and you want to use HSQLDB, you need to change the value of `spring.datasource` properties.  As an example, 
 
-There is also a http://gordondickens.com/wordpress/2012/06/12/spring-3-1-environment-profiles/[profile] named 'hsqldb' that is enabled as part of setting this datasource. This allows for grouping together components of the application and loading only if they are associated with an enabled profile.  This is useful if you are developing custom modules for Spring XD.
-
-===== HSQLDB
-
-The HSQLDB database is already configured as part of the default profile.  You can change the host, port, database name, and database filename used by uncommenting the following lines of configuration in `xd-config.yml` and edit the use the relevant values for your environment.
-
-```
+----
 hsql:
-  server:
-    host: localhost
-    port: 9101
-    dbname: xdjob
-    database: xdjobrepotest
-```
-To change the datasource url, username and password uncomment and modify the following section
-
-```
+ server:
+   host: localhost
+   port: 9102
+   dbname: xdjob
 spring:
-  datasource:
-    url: jdbc:hsqldb:hsql://${hsql.server.host:localhost}:${hsql.server.port:9101}/${hsql.server.dbname:xdjob}
-    username: sa
-    password:
-    driverClassName: org.hsqldb.jdbc.JDBCDriver
-```
+   datasource:
+   url: jdbc:hsqldb:hsql://${hsql.server.host:localhost}:${hsql.server.port:9101}/${hsql.server.dbname:xdjob}
+   username: sa
+   password:
+   driverClassName: org.hsqldb.jdbc.JDBCDriver
+----
 
-The full section is shown but you can override as little as necessary, e.g. it is unlikely you would need to specify again the driverClassName.
+The properties under `hsql.server` are substituted in the `spring.datasource.url` property value.  This lets you create short variants of existing Spring Boot properties.  Using this style, you can override the value of these configuration variables by setting an OS environment variable, such as `xd_server_host`.  Alternatively, you can not use any placeholders and set `spring.datasource.url` directly to known values. 
 
 ===== MySql
 
-To configure MySql, uncomment the following lines of configuration in `xd-config.yml` and edit to use relevant values for your environment.
+When in distributed mode and you want to use HSQLDB, you need to change the value of `spring.datasource.*` properties.  As an example, 
 
-```
+----
 spring:
-  datasource:
-    url: jdbc:mysql://yourDBhost:3306/yourDB
-    username: yourUsername
-    password: yourPassword
-    driverClassName: com.mysql.jdbc.Driver
-  profiles:
-    active: default,mysql
-```
+ datasource:
+ url: jdbc:mysql://yourDBhost:3306/yourDB
+ username: yourUsername
+ password: yourPassword
+ driverClassName: com.mysql.jdbc.Driver
+----
 
-These values can be overridden using environment variables of the form `spring_datasource_url` etc.
+To override these settings set an OS environment variable such as `spring_datasource_url` to the value you require.
 
-===== Postgres
 
-To configure Postgres, uncomment the following lines of configuration in `xd-config.yml` and edit to use relevant values for your environment.
+===== MySql
 
-```
+When in distributed mode and you want to use HSQLDB, you need to change the value of `spring.datasource.*` properties.  As an example, 
+
+----
 spring:
   datasource:
     url: jdbc:postgresql://yourDBhost:5432/yourDB
     username: yourUsername
     password: yourPassword
     driverClassName: org.postgresql.Driver
-  profiles:
-    active: default,postgresql
-```
+----
 
-These values can be overridden using environment variables of the form `spring_datasource_url` etc.
+To override these settings set an OS environment variable such as `spring_datasource_url` to the value you require.
 
-===== Redis
+==== Redis
 
-When you are running in distributed mode where the admin server or containers are on different machines than the Redis server, you need to configure XD to reference the redis instance.  In the application.yml file, update the redis settings with appropriate host and port.
+If you want to use Redis for analytics or data transport you should set the host and port of the Redis server.
+
 
 ```
 spring:
@@ -140,11 +109,11 @@ spring:
    host: localhost
 ```
 
-These values can be overridden using environment variables of the form `spring_redis_port` etc.
+To override these settings set an OS environment variable such as `spring_redis_port` to the value you require.
 
-===== RabbitMQ
+==== RabbitMQ
 
-When you are running in distributed mode where the admin server or containers are on different machines than the RabbitMQ server, you need to configure XD to reference the rabbit instance.  In the xd-config.yml file, update the rabbit settings with appropriate host and port.
+If you want to use RabbitMQ as a data transport use the following configuration setting
 
 ```
 spring:
@@ -156,27 +125,115 @@ spring:
    virtual_host: /
 ```
 
-These values can be overridden using environment variables of the form `spring_rabbitmq_port` etc.
+To override these settings set an OS environment variable such as `spring_rabbitmq_host` to the value you require.
 
-===== Server Port
+==== Admin Server HTTP Port
 
-The port for the admin sever UI, RESTful API, and general health/monitoring endpoints is set via the configuration section.  See http://projects.spring.io/spring-boot/docs/spring-boot-actuator/docs/Features.html[Spring Boot Management Endpoints] for more information about the variety of common non-functional features that help with supporting applications in production.
+The default HTTP port of the `xd-admin` server is 9393.  To change the value use the following configuration setting
 
-```
+----
 server:
-  port: 9393
-```
-This value can be overridden using an environment variable of the form `server_port`.
+  port: 9876
+----
 
-===== Batch Jobs accessing JDBC
+==== Management Port
 
-The provided batch jobs that read from or write to JDBC use a separate `batch-jdbc.properties` file to
-configure the JDBC connection for the data that the jobs process. You can find this file in the `$XD_HOME/config` directory. This file is configured to write to the HSQL database that is started by default. If you change to use another database configuration, remember to change this `batch-jdbc.properties` file as well since it doesn't automatically reflect the changes made for storing the batch jobs' metadata (this should change in the next XD release).
+The XD servers provide general http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready-endpoints[health] and JMX exported http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready-jolokia[management] endpoints via Jolokia.  
 
-===== Local transport
+By default the management and health endpoints are available on port 9393.  To change the value of the port use the following configuration setting.
+
+----
+management:
+  port: 9876
+----
+
+You can also disable http management endpoints by setting the port value to -1.
+
+By default JMX MBeans are exported.  You can disable JMX by setting `spring.jmx.enabled=false`.
+
+The section on http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready-monitoring[Monitoring and management over HTTP] provides details on how to configure these endpoint.
+
+==== Local transport
 
 Local transport uses a http://docs.spring.io/spring-integration/docs/latest-ga/api/org/springframework/integration/channel/QueueChannel.html[QueueChannel] to pass data between modules.  There are a few properties you can configure on the QueueChannel
 
 * `xd.local.transport.named.queueSize` - The capacity of the queue, the default value is `Integer.MAX_VALUE`
 * `xd.local.transport.named.polling` - Messages that are buffered in a QueueChannel need to be polled to be consumed.  This property controls the fixed rate at which polling occurs.  The default value is 1000 ms.
+
+=== Module Configuration
+
+Modules are configured by placing property files in a nested directory structure based on their type and name.  The root of the nested directory structure is by default `XD_HOME/config/modules`.  This location can be customized by setting the OS environment variable `XD_MODULE_CONFIG_LOCATION`, similar to how the environment variable `XD_CONFIG_LOCATION` is used for configuring the server.  
+
+NOTE: The `XD_MODULE_CONFIG_LOCATION` can refernce any any http://docs.spring.io/spring/docs/4.0.3.RELEASE/spring-framework-reference/htmlsingle/#resources[Spring Resource] implementation, most commonly denoted using the prefixes `classpath:`, `file:` and `http:`.
+
+As an example, if you wanted to configure the twittersearch module, you would create a file 
+----
+XD_CONFIG_LOCATION\sink\twittersearch\twittersearch.properties
+----
+
+and the contents of that file would be property names such as `consumerKey` and `consumerSecret`.
+
+NOTE: You *do not* need to prefix these property names with a `sink.twittersearch` prefix.
+
+You can override the values in the module property file in various ways.  The following sources of properties are considered in the following order.
+
+. Properties specified in the stream or job `DSL` definiton
+. Java System Properties
+. OS environment variables.
+. `XD_CONFIG_LOCATION\<type>\<name>\<name>.properties` (including profile variants)
+. Default values specified in module metadata (if available).
+
+Values in `XD_CONFIG_LOCATION\<type>\<name>\<name>.properties` can be property placeholder references to keys defined in another resource location.  By default the resource is the file `XD_MODULE_CONFIG_LOCATION\modules.yml`.  You can customize the name of the resource by using setting the OS environment variable `XD_MODULE_CONFIG_NAME` before running a server startup script.
+
+The `modules.yml` file can be used to specify the values of keys that should be shared across different modules.  For example, it is common to use the same twitter developer credentials in both the twittersearch and twitterstream modules.  To avoid repeating the same credentials in two property files, you can use the following setup.
+
+`modules.yml` contains
+----
+sharedConsumerKey=alsdjfqwopieur
+sharedConsumerSecret=pqwieouralsdjkqwpo
+sharedAccessToken=llixzchvpiawued
+sharedAccessTokenSecret=ewoqirudhdsldke
+----
+
+and `XD_CONFIG_LOCATION\sink\twitterstream\twitterstream.properties` contains
+----
+consumerKey=${sharedConsumerKey}
+consumerSecret=${sharedConsumerSecret}
+accessToken=${sharedAccessToken}
+accessTokenSecret=${sharedAccessTokenSecret}
+----
+
+and `XD_CONFIG_LOCATION\sink\twittersearch\twittersearch.properties` contains
+----
+consumerKey=${sharedConsumerKey}
+consumerSecret=${sharedConsumerSecret}
+----
+
+===== Profiles
+
+When resolving property file names, the server will look to load profile specific variants baed on the naming convention `<name>-{profile}.properties`.  For example, if given the OS environment variable `spring_profiles_active=default,qa` the following configuration file names for the twittersearch module would be searched in this order
+
+. `XD_CONFIG_LOCATION\sink\twittersearch\twittersearch.properties`
+. `XD_CONFIG_LOCATION\sink\twittersearch\twittersearch-default.properties`
+. `XD_CONFIG_LOCATION\sink\twittersearch\twittersearch-qa.properties`
+
+Also, the shared module configuration file is refernced using profile variants, so given the OS environment variable `spring_profiles_active=default,qa` the following shared module configuration files would be searched for in this order
+
+. `XD_MODULE_CONFIG_LOCATION\modules.yml`
+. `XD_MODULE_CONFIG_LOCATION\modules-default.yml`
+. `XD_MODULE_CONFIG_LOCATION\modules-qa.yml`
+
+===== Batch Jobs or modules accessing JDBC
+
+Another common case is access to a relational database from a job or the JDBC Sink module.
+
+As an example, to provide the properties for the batch job `jdbchdfs` the file `XD_MODULE_CONFIG_LOCATION\job\jdbchdfs\jdbchdfs.properites` should contain
+----
+driverClass=org.hsqldb.jdbc.JDBCDriver
+url=jdbc:hsqldb:mem:xd
+username=sa
+password=
+----
+
+A property file with the same keys, but likely different values would be located in `XD_MODULE_CONFIG_LOCATION\sink\jdbc\jdbc.properites`.
 
