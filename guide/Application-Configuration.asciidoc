@@ -162,13 +162,13 @@ Local transport uses a http://docs.spring.io/spring-integration/docs/latest-ga/a
 
 === Module Configuration
 
-Modules are configured by placing property files in a nested directory structure based on their type and name.  The root of the nested directory structure is by default `XD_HOME/config/modules`.  This location can be customized by setting the OS environment variable `XD_MODULE_CONFIG_LOCATION`, similar to how the environment variable `XD_CONFIG_LOCATION` is used for configuring the server.  
+Modules are configured by placing property files in a nested directory structure based on their type and name.  The root of the nested directory structure is by default `XD_HOME/config/modules`.  This location can be customized by setting the OS environment variable `XD_MODULE_CONFIG_LOCATION`, similar to how the environment variable `XD_CONFIG_LOCATION` is used for configuring the server.
 
 NOTE: The `XD_MODULE_CONFIG_LOCATION` can refernce any any http://docs.spring.io/spring/docs/4.0.3.RELEASE/spring-framework-reference/htmlsingle/#resources[Spring Resource] implementation, most commonly denoted using the prefixes `classpath:`, `file:` and `http:`.
 
 As an example, if you wanted to configure the twittersearch module, you would create a file 
 ----
-XD_CONFIG_LOCATION\source\twittersearch\twittersearch.properties
+XD_MODULE_CONFIG_LOCATION\source\twittersearch\twittersearch.properties
 ----
 
 and the contents of that file would be property names such as `consumerKey` and `consumerSecret`.
@@ -180,10 +180,10 @@ You can override the values in the module property file in various ways.  The fo
 . Properties specified in the stream or job `DSL` definiton
 . Java System Properties
 . OS environment variables.
-. `XD_CONFIG_LOCATION\<type>\<name>\<name>.properties` (including profile variants)
+. `XD_MODULE_CONFIG_LOCATION\<type>\<name>\<name>.properties` (including profile variants)
 . Default values specified in module metadata (if available).
 
-Values in `XD_CONFIG_LOCATION\<type>\<name>\<name>.properties` can be property placeholder references to keys defined in another resource location.  By default the resource is the file `XD_MODULE_CONFIG_LOCATION\modules.yml`.  You can customize the name of the resource by using setting the OS environment variable `XD_MODULE_CONFIG_NAME` before running a server startup script.
+Values in `XD_MODULE_CONFIG_LOCATION\<type>\<name>\<name>.properties` can be property placeholder references to keys defined in another resource location.  By default the resource is the file `XD_MODULE_CONFIG_LOCATION\modules.yml`.  You can customize the name of the resource by using setting the OS environment variable `XD_MODULE_CONFIG_NAME` before running a server startup script.
 
 The `modules.yml` file can be used to specify the values of keys that should be shared across different modules.  For example, it is common to use the same twitter developer credentials in both the twittersearch and twitterstream modules.  To avoid repeating the same credentials in two property files, you can use the following setup.
 
@@ -195,7 +195,7 @@ sharedAccessToken=llixzchvpiawued
 sharedAccessTokenSecret=ewoqirudhdsldke
 ----
 
-and `XD_CONFIG_LOCATION\source\twitterstream\twitterstream.properties` contains
+and `XD_MODULE_CONFIG_LOCATION\source\twitterstream\twitterstream.properties` contains
 ----
 consumerKey=${sharedConsumerKey}
 consumerSecret=${sharedConsumerSecret}
@@ -203,7 +203,7 @@ accessToken=${sharedAccessToken}
 accessTokenSecret=${sharedAccessTokenSecret}
 ----
 
-and `XD_CONFIG_LOCATION\source\twittersearch\twittersearch.properties` contains
+and `XD_MODULE_CONFIG_LOCATION\source\twittersearch\twittersearch.properties` contains
 ----
 consumerKey=${sharedConsumerKey}
 consumerSecret=${sharedConsumerSecret}
@@ -211,11 +211,11 @@ consumerSecret=${sharedConsumerSecret}
 
 ===== Profiles
 
-When resolving property file names, the server will look to load profile specific variants baed on the naming convention `<name>-{profile}.properties`.  For example, if given the OS environment variable `spring_profiles_active=default,qa` the following configuration file names for the twittersearch module would be searched in this order
+When resolving property file names, the server will look to load profile specific variants based on the naming convention `<name>-{profile}.properties`.  For example, if given the OS environment variable `spring_profiles_active=default,qa` the following configuration file names for the twittersearch module would be searched in this order
 
-. `XD_CONFIG_LOCATION\source\twittersearch\twittersearch.properties`
-. `XD_CONFIG_LOCATION\source\twittersearch\twittersearch-default.properties`
-. `XD_CONFIG_LOCATION\source\twittersearch\twittersearch-qa.properties`
+. `XD_MODULE_CONFIG_LOCATION\source\twittersearch\twittersearch.properties`
+. `XD_MODULE_CONFIG_LOCATION\source\twittersearch\twittersearch-default.properties`
+. `XD_MODULE_CONFIG_LOCATION\source\twittersearch\twittersearch-qa.properties`
 
 Also, the shared module configuration file is refernced using profile variants, so given the OS environment variable `spring_profiles_active=default,qa` the following shared module configuration files would be searched for in this order
 
