@@ -467,6 +467,30 @@ $ hexdump -C /tmp/xd/output/tcptest9
 00000008
 ----
 
+==== Implementing a simple conversation
+That "stimulus" counter concept bears some explanation. By default, the module will emit (at interval set by `fixedDelay`) an incrementing number, starting at 1. Given that the default is to use an `expression` of `payload.toString()`, this results in the module sending `1, 2, 3, ...` to the remote server.
+
+By using another expression, or more certainly a `script`, one can implement a simple conversation, assuming it is time based. As an example, let's assume we want to join some kind of chat server where one first needs to authenticate, then specify which rooms to join. Lastly, all clients are supposed to send some keepalive commands to make sure that the connection is open.
+
+The following groovy script could be used to that effect:
+```groovy
+def commands = ['', // index 0 is not used
+'LOGIN user=johndoe', // first command sent
+'JOIN weather',
+'JOIN news',
+'JOIN gossip'
+]
+
+
+// payload will contain an incrementing counter, starting at 1
+if (commands.size > payload)
+  return commands[payload] + "\n"
+else 
+  return "PING\n"  // send keep alive after 4th 'real' command
+
+```
+
+
 [[tcp-client]]
 === TCP Client
 The `tcp-client` source module uses raw tcp sockets, as does the `tcp` module but contrary to the `tcp` module, acts as a client. Whereas the `tcp` module will open a listening socket and wait for connections from a remote party, the `tcp-client` will initiate the connection to a remote server and emit as messages what that remote server sends over the wire. As an optional feature, the `tcp-client` can itself emit messages to the remote server, so that a simple conversation can take place.
@@ -504,30 +528,6 @@ dispatcher:: `ringBuffer`, `threadPoolExecutor`, `workQueue`, `sync`. *(default:
 host:: the host to connect to *(default: `0.0.0.0`)*
 port: the port to connect to *(default: `3000`)*
 lengthFieldLength:: length of the field to use when framing *(default: `4`)*
-
-
-==== Implementing a simple conversation
-That "stimulus" counter concept bears some explanation. By default, the module will emit (at interval set by `fixedDelay`) an incrementing number, starting at 1. Given that the default is to use an `expression` of `payload.toString()`, this results in the module sending `1, 2, 3, ...` to the remote server.
-
-By using another expression, or more certainly a `script`, one can implement a simple conversation, assuming it is time based. As an example, let's assume we want to join some kind of chat server where one first needs to authenticate, then specify which rooms to join. Lastly, all clients are supposed to send some keepalive commands to make sure that the connection is open.
-
-The following groovy script could be used to that effect:
-```groovy
-def commands = ['', // index 0 is not used
-'LOGIN user=johndoe', // first command sent
-'JOIN weather',
-'JOIN news',
-'JOIN gossip'
-]
-
-
-// payload will contain an incrementing counter, starting at 1
-if (commands.size > payload)
-  return commands[payload] + "\n"
-else 
-  return "PING\n"  // send keep alive after 4th 'real' command
-
-```
 
 
 
