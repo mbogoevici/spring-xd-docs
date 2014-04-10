@@ -6,9 +6,9 @@ The XD distributed runtime architecture consists of the following distributed co
 * Admin - Manages Stream and Job deployments and other end user operations and provides REST services to access runtime state, system metrics, and analytics
 * Container - Hosts deployed Modules (stream processing tasks) and batch jobs
 * ZooKeeper - Provides all runtime information for the XD cluster. Tracks running containers, in which containers modules and jobs are deployed, stream definitions, deployment manifests, and the like. There's more to come on how ZooKeeper is used in XD. See (https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index)[The ZooKeeper Wiki] for a general introduction.
-* Spring Batch Job Repository Database - A SQL Server required for jobs. The XD distribution comes with HSQLDB, but this is not appropriate for a production installation. XD supports any JDBC compliant database.
+* Spring Batch Job Repository Database - An RDMS is required for jobs. The XD distribution comes with HSQLDB, but this is not appropriate for a production installation. XD supports any JDBC compliant database.
 
-* A Transport Server - XD message transport is designed to be pluggable. Currently XD supports Rabbit MQ and Redis for distributed messaging used for stream and job processing. A production installation must configure one of these transport options. Rabbit MQ is recommended as it is considered the more robust and performent of the two. In either case, a seperate server must be running to provide the messaging middleware.
+* A Message Broker - Used for data transport. XD data transport is designed to be pluggable. Currently XD supports Rabbit MQ and Redis for messaging during stream and job processing. A production installation must configure one of these transport options. Rabbit MQ is recommended as it is considered the more reliable of the two. In either case, a separate server must be running to provide the messaging middleware.
 
 * Analytics Repository - XD currently uses Redis to store the counters and gauges provided link:Analytics#analytics[Analytics]) 
 
@@ -20,7 +20,7 @@ This discussion will focus on the core runtime components and the role of ZooKee
 
 === Configuring XD for High Availabilty (HA)
 
-A production XD environment is typically distributed among multiple hosts in a clustered environment. XD scales horizontally by providing additional Container instances. In the simplest case, all containers are replicas, that is, they are interchangeable and a module may be deployed to any instance in a round-robin fashion. XD supports a flexible container matching algorithm to target modules to specific container configurations. The matching algorithm will be covered in more detail later, but for now, let's assume the simple case. Running multiple containers not only supports horizontal scalability, but allows for failover. If one container goes down, any modules deployed to that container will be deployed to another instance. Thus, a typical N+1 cluster is recommended. That is, N is the ideal number of working instances plus one "spare" instance. The spare instance is not really a spare, it will be just another active container but if one instance goes down, the expected throughput will be maintained. 
+A production XD environment is typically distributed among multiple hosts in a clustered environment. XD scales horizontally by providing additional Container instances. In the simplest case, all containers are replicas, that is, they are interchangeable and a module may be deployed to any instance in a round-robin fashion. XD supports a flexible container matching algorithm to target modules to specific container configurations. The matching algorithm will be covered in more detail later, but for now, let's assume the simple case. Running multiple containers not only supports horizontal scalability, but allows for failover. If one container goes down, any modules deployed to that container will be deployed to another available instance.  
 
 XD requires that a single active Admin server handle interactions with the containers, such as stream deployment requests, as these types of operations must be carefully coordinated and processed in the order received. Without a backup Admin server, this component becomes single point of failure. Therefore, two (or more for the risk averse) Admin servers are recommended for a production environment. Note that every Admin server can accept all requests via REST endpoints but only one instance, the "Leader", will actually perform requests that update the runtime state. If the Leader goes down, another available Admin server will assume the role.
 
@@ -30,9 +30,9 @@ An HA XD installation also requires that additional required servers - ZooKeeper
 
 In the previous section, we claimed that if a container goes down, XD will redeploy anything that is deployed on that instance to another available container. We also claimed that if the Admin Leader goes down, another Admin server will assume that role. ZooKeeper is what makes this all possible. ZooKeeper is widely used Apache project designed primarily for cluster management and coordination. This section will cover some basic concepts necessary to understand its role in XD. See (https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index)[The ZooKeeper Wiki] for a more complete overview.
 
-ZooKeeper is based on a simple heirarchical data structure, formally a tree, but conceptually and semantically similar to a file directory structure. As such, data is stored in _nodes_. A node is referenced via a _path_, e.g., _/xd/streams/mystream_. Each node can store additional data, serialized as a byte array. In XD, all data is a java.util.Map serialized as JSON.
+ZooKeeper is based on a simple hierarchical data structure, formally a tree, but conceptually and semantically similar to a file directory structure. As such, data is stored in _nodes_. A node is referenced via a _path_, e.g., _/xd/streams/mystream_. Each node can store additional data, serialized as a byte array. In XD, all data is a java.util.Map serialized as JSON.
 
-A node is created to be either _ephemeral_ or _persistent_.  An ephemeral node exists only as long as the process that created it. A persistent node is, well, persistent. For example, ephemeral nodes are appropropriate for registering Container instances. When an XD container starts up, it registers itself as an ephemeral node, _/xd/containers/<container-id>_, where XD generates a unique container id. When the container goes down, its node is removed. Persistent nodes are used to manage state needed for recovery and failover that must be available independent of a Container instance. This includes data such as stream definitions, job definitions, deployment manifests, and module deployments.
+A node is created to be either _ephemeral_ or _persistent_.  An ephemeral node exists only as long as the process that created it. A persistent node is, well, persistent. For example, ephemeral nodes are appropriate for registering Container instances. When an XD container starts up, it registers itself as an ephemeral node, _/xd/containers/<container-id>_, where XD generates a unique container id. When the container goes down, its node is removed. Persistent nodes are used to manage state needed for recovery and failover that must be available independent of a Container instance. This includes data such as stream definitions, job definitions, deployment manifests, and module deployments.
 
 Obviously ZooKeeper is critically important to the XD runtime and must itself be HA. ZooKeeper itself supports a clustered architecture, called an _ensemble_. The details are beyond the scope of this document, but for the sake of discussion, there should be at least three ZooKeeper server instances running (an odd number is always recommended). The XD Container and Admin nodes are clients to the ZooKeeper ensemble and must connect to ZooKeeper at startup. XD components are configured with a _zk.client.connect_ property which may designate a single <host>:<port> or a comma separated list. The ZooKeeper client will attempt to connect to each server in order until it succeeds. If it is unable to connect, it will keep trying. If a connection goes down, the ZooKeeper client will attempt to reconnect to one of the servers. The ZooKeeper cluster guarantees consistent replication of data across the ensemble. ZooKeeper maintains data primarily in memory backed by a disk cache. 
 
@@ -57,12 +57,14 @@ The Leader registers listeners on /xd/deployments/streams, /xd/deployments/jobs,
 
 ----
 xd>stream create ticktock --definition "time | log"
-xd>stream deploy ticktock
 ----  
-This shell will invoke a REST service on its connected Admin instance to 
+This command will invoke a REST service on its connected Admin instance to create a new node /xd/streams/ticktock
 
-* create a new node /xd/streams/ticktock
-* create a new node /xd/deployments/streams/ticktock
+----
+xd>stream create ticktock --definition "time | log"
+---- 
+
+This will create a new node /xd/deployments/streams/ticktock 
 
 If the Admin instance connected to the shell is not the Leader, it will perform no further action. The Leader listening to /xd/deployments/streams will respond to the newly added child node and deploy each module in the stream definition to a different Container, if possible, and update the runtime state accordingly.
 
@@ -152,7 +154,7 @@ numChildren = 0
 ----
 using the _get_ command on the new stream node, we can see the stream definition represented as JSON, along with some standard ZooKeeper node information. 
 
-Note: _ephemeralOwner = 0x0_, indicating this is not an ephemeral node. At this point, nothing else should have changed from the initial state. 
+NOTE: _ephemeralOwner = 0x0_, indicating this is not an ephemeral node. At this point, nothing else should have changed from the initial state. 
 
 Now, Using the XD shell, let's deploy the stream,
 
@@ -165,25 +167,43 @@ and verify with ZooKeeper:
 ----
 [zk: localhost:5555(CONNECTED) 9] ls /xd/deployments/streams
 [ticktock]
-[zk: localhost:5555(CONNECTED) 10] ls /xd/deployments/modules/<container-id>
+[zk: localhost:2181(CONNECTED) 10] ls /xd/streams/ticktock
+[sink, source]
+[zk: localhost:2181(CONNECTED) 11] ls /xd/streams/ticktock/source
+[time-0]
+[zk: localhost:2181(CONNECTED) 12] ls /xd/streams/ticktock/sink
+[log-1]
+[zk: localhost:2181(CONNECTED) 13] ls /xd/streams/ticktock/source/time-0
+[<container-id>]
+[zk: localhost:2181(CONNECTED) 14] ls /xd/streams/ticktock/sink/log-1
+[<container-id>]
+[zk: localhost:5555(CONNECTED) 15] ls /xd/deployments/modules/<container-id>
 [ticktock.sink.log-1, ticktock.source.time-0]
 ----
 
-Since XD is running as single node, both modules (time and log) are deployed to the same container instance, corresponding to the <container-id>. The module node name is <stream_name>.<module-type>.<module-name>-<module-index>, where <module-index> represents the position of the module in the stream. 
+Since XD is running as single node, both modules (time and log) are deployed to the same container instance, corresponding to the _<container-id>_. The module node name is _<stream_name>.<module-type>.<module-name>-<module-index>_, where _<module-index>_ represents the position of the module in the stream. 
 
 The information stored in ZooKeeper is provided to XD shell queries. For example:
 
 ----
 xd:>runtime modules
-  Module                  Container Id                          Properties
-  ----------------------  ------------------------------------  -----------------------------------------------------------------------------------------------------------
-  ticktock.sink.log-1     2ebbbc9b-63ac-4da4-aa32-e39d69eb546b  {xd.module.name=log, xd.module.index=1, xd.stream.name=ticktock}
-  ticktock.source.time-0  2ebbbc9b-63ac-4da4-aa32-e39d69eb546b  {xd.module.name=time, xd.module.index=0, xd.stream.name=ticktock, format=yyyy-MM-dd HH:mm:ss, fixedDelay=1}
-xd:>stream list
-  Stream Name  Stream Definition  Status
-  -----------  -----------------  --------
-  ticktock     time | log         deployed
+  Module                  Container Id                          Options
+  ----------------------  ------------------------------------  ------------------------------------------
+  ticktock.sink.log-1     186d3b36-b005-45ff-b46f-cb2c5cf61ea4
+  ticktock.source.time-0  186d3b36-b005-45ff-b46f-cb2c5cf61ea4  {format=yyyy-MM-dd HH:mm:ss, fixedDelay=1}
 ----
+
+=== Module Deployment
+
+A Stream is composed of Modules. In general, each module is deployed to one or more Container instance(s). In this way the Stream processing is distributed among multiple containers. The Admin decides to which container(s) each Module is deployed and writes the module information to _/xd/deployments/modules/<container-id>_. The Container has a Deploymentlistener to monitor this node for new modules to deploy. If the deployment is successful, the Container writes it's id as an ephemeral node to _xd/streams/<stream_name>/<module-type>/<module-name>-<module-index>/<container-id>_.
+
+image::images/module-deployment.png[XD Admin Internals]
+
+
+
+
+
+
 
 
 
