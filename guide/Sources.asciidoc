@@ -1,4 +1,4 @@
-=== Introduction
+>=== Introduction
 In this section we will show some variations on input sources.  As a prerequisite start the XD Container
 as instructed in the link:Getting-Started#getting-started[Getting Started] page.
 
@@ -15,6 +15,7 @@ The Sources covered are
 * <<syslog, Syslog>>
 * <<tcp, TCP>> 
 * <<tcp-client, TCP Client>> 
+* <<reactor-tcp, Reactor TCP>> 
 * <<jms, JMS>>
 * <<rabbit, RabbitMQ>>
 * <<time, Time>>
@@ -484,6 +485,26 @@ bufferSize:: the size of the emitting/receiving buffers *(default: `2048`, _i.e.
 fixedDelay:: the rate at which 'stimulus' messages will be emitted *(default: `5` seconds)*
 script:: reference to a script that should transform the counter stimulus to messages to send *(default: use `expression`)*
 expression:: a SpEL expression to convert the counter stimulus to a message *(default: `payload.toString()`, _i.e._ emit "1", "2", "3", _etc._)*
+
+[[reactor-tcp]]
+=== Reactor TCP
+The `reactor-tcp` source acts as a server and allows a remote party to connect to XD and submit data over a raw tcp socket.  The reactor-tcp source differs from the standard tcp source in that it is based on the https://github.com/reactor/reactor[Reactor Project] and can be configured to use an the http://martinfowler.com/articles/lmax.html[LMAX Disruptor RingBuffer] library allowing form extremebly high ingestion rates, e.g. ~ 1M/sec.
+
+To create a stream definition use the following XD shell command
+
+     xd:> stream create --name tcpReactor --definition "reactor-tcp | file"
+
+This will create the default reactor TCP source and send data read from it to the file named tcpReactor.
+
+The reactor-tcp source has the following options
+
+framing:: `linefeed` or `length`.  How to frame the data to tell invidual messages apart. *(default: `linefeed`)*
+codec:: how to decode the stream, either bytes, string or syslog. *(default: `string`)*
+dispatcher:: `ringBuffer`, `threadPoolExecutor`, `workQueue`, `sync`. *(default: `ringBuffer`)*
+host:: the host to connect to *(default: `0.0.0.0`)*
+port: the port to connect to *(default: `3000`)*
+lengthFieldLength:: length of the field to use when framing *(default: `4`)*
+
 
 ==== Implementing a simple conversation
 That "stimulus" counter concept bears some explanation. By default, the module will emit (at interval set by `fixedDelay`) an incrementing number, starting at 1. Given that the default is to use an `expression` of `payload.toString()`, this results in the module sending `1, 2, 3, ...` to the remote server.
