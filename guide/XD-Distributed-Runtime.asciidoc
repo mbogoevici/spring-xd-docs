@@ -61,7 +61,7 @@ xd>stream create ticktock --definition "time | log"
 This command will invoke a REST service on its connected Admin instance to create a new node /xd/streams/ticktock
 
 ----
-xd>stream create ticktock --definition "time | log"
+xd>stream deploy ticktock
 ---- 
 
 This will create a new node /xd/deployments/streams/ticktock 
