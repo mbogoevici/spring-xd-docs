@@ -1,6 +1,8 @@
 === Introduction
 
-Spring XD provides support for the real-time evaluation of various machine learning scoring algorithms as well simple real-time data analytics using various types of counters and gauges.  Spring XD provides this functionalty as an extensible class library with a few out of the box implemenations.  For Machine Learning algorithms, we integrate with the https://github.com/jpmml/jpmml-evaluator[JPMML-Evaluator] library that provides support for a wide range of https://github.com/jpmml/jpmml-evaluator#features[model types] and is interopable with models exported from http://www.r-project.org/[R], http://rattle.togaware.com/[Rattle], http://www.knime.org/[KNIME], and http://rapid-i.com/content/view/181/190/[RapidMiner].  For counter and gauge analytics, in-memory and http://redis.io/[Redis] implementations are provided.
+Spring XD provides support for the real-time evaluation of various machine learning scoring algorithms as well simple real-time data analytics using various types of counters and gauges.  Spring XD provides this functionalty as an extensible class library with a few out of the box implemenations.  
+
+For Machine Learning algorithms, we integrate with the https://github.com/jpmml/jpmml-evaluator[JPMML-Evaluator] library that provides support for a wide range of https://github.com/jpmml/jpmml-evaluator#features[model types] and is interopable with models exported from http://www.r-project.org/[R], http://rattle.togaware.com/[Rattle], http://www.knime.org/[KNIME], and http://rapid-i.com/content/view/181/190/[RapidMiner].  For counter and gauge analytics, in-memory and http://redis.io/[Redis] implementations are provided.
 
 Incorporating the evaluation of machine learning algorithms into stream processing is as easy as using any other processing module.  Here is a simple example
 
@@ -35,7 +37,7 @@ will produce output in the log file as shown below.
 }
 ----
 
-The next section on analytical models goes into more detail on the general infrastructre 
+The next section on analytical models goes into more detail on the general infrastructure 
 
 === Analytical Models
 
@@ -52,12 +54,12 @@ Applications can produce and consume *PMML* models, thus allowing an analytical 
 
 *PMML* is just one of many other technologies that one can integrate to implement analytics with, more will follow in upcoming releases.
 
-=== Modelling and Evaluation
+==== Modelling and Evaluation
 Analytical models are usually defined by a statistician aka data scientist or quant by using some statistical tool to analyze the data and build an appropriate model.
 In order to implement those models in a business application they are usually transformed and exported in some way (e.g. in the form of a *PMML* definition).
 This model is then loaded into the application which then evaluates it against a given input (event, tuple, example).
 
-=== Modeling
+==== Modeling
 Analytical models can be defined in various ways. For the sake of brevity we use *R* from the http://www.r-project.org[*r-project*] to demonstrate
 how easy it is to export an analytical model to *PMML* and use it later in stream processing.
 
@@ -224,12 +226,12 @@ from the training dataset of the IRIS dataset.
 </PMML>
 ----
 
-=== Evaluation
+==== Evaluation
 
 The above defined *PMML* model can evaluated in a Spring XD stream definition by using the *analytic-pmml* module as a processor
 in your stream definition. The actual evaluation of the *PMML* is performed via the *PmmlAnalytic* which uses the https://github.com/jpmml/jpmml-evaluator[*jpmml-evaluator*] library.
 
-=== Model Selection
+==== Model Selection
 
 The PMML standard allows multiple models to be defined within a single PMML document.
 The model to be used can be configured in multiple ways through the properties *modelName* and *location*. The supported variants are listed below:
@@ -306,7 +308,7 @@ datasets$testset[,1:4][1,]
 
 
 
-== Counters and Gauges
+=== Counters and Gauges
 Counter and Gauges are analytical data strucutres collectively referred to as metrics.  Metrics can be used directly in place of a sink just as if you were creating any other link:Streams#streams[stream], but you can also analyze data from an existing stream using a link:Taps#taps[tap]. We'll look at some examples of using metrics with taps in the following sections. As a prerequisite start the XD Container as instructed in the link:Getting-Started#getting-started[Getting Started] page. 
 
 The 1.0 release provides the following types of metrics
@@ -322,7 +324,7 @@ Spring XD supports these metrics and analytical data structures as a general pur
 
 
 [[counter]]
-=== Counter
+==== Counter
 
 A counter is a Metric that associates a unique name with a long value. It is primarily used for counting events triggered by incoming messages on a target stream. You create a counter with a unique name and optionally an initial value then set its value in response to incoming messages. The most straightforward use for counter is simply to count messages coming into the target stream. That is, its value is incremented on every message. This is exactly what the _counter_ module provided by Spring XD does. 
 
@@ -342,7 +344,7 @@ The results are written to redis under the key counter.${name}. To retrieve the 
    redis 127.0.0.1:6379> get counters.tweetcount
 
 [[field-value-counter]]
-=== Field Value Counter
+==== Field Value Counter
 
 A field value counter is a Metric used for counting occurrences of unique values for a named field in a message payload. XD Supports the following payload types out of the box:
 
@@ -401,7 +403,7 @@ The _twittersearch_ source produces JSON strings which contain the user id of th
    redis 127.0.0.1:6379>zrange fieldvaluecounters.fromUserCount 0 -1 withscores 
 
 [[aggregate-counter]]
-=== Aggregate Counter
+==== Aggregate Counter
 
 The aggregate counter differs from a simple counter in that it not only keeps a total value for the count, but also retains the total count values for each minute, hour day and month of the period for which it is run. The data can then be queried by supplying a start and end date and the resolution at which the data should be returned. 
 
@@ -434,7 +436,7 @@ The general format is
 
 
 [[gauge]]
-=== Gauge
+==== Gauge
 
 A gauge is a Metric, similar to a counter in that it holds a single long value associated with a unique name. In this case the value can represent any numeric value defined by the application. 
 
@@ -445,7 +447,7 @@ The _gauge_ sink provided with XD stores expects a numeric value as a payload, t
 
 Here is an example of creating a tap for a gauge:
 
-==== Simple Tap Example
+===== Simple Tap Example
 
 Create an ingest stream
 
@@ -466,7 +468,7 @@ Check the gauge:
     "10"
 
 [[rich-gauge]]
-=== Rich Gauge
+==== Rich Gauge
 
 A rich gauge is a Metric that holds a double value associated with a unique name. In addition to the value, the rich gauge keeps a running average, along with the minimum and maximum values and the sample count.
 
@@ -479,7 +481,7 @@ When stored in Redis, the values are kept as a space delimited string, formatted
 
 Here are some examples of creating a tap for a rich gauge:
 
-==== Simple Tap Example
+===== Simple Tap Example
 
 Create an ingest stream
 
@@ -501,7 +503,7 @@ Check the gauge:
     redis 127.0.0.1:6379> get richgauges.testgauge
     "16.0 -1 13.0 16.0 10.0 3"
 
-==== Stock Price Example
+===== Stock Price Example
 
 In this example, we will track stock prices, which is a more practical example. The data is ingested as JSON strings like 
 
@@ -531,7 +533,7 @@ Check the gauge:
     "72.08 -1 72.04 72.08 72.02 3"
 
 
-==== Improved Stock Price Example
+===== Improved Stock Price Example
 
 In this example, we will track stock prices for selected stocks. The data is ingested as JSON strings like 
 
@@ -568,7 +570,7 @@ Check the gauge:
     redis 127.0.0.1:6379> get richgauges.vmwprice
     "72.08 -1 72.04 72.08 72.02 3"
 
-=== Accessing Analytics Data over the RESTful API
+==== Accessing Analytics Data over the RESTful API
 
 Spring XD has a discoverable RESTful API based on the Spring HATEAOS library.  You can discover the resources available by making a GET request on the root resource of the Admin server.  Here is an example where navigate down to find the data for a counter named 'httptap' that was created by these commands
 
