@@ -15,6 +15,7 @@ http --outputType=application/x-xd-tuple | analytic-pmml --location=/models/iris
 The `http` source converts posted data to a Tuple.  The `analytic-pmml` processor loads the model from the specifed file and creates two mappings so that fields from the Tuple can be mapped into the input and output model names.  The `log` sink writes the payload of the event message to the log file of the XD container.
 
 Posting the following JSON data to the http source
+[source,json]
 ----
 { 
   "sepalLength": "6.4", 
@@ -25,6 +26,7 @@ Posting the following JSON data to the http source
 ----
 
 will produce output in the log file as shown below.
+[source,json]
 ----
 {
    "id":"1722ec00-baad-11e3-b988-005056c00008",
@@ -44,28 +46,32 @@ The next section on analytical models goes into more detail on the general infra
 We provide some core abstractions for implementing analytical models in stream processing applications.
 The main interface for integrating analytical models is *Analytic*. Some analytical
 models need to adjust the domain input and the model output in some way, therefore we provide a special base class *MappedAnalytic*
-provide core abstractions for implementing that mapping via *InputMapper* and *OutputMapper*.
+which has core abstractions for implementing that mapping via *InputMapper* and *OutputMapper*.
 
 Since *Spring XD 1.0.0.M6* we support the integration of analytical models, also called statistical models or mining models, that are defined via http://en.wikipedia.org/wiki/Predictive_Model_Markup_Language[*PMML*].
-*PMML* is the abreviation for *Predictive* *Model* *Markup* *Language* and is a standard XML representation that allows specifications of different mining models, their ensembles, and associated preprocessing. +
-*PMML* is maintained by the *Data* *Mining* *Group* (*DMG*) and supported by several state-of-the-art statistics and data mining software tools such as InfoSphere Warehouse, R / Rattle, SAS Enterprise Miner, SPSS®, and Weka. +
+*PMML* is the abreviation for *Predictive Model Markup Language* and is a standard XML representation that allows specifications of different mining models, their ensembles, and associated preprocessing. 
+
+[Note]
+====
+*PMML* is maintained by the *Data Mining Group* (*DMG*) and supported by several state-of-the-art statistics and data mining software tools such as InfoSphere Warehouse, R / Rattle, SAS Enterprise Miner, SPSS®, and Weka. 
 The current version of the *PMML* specification is http://www.dmg.org/v4-2/GeneralStructure.html[*4.2*] at the time of this writing.
 Applications can produce and consume *PMML* models, thus allowing an analytical model created in one application to be implemented and used for scoring or prediction in another.
+====
 
 *PMML* is just one of many other technologies that one can integrate to implement analytics with, more will follow in upcoming releases.
 
 ==== Modelling and Evaluation
-Analytical models are usually defined by a statistician aka data scientist or quant by using some statistical tool to analyze the data and build an appropriate model.
-In order to implement those models in a business application they are usually transformed and exported in some way (e.g. in the form of a *PMML* definition).
+Analytical models are usually defined by a statistician _aka_ data scientist or quant by using some statistical tool to analyze the data and build an appropriate model.
+In order to implement those models in a business application they are usually transformed and exported in some way (_e.g._ in the form of a *PMML* definition).
 This model is then loaded into the application which then evaluates it against a given input (event, tuple, example).
 
 ==== Modeling
 Analytical models can be defined in various ways. For the sake of brevity we use *R* from the http://www.r-project.org[*r-project*] to demonstrate
 how easy it is to export an analytical model to *PMML* and use it later in stream processing.
 
-For our example we use the http://en.wikipedia.org/wiki/Iris_flower_data_set[*iris*] example dataset in *R* to generate a classifier for iris flower species by applying the http://en.wikipedia.org/wiki/Naive_Bayes_classifier[*Navive Bayes*] algorithm.
+For our example we use the http://en.wikipedia.org/wiki/Iris_flower_data_set[*iris*] example dataset in *R* to generate a classifier for iris flower species by applying the http://en.wikipedia.org/wiki/Naive_Bayes_classifier[*Naive Bayes*] algorithm.
 
-[source,slang]
+[source,r]
 ----
 library(e1071) # Load library with the naive bayes algorithm support.
 
@@ -228,58 +234,48 @@ from the training dataset of the IRIS dataset.
 
 ==== Evaluation
 
-The above defined *PMML* model can evaluated in a Spring XD stream definition by using the *analytic-pmml* module as a processor
+The above defined *PMML* model can be evaluated in a Spring XD stream definition by using the *analytic-pmml* module as a processor
 in your stream definition. The actual evaluation of the *PMML* is performed via the *PmmlAnalytic* which uses the https://github.com/jpmml/jpmml-evaluator[*jpmml-evaluator*] library.
 
 ==== Model Selection
 
 The PMML standard allows multiple models to be defined within a single PMML document.
-The model to be used can be configured in multiple ways through the properties *modelName* and *location*. The supported variants are listed below:
+The model to be used can be configured through the *modelName* option.
 
-* analytic-pmml --modelName=...
-Uses the model with the given modelName from a pmml document location derived from the name.
-* analytic-pmml --location=...
-Uses the default model (according to the PMML standard this is simply the first model in the PMML document) from the given pmml location.
-* analytic-pmml --modelName=... --location=...
-Uses the model with the given modelName from the given pmml document location.
+*NOTE* The PMML standard also supports other ways for selection models, _e.g._ based on a predicate. This is currently not supported.
 
-*NOTE* The PMML standard also supports other ways for selection models, e.g. based on a predicate. This is currently not supported.
-
-In order to perform the evaluation in Spring XD you need to save the generated PMML document
-to the *${XD_HOME}/modules/processor/analytic-pmml/* folder (that you have to create if it is not there already) with the extension "pmml.xml". +
+In order to perform the evaluation in Spring XD you need to save the generated PMML document to some folder, typically the with the extension "pmml.xml".
 For this example we save the PMML document under the name *iris-flower-classification-naive-bayes-1.pmml.xml*.
 
-*NOTE* the search location for the PMML documents can be configured via the *--location* property, for which *{XD_HOME}/modules/processor/analytic-pmml/* is the default.
-
-In the following example we set up a stream definition with a http source that produces iris-flower-records
-that are piped to the analytic-pmml module which applies our iris flower classifier to predict the species of a given flower record.
-The result of that is a new record extended by a new attribute *predictedSpecies* is simply send to a *log* sink.
+In the following example we set up a stream definition with an `http` source that produces iris-flower-records
+that are piped to the `analytic-pmml` module which applies our iris flower classifier to predict the species of a given flower record.
+The result of that is a new record extended by a new attribute *predictedSpecies* which simply sent to a `log` sink.
 
 The definition of the stream, which we call *iris-flower-classification*, looks as follows:
-[source]
+
 ----
-stream create --name iris-flower-classification --definition "http --outputType=application/x-xd-tuple | analytic-pmml --location=/Users/tom/Documents/dev/repos/thomasdarimont/tmp/iris-flower-classification-naive-bayes-1.pmml.xml --inputFieldMapping='sepalLength:Sepal.Length,sepalWidth:Sepal.Width,petalLength:Petal.Length,petalWidth:Petal.Width' --outputFieldMapping='Predicted_Species:predictedSpecies' | log"
+xd:>stream create --name iris-flower-classification --definition "http --outputType=application/x-xd-tuple | analytic-pmml --location=/models/iris-flower-classification-naive-bayes-1.pmml.xml --inputFieldMapping='sepalLength:Sepal.Length,sepalWidth:Sepal.Width,petalLength:Petal.Length,petalWidth:Petal.Width' --outputFieldMapping='Predicted_Species:predictedSpecies' | log"
 ----
 
 * The *location* parameter can be used to specify the exact location of the pmml document. The value must be a valid spring http://www.springindepth.com/2.5.x/0.10/ch05.html[*resource*] location
-* The *inputFieldMapping* parameter defines a mapping of domain input fields to model input fields. It is just a list of fields or optional field:alias mappings to control which fields and how they are going to end up in the model-input if no inputFieldMapping is defined than all domain input fields are used as model input. +
+* The *inputFieldMapping* parameter defines a mapping of domain input fields to model input fields. It is just a list of fields or optional field:alias mappings to control which fields and how they are going to end up in the model-input. If no inputFieldMapping is defined then all domain input fields are used as model input. +
 * The *outputFieldMapping* parameter defines a mapping of model output fields to domain output fields with semantics analog to the inputFieldMapping. +
 * The optional *modelName* parameter of the analytic-pmml module can be used to refer to a particular named model within the PMML definition. If modelName is not defined the first model is selected by default. +
 
 *NOTE* Some analytical models like for instance *association rules* require a different typ of mapping. You can implement your own custom mapping strategies by implementing a custom *InputMapper* and *OutputMapper*
 and defining a new *PmmlAnalytic* or *TuplePmmlAnalytic* bean that uses your custom mappers.
 
-After the stream has been successfuly deployed to *Spring XD* we can eventually start to throw some data at it by issuing the follwing http request via the *XD-Shell*:
-*Note* that our example record contains no information to which species the example belongs to - this will be added by our classifier.
-[source]
+After the stream has been successfuly deployed to *Spring XD* we can eventually start to throw some data at it by issuing the follwing http request via the *XD-Shell* (or `curl`, or any other tool):
+
+*Note* that our example record contains no information about which species the example belongs to - this will be added by our classifier.
+
 ----
-http post --target http://localhost:9000 --contentType application/json --data "{ \"sepalLength\": 6.4, \"sepalWidth\": 3.2, \"petalLength\":4.5, \"petalWidth\":1.5 }"
+xd:>http post --target http://localhost:9000 --contentType application/json --data "{ \"sepalLength\": 6.4, \"sepalWidth\": 3.2, \"petalLength\":4.5, \"petalWidth\":1.5 }"
 ----
 
 After posting the above json document to the stream we should see the following output in the console:
-[source]
+[source, json]
 ----
-23:23:53,153  WARN pool-9-thread-4 logger.iris-flower-classification:150 -
    {
      "id":"1722ec00-baad-11e3-b988-005056c00008"
    , "timestamp":1396473833152
@@ -294,7 +290,7 @@ After posting the above json document to the stream we should see the following 
 *NOTE* the generated field *predictedSpecies* which now identifies our input as belonging to the iris species *versicolor*.
 
 We verify that the generated *PMML* classifier produces the same result as *R* by executing the issuing the following commands in *rproject*:
-[source,slang]
+[source,r]
 ----
 datasets$testset[,1:4][1,]
 # This is the first example record that we sent via the http post.
