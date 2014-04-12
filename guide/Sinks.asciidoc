@@ -477,7 +477,7 @@ The keyExpression is a SpEL expression that depends on the payload type. In this
 
     xd:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')"
     
-    xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":73}"
+    xd:> http post --target http://localhost:9090 --data {"symbol":"VMW","price":73}
 
 This will write an entry to the GemFire _Stocks_ region with the key _VMW_.  Please do not put spaces when separating the JSON key-value pairs, only a comma. 
 
