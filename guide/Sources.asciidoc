@@ -279,7 +279,7 @@ The _cqtest_ stream is now listening for any stock quote updates for VMW. Presum
 
 As updates are posted to the cache you should see them captured in the output file:
 
-    $cat /tmp/xd/output/cqtest
+    $cat /tmp/xd/output/cqtest.out
 
    {"symbol":"VMW","price":73}
    {"symbol":"VMW","price":78}
