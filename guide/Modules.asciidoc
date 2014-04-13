@@ -146,8 +146,8 @@ If a module were composed of a source and a processor, it would be classified as
 
 Based on the logical type of the composed module, it may be used in a stream as if it were a simple module instance. For example, to redefine the two streams from the first problem case above, now that the "foo" sink module has been composed, you would issue the following shell commands:
 
-    xd:> stream create httpfoo --definition "http | foo"
-    xd:> stream create filefoo --definition "file --outputType=text/plain | foo"
+    xd:> stream create httpfoo --definition "http | foo" --deploy
+    xd:> stream create filefoo --definition "file --outputType=text/plain | foo"  --deploy
 
 To test the "httpfoo" stream, try the following:
 
