@@ -85,9 +85,9 @@ You should now be able to start using Spring XD.
 
 In Spring XD, a basic stream defines the ingestion of event driven data from a source to a sink that passes through any number of processors. You can create a new stream by issuing a `stream create` command from the XD shell.  Stream defintions are built from a simple DSL. For example, execute:
 
-  xd:> stream create --definition "time | log" --name ticktock
+  xd:> stream create --name ticktock --definition "time | log" --deploy
 
-This defines a stream named `ticktock` based off the DSL expression `time | log`.  The DSL uses the "pipe" symbol `|`, to connect a source to a sink. The stream server finds the `time` and `log` definitions in the modules directory and uses them to setup the stream.  In this simple example, the time source simply sends the current time as a message each second, and the log sink outputs it using the logging framework at the WARN logging level.  In the shell where you started the server, you will see log output similar to that listed below
+This defines a stream named `ticktock` based off the DSL expression `time | log`.  The DSL uses the "pipe" symbol `|`, to connect a source to a sink. The stream server finds the `time` and `log` definitions in the modules directory and uses them to setup the stream.  In this simple example, the time source simply sends the current time as a message each second, and the log sink outputs it using the logging framework at the WARN logging level.  Since the `--deploy` flag was provided, this stream will be deployed immediately. In the console where you started the server, you will see log output similar to that listed below
 
   13:09:53,812  INFO http-bio-8080-exec-1 module.SimpleModule:109 - started module: Module [name=log, type=sink]
   13:09:53,813  INFO http-bio-8080-exec-1 module.ModuleDeployer:111 - launched sink module: ticktock:log:1
