@@ -8,8 +8,8 @@ Simply put, a Tap is a stream that uses a point in another stream as a source.
 The following XD shell commands create a stream `foo1` and a tap named `foo1tap`:
 
 ----
-xd:> stream create --name foo1 --definition "time | log"
-xd:> stream create --name foo1tap --definition "tap:stream:foo1 > log"
+xd:> stream create --name foo1 --definition "time | log" --deploy
+xd:> stream create --name foo1tap --definition "tap:stream:foo1 > log" --deploy
 ----
 
 Since a tap is a type of stream, use the `stream create` command to create the tap. The tap source is specified using the link:DSL-Reference#named-channels[named channel syntax] and always begins with `tap:`. In this case, we are tapping the stream named `foo1` specified by `:stream:foo1` 
@@ -20,7 +20,7 @@ A tap can consume data from any point along the target stream's processing pipel
 
 
 
-==== Example - tap after a processer has been applied ====
+==== Example - tap after a processor has been applied ====
 
 If the module name is unique in the target stream, use tap:stream:<stream_name>.<module_name> 
 
@@ -56,7 +56,7 @@ tap:stream:mystream.transformer.1 > ....
 NOTE: the `module index` is the position of the module in the stream, starting with 0. It is also valid to tap the source using this syntax, e.g., tap:stream:mystream.http.0
 
 
-==== Example - using a labels ====
+==== Example - using a label ====
 
 You may also use labels to create an alias for a module and reference the label in the tap
 
