@@ -44,7 +44,7 @@ If the module name is repeated in the target stream, use tap:stream:<stream_name
 If you have a stream called `mystream`, defined as
 
 ----
-http | transform --expression=payload.toLowerCase() | transform --expression=payload.reverse() | file
+http | transform --expression=payload.toLowerCase() | transform --expression=payload+'!' | file
 ----
 
 Create a tap after the first transformer is applied using
@@ -69,7 +69,7 @@ http | transform --expression=payload.toLowerCase() | flibble: transform --expre
 Create a tap after the second transformer is applied using
 
 ----
-tap:stream:mystream.transform.flibble > ....
+tap:stream:mystream.flibble > ....
 ----
 
 
