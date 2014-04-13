@@ -30,10 +30,11 @@ http://localhost:9393/beans etc.,
 
 Set `management.port=-1` for both default and container profiles in config/servers.yml
 
-==== To enable management over JMX
+==== Management over JMX
 
 All the boot endpoints are exposed over JMX with the domain name `org.springframework.boot` 
-All the spring integration components (such as message handlers, channels etc.,) are exposed by IntegrationMBeanExporter with domain names `xd.admin` (for XD admin), `xd.container` (for XD container),  `xd.shared.server` and `xd.parent` representing the application contexts common to both XD admin and container. Singlenode server will have all these domain names exposed.
+The MBeans that are exposed within XD admin, container server level are available with the domain names `xd.admin` (for XD admin), `xd.container` (for XD container),  `xd.shared.server` and `xd.parent` representing the application contexts common to both XD admin and container. Singlenode server will have all these domain names exposed.
+When the stream/job gets deployed into the XD container, the stream/job MBeans are exposed with specific domain/object naming strategy.
 
 ==== To disable management over JMX
 
@@ -55,12 +56,15 @@ MBeans with domain name `xd.myjob` with an object `jdbchdfs.0`
 
 === Using Jolokia to access JMX over http
 
-When JMX is enabled (which is **default** via `XD_JMX_ENABLED` property), Jolokia is auto-configured as well.
+When JMX is enabled (which is **default** via `XD_JMX_ENABLED` property), Jolokia is auto-configured to expose the XD admin, container and singenode server MBeans.
 
-For example, with XD container running management port 9080
+For example, with XD singlenode running management port 9080
 
  http://localhost:9080/jolokia/search/xd.*:type=*,*
 
-will list all the MBeans exposed in XD container and the deployed modules. Apart from this, other available domain and types can be accessed via Jolokia.
+ 
+will list all the MBeans exposed in XD admin/container servers. Apart from this, other available domain and types can be accessed via Jolokia.
+
+Please note that the deployed modules MBeans aren't exposed via Jolokia yet.But, those are accessible using tools like jconsole etc.,
 
 
