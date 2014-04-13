@@ -1,3 +1,3 @@
-This documentation describes the runtime architecture of Spring XD and the components of processing data, namely Streams, Taps, Analytics and the DSL used to declare them.
+This documentation describes the runtime architecture of Spring XD and the components of processing data, namely Jobs, Streams, Taps, Analytics and the DSL used to declare them.
 
 Use the sidebar to navigate the various sections of the documentation.
