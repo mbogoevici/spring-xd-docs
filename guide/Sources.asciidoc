@@ -113,13 +113,13 @@ The file source provides the contents of a File as a byte array by default but m
 
 To log the contents of a file create a stream definition using the XD shell
 
-    xd:> stream create --name filetest --definition "file | log"
+    xd:> stream create --name filetest --definition "file | log" --deploy
 
 The file source by default will look into a directory named after the stream, in this case /tmp/xd/input/filetest
 
 Note the above will log the raw bytes. For text files, it is normally desirable to output the contents as plain text. To do this, set the _outputType_ parameter: 
 
-    xd:> stream create --name filetest --definition "file --outputType=text/plain | log"
+    xd:> stream create --name filetest --definition "file --outputType=text/plain | log" --deploy
 
 For more details on the use of the _outputType_ parameter see link:Type-conversion#type-conversion[Type Conversion]
 
@@ -672,4 +672,3 @@ There isn't actually a source named "stdin" but it is easy to capture stdin by r
 You can then capture the output from commands using the `netcat` command:
 
      $ cat mylog.txt | netcat localhost 1234
-
