@@ -1,4 +1,3 @@
-
 Spring XD provides monitoring and management support using Spring Boot's monitoring and management support over http://docs.spring.io/spring-boot/docs/1.0.1.RELEASE/reference/htmlsingle/#production-ready-monitoring[HTTP] and http://docs.spring.io/spring-boot/docs/1.0.1.RELEASE/reference/htmlsingle/#production-ready-jmx[JMX] along with Spring Integration's http://docs.spring.io/spring-integration/docs/4.0.0.M4/reference/htmlsingle/#jmx-mbean-exporter[MBean Exporters]
 
 === Monitoring XD Admin and Container
@@ -48,7 +47,7 @@ For a job name `myjob` with DSL `jdbchdfs` will have
 MBeans with domain name `xd.myjob` with an object `jdbchdfs.0`
 
 
-==== Using Jolokia to access JMX over http
+=== Using Jolokia to access JMX over http
 
 When JMX is enabled (which is **default** via `XD_JMX_ENABLED` property), Jolokia is configured as well.
 
