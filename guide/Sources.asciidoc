@@ -31,7 +31,7 @@ The following sections show a mix of Spring XD shell and plain Unix shell comman
 
 To create a stream definition in the server using the XD shell
 
-    xd:> stream create --name httptest --definition "http | file"
+    xd:> stream create --name httptest --definition "http | file" --deploy
 
 Post some data to the http server on the default port of 9000
 
@@ -49,7 +49,7 @@ port:: The http port where data will be posted *(default: `9000`)*
 
 Here is an example 
 
-    xd:> stream create --name httptest9020 --definition "http --port=9020 | file"
+    xd:> stream create --name httptest9020 --definition "http --port=9020 | file" --deploy
 
 Post some data to the new port
 
@@ -70,7 +70,7 @@ Create an empty file to tail (this is not needed on some platforms such as Linux
 
 To create a stream definition using the XD shell
 
-    xd:> stream create --name tailtest --definition "tail | file"
+    xd:> stream create --name tailtest --definition "tail | file" --deploy
 
 Send some text into the file being monitored 
 
@@ -90,7 +90,7 @@ fileDelay:: on platforms that don't wait for a missing file to appear, how often
 
 Here is an example 
 
-     xd:> stream create --name tailtest --definition "tail --name=/tmp/foo | file --name=bar"
+     xd:> stream create --name tailtest --definition "tail --name=/tmp/foo | file --name=bar" --deploy
 
      $ echo blah >> /tmp/foo
 
@@ -141,7 +141,7 @@ Spring XD provides a source module for receiving emails, named `mail`. Depending
 
 Let's see an example:
 
-  xd:> stream create --name mailstream --definition "mail --host=imap.gmail.com --username=your.user@gmail.com --password=secret | file"
+  xd:> stream create --name mailstream --definition "mail --host=imap.gmail.com --username=your.user@gmail.com --password=secret | file" --deploy
 
 Then send an email to yourself and you should see it appear inside a file at `/tmp/xd/output/mailstream`
 
@@ -179,7 +179,7 @@ To get a `consumerKey` and `consumerSecret` you need to register a twitter appli
 
 To create a stream definition in the server using the XD shell
 
-    xd:> stream create --name springone2gx --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query='#springone2gx' | file"
+    xd:> stream create --name springone2gx --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query='#springone2gx' | file" --deploy
 
 Make sure the default output directory for the `file` sink exists
 
@@ -201,7 +201,7 @@ This source ingests data from Twitter's https://dev.twitter.com/docs/streaming-a
 
 You need to supply all keys and secrets (both consumer and accessToken) to authenticate for this source, so it is easiest if you just add these to the `XD_HOME/config/twitter.properties` file. Stream creation is then straightforward:
 
-    xd:> stream create --name tweets --definition "twitterstream | file"
+    xd:> stream create --name tweets --definition "twitterstream | file" --deploy
 
 The parameters available are pretty much the same as those listed in the https://dev.twitter.com/docs/streaming-apis/parameters[API docs] and unless otherwise stated, the accepted formats are the same.
 
@@ -264,14 +264,14 @@ port:: The port on which the GemFire server is running. *(default: `40404`)*
 
 Here is an example. Create two streams: One to write http messages to a Gemfire region named _Stocks_, and another to execute the CQ.
 
-    xd:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')" 
-    xd:> stream create --name cqtest --definition "gemfire-cq --query='Select * from /Stocks where symbol=''VMW''' | file"
+    xd:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')" --deploy
+    xd:> stream create --name cqtest --definition "gemfire-cq --query='Select * from /Stocks where symbol=''FAKE''' | file" --deploy
 
 Now send some messages to the stocks stream.
 
-     xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":73}"
-     xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":78}"
-     xd:> http post --target http://localhost:9090 --data "{"symbol":"VMW","price":80}"
+     xd:> http post --target http://localhost:9090 --data "{"symbol":"FAKE","price":73}"
+     xd:> http post --target http://localhost:9090 --data "{"symbol":"FAKE","price":78}"
+     xd:> http post --target http://localhost:9090 --data "{"symbol":"FAKE","price":80}"
 
 Please do not put spaces when separating the JSON key-value pairs, only a comma. 
 
@@ -281,9 +281,9 @@ As updates are posted to the cache you should see them captured in the output fi
 
     $cat /tmp/xd/output/cqtest.out
 
-   {"symbol":"VMW","price":73}
-   {"symbol":"VMW","price":78}
-   {"symbol":"VMW","price":80}
+   {"symbol":"FAKE","price":73}
+   {"symbol":"FAKE","price":78}
+   {"symbol":"FAKE","price":80}
 
 [[syslog]]
 === Syslog
@@ -294,11 +294,11 @@ port:: the port on which the system will listen for syslog messages *(default: `
 
 To create a stream definition (using shell command)
 
-    xd:> stream create --name syslogtest --definition "syslog-udp --port=1514 | file"
+    xd:> stream create --name syslogtest --definition "syslog-udp --port=1514 | file" --deploy
 
 or
 
-    xd:> stream create --name syslogtest --definition "syslog-tcp --port=1514 | file"
+    xd:> stream create --name syslogtest --definition "syslog-tcp --port=1514 | file" --deploy
 
 Send a test message to the syslog
 
@@ -328,7 +328,7 @@ The `tcp` source acts as a server and allows a remote party to connect to XD and
 
 To create a stream definition in the server, use the following XD shell command
 
-    xd:> stream create --name tcptest --definition "tcp | file"
+    xd:> stream create --name tcptest --definition "tcp | file" --deploy
 
 This will create the default TCP source and send data read from it to the `tcptest` file.
 
@@ -387,7 +387,7 @@ The echo options `-en` allows echo to interpret escape sequences and not send a 
 
 .CRLF Decoder
 
-    xd:> stream create --name tcptest --definition "tcp | file"
+    xd:> stream create --name tcptest --definition "tcp | file" --deploy
 
 This uses the default (CRLF) decoder and port 1234; send some data
 
@@ -399,7 +399,7 @@ See if the data ended up in the file
 
 .LF Decoder
 
-     xd:> stream create --name tcptest2 --definition "tcp --decoder=LF --port=1235 | file"
+     xd:> stream create --name tcptest2 --definition "tcp --decoder=LF --port=1235 | file" --deploy
 
      $ echo -en 'foobar\n' | netcat localhost 1235
 
@@ -407,7 +407,7 @@ See if the data ended up in the file
 
 .NULL Decoder
 
-     xd:> stream create --name tcptest3 --definition "tcp --decoder=NULL --port=1236 | file"
+     xd:> stream create --name tcptest3 --definition "tcp --decoder=NULL --port=1236 | file" --deploy
 
      $ echo -en 'foobar\x00' | netcat localhost 1236
 
@@ -415,7 +415,7 @@ See if the data ended up in the file
 
 .STXETX Decoder
 
-     xd:> stream create --name tcptest4 --definition "tcp --decoder=STXETX --port=1237 | file"
+     xd:> stream create --name tcptest4 --definition "tcp --decoder=STXETX --port=1237 | file" --deploy
 
      $ echo -en '\x02foobar\x03' | netcat localhost 1237
 
@@ -423,7 +423,7 @@ See if the data ended up in the file
 
 .RAW Decoder
 
-     xd:> stream create --name tcptest5 --definition "tcp --decoder=RAW --port=1238 | file"
+     xd:> stream create --name tcptest5 --definition "tcp --decoder=RAW --port=1238 | file" --deploy
 
      $ echo -n 'foobar' | netcat localhost 1238
 
@@ -431,7 +431,7 @@ See if the data ended up in the file
 
 .L1 Decoder
 
-     xd:> stream create --name tcptest6 --definition "tcp --decoder=L1 --port=1239 | file"
+     xd:> stream create --name tcptest6 --definition "tcp --decoder=L1 --port=1239 | file" --deploy
 
      $ echo -en '\x06foobar' | netcat localhost 1239
 
@@ -439,7 +439,7 @@ See if the data ended up in the file
 
 .L2 Decoder
 
-     xd:> stream create --name tcptest7 --definition "tcp --decoder=L2 --port=1240 | file"
+     xd:> stream create --name tcptest7 --definition "tcp --decoder=L2 --port=1240 | file" --deploy
 
      $ echo -en '\x00\x06foobar' | netcat localhost 1240
 
@@ -447,7 +447,7 @@ See if the data ended up in the file
 
 .L4 Decoder
 
-     xd:> stream create --name tcptest8 --definition "tcp --decoder=L4 --port=1241 | file"
+     xd:> stream create --name tcptest8 --definition "tcp --decoder=L4 --port=1241 | file" --deploy
 
      $ echo -en '\x00\x00\x00\x06foobar' | netcat localhost 1241
 
@@ -455,7 +455,7 @@ See if the data ended up in the file
 
 ==== Binary Data Example
 
-     xd:> stream create --name tcptest9 --definition "tcp --decoder=L1 --port=1242 | file --binary=true"
+     xd:> stream create --name tcptest9 --definition "tcp --decoder=L1 --port=1242 | file --binary=true" --deploy
 
 Note that we configure the `file` sink with `binary=true` so that a newline is not appended.
 
@@ -516,7 +516,7 @@ The `reactor-tcp` source acts as a server and allows a remote party to connect t
 
 To create a stream definition use the following XD shell command
 
-     xd:> stream create --name tcpReactor --definition "reactor-tcp | file"
+     xd:> stream create --name tcpReactor --definition "reactor-tcp | file" --deploy
 
 This will create the default reactor TCP source and send data read from it to the file named tcpReactor.
 
@@ -540,7 +540,7 @@ The following example shows the default settings.
 
 Configure a stream:
 
-     xd:> stream create --name rabbittest --definition "rabbit | file --binary=true"
+     xd:> stream create --name rabbittest --definition "rabbit | file --binary=true" --deploy
 
 This receives messages from a queue named `rabbittest` and writes them to the default file sink (`/tmp/xd/output/rabbittest.out`). It uses the default RabbitMQ broker running on localhost, port 5672.
 
@@ -574,7 +574,7 @@ The following example shows the default settings.
 
 Configure a stream:
 
-     xd:> stream create --name jmstest --definition "jms | file"
+     xd:> stream create --name jmstest --definition "jms | file" --deploy
 
 This receives messages from a queue named `jmstest` and writes them to the default file sink (`/tmp/xd/output/jmstest`). It uses the default ActiveMQ broker running on localhost, port 61616.
 
@@ -634,11 +634,11 @@ The mqtt source connects to an mqtt server and receives telemetry messages.
 
 Configure a stream:
 
-     xd:> stream create tcptest --definition "mqtt --url='tcp://localhost:1883' --topics='xd.mqtt.test' |log"
+     xd:> stream create tcptest --definition "mqtt --url='tcp://localhost:1883' --topics='xd.mqtt.test' | log" --deploy
 
 If you wish to use the MQTT Source defaults you can execute the command as follows:
 
-     xd:> stream create tcptest --definition "mqtt | log"
+     xd:> stream create tcptest --definition "mqtt | log" --deploy
 
 
 ==== Options
@@ -667,7 +667,7 @@ password:: The password to use when connecting to the broker
 === Stdout Capture
 There isn't actually a source named "stdin" but it is easy to capture stdin by redirecting it to a `tcp` source. For example if you wanted to capture the output of a command, you would first create the `tcp` stream, as above, using the appropriate sink for your requirements:
 
-     xd:> stream create tcpforstdout --definition "tcp --decoder=LF | log"
+     xd:> stream create tcpforstdout --definition "tcp --decoder=LF | log" --deploy
 
 You can then capture the output from commands using the `netcat` command:
 
