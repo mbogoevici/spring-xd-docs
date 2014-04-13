@@ -180,7 +180,7 @@ Now fire up the server. See link:Getting-Started#getting-started[Getting Started
 === Test the deployed module
 Once the XD server is running, create a stream to test it out. This stream will write SyndEntry objects to the XD log:
 
-    xd:> stream create --name feedtest --definition "feed | log"
+    xd:> stream create --name feedtest --definition "feed | log" --deploy
 
 You should start seeing messages like the following in the container console window:
 
