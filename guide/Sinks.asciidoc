@@ -35,7 +35,7 @@ See the section link:Creating-a-Sink-Module#creating-a-sink-module[Creating a Si
 
 Probably the simplest option for a sink is just to log the data. The `log` sink uses the application logger to output the data for inspection. The log level is set to `WARN` and the logger name is created from the stream name. To create a stream using a `log` sink you would use a command like
 
-  xd:> stream create --name mylogstream --definition "http --port=8000 | log"
+  xd:> stream create --name mylogstream --definition "http --port=8000 | log" --deploy
 
 You can then try adding some data. We've used the `http` source on port 8000 here, so run the following command to send a message
 
@@ -47,14 +47,14 @@ and you should see the following output in the XD container console.
 
 The logger name is the sink name prefixed with the string "logger.". The sink name is the same as the stream name by default, but you can set it by passing the `--name` parameter 
 
-  xd:> stream create --name myotherlogstream --definition "http --port=8001 | log --name=mylogger"
+  xd:> stream create --name myotherlogstream --definition "http --port=8001 | log --name=mylogger" --deploy
 
 [[file-sink]]
 === File Sink
 
 Another simple option is to stream data to a file on the host OS. This can be done using the `file` sink module to create a link:Streams#streams[stream].
 
-  xd:> stream create --name myfilestream --definition "http --port=8000 | file"
+  xd:> stream create --name myfilestream --definition "http --port=8000 | file" --deploy
 
 We've used the `http` source again, so run the following command to send a message
 
@@ -67,7 +67,7 @@ The `file` sink uses the stream name as the default name for the file it creates
 
 You can cutomize the behavior and specify the `name` and `dir` properties of the output file. For example
 
-  xd:> stream create --name otherfilestream --definition "http --port=8000 | file --name=myfile --dir=/some/custom/directory"
+  xd:> stream create --name otherfilestream --definition "http --port=8000 | file --name=myfile --dir=/some/custom/directory" --deploy
 
 ==== File with Options
 
@@ -83,7 +83,7 @@ If you do not have Hadoop installed, you can install Hadoop 1.2.1 as described i
 
 Once Hadoop is up and running, you can then use the `hdfs` sink when creating a link:Streams#streams[stream]
 
-  xd:> stream create --name myhdfsstream1 --definition "time | hdfs"
+  xd:> stream create --name myhdfsstream1 --definition "time | hdfs" --deploy
 
 In the above example, we've scheduled `time` source to automatically send ticks to `hdfs` once in every second. If you wait a little while for data to accumuluate you can then list can then list the files in the hadoop filesystem using the shell's built in hadoop fs commands.  Before making any access to HDFS in the shell you first need to configure the shell to point to your name node.  This is done using the `hadoop config` command.
 
@@ -109,7 +109,7 @@ and list the stream directory again, in use file suffix doesn't exist anymore.
 
 To list the list the contents of a file directly from a shell execute the hadoop cat command.
 
-  xd:>hadoop fs cat /xd/myhdfsstream1/myhdfsstream1-0.txt
+  xd:> hadoop fs cat /xd/myhdfsstream1/myhdfsstream1-0.txt
   2013-12-18 18:10:07
   2013-12-18 18:10:08
   2013-12-18 18:10:09
@@ -117,7 +117,7 @@ To list the list the contents of a file directly from a shell execute the hadoop
 
 In the above examples we didn't yet go through why the file was written in a specific directory and why it was named in this specific way. Default location of a file is defined as `/xd/<stream name>/<stream name>-<rolling part>.txt`. These can be changed using options `--directory` and `--fileName` respectively. Example is shown below. 
 
-  xd:>stream create --name myhdfsstream2 --definition "time | hdfs --directory=/xd/tmp --fileName=data"
+  xd:>stream create --name myhdfsstream2 --definition "time | hdfs --directory=/xd/tmp --fileName=data" --deploy
   xd:>stream destroy --name myhdfsstream2
   xd:>hadoop fs ls /xd/tmp
   Found 1 items
@@ -125,7 +125,7 @@ In the above examples we didn't yet go through why the file was written in a spe
 
 It is also possible to control the size of a files written into HDFS. The `--rollover` option can be used to control when file currently being written is rolled over and a new file opened by providing the rollover size in bytes, kilobytes, megatypes, gigabytes, and terabytes.
  
-  xd:>stream create --name myhdfsstream3 --definition "time | hdfs --rollover=100"
+  xd:>stream create --name myhdfsstream3 --definition "time | hdfs --rollover=100" --deploy
   xd:>stream destroy --name myhdfsstream3
   xd:>hadoop fs ls /xd/myhdfsstream3
   Found 3 items
@@ -137,7 +137,7 @@ Shortcuts to specify sizes other than bytes are written as `--rollover=64M`, `--
 
 The stream can also be compressed during the write operation. Example of this is shown below.
 
-  xd:>stream create --name myhdfsstream4 --definition "time | hdfs --codec=gzip"
+  xd:>stream create --name myhdfsstream4 --definition "time | hdfs --codec=gzip" --deploy
   xd:>stream destroy --name myhdfsstream4
   xd:>hadoop fs ls /xd/myhdfsstream4
   Found 1 items
@@ -152,7 +152,7 @@ From a native os shell we can use hadoop's fs commands and pipe data into gunzip
 
 Often a stream of data may not have a high enough rate to roll over files frequently, leaving the file in an opened state.  This prevents users from reading a consistent set of data when running mapreduce jobs.  While one can alleviate this problem by using a small rollover value, a better way is to use the `idleTimeout`  option that will automatically close the file if there was no writes during the specified period of time.   This feature is also useful in cases where burst of data is written into a stream and you'd like that data to become visible in HDFS.
 
-  xd:> stream create --name myhdfsstream5 --definition "http --port=8000 | hdfs --rollover=20 --idleTimeout=10000"
+  xd:> stream create --name myhdfsstream5 --definition "http --port=8000 | hdfs --rollover=20 --idleTimeout=10000" --deploy
 
 In the above example we changed a source to `http` order to control what we write into a `hdfs` sink. We defined a small rollover size and a timeout of 10 seconds. Now we can simply post data into this stream via source end point using a below command.
 
@@ -191,7 +191,7 @@ The HDFS Dataset sink requires that you have a Hadoop installation that is based
 
 Once Hadoop is up and running, you can then use the `hdfs-dataset` sink when creating a link:Streams#streams[stream]
 
-  xd:>stream create --name mydataset --definition "time | hdfs-dataset --batchSize=20"
+  xd:>stream create --name mydataset --definition "time | hdfs-dataset --batchSize=20" --deploy
 
 In the above example, we've scheduled `time` source to automatically send ticks to the `hdfs-dataset` sink once every second. The data will be stored in a directory named `/xd/<streamname>` by default, so in this example it will be `/xd/mydataset`. You can change this by supplying a `‑‑directory` parameter. The Avro format is usd by default and the data files are stored in a sub-directory named after the payload Java class. In this example the stream payload is a String so the name of the data sub-directory is `string`. If you have multiple Java classes as payloads, each class will get its own sub-directory.
 
@@ -238,7 +238,7 @@ The payload data will be inserted as-is if the 'names' option is set to 'payload
 
 To create a stream using a `jdbc` sink relying on all defaults you would use a command like
 
-  xd:> stream create --name mydata --definition "time | jdbc --initializeDatabase=true"
+  xd:> stream create --name mydata --definition "time | jdbc --initializeDatabase=true" --deploy
 
 This will insert the time messages into a 'payload' column in a table named 'mydata'. Since the default is using the XD batch metadata HSQLDB database we can connect to this database instance from an external tool. After we let the stream run for a little while, we can connect to the database and look at the data stored in the database.
 
@@ -291,7 +291,7 @@ First, start a netcat to receive the data, and background it
 
 Now, configure a stream
 
-     xd:> stream create --name tcptest --definition "time --interval=3 | tcp"
+     xd:> stream create --name tcptest --definition "time --interval=3 | tcp" --deploy
 
 This sends the time, every 3 seconds to the default tcp Sink, which connects to port `1234` on `localhost`.
 
@@ -354,7 +354,7 @@ Start netcat in the background and redirect the output to a file `foo`
 
 Create the stream, using the `L4` encoder
 
-     xd:> stream create --name tcptest --definition "time --interval=3 | tcp --encoder=L4 --port=1235"
+     xd:> stream create --name tcptest --definition "time --interval=3 | tcp --encoder=L4 --port=1235" --deploy
 
 Destroy the stream
 
@@ -381,7 +381,7 @@ The "mail" sink allows sending of messages as emails, leveraging Spring Integrat
 
 Here is a simple example of how the mail module is used:
 
-  xd:> stream create mystream --definition "http | mail --to='"your.email@gmail.com"' --host=your.imap.server --subject=payload+' world'"
+  xd:> stream create mystream --definition "http | mail --to='"your.email@gmail.com"' --host=your.imap.server --subject=payload+' world'" --deploy
 
 Then,
 
@@ -414,7 +414,7 @@ The following example shows the default settings.
 
 Configure a stream:
 
-     xd:> stream create --name rabbittest --definition "time --interval=3 | rabbit"
+     xd:> stream create --name rabbittest --definition "time --interval=3 | rabbit" --deploy
 
 This sends the time, every 3 seconds to the default (no-name) Exchange for a RabbitMQ broker running on localhost, port 5672.
 
@@ -467,7 +467,7 @@ NOTE: The locator option is mostly intended for integration with an existing Gem
 ==== Example
 Suppose we have a JSON document containing a stock price:
 
-      {"symbol":"VMW", "price":73} 
+      {"symbol":"FAKE", "price":73} 
 
 We want this to be cached using the stock symbol as the key. The stream definition is:
 
@@ -477,13 +477,13 @@ The keyExpression is a SpEL expression that depends on the payload type. In this
 
     xd:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')"
     
-    xd:> http post --target http://localhost:9090 --data {"symbol":"VMW","price":73}
+    xd:> http post --target http://localhost:9090 --data {"symbol":"FAKE","price":73}
 
-This will write an entry to the GemFire _Stocks_ region with the key _VMW_.  Please do not put spaces when separating the JSON key-value pairs, only a comma. 
+This will write an entry to the GemFire _Stocks_ region with the key _FAKE_.  Please do not put spaces when separating the JSON key-value pairs, only a comma. 
 
 You should see a message on STDOUT for the process running the GemFire server like:
 
-    INFO [LoggingCacheListener] - updated entry VMW
+    INFO [LoggingCacheListener] - updated entry FAKE
 
 [[splunk]]
 === Splunk Server
@@ -517,7 +517,7 @@ The TCP port number to where XD will send the data *(default: `9500`)*
 ==== Example
 An example stream would be to take data from a twitter search and push it through to a splunk instance.
 
-    xd:> stream create --name springone2gx --definition "twittersearch --consumerKey= --consumerSecret= --query='#LOTR' | splunk"
+    xd:> stream create --name springone2gx --definition "twittersearch --consumerKey= --consumerSecret= --query='#LOTR' | splunk" --deploy
 
 [[mqtt_sink]]
 === MQTT
@@ -552,13 +552,13 @@ The Dynamic Router support allows for routing Spring XD messages to *named chann
 In the following example, 2 streams are created that listen for message on the *foo* and the *bar* channel. Furthermore, we create a stream that receives messages via HTTP and then delegates the received messages to a router:
 
 ----
-xd:>stream create f --definition "queue:foo > transform --expression=payload+'-foo' | log"
+xd:>stream create f --definition "queue:foo > transform --expression=payload+'-foo' | log" --deploy
 Created new stream 'f'
 
-xd:>stream create b --definition "queue:bar > transform --expression=payload+'-bar' | log"
+xd:>stream create b --definition "queue:bar > transform --expression=payload+'-bar' | log" --deploy
 Created new stream 'b'
 
-xd:>stream create r --definition "http | router --expression=payload.contains('a')?'queue:foo':'queue:bar'"
+xd:>stream create r --definition "http | router --expression=payload.contains('a')?'queue:foo':'queue:bar'" --deploy
 Created new stream 'r'
 ----
 
@@ -601,13 +601,13 @@ else {
 Now we create the following streams:
 
 ----
-xd:>stream create f --definition ":foo > transform --expression=payload+'-foo' | log"
+xd:>stream create f --definition ":foo > transform --expression=payload+'-foo' | log" --deploy
 Created new stream 'f'
 
-xd:>stream create b --definition ":bar > transform --expression=payload+'-bar' | log"
+xd:>stream create b --definition ":bar > transform --expression=payload+'-bar' | log" --deploy
 Created new stream 'b'
 
-xd:>stream create g --definition "http | router --script='file:/my/path/router.groovy'"
+xd:>stream create g --definition "http | router --script='file:/my/path/router.groovy'" --deploy
 ----
 
 Now post some data to the HTTP source:
