@@ -27,7 +27,7 @@ If the module name is unique in the target stream, use tap:stream:<stream_name>.
 If you have a stream called `mystream`, defined as
 
 ----
-http | filter --expression=payload.startsWith('A') | transformer --expression=payload.toLowerCase() | file
+http | filter --expression=payload.startsWith('A') | transform --expression=payload.toLowerCase() | file
 ----
 
 Create a tap after the filter is applied using
@@ -63,13 +63,13 @@ You may also use labels to create an alias for a module and reference the label 
 If you have a stream called `mystream`, defined as
 
 ----
-http | transform --expression=payload.toLowerCase() | flibble: transformer --expression=payload.reverse() | file
+http | transform --expression=payload.toLowerCase() | flibble: transform --expression=payload.reverse() | file
 ----
 
 Create a tap after the second transformer is applied using
 
 ----
-tap:stream:mystream.transformer.flibble > ....
+tap:stream:mystream.transform.flibble > ....
 ----
 
 
