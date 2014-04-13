@@ -148,13 +148,13 @@ $ rabbitmq-server
 You should see something similar to this:
 ----
 
-              RabbitMQ 3.1.1. Copyright (C) 2007-2013 VMware, Inc.
+              RabbitMQ 3.3.0. Copyright (C) 2007-2013 GoPivotal, Inc.
   ##  ##      Licensed under the MPL.  See http://www.rabbitmq.com/
   ##  ##
   ##########  Logs: /usr/local/var/log/rabbitmq/rabbit@localhost.log
   ######  ##        /usr/local/var/log/rabbitmq/rabbit@localhost-sasl.log
   ##########
-              Starting broker... completed with 7 plugins.
+              Starting broker... completed with 10 plugins.
 ----
 
 === Starting Spring XD in Distributed Mode
