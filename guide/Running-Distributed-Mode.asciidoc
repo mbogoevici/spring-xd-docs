@@ -43,11 +43,10 @@ Usage:
 
 ===== xd-container command line args:
 
-* analytics - How to persist analytics such as counters and gauges. The current is *redis* 
+* analytics - How to persist analytics such as counters and gauges. The default is *redis* 
 * hadoopDistro - The Hadoop distribution to be used for HDFS access.  HDFS is not available if not set.
 * help - Displays help for the command args.  Help information may be accessed with a -? or -h.  
 * mgmtPort - The port for the management server.  Defaults to 9393.
-* transport - The transport to use for data messages (from container to container)
 
 === Using Redis
 
