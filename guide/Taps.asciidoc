@@ -44,13 +44,13 @@ If the module name is repeated in the target stream, use tap:stream:<stream_name
 If you have a stream called `mystream`, defined as
 
 ----
-http | transformer --expression=payload.toLowerCase() | transformer --expression=payload.reverse() | file
+http | transform --expression=payload.toLowerCase() | transform --expression=payload.reverse() | file
 ----
 
 Create a tap after the first transformer is applied using
 
 ----
-tap:stream:mystream.transformer.1 > ....
+tap:stream:mystream.transform.1 > ....
 ----
 
 NOTE: the `module index` is the position of the module in the stream, starting with 0. It is also valid to tap the source using this syntax, e.g., tap:stream:mystream.http.0
@@ -63,7 +63,7 @@ You may also use labels to create an alias for a module and reference the label 
 If you have a stream called `mystream`, defined as
 
 ----
-http | transformer --expression=payload.toLowerCase() | flibble: transformer --expression=payload.reverse() | file
+http | transform --expression=payload.toLowerCase() | flibble: transformer --expression=payload.reverse() | file
 ----
 
 Create a tap after the second transformer is applied using
