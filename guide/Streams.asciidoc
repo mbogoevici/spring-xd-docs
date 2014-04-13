@@ -19,17 +19,30 @@ To create these stream definitions you make an HTTP POST request to the XD Admin
 
 The XD Admin server footnote:[The server is implemented by the `AdminMain` class in the `spring-xd-dirt` subproject] exposes a full RESTful API for managing the lifecycle of stream definitions, but the easiest way to use the XD shell. Start the shell as described in the link:Getting-Started#getting-started[Getting Started] section 
 
-New streams are created by posting stream definitions.  The definitions are built from a simple DSL. For example, let's walk through what happens if we execute the following shell command
+New streams are created by posting stream definitions.  The definitions are built from a simple DSL. For example, let's walk through what happens if we execute the following shell command:
 
     xd:> stream create --definition "time | log" --name ticktock
   
 
-This defines a stream named `ticktock` based off the DSL expression `time | log`.  The DSL uses the "pipe" symbol `|`, to connect a source to a sink. The stream server finds the `time` and `log` definitions in the modules directory and uses them to setup the stream.  In this simple example, the time source simply sends the current time as a message each second, and the log sink outputs it using the logging framework.
+This defines a stream named `ticktock` based off the DSL expression `time | log`.  The DSL uses the "pipe" symbol `|`, to connect a source to a sink.
+
+Then to deploy the stream execute the following shell command (or alternatively add the `--deploy` flag when creating the stream so that this step is not needed):
+
+    xd:> stream deploy --name ticktock
+
+The stream server finds the `time` and `log` definitions in the modules directory and uses them to setup the stream.  In this simple example, the time source simply sends the current time as a message each second, and the log sink outputs it using the logging framework.
 
   processing module 'Module [name=log, type=sink]' from group 'ticktock' with index: 1
   processing module 'Module [name=time, type=source]' from group 'ticktock' with index: 0
   17:26:18,774  WARN ThreadPoolTaskScheduler-1 logger.ticktock:141 - Thu May 23 17:26:18 EDT 2013
 
+If you would like to have multiple instances of a module in the stream, you can include a property with the deploy command:
+
+    xd:> stream deploy --name ticktock --properties "module.time.count=3"
+
+You can also include a [SpEL expression](http://docs.spring.io/spring/docs/4.0.x/spring-framework-reference/htmlsingle/#expressions) as a `criteria` property for any module. That will be evaluated against the attributes of each currently available Container. Instances of the module will only be deployed to Containers for which the expression evaluates to true.
+
+    xd:> stream deploy --name ticktock --properties "module.time.count=3,module.log.criteria=groups.contains('x')"
 
 === Deleting a Stream
 
