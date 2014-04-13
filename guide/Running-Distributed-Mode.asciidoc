@@ -203,12 +203,6 @@ One could have also used the `--transport` option the admin node, but when mixin
 If you have multiple XD instances running that use different Redis instances for storage but share a single RabbitMQ server for transport, you may encounter issues if each system contains streams of the same name.  We recommend using a different RabbitMQ virtual host for each system. Update the `spring.rabbitmq.virtual_host` property in `$XD_HOME/config/rabbit.properties` to point XD at the correct virtual host.
 =====================================================================
 
-==== Choosing a Store
-By default, the xd-admin server stores stream definitions and other information in Redis, using the connection parameters specified in `redis.properties`. Use the --store option to specify another storage type. Currently, only "redis" and "memory" are available.
-[source,sh]
-----
-xd/bin>$ ./xd-admin --store memory
-----
 
 ==== Choosing an Analytics provider
 By default, the xd-container will store Analytics data in redis. At the time of writing, this is the only supported option (when running in distributed mode). Use the --analytics option to specify another backing store for Analytics data.
