@@ -71,6 +71,6 @@ particular configuration of a module and possibly something easier to refer to i
 
 Labels are especially useful for disambiguating when multiple modules of the same name are used:
 
-  mystream = http | uppercaser: transform --expression=payload.toUpperCase() | exclaimer: transform --expression=payload+'!' file
+  mystream = http | uppercaser: transform --expression=payload.toUpperCase() | exclaimer: transform --expression=payload+'!' | file
 
 Refer to link:Taps#example---using-a-label[this section] of the Taps chapter to see how labels facilitate the creation of taps in these cases where a stream contains ambiguous modules.
