@@ -253,27 +253,24 @@ To display the actual definition file of a module use the `module display --name
 
 ```bash
 xd:>module display --name tcp --type source
-Configuration file contents for module definiton 'tcp' (source):
+Configuration file contents for module definition 'tcp' (source):
 
 -------------------------------------------------------------------------------
 ...
     <int-ip:tcp-connection-factory id="connectionFactory"
         type="server"
-        port="${port:1234}"
-        lookup-host="${reverse-lookup:false}"
-        so-timeout="${socket-timeout:120000}"
-        using-nio="${nio:false}"
-        using-direct-buffers="${nio:false}"
-        deserializer="${decoder:CRLF}"/>
+        port="${port}"
+        lookup-host="${reverseLookup}"
+        so-timeout="${socketTimeout}"
+        using-nio="${nio}"
+        using-direct-buffers="${useDirectBuffers}"
+        deserializer="${decoder}"/>
 
     <int-ip:tcp-inbound-channel-adapter id="adapter" channel="toString"
-            auto-startup="false"
-            connection-factory="connectionFactory"/>
+        auto-startup="false"
+        connection-factory="connectionFactory"/>
 
-    <!-- Binary payloads are not currently supported; see XD-145 -->
-<!--     <int:router input-channel="toStringIfNeeded" expression="${binary:false} ? 'output' : 'toString'"/> -->
-
-    <int:transformer input-channel="toString" output-channel="output" expression="new String(payload, '${charset:UTF-8}')"/>
+    <int:transformer input-channel="toString" output-channel="output" expression="new String(payload, '${charset}')"/>
 
     <int:channel id="output"/>
 ...
