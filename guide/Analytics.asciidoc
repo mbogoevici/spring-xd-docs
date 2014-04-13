@@ -254,7 +254,7 @@ The result of that is a new record extended by a new attribute *predictedSpecies
 The definition of the stream, which we call *iris-flower-classification*, looks as follows:
 
 ----
-xd:>stream create --name iris-flower-classification --definition "http --outputType=application/x-xd-tuple | analytic-pmml --location=/models/iris-flower-classification-naive-bayes-1.pmml.xml --inputFieldMapping='sepalLength:Sepal.Length,sepalWidth:Sepal.Width,petalLength:Petal.Length,petalWidth:Petal.Width' --outputFieldMapping='Predicted_Species:predictedSpecies' | log"
+xd:>stream create --name iris-flower-classification --definition "http --outputType=application/x-xd-tuple | analytic-pmml --location=/models/iris-flower-classification-naive-bayes-1.pmml.xml --inputFieldMapping='sepalLength:Sepal.Length,sepalWidth:Sepal.Width,petalLength:Petal.Length,petalWidth:Petal.Width' --outputFieldMapping='Predicted_Species:predictedSpecies' | log" --deploy
 ----
 
 * The *location* parameter can be used to specify the exact location of the pmml document. The value must be a valid spring http://www.springindepth.com/2.5.x/0.10/ch05.html[*resource*] location
@@ -328,11 +328,11 @@ Here's an example:
 
 Start by creating a data ingestion stream. Something like:
 
-   xd:> stream create --name springtweets --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file --dir=/tweets/"
+   xd:> stream create --name springtweets --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file --dir=/tweets/" --deploy
 
 Next, create a tap on the _springtweets_ stream that sets a message counter named _tweetcount_
 
-   xd:> stream create --name tweettap --definition "tap:stream:springtweets > counter --name=tweetcount"
+   xd:> stream create --name tweettap --definition "tap:stream:springtweets > counter --name=tweetcount" --deploy
 
 The results are written to redis under the key counter.${name}. To retrieve the count:
   
@@ -387,11 +387,11 @@ name:: A key used to access the counter values. *(default: stream name)*
 
 To try this out, create a stream to ingest twitter feeds containing the word _spring_ and output to a file:
 
-   xd:> stream create --name springtweets --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file"
+   xd:> stream create --name springtweets --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=spring | file" --deploy
 
 Now create a tap for a field value counter:
 
-   xd:> stream create --name fromUserCount --definition "tap:stream:springtweets > field-value-counter --fieldName=fromUser"
+   xd:> stream create --name fromUserCount --definition "tap:stream:springtweets > field-value-counter --fieldName=fromUser" --deploy
 
 The _twittersearch_ source produces JSON strings which contain the user id of the tweeter in the _fromUser_ field. The _field_value_counter_ sink parses the tweet and updates a field value counter named _fromUserCount_ in Redis. To view the counts:
 
@@ -405,11 +405,11 @@ The aggregate counter differs from a simple counter in that it not only keeps a 
 
 Creating an aggregate counter is very similar to a simple counter. For example, to obtain an aggregate count for our spring tweets stream:
    
-    xd:> stream create --name springtweets --definition "twittersearch --query=spring | file"
+    xd:> stream create --name springtweets --definition "twittersearch --query=spring | file" --deploy
 
 you'd simply create a tap which pipes the input to `aggregate-counter`:
 
-   xd:> stream create --name tweettap --definition "tap:stream:springtweets > aggregate-counter --name=tweetcount"
+   xd:> stream create --name tweettap --definition "tap:stream:springtweets > aggregate-counter --name=tweetcount" --deploy
 
 The Redis back-end stores the aggregate counts in buckets prefixed with `aggregatecounters.${name}`. The rest of the string contains the date information. So for our `tweetcount` counter you might see something like the following keys appearing in Redis:
 
@@ -447,11 +447,11 @@ Here is an example of creating a tap for a gauge:
 
 Create an ingest stream
 
-    xd:> stream create --name test --definition "http --port=9090 | file"
+    xd:> stream create --name test --definition "http --port=9090 | file" --deploy
 
 Next create the tap:
 
-    xd:> stream create --name simplegauge --definition "tap:stream:test > gauge"
+    xd:> stream create --name simplegauge --definition "tap:stream:test > gauge" --deploy
 
 Now Post a message to the ingest stream:
 
@@ -481,11 +481,11 @@ Here are some examples of creating a tap for a rich gauge:
 
 Create an ingest stream
 
-      xd:> stream create --name test --definition "http --port=9090 | file"
+      xd:> stream create --name test --definition "http --port=9090 | file" --deploy
 
 Next create the tap:
 
-      xd:> stream create --name testgauge --definition "tap:stream:test > rich-gauge"
+      xd:> stream create --name testgauge --definition "tap:stream:test > rich-gauge" --deploy
 
 Now Post some messages to the ingest stream:
 
@@ -544,8 +544,8 @@ Create an ingest stream
 
 Next create the tap, using the transform module to extract the stock price from the payload: 
 
-     xd:> stream create --name vmwprice --definition "tap:stream:stocks > filter --expression=#jsonPath(payload,'$.symbol')==VMW | transform --expression=#jsonPath(payload,'$.price') | rich-gauge"
-     xd:> stream create --name emcprice --definition "tap:stream:stocks > filter --expression=#jsonPath(payload,'$.symbol')==EMC | transform --expression=#jsonPath(payload,'$.price') | rich-gauge"
+     xd:> stream create --name vmwprice --definition "tap:stream:stocks > filter --expression=#jsonPath(payload,'$.symbol')==VMW | transform --expression=#jsonPath(payload,'$.price') | rich-gauge" --deploy
+     xd:> stream create --name emcprice --definition "tap:stream:stocks > filter --expression=#jsonPath(payload,'$.symbol')==EMC | transform --expression=#jsonPath(payload,'$.price') | rich-gauge" --deploy
 
 Now Post some messages to the ingest stream:
 
@@ -573,8 +573,8 @@ Spring XD has a discoverable RESTful API based on the Spring HATEAOS library.  Y
 
 [source,sh]
 ----
-xd:>stream create --name httpStream --definition "http | file"
-xd:>stream create --name httptap --definition "tap:stream:httpStream > counter"
+xd:>stream create --name httpStream --definition "http | file" --deploy
+xd:>stream create --name httptap --definition "tap:stream:httpStream > counter" --deploy
 xd:>http post --target http://localhost:9000 --data "helloworld"
 ----
 
