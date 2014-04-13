@@ -40,7 +40,7 @@ If you would like to have multiple instances of a module in the stream, you can 
 
     xd:> stream deploy --name ticktock --properties "module.time.count=3"
 
-You can also include a [SpEL expression](http://docs.spring.io/spring/docs/4.0.x/spring-framework-reference/htmlsingle/#expressions) as a `criteria` property for any module. That will be evaluated against the attributes of each currently available Container. Instances of the module will only be deployed to Containers for which the expression evaluates to true.
+You can also include a http://docs.spring.io/spring/docs/4.0.x/spring-framework-reference/htmlsingle/#expressions[SpEL Expression] as a `criteria` property for any module. That will be evaluated against the attributes of each currently available Container. Instances of the module will only be deployed to Containers for which the expression evaluates to true.
 
     xd:> stream deploy --name ticktock --properties "module.time.count=3,module.log.criteria=groups.contains('x')"
 
@@ -64,7 +64,7 @@ Let's try something a bit more complicated and swap out the `time` source for so
 
 To create a stream using an `http` source, but still using the same `log` sink, we would change the original command above to
 
-    xd:> stream create --definition "http | log" --name myhttpstream
+    xd:> stream create --definition "http | log" --name myhttpstream --deploy
 
 which will produce the following output from the server
 
@@ -91,7 +91,7 @@ As an example of a simple processing step, we can transform the payload of the H
 
 To create this stream enter the following command in the shell
 
-    xd:> stream deploy --definition "http | transform --expression=payload.toUpperCase() | log" --name myprocstrem
+    xd:> stream create --definition "http | transform --expression=payload.toUpperCase() | log" --name myprocstrem --deploy
 
 Posting some data (using shell command)
 
