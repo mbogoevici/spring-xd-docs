@@ -118,6 +118,11 @@ include::ModuleOptionsMetadata.asciidoc[]
 == Building Spring XD 
 include::Building-Spring-XD.asciidoc[]
 
+[appendix]
+[[monitoring-management]]
+== Monitoring and Management
+include::Monitoring-and-Management.asciidoc[]
+
 // The following is generated at release-time
 // As a consequence, it needs not be present in the _Sidebar file
 [appendix]
