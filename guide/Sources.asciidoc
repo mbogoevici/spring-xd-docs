@@ -528,12 +528,12 @@ This will create the reactor TCP source and send data read from it to the file n
 
 The reactor-tcp source has the following options
 
-transport:: `tcp` or `udp`. *(default: `tcp`)*
+transport:: `tcp` or `udp` *(default: `tcp`)*
 framing:: `linefeed` or `length`.  How to frame the data to tell individual messages apart. *(default: `linefeed`)*
-codec:: how to decode the stream, either bytes, string or syslog. *(default: `string`)*
+codec:: How to decode the stream. Either bytes, string or syslog. *(default: `string`)*
 dispatcher:: `ringBuffer`, `threadPoolExecutor`, `workQueue`, `sync`. *(default: `ringBuffer`)*
 host:: the host to connect to *(default: `0.0.0.0`)*
-port: the port to connect to *(default: `3000`)*
+port:: the port to connect to *(default: `3000`)*
 lengthFieldLength:: length of the field to use when framing. 2, 4 or 8.  *(default: `4`)*
 
 
