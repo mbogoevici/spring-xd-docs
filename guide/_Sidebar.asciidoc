@@ -9,6 +9,7 @@ link:Running-on-YARN[Running on YARN] +
 link:Application-Configuration[Application Configuration] + 
 *link:Technical-Documentation[Technical Documentation]* +
 link:Architecture[Architecture] +
+link:XD-Distrbuted-Runtime[XD Distributed Runtime] +
 link:Streams[Streams] +
 link:Modules[Modules] +
 link:Sources[Sources] +

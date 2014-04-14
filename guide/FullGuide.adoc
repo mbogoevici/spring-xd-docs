@@ -35,6 +35,10 @@ include::Application-Configuration.asciidoc[]
 == Architecture
 include::Architecture.asciidoc[]
 
+[[distributed runtime]]
+== XD Distributed Runtime
+include::XD-Distributed-Runtime.asciidoc[]
+
 [[streams]]
 == Streams
 include::Streams.asciidoc[]
