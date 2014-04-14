@@ -7,6 +7,12 @@ In this section we will show a simple example on how to setup syslog ingestion f
 
 Create the streams with syslog as source and HDFS as sink (Please refer to link:Sources#sources[source] and link:Sinks#sinks[sink])
 
+If you're using syslog over TCP and need the highest throughput, use the Reactor-backed syslog module.
+
+  xd:> stream create --definition "reactor-syslog --port=<tcp-port> | hdfs" --name <stream-name>
+
+The `reactor-syslog` module doesn't yet support UDP (though it soon will), so if you're using syslog over UDP you'll want to use the standard syslog module.
+
   xd:> stream create --definition "syslog-udp --port=<udp-port> | hdfs" --name <stream-name>
 
   xd:> stream create --definition "syslog-tcp --port=<tcp-port> | hdfs" --name <stream-name>
