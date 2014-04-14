@@ -275,6 +275,27 @@ xd:> job undeploy helloSpringXD
 
 Spring XD comes with several batch import and export modules. You can run them out of the box or use them as a basis for building your own custom modules.
 
+===== Note HDFS Configuration
+To use the hdfs based jobs below, XD needs to have append enabled for hdfs.
+Update the hdfs-site.xml with the following settings:
+
+====== For Hadoop 1.x
+
+----   
+    <property>
+      <name>dfs.support.broken.append</name>
+      <value>true</value>
+    </property>
+----
+
+====== For Hadoop 2.x
+
+----
+    <property>
+        <name>dfs.support.append</name>
+        <value>true</value>
+    </property>
+----
 ==== Poll a Directory and Import CSV Files to HDFS (`filepollhdfs`)
 
 This module is designed to be driven by a stream polling a directory. It imports data from CSV files and requires that you supply a list of named columns for the data using the `names` parameter. For example:
