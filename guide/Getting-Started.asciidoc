@@ -51,22 +51,6 @@ xd/bin>$ ./xd-singlenode
 In a separate terminal, `cd` into the `shell` directory and start the XD shell, which you can use to issue commands.
 
 [source]
-
-[TIP]
-=====
-Spring XD uses ZooKeeper internally which typically runs as an external process. XD singlenode runs with an embedded ZooKeeper server and assigns a random available port. This keeps things very simple. However if you already have a ZooKeeper ensemble set up and want to connect to it, you can edit `xd\config\servers.yml` :
----
-#Zookeeper properties
-# client connect string: host1:port1,host2:port2,...,hostN:portN
-zk:
-  client:
-     connect: localhost:2181
----
-
-Also, sometimes it is useful in troubleshooting to connect the ZooKeeper CLI to the embedded server. The assigned server port is listed in the console log, but you can also set the port directly by setting the property `zk.embedded.server.port` in `servers.yml`
-
-====
-
 ----
 shell/bin>$ ./xd-shell
  _____                           __   _______
@@ -89,13 +73,32 @@ The shell is a more user-friendly front end to the REST API which Spring XD expo
 ====
 If the server could not be reached, the prompt will read
 
-[source]
 ----
 server-unknown:>
+----
+
+You can then use the `admin config server <url>` to attempt to reconnect to the admin REST endpoint once you've figured out what went wrong:
+----
+admin config server http://localhost:9393
 ----
 ====
 
 You should now be able to start using Spring XD.
+
+[TIP]
+====
+Spring XD uses ZooKeeper internally which typically runs as an external process. XD singlenode runs with an embedded ZooKeeper server and assigns a random available port. This keeps things very simple. However if you already have a ZooKeeper ensemble set up and want to connect to it, you can edit `xd\config\servers.yml`:
+
+----
+#Zookeeper properties
+# client connect string: host1:port1,host2:port2,...,hostN:portN
+zk:
+  client:
+     connect: localhost:2181
+----
+
+Also, sometimes it is useful in troubleshooting to connect the ZooKeeper CLI to the embedded server. The assigned server port is listed in the console log, but you can also set the port directly by setting the property `zk.embedded.server.port` in `servers.yml`
+====
 
 === Create a Stream
 
