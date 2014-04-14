@@ -288,11 +288,15 @@ As updates are posted to the cache you should see them captured in the output fi
 [[syslog]]
 === Syslog
 
-Three syslog sources are provided: `syslog-udp`, `syslog-tcp` and `reactor-syslog`.  The reactor-syslog adapter uses tcp and builds upon the functionality available in https://github.com/reactor/reactor[Reactor] project and provides improved throughput over the syslog-tcp adapter. They all support the following option:
+Three syslog sources are provided: `reactor-syslog`, `syslog-udp`, and `syslog-tcp`. The reactor-syslog adapter uses tcp and builds upon the functionality available in the https://github.com/reactor/reactor[Reactor] project and provides improved throughput over the syslog-tcp adapter. They all support the following option:
 
 port:: the port on which the system will listen for syslog messages *(default: `5140`)*
 
 To create a stream definition (using shell command)
+
+    xd:> stream create --name syslogtest --definition "reactor-syslog --port=5140 | file" --deploy
+
+or
 
     xd:> stream create --name syslogtest --definition "syslog-udp --port=5140 | file" --deploy
 
