@@ -1,20 +1,6 @@
 === Introduction
 This document describes what's happening "under the hood" of the XD Distributed Runtime (DIRT) and, in particular, how the runtime architecture achieves high availability and failover in a clustered production environment. See link:Running-Distributed-Mode[Running in Distributed Mode] for basic information on running Spring XD in distributed mode.
 
-The XD distributed runtime architecture consists of the following distributed components:
-
-* Admin - Manages Stream and Job deployments and other end user operations and provides REST services to access runtime state, system metrics, and analytics
-* Container - Hosts deployed Modules (stream processing tasks) and batch jobs
-* ZooKeeper - Provides all runtime information for the XD cluster. Tracks running containers, in which containers modules and jobs are deployed, stream definitions, deployment manifests, and the like. There's more to come on how ZooKeeper is used in XD. See (https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index)[The ZooKeeper Wiki] for a general introduction.
-* Spring Batch Job Repository Database - An RDMS is required for jobs. The XD distribution comes with HSQLDB, but this is not appropriate for a production installation. XD supports any JDBC compliant database.
-
-* A Message Broker - Used for data transport. XD data transport is designed to be pluggable. Currently XD supports Rabbit MQ and Redis for messaging during stream and job processing. A production installation must configure one of these transport options. Rabbit MQ is recommended as it is considered the more reliable of the two. In either case, a separate server must be running to provide the messaging middleware.
-
-* Analytics Repository - XD currently uses Redis to store the counters and gauges provided link:Analytics#analytics[Analytics]) 
-
-In addition, XD  provides a Command Line Interface (CLI), XD Shell as well as a web application, XD-UI to interact with the XD runtime.
-
-image::images/distributed-runtime-overview.png[Spring XD Distributed Runtime]
 
 This discussion will focus on the core runtime components and the role of ZooKeeper.
 
@@ -44,12 +30,12 @@ image::images/xd-cluster.png[Spring XD and ZK Ensemble]
 
 Assuming more than one Admin instance is running, Each instance requests leadership at start up. If there is already a designated leader, the instance will watch the _xd/admin_ node to be notified if the Leader goes away. The instance designated as the "Leader", using the Leader Selector recipe provided by (http://curator.apache.org)[Curator], a ZooKeeper client library that implements some common patterns. Curator also provides some Listener callback interfaces that the client can register on a node. The AdminServer creates the top level nodes for xd:
 
-* /xd/admin - children are ephemeral nodes for each available Admin instance and used for Leader Selector 
-* /xd/containers - children are ephemaral nodes containing runtime attributes for each available container
-* /xd/streams - children are persistent nodes containing the definition for each stream
-* /xd/jobs - childrean are persistent nodes containing the definition for each job
-* /xd/deployments/streams - children are persistent nodes containing stream deployment status
-* /xd/deployments/jobs - children are persistent nodes containing job deployment status
+* */xd/admin* - children are ephemeral nodes for each available Admin instance and used for Leader Selector 
+* */xd/containers* - children are ephemeral nodes containing runtime attributes for each available container
+* */xd/streams* - children are persistent nodes containing the definition for each stream, however the leaf nodes for a deployed stream, at the module level, are ephemeral nodes added by the container to which the module is deployed. 
+* */xd/jobs* - children are persistent nodes containing the definition for each job, however the leaf node for a deployed job is an ephemeral node added by the container to which the job is deployed.
+* */xd/deployments/streams* - children are persistent nodes containing stream deployment status
+* */xd/deployments/jobs* - children are persistent nodes containing job deployment status
 
 and regiseters a LeaderListener which is used by the selected Leader. 
 
@@ -198,6 +184,123 @@ xd:>runtime modules
 A Stream is composed of Modules. In general, each module is deployed to one or more Container instance(s). In this way the Stream processing is distributed among multiple containers. The Admin decides to which container(s) each Module is deployed and writes the module information to _/xd/deployments/modules/<container-id>_. The Container has a Deploymentlistener to monitor this node for new modules to deploy. If the deployment is successful, the Container writes it's id as an ephemeral node to _xd/streams/<stream_name>/<module-type>/<module-name>-<module-index>/<container-id>_.
 
 image::images/module-deployment.png[XD Admin Internals]
+
+By default, deploying a stream in a distributed configuration uses simple round robin logic. For example if there are 3 containers and 3 modules in a stream definition,  s1= m1 | m2 | m3,  then XD will attempt distribute the work load evenly among each container. This is a very simplistic strategy and does not take into account things like:
+
+* server load - how many modules are already deployed to a container? How close is it to exhausting available memory, cpu, etc.?
+* server affinity - some containers may have external software installed with which specific modules should be co-located. For example, an hdfs sink could be deployed only to servers running Hadoop. Or perhaps a file sink should be deployed to servers configured with more disk space.
+* scalability - Suppose the stream s1, above, can achieve higher throughput with multiple instances of m2 running, so we want to deploy m2 to every container.
+* fault tolerance - the ability to target physical servers on redundant networks, routers, racks, etc.
+
+==== Deployment Manifest
+
+More complex strategies are critical to tuning and operating XD. Additionally, we must consider various features and constraints when deploying to a PaaS, Yarn or some other cluster manager. Furthermore, such deployment concerns should be addressed independently from the stream definition which is really an expression of the processing logic. To accommodate deployment concerns, XD provides a Deployment Manifest which is submitted with the deployment request, in the form of in-line properties, or a reference to a persisted document containing deployment properties.
+
+When you execute a _stream deploy_ shell command, you can optionally pass a --properties parameter which is a comma delimited list of key=value pairs. The key is either _module.[modulename].count_ or _module.[modulename].criteria_. The value for a count is a positive integer, and the value for criteria is a valid SpEL expression. The Admin server will match the available containers to the deployment manifest. The stream is considered to be successfully deployed if at least one of each module instance is deployed to a container. For example, 
+
+----
+xd:>stream create test1 --definition "http | transform --expression=payload.toUpperCase() | log"
+Created new stream 'test1' 
+----
+
+Next, deploy it requesting three transformer instances:
+
+----
+xd:>stream deploy --name test1 --properties "module.transform.count=3"
+Deployed stream 'test1'
+----
+
+If there are only two container instances available, only two instances of transform will be deployed. The stream deployment is successful since it is functional. However the unfulfilled deployment request remains active and a third instance will be deployed if a new container comes on line that matches the criteria.
+
+
+==== Container Attributes
+
+The SpEL context (root object) for the Deployment Manifest is ContainerAtrtributes, basically a map derivative that contains some standard attributes:
+
+ * *id* - the generated container ID
+ * *pid* - the process ID of the container instance
+ * *host* - the host name of the machine running the container instance
+ * *ip* -- the IP address of the machine running the container instance
+
+ContainerAttributes also includes any user-defined attribute values configured for the container. These attributes are configured by editing _xd/config/servers.yml_ the file included in the XD distribution contains some commented out sections as examples. In this case, the container attributes configuration looks something like:
+
+----
+xd:
+  container:
+      groups: group2
+      color :red
+----
+
+NOTE: Groups may also be assigned to a container via the optional command line argument _--groups_ or by setting the environment variable _XD_CONTAINER_GROUPS_. As the property name suggests, a container may belong to more than one group, represented as comma-delimited string. XD considers the concept of groups a useful convention for targeting groups of servers for deployment in a variety of scenarios, so it enjoys special treatment. However, there is nothing technically different from groups and other user defined attribute.
+
+
+=== Stream Deployment Examples 
+
+To Illustrate how to use the Deployment Manifest, We will use the following runtime configuration, as displayed in the XD shell:
+
+----
+xd:>runtime containers
+  Container Id                          Host              IP Address     PID   Groups  Custom Attributes
+  ------------------------------------  ----------------  -------------  ----  ------  -----------------
+  bc624816-f8a8-4f35-83f6-a125ed147b7c  ip-10-110-18-10   10.110.18.10   1708  group2  {color=red}
+  018b7c8d-6fa9-4759-8471-76899766f892  ip-10-139-36-168  10.139.36.168  1852  group2  {color=blue}
+  afc3741c-217a-415a-9d86-a1f62de03613  ip-10-139-17-116  10.139.17.116  1861  group1  {color=green} 
+----
+
+Each of the three containers is running on a different host and has configured Groups and Custom Attributes as shown.
+
+First, create a stream:
+
+----
+xd:>stream create test1 --definition "http | transform --expression=payload.toUpperCase() | log"
+Created new stream 'test1' 
+----
+
+Next, deploy it using a manifest:
+
+----
+xd:>stream deploy --name test1 --properties "module.transform.count=3,module.log.criteria=groups.contains('group1')"
+Deployed stream 'test1'
+----
+
+Verify the deployment:
+
+----
+xd:>runtime modules
+  Module                       Container Id                          Properties
+  ---------------------------  ------------------------------------  ----------------------------------------------
+  test1.source.http-0          bc624816-f8a8-4f35-83f6-a125ed147b7c  {port=9000}
+  test1.processor.transform-1  bc624816-f8a8-4f35-83f6-a125ed147b7c  {valid=true, expression=payload.toUpperCase()}
+  test1.processor.transform-1  018b7c8d-6fa9-4759-8471-76899766f892  {valid=true, expression=payload.toUpperCase()}
+  test1.processor.transform-1  afc3741c-217a-415a-9d86-a1f62de03613  {valid=true, expression=payload.toUpperCase()}
+  test1.sink.log-2             afc3741c-217a-415a-9d86-a1f62de03613
+----
+
+We can see that three instances of the processor have been deployed, one to each container instance. Also the log module has been deployed to the container id corresponding to _group1_. Now we can undeploy and deploy the stream using a different manifest:
+
+----
+xd:>stream undeploy test1
+Un-deployed stream 'test1'
+xd:>runtime modules
+  Module  Container Id  Properties
+  ------  ------------  ----------
+
+xd:>stream deploy --name test1 --properties "module.log.count=3,module.log.criteria=!groups.contains('group1')"
+Deployed stream 'test1'
+
+xd:>runtime modules
+  Module                       Container Id                          Properties
+  ---------------------------  ------------------------------------  ----------------------------------------------
+  test1.sink.log-2             bc624816-f8a8-4f35-83f6-a125ed147b7c
+  test1.processor.transform-1  018b7c8d-6fa9-4759-8471-76899766f892  {valid=true, expression=payload.toUpperCase()}
+  test1.sink.log-2             018b7c8d-6fa9-4759-8471-76899766f892
+  test1.source.http-0          afc3741c-217a-415a-9d86-a1f62de03613  {port=9000}
+----
+
+Note that there are only two instances of _log_ deployed. We asked for three however the criteria specified only containers not in _group1_ are eligible. Since only two containers matched the criteria, we have a _log_ module deployed on each one. If we start a new container not in _group1_, the third instance will be deployed. The stream is currently shown as deployed since it is functional even though the manifest is not completely satisfied.
+
+
+
 
 
 

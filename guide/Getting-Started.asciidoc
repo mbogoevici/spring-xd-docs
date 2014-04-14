@@ -8,11 +8,11 @@ If you want to try out Spring XD, we'd recommend downloading a snapshot build, s
 
 Unzip the distribution which will unpack to a single installation directory. All the commands below are executed from this directory, so change into it before proceeding.
 
-If you are sure you want the previous milestone release, you can also download the distribution http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M5/spring-xd-1.0.0.M5-dist.zip[*spring-xd-1.0.0.M5-dist.zip*] and http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M5/spring-xd-1.0.0.M5-docs.zip[its accompanying documentation]. 
+If you are sure you want the previous milestone release, you can also download the distribution http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M6/spring-xd-1.0.0.M6-dist.zip[*spring-xd-1.0.0.M6-dist.zip*] and http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M6/spring-xd-1.0.0.M6-docs.zip[its accompanying documentation]. 
 
 [source,sh]
 ----
-$ cd spring-xd-1.0.0.M5
+$ cd spring-xd-1.0.0.M6
 ----
 
 Set the environment variable `XD_HOME` to the installation directory `<root-install-dir>\spring-xd\xd`
@@ -51,6 +51,22 @@ xd/bin>$ ./xd-singlenode
 In a separate terminal, `cd` into the `shell` directory and start the XD shell, which you can use to issue commands.
 
 [source]
+
+[TIP]
+=====
+Spring XD uses ZooKeeper internally which typically runs as an external process. XD singlenode runs with an embedded ZooKeeper server and assigns a random available port. This keeps things very simple. However if you already have a ZooKeeper ensemble set up and want to connect to it, you can edit `xd\config\servers.yml` :
+---
+#Zookeeper properties
+# client connect string: host1:port1,host2:port2,...,hostN:portN
+zk:
+  client:
+     connect: localhost:2181
+---
+
+Also, sometimes it is useful in troubleshooting to connect the ZooKeeper CLI to the embedded server. The assigned server port is listed in the console log, but you can also set the port directly by setting the property `zk.embedded.server.port` in `servers.yml`
+
+====
+
 ----
 shell/bin>$ ./xd-shell
  _____                           __   _______
@@ -62,7 +78,7 @@ shell/bin>$ ./xd-shell
       | |                  __/ |
       |_|                 |___/
 eXtreme Data
-1.0.0.M5 | Admin Server Target: http://localhost:8080
+1.0.0.M6 | Admin Server Target: http://localhost:8080
 Welcome to the Spring XD shell. For assistance hit TAB or type "help".
 xd:>
 ----
@@ -101,7 +117,7 @@ To stop the stream, and remove the definition completely, you can use the `strea
 
   xd:>stream destroy --name ticktock
 
-It is also possibly to stop and restart the stream instead, using the `undeploy` and `deploy` commands. The shell supports command completion so you can hit the `tab` key to see which commands and options are available.
+It is also possible to stop and restart the stream instead, using the `undeploy` and `deploy` commands. The shell supports command completion so you can hit the `tab` key to see which commands and options are available.
 
 === Explore Spring XD
 Learn about the modules available in Spring XD in the link:Sources#sources[Sources], link:Processors#processors[Processors], and link:Sinks#sinks[Sinks] sections of the documentation. 
