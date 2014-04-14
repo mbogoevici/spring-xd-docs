@@ -223,11 +223,12 @@ The SpEL context (root object) for the Deployment Manifest is ContainerAtrtribut
 
 ContainerAttributes also includes any user-defined attribute values configured for the container. These attributes are configured by editing _xd/config/servers.yml_ the file included in the XD distribution contains some commented out sections as examples. In this case, the container attributes configuration looks something like:
 
+[source, yaml]
 ----
 xd:
   container:
       groups: group2
-      color :red
+      color: red
 ----
 
 NOTE: Groups may also be assigned to a container via the optional command line argument _--groups_ or by setting the environment variable _XD_CONTAINER_GROUPS_. As the property name suggests, a container may belong to more than one group, represented as comma-delimited string. XD considers the concept of groups a useful convention for targeting groups of servers for deployment in a variety of scenarios, so it enjoys special treatment. However, there is nothing technically different from groups and other user defined attribute.
