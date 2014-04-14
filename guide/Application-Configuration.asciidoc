@@ -189,10 +189,10 @@ The `modules.yml` file can be used to specify the values of keys that should be 
 
 `modules.yml` contains
 ----
-sharedConsumerKey=alsdjfqwopieur
-sharedConsumerSecret=pqwieouralsdjkqwpo
-sharedAccessToken=llixzchvpiawued
-sharedAccessTokenSecret=ewoqirudhdsldke
+sharedConsumerKey: alsdjfqwopieur
+sharedConsumerSecret: pqwieouralsdjkqwpo
+sharedAccessToken: llixzchvpiawued
+sharedAccessTokenSecret: ewoqirudhdsldke
 ----
 
 and `XD_MODULE_CONFIG_LOCATION\source\twitterstream\twitterstream.properties` contains
