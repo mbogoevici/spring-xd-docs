@@ -440,6 +440,11 @@ The _gauge_ sink provided with XD stores expects a numeric value as a payload, t
 
  name:: The name for the gauge *(default: `<streamname>`)*
 
+====== Note:
+When using gauges and rich gauges with these examples you will need a redis instance running.  Also if you are using singlenode, start your single node with the --analytics redis parameter 
+----
+xd-singlenode --analyttics redis
+----
 
 Here is an example of creating a tap for a gauge:
 
@@ -669,4 +674,3 @@ xd:>! wget  -q -S -O - http://localhost:9393/metrics/counters/httptap
   "value":2
 }
 ----
-
