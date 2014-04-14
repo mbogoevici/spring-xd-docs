@@ -5,7 +5,7 @@ The XD distributed runtime architecture consists of the following distributed co
 
 * Admin - Manages Stream and Job deployments and other end user operations and provides REST services to access runtime state, system metrics, and analytics
 * Container - Hosts deployed Modules (stream processing tasks) and batch jobs
-* ZooKeeper - Provides all runtime information for the XD cluster. Tracks running containers, in which containers modules and jobs are deployed, stream definitions, deployment manifests, and the like. There's more to come on how ZooKeeper is used in XD. See (https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index)[The ZooKeeper Wiki] for a general introduction.
+* ZooKeeper - Provides all runtime information for the XD cluster. Tracks running containers, in which containers modules and jobs are deployed, stream definitions, deployment manifests, and the like, see link:XD-Distributed-Runtime[XD Distributed Runtime] for an overview on how XD uses ZooKeeper.
 * Spring Batch Job Repository Database - An RDMS is required for jobs. The XD distribution comes with HSQLDB, but this is not appropriate for a production installation. XD supports any JDBC compliant database.
 
 * A Message Broker - Used for data transport. XD data transport is designed to be pluggable. Currently XD supports Rabbit MQ and Redis for messaging during stream and job processing. A production installation must configure one of these transport options. Rabbit MQ is recommended as it is considered the more reliable of the two. In either case, a separate server must be running to provide the messaging middleware.
@@ -56,7 +56,7 @@ Usage:
 * *analytics* - How to persist analytics such as counters and gauges. The default is *redis* 
 * *groups* - The assigned group membership for this container as a comma delimited list
 * *hadoopDistro* - The Hadoop distribution to be used for HDFS access.  HDFS is not available if not set.
-* help* - Displays help for the command args.  Help information may be accessed with a -? or -h.  
+* *help* - Displays help for the command args.  Help information may be accessed with a -? or -h.  
 * *mgmtPort* - The port for the management server.  Defaults to 9393.
 
 === Setting up a RDBMS

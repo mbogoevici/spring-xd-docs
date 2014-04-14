@@ -1,6 +1,5 @@
 === Introduction
-This document describes what's happening "under the hood" of the XD Distributed Runtime (DIRT) and, in particular, how the runtime architecture achieves high availability and failover in a clustered production environment. See link:Running-Distributed-Mode[Running in Distributed Mode] for basic information on running Spring XD in distributed mode.
-
+This document describes what's happening "under the hood" of the XD Distributed Runtime (DIRT) and, in particular, how the runtime architecture achieves high availability and failover in a clustered production environment. See link:Running-Distributed-Mode[Running in Distributed Mode] for more information on installing and running Spring XD in distributed mode.
 
 This discussion will focus on the core runtime components and the role of ZooKeeper.
 
