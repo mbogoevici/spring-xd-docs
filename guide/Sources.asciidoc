@@ -518,7 +518,7 @@ expression:: a SpEL expression to convert the counter stimulus to a message *(de
 
 [[reactor-tcp]]
 === Reactor TCP
-The `reactor-tcp` source acts as a server and allows a remote party to connect to XD and submit data over a raw tcp socket.  The reactor-tcp source differs from the standard tcp source in that it is based on the https://github.com/reactor/reactor[Reactor Project] and can be configured to use an the http://martinfowler.com/articles/lmax.html[LMAX Disruptor RingBuffer] library allowing for an extremely high ingestion rates, e.g. ~ 1M/sec.
+The `reactor-tcp` source acts as a server and allows a remote party to connect to XD and submit data over a raw tcp socket.  The reactor-tcp source differs from the standard tcp source in that it is based on the https://github.com/reactor/reactor[Reactor Project] and can be configured to use an the http://martinfowler.com/articles/lmax.html[LMAX Disruptor RingBuffer] library allowing for extremely high ingestion rates, e.g. ~ 1M/sec.
 
 To create a stream definition use the following XD shell command
 
@@ -528,8 +528,9 @@ This will create the reactor TCP source and send data read from it to the file n
 
 The reactor-tcp source has the following options
 
-framing:: `linefeed` or `length`.  How to frame the data to tell invidual messages apart. *(default: `linefeed`)*
-codec:: how to decode the stream, either bytes, string or syslog.*(default: `string`)*
+transport:: `tcp` or `udp`. *(default: `tcp`)*
+framing:: `linefeed` or `length`.  How to frame the data to tell individual messages apart. *(default: `linefeed`)*
+codec:: how to decode the stream, either bytes, string or syslog. *(default: `string`)*
 dispatcher:: `ringBuffer`, `threadPoolExecutor`, `workQueue`, `sync`. *(default: `ringBuffer`)*
 host:: the host to connect to *(default: `0.0.0.0`)*
 port: the port to connect to *(default: `3000`)*
