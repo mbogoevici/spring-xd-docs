@@ -1,3 +1,6 @@
+We have a number of sample projects in the https://github.com/spring-projects/spring-xd-samples[Spring XD Samples GitHub repository]. Below are some additional examples for ingesting syslog data to HDFS.
+
+
 === Syslog ingestion into HDFS
 
 In this section we will show a simple example on how to setup syslog ingestion from multiple hosts into HDFS.
