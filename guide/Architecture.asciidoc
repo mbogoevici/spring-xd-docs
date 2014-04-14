@@ -35,7 +35,7 @@ image::images/local-mode.png[]
 [[admin-server-arch]]
 ==== Admin Server Architecture
 
-The Admin Server uses an embedded servlet container and exposes REST endpoints for creating, deploying, undeploying, and destroying streams and jobs, querying runtime state, analytics, qnd the like. The Admin Server is implemented using Spring's MVC framework and the https://github.com/SpringSource/spring-hateoas[Spring HATEOAS] library to create REST representations that follow the http://en.wikipedia.org/wiki/HATEOAS[HATEOAS] principle. The Admin Server and Container Servers monitor and update runtime state using ZooKeeper (see link:XD-Distributed-Runtime#xd-distributed-runtime[XD-Distributed-Runtime]).
+The Admin Server uses an embedded servlet container and exposes REST endpoints for creating, deploying, undeploying, and destroying streams and jobs, querying runtime state, analytics, and the like. The Admin Server is implemented using Spring's MVC framework and the https://github.com/SpringSource/spring-hateoas[Spring HATEOAS] library to create REST representations that follow the http://en.wikipedia.org/wiki/HATEOAS[HATEOAS] principle. The Admin Server and Container Servers monitor and update runtime state using ZooKeeper (see link:XD-Distributed-Runtime#xd-distributed-runtime[XD-Distributed-Runtime]).
 
 
 [[container-server-arch]]
