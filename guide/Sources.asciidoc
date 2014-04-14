@@ -290,15 +290,17 @@ As updates are posted to the cache you should see them captured in the output fi
 
 Three syslog sources are provided: `syslog-udp`, `syslog-tcp` and `reactor-syslog`.  The reactor-syslog adapter uses tcp and builds upon the functionality available in https://github.com/reactor/reactor[Reactor] project and provides improved throughput over the syslog-tcp adapter. They all support the following option:
 
-port:: the port on which the system will listen for syslog messages *(default: `1514`)*
+port:: the port on which the system will listen for syslog messages *(default: `5140`)*
 
 To create a stream definition (using shell command)
 
-    xd:> stream create --name syslogtest --definition "syslog-udp --port=1514 | file" --deploy
+    xd:> stream create --name syslogtest --definition "syslog-udp --port=5140 | file" --deploy
 
 or
 
-    xd:> stream create --name syslogtest --definition "syslog-tcp --port=1514 | file" --deploy
+    xd:> stream create --name syslogtest --definition "syslog-tcp --port=5140 | file" --deploy
+
+(`--port` is not required when using the default `5140`)
 
 Send a test message to the syslog
 
@@ -312,12 +314,12 @@ Refer to your syslog documentation to configure the syslog daemon to forward sys
 
 UDP - Mac OSX (syslog.conf) and Ubuntu (rsyslog.conf)
 
-    *.*	@localhost:1514 
+    *.*	@localhost:5140 
 
 TCP - Ubuntu (rsyslog.conf)
 
     $ModLoad omfwd
-    *.*	@@localhost:1514
+    *.*	@@localhost:5140
 
 Restart the syslog daemon after reconfiguring.
 
