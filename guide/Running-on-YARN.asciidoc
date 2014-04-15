@@ -6,7 +6,9 @@ To begin with, you need to have access to a Hadoop cluster running a version bas
 
 You also need a supported transport, see link:Running-Distributed-Mode[Running Distributed Mode] for installation of Redis or Rabbit MQ. Spring XD on YARN currently uses the same transport for both control and data with Redis being the default.
 
-You also need Zookeeper running. If your Hadoop cluster doesn't have Zookeeper installed you need to install and run it specifically for Spring XD. See the link:#[Zookeeper docs???].
+You also need Zookeeper running. If your Hadoop cluster doesn't have Zookeeper installed you need to install and run it specifically for Spring XD. See the link:Running-Distributed-Mode#setting-up-zookeeper[Setting up ZooKeeper] section of the "Running Distributed Mode" chapter.
+
+Lastly, you need an RDBMs to support batch jobs and JDBC operations.
 
 === Download Spring XD on YARN binaries
 In addition to the regular `spring-xd-<version>-dist.zip` files we also distribute a zip file that includes all you need to deploy on YARN. The name of this zip file is `spring-xd-<version>-yarn.zip`. You can download it from the link:http://repo.spring.io/libs-snapshot/org/springframework/xd/spring-xd/1.0.0.BUILD-SNAPSHOT/[Spring Repo]. Unzip the downloaded file and you should see a `spring-xd-<version>-yarn` directory.
