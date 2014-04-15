@@ -1,8 +1,12 @@
 === Introduction
 
-Spring XD provides support for the real-time evaluation of various machine learning scoring algorithms as well simple real-time data analytics using various types of counters and gauges.  Spring XD provides this functionality as an extensible class library with a few out of the box implementations.  
+Spring XD provides support for the real-time evaluation of various machine learning scoring algorithms as well simple real-time data analytics using various types of counters and gauges. The analytics functionality is provided via modules that can be added to a stream. In that sense, real-time analytics is accomplished via the same exact model as data-ingestion. It's possible that the primary role of a stream is to perform real-time analytics, but it's quite common to add a link:Taps#taps[tap] to initiate a secondary stream where analytics, e.g. a field-value-counter, is applied to the same data being ingested through a primary stream.
 
-For Machine Learning algorithms, we integrate with the https://github.com/jpmml/jpmml-evaluator[JPMML-Evaluator] library that provides support for a wide range of https://github.com/jpmml/jpmml-evaluator#features[model types] and is interoperable with models exported from http://www.r-project.org/[R], http://rattle.togaware.com/[Rattle], http://www.knime.org/[KNIME], and http://rapid-i.com/content/view/181/190/[RapidMiner].  For counter and gauge analytics, in-memory and http://redis.io/[Redis] implementations are provided.
+=== Machine Learning
+
+Spring XD's support for machine learning scoring algorithms begins with an extensible class library foundation upon which implementations can be built, such as the https://github.com/spring-projects/spring-xd-modules/tree/master/analytics-ml-pmml[PMML Module] that we describe here.
+
+That module integrates with the https://github.com/jpmml/jpmml-evaluator[JPMML-Evaluator] library that provides support for a wide range of https://github.com/jpmml/jpmml-evaluator#features[model types] and is interoperable with models exported from http://www.r-project.org/[R], http://rattle.togaware.com/[Rattle], http://www.knime.org/[KNIME], and http://rapid-i.com/content/view/181/190/[RapidMiner].  For counter and gauge analytics, in-memory and http://redis.io/[Redis] implementations are provided.
 
 Incorporating the evaluation of machine learning algorithms into stream processing is as easy as using any other processing module.  Here is a simple example
 
