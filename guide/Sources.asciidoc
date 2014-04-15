@@ -15,7 +15,7 @@ The Sources covered are
 * <<syslog, Syslog>>
 * <<tcp, TCP>> 
 * <<tcp-client, TCP Client>> 
-* <<reactor-tcp, Reactor TCP>> 
+* <<reactor-ip, Reactor IP>> 
 * <<jms, JMS>>
 * <<rabbit, RabbitMQ>>
 * <<time, Time>>
@@ -516,17 +516,17 @@ fixedDelay:: the rate at which 'stimulus' messages will be emitted *(default: `5
 script:: reference to a script that should transform the counter stimulus to messages to send *(default: use `expression`)*
 expression:: a SpEL expression to convert the counter stimulus to a message *(default: `payload.toString()`, _i.e._ emit "1", "2", "3", _etc._)*
 
-[[reactor-tcp]]
-=== Reactor TCP
-The `reactor-tcp` source acts as a server and allows a remote party to connect to XD and submit data over a raw tcp socket.  The reactor-tcp source differs from the standard tcp source in that it is based on the https://github.com/reactor/reactor[Reactor Project] and can be configured to use an the http://martinfowler.com/articles/lmax.html[LMAX Disruptor RingBuffer] library allowing for extremely high ingestion rates, e.g. ~ 1M/sec.
+[[reactor-ip]]
+=== Reactor IP
+The `reactor-ip` source acts as a server and allows a remote party to connect to XD and submit data over a raw TCP or UDP socket.  The reactor-ip source differs from the standard tcp source in that it is based on the https://github.com/reactor/reactor[Reactor Project] and can be configured to use the http://martinfowler.com/articles/lmax.html[LMAX Disruptor RingBuffer] library allowing for extremely high ingestion rates, e.g. ~ 1M/sec.
 
 To create a stream definition use the following XD shell command
 
-     xd:> stream create --name tcpReactor --definition "reactor-tcp | file" --deploy
+     xd:> stream create --name tcpReactor --definition "reactor-ip | file" --deploy
 
 This will create the reactor TCP source and send data read from it to the file named tcpReactor.
 
-The reactor-tcp source has the following options
+The reactor-ip source has the following options
 
 transport:: `tcp` or `udp` *(default: `tcp`)*
 framing:: `linefeed` or `length`.  How to frame the data to tell individual messages apart. *(default: `linefeed`)*
