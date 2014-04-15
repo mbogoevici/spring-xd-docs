@@ -4,7 +4,7 @@ Spring XD provides support for the real-time evaluation of various machine learn
 
 === Machine Learning
 
-Spring XD's support for machine learning scoring algorithms begins with an extensible class library foundation upon which implementations can be built, such as the https://github.com/spring-projects/spring-xd-modules/tree/master/analytics-ml-pmml[PMML Module] that we describe here.
+Spring XD’s support for implementing predictive analytics by scoring analytical models that leverage machine learning algorithms begins with an extensible class library foundation upon which implementations can be built, such as the https://github.com/spring-projects/spring-xd-modules/tree/master/analytics-ml-pmml[PMML Module] that we describe here.
 
 That module integrates with the https://github.com/jpmml/jpmml-evaluator[JPMML-Evaluator] library that provides support for a wide range of https://github.com/jpmml/jpmml-evaluator#features[model types] and is interoperable with models exported from http://www.r-project.org/[R], http://rattle.togaware.com/[Rattle], http://www.knime.org/[KNIME], and http://rapid-i.com/content/view/181/190/[RapidMiner].  For counter and gauge analytics, in-memory and http://redis.io/[Redis] implementations are provided.
 
