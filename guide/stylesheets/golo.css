@@ -658,7 +658,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 
 body { background: url('../images/golo/body-bg.png?1370460826') #fdfaf7 repeat; }
 
-#toc.toc2 ul ul { list-style-type: circle; padding-left: 1.75em; }
+#toc.toc2 ul ul { padding-left: 1.75em; }
 
 #toctitle { color: #152347; }
 
