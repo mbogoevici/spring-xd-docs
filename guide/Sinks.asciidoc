@@ -14,7 +14,7 @@ The Sinks covered are
 
 * <<jdbc, JDBC>>
 
-* <<tcp, TCP>>
+* <<tcp-sink, TCP>>
 
 * <<mail, Mail>>
 
@@ -281,8 +281,8 @@ initializerScript:: the file name for the script containing SQL statements used 
 tableName:: the name of the table to insert payload data into *(default: `<streamname>`)*
 names:: comma separated list of column names to include in the insert statement. Use 'payload' to include the entire message payload into a payload column. *(default: `payload`)*
 
-[[tcp]]
-=== TCP
+[[tcp-sink]]
+=== TCP Sink
 
 The TCP Sink provides for outbound messaging over TCP.
 
