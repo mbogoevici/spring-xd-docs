@@ -72,7 +72,7 @@ zk:
 ----
 
 ==== JDBC datasource properties
-You should specify the JDBC connection properties based on the RDBMs that you use for the job and JDBC sink
+You should specify the JDBC connection properties based on the RDBMs that you use for the batch jobs and JDBC sink
 
 ----
 ---
