@@ -530,6 +530,7 @@ The reactor-ip source has the following options
 
 transport:: `tcp` or `udp` *(default: `tcp`)*
 framing:: `linefeed` or `length`.  How to frame the data to tell individual messages apart. *(default: `linefeed`)*
+lengthFieldLength:: `2`, `4`, or `8`. Byte precision of the number used to denote the length of a message. *(default: `4`)*
 codec:: How to decode the stream. Either bytes, string or syslog. *(default: `string`)*
 dispatcher:: `ringBuffer`, `threadPoolExecutor`, `workQueue`, `sync`. *(default: `ringBuffer`)*
 host:: the host to connect to *(default: `0.0.0.0`)*
