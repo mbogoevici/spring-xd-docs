@@ -20,9 +20,9 @@ The Sinks covered are
 
 * <<rabbitmq, RabbitMQ>>
 
-* <<gemfire-server,GemFire Server>>
+* <<gemfire-server, GemFire Server>>
 
-* <<splunk,Splunk Server>>
+* <<splunk-server, Splunk Server>>
 
 * <<mqtt, MQTT>>
 
@@ -490,7 +490,7 @@ You should see a message on STDOUT for the process running the GemFire server li
 
     INFO [LoggingCacheListener] - updated entry FAKE
 
-[[splunk]]
+[[splunk-server]]
 === Splunk Server
 A http://www.splunk.com/[Splunk] sink that writes data to a TCP Data Input type for Splunk. 
 
