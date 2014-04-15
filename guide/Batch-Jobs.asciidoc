@@ -15,7 +15,7 @@ A Job that has steps specific to Hadoop is shown below.
 
 image::images/batch-hadoop-overview.png[Steps in a workflow that execute Hadoop HDFS operations and run Pig, MapReduce and Hive jobs, scaledwidth="75%"]
 
-A JobLauncher is responsible for starting a job and is often triggered via a scheduler.  Other options to launch a job are through Spring XD's RESTful administration API, the XD web application, or in response to an external event from and XD stream defintion, _e.g._ file polling using the file source.
+A JobLauncher is responsible for starting a job and is often triggered via a scheduler.  Other options to launch a job are through Spring XD's RESTful administration API, the XD web application, or in response to an external event from and XD stream definition, _e.g._ file polling using the file source.
 
 === Features
 
@@ -41,7 +41,7 @@ The Jobs definitions provided as part of the Spring XD distribution as well as t
 * http://www.manning.com/templier/[Spring Batch In Action - Manning]
 * http://www.apress.com/9781430234524[Pro Spring Batch - APress]
 
-For help developing Job steps specific to Hadoop, e.g. HDFS, Pig, Hive, the https://github.com/spring-projects/spring-xd-samples[Spring XD Samples] is useful as wella s the following resources
+For help developing Job steps specific to Hadoop, e.g. HDFS, Pig, Hive, the https://github.com/spring-projects/spring-xd-samples[Spring XD Samples] is useful as well as the following resources
 
 * http://projects.spring.io/spring-hadoop/[Spring for Apache Hadoop home page]
 * http://shop.oreilly.com/product/0636920024767.do[Spring Data - O'Reilly - Chapter 13]
@@ -57,7 +57,7 @@ To create a job in the XD shell, execute the job create command composed of:
 * name - the "name" that will be associated with the Job
 * definition - the name of the context file that describes the tasklet.
 
-So using our example above where we have a myjob.xml job definiton file in the $XD_HOME/modules/jobs directory, this will look like:
+So using our example above where we have a myjob.xml job definition file in the $XD_HOME/modules/jobs directory, this will look like:
 ----
 xd:> job create --name helloSpringXD --definition "myjob" --deploy
 
@@ -78,7 +78,7 @@ In the logging output of the XDContainer you should see the following:
 When creating jobs, the following options are available to all job definitions:
 
 dateFormat:: The optional date format for job parameters *(default: `yyyy/MM/dd`)*
-numberFormat:: Defines the numberformat when parsing numeric parameters *(default: `NumberFormat.getInstance(Locale.US)`)*
+numberFormat:: Defines the number format when parsing numeric parameters *(default: `NumberFormat.getInstance(Locale.US)`)*
 makeUnique:: Shall job parameters be made unique? *(default: `true`)*
 
 Also, similar to the `stream create` command, the `job create` command has an optional `--deploy` option to create the job definition and deploy it. `--deploy` option is false by default.
@@ -246,7 +246,7 @@ xd>job create --name myHttpJob --definition "httpJob --listeners=disable" --depl
 
 ==== To select specific listeners
 
-To select specific listeners, specify comma seperated list in `--listeners` option. 
+To select specific listeners, specify comma separated list in `--listeners` option. 
 Following example illustrates the selection of job and step execution listeners only:
 
 ----
@@ -319,7 +319,7 @@ The job also supports a boolean `deleteFiles` option if you want the files to be
 
 ==== Import CSV Files to JDBC (`filejdbc`)
 
-A module which loads CSV files into a JDBC table using a single batch job. By default it uses the internal HSQL DB which is used by Spring Batch. Refer to link:Modules#module_values[how module options are resolved] for further details on how to change defaults (one can of course always use `--foo=bar` notation in the job definition to achieve the same effect). The job should be defined with the `resources` parameter defining the files which should be loaded. It also requires a `names` parameter (for the CSV field names) and these should match the database column names into which the data should be stored. You can either pre-create the database table or the module will create it for you if you use `--initializeDatabase=true` when the job is created. The table intitialization is configured in a similar way to the JDBC sink and uses the same parameters. The default table name is the job name and can be customized by setting the `tableName` parameter. As an example, if you run the command
+A module which loads CSV files into a JDBC table using a single batch job. By default it uses the internal HSQL DB which is used by Spring Batch. Refer to link:Modules#module_values[how module options are resolved] for further details on how to change defaults (one can of course always use `--foo=bar` notation in the job definition to achieve the same effect). The job should be defined with the `resources` parameter defining the files which should be loaded. It also requires a `names` parameter (for the CSV field names) and these should match the database column names into which the data should be stored. You can either pre-create the database table or the module will create it for you if you use `--initializeDatabase=true` when the job is created. The table initialization is configured in a similar way to the JDBC sink and uses the same parameters. The default table name is the job name and can be customized by setting the `tableName` parameter. As an example, if you run the command
 
 ----
 xd:> job create myjob --definition "filejdbc --resources=file:///mycsvdir/*.csv --names=forename,surname,address --tableName=people --initializeDatabase=true" --deploy

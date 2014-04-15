@@ -136,7 +136,7 @@ Also, sometimes it is useful in troubleshooting to connect the ZooKeeper CLI to 
 
 === Create a Stream
 
-In Spring XD, a basic stream defines the ingestion of event driven data from a source to a sink that passes through any number of processors. You can create a new stream by issuing a `stream create` command from the XD shell.  Stream defintions are built from a simple DSL. For example, execute:
+In Spring XD, a basic stream defines the ingestion of event driven data from a source to a sink that passes through any number of processors. You can create a new stream by issuing a `stream create` command from the XD shell.  Stream definitions are built from a simple DSL. For example, execute:
 
   xd:> stream create --name ticktock --definition "time | log" --deploy
 

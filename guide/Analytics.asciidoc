@@ -1,8 +1,8 @@
 === Introduction
 
-Spring XD provides support for the real-time evaluation of various machine learning scoring algorithms as well simple real-time data analytics using various types of counters and gauges.  Spring XD provides this functionalty as an extensible class library with a few out of the box implemenations.  
+Spring XD provides support for the real-time evaluation of various machine learning scoring algorithms as well simple real-time data analytics using various types of counters and gauges.  Spring XD provides this functionality as an extensible class library with a few out of the box implementations.  
 
-For Machine Learning algorithms, we integrate with the https://github.com/jpmml/jpmml-evaluator[JPMML-Evaluator] library that provides support for a wide range of https://github.com/jpmml/jpmml-evaluator#features[model types] and is interopable with models exported from http://www.r-project.org/[R], http://rattle.togaware.com/[Rattle], http://www.knime.org/[KNIME], and http://rapid-i.com/content/view/181/190/[RapidMiner].  For counter and gauge analytics, in-memory and http://redis.io/[Redis] implementations are provided.
+For Machine Learning algorithms, we integrate with the https://github.com/jpmml/jpmml-evaluator[JPMML-Evaluator] library that provides support for a wide range of https://github.com/jpmml/jpmml-evaluator#features[model types] and is interoperable with models exported from http://www.r-project.org/[R], http://rattle.togaware.com/[Rattle], http://www.knime.org/[KNIME], and http://rapid-i.com/content/view/181/190/[RapidMiner].  For counter and gauge analytics, in-memory and http://redis.io/[Redis] implementations are provided.
 
 Incorporating the evaluation of machine learning algorithms into stream processing is as easy as using any other processing module.  Here is a simple example
 
@@ -49,7 +49,7 @@ models need to adjust the domain input and the model output in some way, therefo
 which has core abstractions for implementing that mapping via *InputMapper* and *OutputMapper*.
 
 Since *Spring XD 1.0.0.M6* we support the integration of analytical models, also called statistical models or mining models, that are defined via http://en.wikipedia.org/wiki/Predictive_Model_Markup_Language[*PMML*].
-*PMML* is the abreviation for *Predictive Model Markup Language* and is a standard XML representation that allows specifications of different mining models, their ensembles, and associated preprocessing. 
+*PMML* is the abbreviation for *Predictive Model Markup Language* and is a standard XML representation that allows specifications of different mining models, their ensembles, and associated preprocessing. 
 
 [NOTE]
 =====================================================================
@@ -60,7 +60,7 @@ Applications can produce and consume *PMML* models, thus allowing an analytical 
 
 *PMML* is just one of many other technologies that one can integrate to implement analytics with, more will follow in upcoming releases.
 
-==== Modelling and Evaluation
+==== Modeling and Evaluation
 Analytical models are usually defined by a statistician _aka_ data scientist or quant by using some statistical tool to analyze the data and build an appropriate model.
 In order to implement those models in a business application they are usually transformed and exported in some way (_e.g._ in the form of a *PMML* definition).
 This model is then loaded into the application which then evaluates it against a given input (event, tuple, example).
@@ -111,7 +111,7 @@ pmmlDefinition = pmml.naiveBayes(model,model.name=paste(modelName,externalId,sep
 cat(toString(pmmlDefinition))
 ----
 
-The r script above should produce the following *PMML* document that contains the abstract definition of the naive bayes classifer that we derived
+The r script above should produce the following *PMML* document that contains the abstract definition of the naive bayes classifier that we derived
 from the training dataset of the IRIS dataset.
 [source, xml]
 ----
@@ -265,7 +265,7 @@ xd:>stream create --name iris-flower-classification --definition "http --outputT
 *NOTE* Some analytical models like for instance *association rules* require a different typ of mapping. You can implement your own custom mapping strategies by implementing a custom *InputMapper* and *OutputMapper*
 and defining a new *PmmlAnalytic* or *TuplePmmlAnalytic* bean that uses your custom mappers.
 
-After the stream has been successfuly deployed to *Spring XD* we can eventually start to throw some data at it by issuing the follwing http request via the *XD-Shell* (or `curl`, or any other tool):
+After the stream has been successfully deployed to *Spring XD* we can eventually start to throw some data at it by issuing the following http request via the *XD-Shell* (or `curl`, or any other tool):
 
 *Note* that our example record contains no information about which species the example belongs to - this will be added by our classifier.
 
@@ -305,7 +305,7 @@ datasets$testset[,1:4][1,]
 
 
 === Counters and Gauges
-Counter and Gauges are analytical data strucutres collectively referred to as metrics.  Metrics can be used directly in place of a sink just as if you were creating any other link:Streams#streams[stream], but you can also analyze data from an existing stream using a link:Taps#taps[tap]. We'll look at some examples of using metrics with taps in the following sections. As a prerequisite start the XD Container as instructed in the link:Getting-Started#getting-started[Getting Started] page. 
+Counter and Gauges are analytical data structures collectively referred to as metrics.  Metrics can be used directly in place of a sink just as if you were creating any other link:Streams#streams[stream], but you can also analyze data from an existing stream using a link:Taps#taps[tap]. We'll look at some examples of using metrics with taps in the following sections. As a prerequisite start the XD Container as instructed in the link:Getting-Started#getting-started[Getting Started] page. 
 
 The 1.0 release provides the following types of metrics
 

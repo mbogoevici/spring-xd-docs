@@ -10,7 +10,7 @@ For modules, each module has its own configuration file located in its own direc
 
 For both server and module configuration, you can have environment specific settings through the use of application profiles and the ability to override values in files by setting OS environment variables.  
 
-In this secton we will walk though how to configure servers and modules.
+In this section we will walk though how to configure servers and modules.
 
 === Server Configuration
 
@@ -18,7 +18,7 @@ The startup scripts for `xd-singlenode`, `xd-admin`, and `xd-container` will by 
 
 The location and name of this resourse can be changed by using the environment variables `XD_CONFIG_LOCATION` and `XD_CONFIG_NAME`.  The start up script takes the value of these environment variables to set the Spring Boot properties `spring.config.location` and `spring.config.name`.  Note, that for `XD_CONFIG_LOCATION` you can reference any http://docs.spring.io/spring/docs/4.0.3.RELEASE/spring-framework-reference/htmlsingle/#resources[Spring Resource] implementation, most commonly denoted using the prefixes `classpath:`, `file:` and `http:`.
 
-It is common to keep your server configuration seperate form the installation directory of XD itself.  To do this, here is an example environment variable setting 
+It is common to keep your server configuration separate form the installation directory of XD itself.  To do this, here is an example environment variable setting 
 
 ----
 export XD_CONFIG_LOCATION=file:/xd/config/
@@ -29,7 +29,7 @@ export XD_CONFIG_NAME=region1-servers
 
 Profiles provide a way to segregate parts of your application configuration and change their availability and/or values based on the environment.  This lets you have different configuration settings for `qa` and `prod` environments and to easily switch between them.
 
-To activiate a profile, set the OS environment variable `SPRING_PROFILES_ACTIVE` to a comma delimited list of profile names.  The server looks to load profile specific variants of the `servers.yml` file based on the naming convention `servers-{profile}.yml`.  For example, if `SPRING_PROFILES_ACTIVE=prod` the following files would be searched for in the following order.
+To activate a profile, set the OS environment variable `SPRING_PROFILES_ACTIVE` to a comma delimited list of profile names.  The server looks to load profile specific variants of the `servers.yml` file based on the naming convention `servers-{profile}.yml`.  For example, if `SPRING_PROFILES_ACTIVE=prod` the following files would be searched for in the following order.
 
 . `XD_CONFIG_LOCATION/servers-prod.yml`
 . `XD_CONFIG_LOCATION/servers.yml`
@@ -40,7 +40,7 @@ You may also put multiple profile specific configuration in a single `servers.ym
 
 Spring XD saves the state of the batch job workflows in a relational database.  When running `xd-singlenode` a embedded HSQLDB database is run.  When running in distributed mode a standalone HSQLDB instance can be used, the startup script `hsqldb-server` is in is provided the installation directory under the folder 'hsqldb/bin'.  It is recommended to use HSQLDB only for development and learning. 
 
-When deploying in a production enviornment, you will need to select another database.  Spring XD is actively tested on MySql (Version: 5.1.23) and Postgres (Version 9.2-1002).  All batch workflow tables are automatically created, if they do not exist, for HSQLDB, MySQL and Postgres.  The JDBC driver jars for the HSQLDB, MySql, and Postgres are already on the XD classpath.
+When deploying in a production environment, you will need to select another database.  Spring XD is actively tested on MySql (Version: 5.1.23) and Postgres (Version 9.2-1002).  All batch workflow tables are automatically created, if they do not exist, for HSQLDB, MySQL and Postgres.  The JDBC driver jars for the HSQLDB, MySql, and Postgres are already on the XD classpath.
 
 NOTE: Until full schema support is added for Oracle, Sybase and other database, you will need to put a .jar file in the `xd/lib` directory that contains the equivalent functionality as these https://github.com/spring-projects/spring-xd/tree/master/spring-xd-batch/src/main/resources/org/springframework/xd/batch/schema[DDL scripts].  
 
@@ -164,7 +164,7 @@ Local transport uses a http://docs.spring.io/spring-integration/docs/latest-ga/a
 
 Modules are configured by placing property files in a nested directory structure based on their type and name.  The root of the nested directory structure is by default `XD_HOME/config/modules`.  This location can be customized by setting the OS environment variable `XD_MODULE_CONFIG_LOCATION`, similar to how the environment variable `XD_CONFIG_LOCATION` is used for configuring the server.
 
-NOTE: The `XD_MODULE_CONFIG_LOCATION` can refernce any any http://docs.spring.io/spring/docs/4.0.3.RELEASE/spring-framework-reference/htmlsingle/#resources[Spring Resource] implementation, most commonly denoted using the prefixes `classpath:`, `file:` and `http:`.
+NOTE: The `XD_MODULE_CONFIG_LOCATION` can reference any any http://docs.spring.io/spring/docs/4.0.3.RELEASE/spring-framework-reference/htmlsingle/#resources[Spring Resource] implementation, most commonly denoted using the prefixes `classpath:`, `file:` and `http:`.
 
 As an example, if you wanted to configure the twittersearch module, you would create a file 
 ----
@@ -177,7 +177,7 @@ NOTE: You *do not* need to prefix these property names with a `source.twittersea
 
 You can override the values in the module property file in various ways.  The following sources of properties are considered in the following order.
 
-. Properties specified in the stream or job `DSL` definiton
+. Properties specified in the stream or job `DSL` definition
 . Java System Properties
 . OS environment variables.
 . `XD_MODULE_CONFIG_LOCATION\<type>\<name>\<name>.properties` (including profile variants)
