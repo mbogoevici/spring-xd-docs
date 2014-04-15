@@ -83,11 +83,10 @@ apply plugin: 'idea'
 
 ext {
     junitVersion = '4.11'
-    lettuceVersion = '2.3.2'
-    springVersion = '3.2.2.RELEASE'
-    springIntegrationVersion = '3.0.0.M2'
-    springSocialVersion = '1.0.1.RELEASE'
-    springDataRedisVersion = '1.0.4.RELEASE'
+    lettuceVersion = '2.3.3'
+    springVersion = '4.0.3.RELEASE'
+    springIntegrationVersion = '4.0.0.M4'
+    springDataRedisVersion = '1.1.1.RELEASE'
 }
 
 dependencies {
