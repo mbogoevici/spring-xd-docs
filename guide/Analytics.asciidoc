@@ -2,7 +2,7 @@
 
 Spring XD provides support for the real-time evaluation of various machine learning scoring algorithms as well simple real-time data analytics using various types of counters and gauges. The analytics functionality is provided via modules that can be added to a stream. In that sense, real-time analytics is accomplished via the same exact model as data-ingestion. It's possible that the primary role of a stream is to perform real-time analytics, but it's quite common to add a link:Taps#taps[tap] to initiate a secondary stream where analytics, e.g. a field-value-counter, is applied to the same data being ingested through a primary stream. You will see both approaches in the examples below.
 
-=== Machine Learning
+=== Predictive analytics
 
 Spring XD’s support for implementing predictive analytics by scoring analytical models that leverage machine learning algorithms begins with an extensible class library foundation upon which implementations can be built, such as the https://github.com/spring-projects/spring-xd-modules/tree/master/analytics-ml-pmml[PMML Module] that we describe here.
 
