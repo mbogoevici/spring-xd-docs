@@ -11,7 +11,7 @@ However, if you are interested in extending XD with your own modules, some knowl
 === Creating a Module
 This section provides details on how to write and register custom modules. For a quick start, dive into the examples of creating link:Creating-a-Source-Module#creating-a-source-module[source], link:Creating-a-Processor-Module#creating-a-processor-module[processor], and link:Creating-a-Sink-Module#creating-a-sink-module[sink] modules.
 
-A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/Module.java[Module] has the following required attributes:
+A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/ModuleDefinition.java[ModuleDefinition] has the following required attributes:
 
 * name - the name of the component, normally a single word representing the purpose of the module. Examples are _file_, _http_, _syslog_.
 * type - the module type, current XD module types include _source_, _sink_, and _processor_
