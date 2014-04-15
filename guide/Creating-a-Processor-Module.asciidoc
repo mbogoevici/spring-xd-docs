@@ -64,7 +64,10 @@ Create the following file as _tweettransformer.xml_:
 
 === Deploy the Module
 
-To deploy the module, you need to copy the _tweettransformer.xml_ file to the `${xd.home}/modules/processors` directory. We also need to make the custom module code available. Currently Spring XD looks for code in the jars it finds in the `${xd.home}/lib` directory. So create a jar with the `TweetTransformer` class in it (and the correct package structure) and drop it into `lib`.
+To deploy the module, you need to copy the _tweettransformer.xml_ file to the `${xd.home}/modules/processors` directory. We also need to make the custom module code available. Spring XD looks for code in the jars it finds in the `${xd.home}/lib` directory. So create a jar with the `TweetTransformer` class in it (and the correct package structure) and drop it into `lib`.
+
+[NOTE]
+For a more sophisticated handling of module dependencies, please see https://github.com/spring-projects/spring-xd/wiki/Modules#modules-with-isolated-classpath[Modules with isolated classpath].
 
 === Test the deployed module
 
