@@ -20,7 +20,7 @@ The Sinks covered are
 
 * <<rabbitmq, RabbitMQ>>
 
-* <<gemfire,GemFire Server>>
+* <<gemfire-server,GemFire Server>>
 
 * <<splunk,Splunk Server>>
 
@@ -443,7 +443,7 @@ Also, if the routingKey is specified as string literal, the SpEL literal needs t
 
    xd:> stream create rabbitSinkStream --definition "http | rabbit --routingKey='\"myqueue\"'" --deploy
 
-[[gemfire]]
+[[gemfire-server]]
 === GemFire Server
 
 Currently XD supports GemFire's client-server topology. A sink that writes data to a GemFire cache requires at least one  cache server to be running in a separate process and may also be configured to use a Locator. While Gemfire configuration is outside of the scope of this document, details are covered in the https://www.vmware.com/support/pubs/vfabric-gemfire.html[GemFire Product documentation]. The XD distribution includes a standalone GemFire server executable suitable for development and test purposes and bootstrapped using a Spring configuration file provided as a command line argument. The GemFire jar is distributed freely under GemFire's development license and is subject to the license's terms and conditions. Sink modules provided with the XD distrubution that write data to GemFire create a client cache and client region. No data is cached on the client.
