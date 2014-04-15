@@ -6,7 +6,7 @@ The last module in a link:Streams#streams[stream] is always a sink. Sink modules
 
 Spring Integration provides a number of adapters out of the box to support various transports, such as JMS, File, HTTP, Web Services, Mail, and more. You can typically create a sink module that uses these outbound channel adapters by writing just a single Spring application context file.
 
-These steps will demonstrate how to create and deploy a sink module using the Spring Integration RedisStore Outbound Channel Adapter.
+These steps will demonstrate how to create and deploy a sink module using the http://docs.spring.io/spring-integration/reference/html/redis.html#redis-store-outbound-channel-adapter[Spring Integration RedisStore Outbound Channel Adapter].
 
 === Create the module Application Context file
 Create the Outbound Channel Adapter in a file called _redis-store.xml_:
