@@ -57,7 +57,7 @@ Usage:
 * *groups* - The assigned group membership for this container as a comma delimited list
 * *hadoopDistro* - The Hadoop distribution to be used for HDFS access.  HDFS is not available if not set.
 * *help* - Displays help for the command args.  Help information may be accessed with a -? or -h.  
-* *mgmtPort* - The port for the management server.  Defaults to 9393.
+* *mgmtPort* - The port for the management server.  Defaults to the container server port.
 
 === Setting up a RDBMS
 
@@ -224,22 +224,21 @@ xd/bin>$ ./xd-container --analytics redis
 ==== Other Options
 There are additional configuration options available for these scripts:
  
-To specify the location of the Spring XD install,
+To specify the location of the Spring XD install other than the default configured in the script
 
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --xdHomeDir <xd-install-directory>
-xd/bin>$ ./xd-container --xdHomeDir <xd-install-directory>
+export XD_HOME=<Specific XD install directory>
 ----
 
 To specify the http port of the XDAdmin server,
 
 [source,sh]
 ----
-xd/bin>$ ./xd-admin --server.port <httpPort> 
+xd/bin>$ ./xd-admin --httpPort <httpPort> 
 ----
 
-The XDContainer nodes by default start up with --server.port 0 (which means they will scan for an available HTTP port). You can disable the HTTP endpoints for the XDContainer by setting --server.port=-1. Note that in this case HTTP source support will not work in a PaaS environment because typically it would require XD to bind to a specific port. Both the XDAdmin and XDContainer processes bind to --server.port $PORT (i.e. an environment variable if one is available, as is typical in a PaaS).
+The XDContainer nodes by default start up with server.port 0 (which means they will scan for an available HTTP port). You can disable the HTTP endpoints for the XDContainer by setting server.port=-1. Note that in this case HTTP source support will not work in a PaaS environment because typically it would require XD to bind to a specific port. Both the XDAdmin and XDContainer processes bind to server.port $PORT (i.e. an environment variable if one is available, as is typical in a PaaS).
 
 [[using-hadoop]]
 === Using Hadoop
