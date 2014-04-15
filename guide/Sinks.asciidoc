@@ -8,9 +8,9 @@ The Sinks covered are
 
 * <<file-sink, File>>
 
-* <<hadoop-hdfs, HDFS>>
+* <<hdfs, HDFS>>
 
-* <<hdfs-dataset-avroparquet, HDFS Dataset>>
+* <<hdfs-dataset, HDFS Dataset>>
 
 * <<jdbc_sink, JDBC>>
 
