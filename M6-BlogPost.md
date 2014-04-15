@@ -1,6 +1,6 @@
 The Spring XD team is pleased to announce that Spring XD 1.0 Milestone 6 is now available for download.
 
-This is our biggest release ever!  The team has been hard at work and this release contains a weath of new features:
+This is our biggest release ever!  The team has been hard at work and this release contains a wealth of new features:
 
 * [Distributed and Fault Tolerant Runtime](https://github.com/spring-projects/spring-xd/wiki/XD-Distributed-Runtime) - Leader election among multiple xd-admin severs and automatic redeployment of modules to other xd-containers in the case of failure.  ZooKeeper is introduced to manage the cluster and its deployment state.
 *  [Deployment Manifest] - When deploying a stream you can provide a deployment manifest that describes how to transform the logical stream definition (e.g.  http | hdfs) to a physical deployment on the cluster.  You can specify the number of instances of each module to deploy and also a criteria expression that selects the target container(s) on which to run the module.  This will be an area of active development for the next release as we extend the manifest to include support for data partitioning strategies.
