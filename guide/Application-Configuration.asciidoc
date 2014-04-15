@@ -66,9 +66,9 @@ spring:
 
 The properties under `hsql.server` are substituted in the `spring.datasource.url` property value.  This lets you create short variants of existing Spring Boot properties.  Using this style, you can override the value of these configuration variables by setting an OS environment variable, such as `xd_server_host`.  Alternatively, you can not use any placeholders and set `spring.datasource.url` directly to known values. 
 
-===== MySql
+===== MySQL
 
-When in distributed mode and you want to use HSQLDB, you need to change the value of `spring.datasource.*` properties.  As an example, 
+When in distributed mode and you want to use MySQL, you need to change the value of `spring.datasource.*` properties.  As an example, 
 
 ----
 spring:
@@ -82,9 +82,9 @@ spring:
 To override these settings set an OS environment variable such as `spring_datasource_url` to the value you require.
 
 
-===== MySql
+===== PostgreSQL
 
-When in distributed mode and you want to use HSQLDB, you need to change the value of `spring.datasource.*` properties.  As an example, 
+When in distributed mode and you want to use PostgreSQL, you need to change the value of `spring.datasource.*` properties.  As an example, 
 
 ----
 spring:
