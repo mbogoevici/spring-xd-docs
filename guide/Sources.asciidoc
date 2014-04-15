@@ -563,14 +563,12 @@ To destroy the stream, enter the following at the shell prompt:
 
 The RabbitMQ Source has the following options
 
-username:: the username to connect to the RabbitMQ broker *(default: `guest` unless `spring.rabbitmq.username` has been overridden in `rabbit.properties`)*
-password:: the password to connect to the RabbitMQ broker *(default: `guest` unless `spring.rabbitmq.password` has been overridden in `rabbit.properties`)*
-host:: the host (or IP Address) to connect to *(default: `localhost` unless `spring.rabbitmq.host` has been overridden in `rabbit.properties`)*
-port:: the port on the `host` *(default: `5672` unless `spring.rabbitmq.port` has been overridden in `rabbit.properties`)*
-vhost:: the virtual host *(default: `/` unless `spring.rabbitmq.virtual_host` has been overridden in `rabbit.properties`)*
-queues:: the queue(s) from which messages will be received; use a comma-delimited list to receive messages from multiple queues *(default: the stream name)*
-
-Note: the `rabbit.properties` file referred to above is located within the `XD_HOME/config` directory.
+username:: the username to connect to the RabbitMQ broker *(default: `guest`)*
+password:: the password to connect to the RabbitMQ broker *(default: `guest`)*
+host:: the host (or IP Address) to connect to *(default: `localhost`)*
+port:: the port on the `host` *(default: `5672`)*
+vhost:: the virtual host *(default: `/` unless)*
+queues:: the queue(s) from which messages will be received; use a comma-delimited list to receive messages from multiple queues *(default: `<streamname>`)*
 
 [[jms]]
 === JMS
@@ -650,25 +648,13 @@ If you wish to use the MQTT Source defaults you can execute the command as follo
 
 ==== Options
 
-The following options are configured in mqtt.properties in XD_HOME/config
+The defaults are set up to connect to the RabbitMQ MQTT adapter on localhost:
 
-    mqtt.url=tcp://localhost:1883
-    mqtt.default.client.id=xd.mqtt.client.id
-    mqtt.username=guest
-    mqtt.password=guest
-    mqtt.default.topics=xd.mqtt.test
-
-The defaults are set up to connect to the RabbitMQ MQTT adapter on localhost.
-
-Note that the client id must be no more than 19 characters; this is because `.src` is added and the id must be no more than 23 characters.
-
-The mqtt module accepts the following options, which override the defaults defined above
-
-clientId:: Identifies the client
-topics:: The topic(s) to which the source will subscribe
-url:: Location of the mqtt broker
-username:: The username to use when connecting to the broker
-password:: The password to use when connecting to the broker
+url:: location of the mqtt broker *(default: `tcp://localhost:1883`)*
+clientId:: identifies the client *(default: `xd.mqtt.client.id.snk`)*
+username:: the username to use when connecting to the broker *(default: `guest`)*
+password:: the password to use when connecting to the broker *(default: `guest`)*
+topics:: the topic(s) to which the source will subscribe *(default: `xd.mqtt.test`)*
 
 [[stdout]]
 === Stdout Capture

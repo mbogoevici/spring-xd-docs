@@ -13,11 +13,11 @@ A Job that has steps specific to Hadoop is shown below.
 
 image::images/batch-hadoop-overview.png[Steps in a workflow that execute Hadoop HDFS operations and run Pig, MapReduce and Hive jobs, scaledwidth="75%"]
 
-A JobLauncher is responsible for starting a job and is often triggered via a scheduler.  Other options to launch a job are through Spring XD's RESTful administration API, the XD web application, or in response to an external event from and XD stream defintion, e.g file polling using the file source.
+A JobLauncher is responsible for starting a job and is often triggered via a scheduler.  Other options to launch a job are through Spring XD's RESTful administration API, the XD web application, or in response to an external event from and XD stream defintion, _e.g._ file polling using the file source.
 
 === Features
 
-Spring XD allows you to create and launch jobs.  The launching of a job can be trigger using a cron expression or in reaction to data on a stream. When jobs are executing, they are also a souce of event data that can be subscribed to by a stream.  There are several type of events sent during a job's execution, the most common being the status of the job and the steps taken within the job.  This bi-direction communication between stream processing and batch processing allows for more complex chains of processing to be developed.
+Spring XD allows you to create and launch jobs.  The launching of a job can be triggered using a cron expression or in reaction to data on a stream. When jobs are executing, they are also a souce of event data that can be subscribed to by a stream.  There are several type of events sent during a job's execution, the most common being the status of the job and the steps taken within the job.  This bi-direction communication between stream processing and batch processing allows for more complex chains of processing to be developed.
 
 As a starting point, jobs for the following cases are provided to use out of the box
 
@@ -64,7 +64,7 @@ xd:> job create --name helloSpringXD --definition "myjob" --deploy
 
 In the logging output of the XDContainer you should see the following:
 ----
-14:17:46,793  INFO http-bio-8080-exec-5 job.JobPlugin:87 - Configuring module with the following properties: {numberFormat=, dateFormat=, makeUnique=true, xd.stream.name=helloSpringXD}
+14:17:46,793  INFO http-bio-8080-exec-5 job.JobPlugin:87 - Configuring module with the following properties: {numberFormat=, dateFormat=, makeUnique=true, xd.job.name=helloSpringXD}
 14:17:46,837  INFO http-bio-8080-exec-5 module.SimpleModule:140 - initialized module: SimpleModule [name=myjob, type=job, group=helloSpringXD, index=0]
 14:17:46,840  INFO http-bio-8080-exec-5 module.SimpleModule:154 - started module: SimpleModule [name=job, type=job, group=helloSpringXD, index=0]
 14:17:46,840  INFO http-bio-8080-exec-5 module.ModuleDeployer:152 - launched job module: helloSpringXD:myjob:0
@@ -103,7 +103,7 @@ xd:> job launch helloSpringXD
 ----
 In the logging output of the XDContainer you should see the following
 ----
-16:45:40,127  INFO http-bio-9393-exec-1 job.JobPlugin:98 - Configuring module with the following properties: {numberFormat=, dateFormat=, makeUnique=true, xd.stream.name=myjob}
+16:45:40,127  INFO http-bio-9393-exec-1 job.JobPlugin:98 - Configuring module with the following properties: {numberFormat=, dateFormat=, makeUnique=true, xd.job.name=myjob}
 16:45:40,185  INFO http-bio-9393-exec-1 module.SimpleModule:140 - initialized module: SimpleModule [name=job, type=job, group=myjob, index=0 @3a9ecb9d]
 16:45:40,198  INFO http-bio-9393-exec-1 module.SimpleModule:161 - started module: SimpleModule [name=job, type=job, group=myjob, index=0 @3a9ecb9d]
 16:45:40,199  INFO http-bio-9393-exec-1 module.ModuleDeployer:161 - deployed SimpleModule [name=job, type=job, group=myjob, index=0 @3a9ecb9d]
@@ -141,7 +141,7 @@ To pause/stop future scheduled jobs from running for this stream, you must undep
 xd:> stream undeploy --name cronStream
 ----
 ==== Launch job as a part of event flow
-A batch job is always used as a sink, with that being said it can receive messages from sources (other than triggers) and processors. In the case below we see that the user has created a http source (http source receives http posts and passes the payload of the http message to the next module in the stream) that will pass the http payload to the "myHttpJob".
+A batch job is always used as a sink, with that being said it can receive messages from sources (other than triggers) and processors. In the case below we see that the user has created an http source (http source receives http posts and passes the payload of the http message to the next module in the stream) that will pass the http payload to the "myHttpJob".
 
 ----
  stream create --name jobStream --definition "http > queue:job:myHttpJob" --deploy
@@ -315,7 +315,7 @@ The job also supports a boolean `deleteFiles` option if you want the files to be
 
 ==== Import CSV Files to JDBC (`filejdbc`)
 
-A module which loads CSV files into a JDBC table using a single batch job. By default it uses the file `config/batch-jdbc.properties` to configure the module and stores data in the internal HSQL DB which is used by Spring Batch. The job should be defined with the `resources` parameter defining the files which should be loaded. It also requires a `names` parameter (for the CSV field names) and these should match the database column names into which the data should be stored. You can either pre-create the database table or the module will create it for you if you use --initializeDatabase=true when the job is created. The table intitialization is configured in a similar way to the JDBC sink and uses the same parameters. The default table name is the job name and can be customized by setting the `tableName` parameter. As an example, if you run the command
+A module which loads CSV files into a JDBC table using a single batch job. By default it uses the internal HSQL DB which is used by Spring Batch. Refer to link:Modules#module_values[how module options are resolved] for further details on how to change defaults (one can of course always use `--foo=bar` notation in the job definition to achieve the same effect). The job should be defined with the `resources` parameter defining the files which should be loaded. It also requires a `names` parameter (for the CSV field names) and these should match the database column names into which the data should be stored. You can either pre-create the database table or the module will create it for you if you use `--initializeDatabase=true` when the job is created. The table intitialization is configured in a similar way to the JDBC sink and uses the same parameters. The default table name is the job name and can be customized by setting the `tableName` parameter. As an example, if you run the command
 
 ----
 xd:> job create myjob --definition "filejdbc --resources=file:///mycsvdir/*.csv --names=forename,surname,address --tableName=people --initializeDatabase=true" --deploy
@@ -363,7 +363,7 @@ xd:> job launch myjob
 
 ==== HDFS to MongoDB Export (`hdfsmongodb`)
 
-Exports CSV data from HDFS and stores it in a MongoDB collection which defaults to the stream name. This can be overridden with the `collectionName` parameter. The job is configured using the file `config/batch-mongo.properties`. Once again, the field names should be defined by supplying the `names` parameter. The data is converted internally to a Spring XD `Tuple` and the collection items will have an `id` matching the tuple's UUID. You can override this by setting the `idField` parameter to one of the field names if desired.
+Exports CSV data from HDFS and stores it in a MongoDB collection which defaults to the job name. This can be overridden with the `collectionName` parameter. Once again, the field names should be defined by supplying the `names` parameter. The data is converted internally to a Spring XD `Tuple` and the collection items will have an `id` matching the tuple's UUID. You can override this by setting the `idField` parameter to one of the field names if desired.
 
 An example:
 

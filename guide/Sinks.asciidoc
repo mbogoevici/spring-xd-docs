@@ -65,7 +65,7 @@ The `file` sink uses the stream name as the default name for the file it creates
   $ less /tmp/xd/output/myfilestream
   hello
 
-You can cutomize the behavior and specify the `name` and `dir` properties of the output file. For example
+You can cutomize the behavior and specify the `name` and `dir` options of the output file. For example
 
   xd:> stream create --name otherfilestream --definition "http --port=8000 | file --name=myfile --dir=/some/custom/directory" --deploy
 
@@ -232,7 +232,7 @@ format:: The format to use when writing the dataset data. Options are `avro` and
 [[jdbc_sink]]
 === JDBC
 
-The JDBC sink can be used to insert message payload data into a relational database table. By default it inserts the entire payload into a table named after the stream name in the HSQLDB database that XD uses to store metadata for batch jobs.  To alter this behavior you should modify the 'config/jdbc.properties' file with the connection parameters you want to use. There is also a 'config/init_db.sql' file that contains the SQL statements used to initialize the database table. You can modify this file if you'd like to create a table with your specific layout when the sink starts. You should also change the 'initializeDatabase' property to 'true' to have this script execute when the sink starts up.
+The JDBC sink can be used to insert message payload data into a relational database table. By default it inserts the entire payload into a table named after the stream name in the HSQLDB database that XD uses to store metadata for batch jobs.  To alter this behavior, the jdbc sink accepts several options that you can pass using the `--foo=bar` notation in the stream, or link:Modules#module_values[change globally]. There is also a 'config/init_db.sql' file that contains the SQL statements used to initialize the database table. You can modify this file if you'd like to create a table with your specific layout when the sink starts. You should also change the 'initializeDatabase' property to 'true' to have this script execute when the sink starts up.
 
 The payload data will be inserted as-is if the 'names' option is set to 'payload'. This is the default behavior.  If you specify any other column names the payload data will be assumed to be a JSON document that will be converted to a hash map. This hash map will be used to populate the data values for the SQL insert statement. A matching of column names with underscores like 'user_name' will match onto camel case style keys like 'userName' in the hash map.  There will be one insert statement executed for each message.
 
@@ -272,9 +272,12 @@ Now we can destroy the stream using:
 
 The JDBC Sink has the following options:
 
-configProperties:: base name of properties file (in the config directory) containing configuration options for the sink. This file should contain the usual JDBC properties - driverClass, url, username, password *(default: `jdbc`)*
-initializeDatabase:: whether to initialize the database using the initializer script (the default property file jdbc.properties has this set to true) *(default: `false`)*
-initializerScript:: the file name for the script containing SQL statements used to initialize the database when the sink starts (will search config directory for this file) *(default: `init_db.sql`)*
+driverClassName:: the JDBC driver to use *(default: same as batch config)*
+url:: the JDBC URL for the database *(default: same as batch config)*
+username:: the JDBC usernmae *(default: same as batch config)*
+password:: the JDBC password *(default: same as batch config)*
+initializeDatabase:: whether to initialize the database using the initializer script *(default: `false`)*
+initializerScript:: the file name for the script containing SQL statements used to initialize the database when the sink starts (will search `config/` directory for this file) *(default: `init_db.sql`)*
 tableName:: the name of the table to insert payload data into *(default: `<streamname>`)*
 names:: comma separated list of column names to include in the insert statement. Use 'payload' to include the entire message payload into a payload column. *(default: `payload`)*
 
@@ -389,7 +392,7 @@ Then,
 
 You would then receive an email whose body contains "Hello" and whose subject is "Hellow world". Of special attention here is the way you need to escape strings for most of the parameters, because they're actually SpEL expressions (so here for example, we used a String literal for the `to` parameter).
 
-The full list of options available to the mail module is below (note that most of these options can be set once and for all in the `mail.properties` file):
+The full list of options available to the mail module is below:
 
   to:: The primary recipient(s) of the email. *(default: `null`, SpEL Expression)*
   from:: The sender address of the email. *(default: `null`, SpEL Expression)*
@@ -428,15 +431,13 @@ To destroy the stream, enter the following at the shell prompt:
 
 The RabbitMQ Sink has the following options
 
-username:: the username to connect to the RabbitMQ broker *(default: `guest` unless `spring.rabbitmq.username` has been overridden in `rabbit.properties`)*
-password:: the password to connect to the RabbitMQ broker *(default: `guest` unless `spring.rabbitmq.password` has been overridden in `rabbit.properties`)*
-host:: the host (or IP Address) to connect to *(default: `localhost` unless `spring.rabbitmq.host` has been overridden in `rabbit.properties`)*
-port:: the port on the `host` *(default: `5672` unless `spring.rabbitmq.port` has been overridden in `rabbit.properties`)*
-vhost:: the virtual host *(default: `/` unless `spring.rabbitmq.virtual_host` has been overridden in `rabbit.properties`)*
+username:: the username to connect to the RabbitMQ broker *(default: `guest`)*
+password:: the password to connect to the RabbitMQ broker *(default: `guest`)*
+host:: the host (or IP Address) to connect to *(default: `localhost`)*
+port:: the port on the `host` *(default: `5672`)*
+vhost:: the virtual host *(default: `/`)*
 exchange:: the Exchange on the RabbitMQ broker to which messages should be sent *(default: `` (empty: therefore, the default no-name Exchange))*
 routingKey:: the routing key to be passed with the message. Note: If the routing key is not passed with the message and simply be a string literal (like the queue name), please make sure to specify it as SpEL literal. *(default: <streamname>)*
-
-Note: the `rabbit.properties` file referred to above is located within the `XD_HOME/config` directory.
 
 [[gemfire]]
 === GemFire Server
@@ -525,22 +526,16 @@ The mqtt sink connects to an mqtt server and publishes telemetry messages.
 
 ==== Options
 
-The folllowing options are configured in mqtt.properties in XD_HOME/config
 
-    mqtt.url=tcp://localhost:1883
-    mqtt.default.client.id=xd.mqtt.client.id
-    mqtt.username=guest
-    mqtt.password=guest
-    mqtt.default.topic=xd.mqtt.test
+The defaults are set up to connect to the RabbitMQ MQTT adapter on localhost:
 
-The defaults are set up to connect to the RabbitMQ MQTT adapter on localhost.
-
-Note that the client id must be no more than 19 characters; this is because `.snk` is added and the id must be no more than 23 characters.
-
-clientId:: Identifies the client - overrides the default above.
-topic:: The topic to which the sink will publish - overrides the default above.
-qos:: The Quality of Service (default: 1)
-retained:: Whether the retained flag is set (default: false)
+url:: location of the mqtt broker *(default: `tcp://localhost:1883`)*
+clientId:: identifies the client *(default: `xd.mqtt.client.id.snk`)*
+username:: the username to use when connecting to the broker *(default: `guest`)*
+password:: the password to use when connecting to the broker *(default: `guest`)*
+topic:: the topic to which the sink will publish *(default: `xd.mqtt.test`)*
+qos:: the Quality of Service *(default: `1`)*
+retained:: whether the retained flag is set *(default: `false`)*
 
 [[router_sink]]
 === Dynamic Router
