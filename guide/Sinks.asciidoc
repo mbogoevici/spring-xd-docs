@@ -439,6 +439,10 @@ vhost:: the virtual host *(default: `/`)*
 exchange:: the Exchange on the RabbitMQ broker to which messages should be sent *(default: `` (empty: therefore, the default no-name Exchange))*
 routingKey:: the routing key to be passed with the message. Note: If the routing key is not passed with the message and simply be a string literal (like the queue name), please make sure to specify it as SpEL literal. *(default: <streamname>)*
 
+Also, if the routingKey is specified as string literal, the SpEL literal needs to be specified like this:
+
+   xd:> stream create rabbitSinkStream --definition "http | rabbit --routingKey='\"myqueue\"'" --deploy
+
 [[gemfire]]
 === GemFire Server
 
