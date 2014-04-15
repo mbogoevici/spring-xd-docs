@@ -25,7 +25,7 @@ Create the Inbound Channel Adapter in a file called _feed.xml_:
 		http://www.springframework.org/schema/integration/feed
 		http://www.springframework.org/schema/integration/feed/spring-integration-feed.xsd">
 
-	<int-feed:inbound-channel-adapter  channel="output" url="http://feeds.bbci.co.uk/news/rss.xml">
+	<int-feed:inbound-channel-adapter id="xdFeed" channel="output" url="http://feeds.bbci.co.uk/news/rss.xml">
 		<int:poller fixed-rate="5000" max-messages-per-poll="100" />
 	</int-feed:inbound-channel-adapter>
 	
@@ -40,13 +40,12 @@ Users may want to pull data from feeds other than BBC News. Spring XD will autom
 
 [source,xml]
 ----
-<int-feed:inbound-channel-adapter  channel="output" url="${url:http://feeds.bbci.co.uk/news/rss.xml}">
+<int-feed:inbound-channel-adapter  id="xdFeed" channel="output" url="${url:http://feeds.bbci.co.uk/news/rss.xml}">
   <int:poller fixed-rate="5000" max-messages-per-poll="100" />
 </int-feed:inbound-channel-adapter>
 ----
 
 Now users can optionally pass a _url_ property value on stream creation. If not present, the specified default will be used.
-
 
 === Test the module locally
 This section covers setup of a local project containing some code for testing outside of an XD container. This step can be skipped if you prefer to test the module by <<deploy-module-source,deploying to Spring XD>>.
@@ -62,8 +61,8 @@ description = 'Feed Source Module'
 group = 'org.springframework.xd.samples'
 
 repositories {
-  maven { url "http://repo.springsource.org/libs-snapshot" }
-  maven { url "http://repo.springsource.org/plugins-release" }
+  maven { url "http://repo.spring.io/libs-snapshot" }
+  maven { url "http://repo.spring.io/plugins-release" }
 }
 
 apply plugin: 'java'
