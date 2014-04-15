@@ -6,7 +6,7 @@ The first module in a link:Streams#streams[stream] is always a source. Source mo
 
 Spring Integration provides a number of adapters out of the box to support various transports, such as JMS, File, HTTP, Web Services, Mail, and more. You can typically create a source module that uses these inbound channel adapters by writing just a single Spring application context file.
 
-These steps will demonstrate how to create and deploy a source module using the Spring Integration Feed Inbound Channel Adapter.
+These steps will demonstrate how to create and deploy a source module using the http://docs.spring.io/spring-integration/reference/html/feed.html#feed-inbound-channel-adapter[Spring Integration Feed Inbound Channel Adapter].
 
 === Create the module Application Context file
 Create the Inbound Channel Adapter in a file called _feed.xml_:
