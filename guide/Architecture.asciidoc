@@ -124,7 +124,7 @@ image::images/anatomyOfAStreamSingleNode.jpg[]
 
 
 .A Stream Deployed in a distributed runtime 
-image::images/anatomyOfAStreamv3.jpg[]
+image::images/anatomyOfAStreamV3.jpg[]
 
 In the `http | file` example, the Admin assigns each module to a separate Container instance, provided there are at least two Containers available. The `file` module is deployed to one container and the `http` module to another.  The definition of a module is stored in a Module Registry. A module definition consists of a Spring XML configuration file, some classes used to validate and handle options defined by the module, and dependent jars.  The module definition contains variable placeholders, corresponding to DSL parameters (called _options_) that allow you to customize the behavior of the module. For example, setting the http listening port would be done by passing in the option `--port`, e.g. `http --port=8090 | file`, which is in turn used to substitute a placeholder value in the module definition. 
 
