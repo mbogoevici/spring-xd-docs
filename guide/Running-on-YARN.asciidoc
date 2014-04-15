@@ -4,7 +4,7 @@ The Spring XD distributed runtime (DIRT) supports distribution of processing tas
 === What do you need?
 To begin with, you need to have access to a Hadoop cluster running a version based on Apache Hadoop 2.2.0 or later. This includes link:http://www.us.apache.org/dist/hadoop/common/hadoop-2.2.0/[Apache Hadoop 2.2.0], link:http://hortonworks.com/products/hdp-2/[Hortonworks HDP 2.0] and link:http://www.cloudera.com/content/cloudera-content/cloudera-docs/CDH5/latest/CDH5-Installation-Guide/cdh5ig_topic_4_2.html[Cloudera CDH5].
 
-You also need a supported transport, see link:Running-Distributed-Mode[Running Distributed Mode] for installation of Redis or Rabbit MQ. Spring XD on YARN currently uses the same transport for both control and data with Redis being the default.
+You also need a supported transport, see link:Running-Distributed-Mode[Running Distributed Mode] for installation of Redis or Rabbit MQ. Spring XD on YARN currently uses Redis as the default data transport.
 
 You also need Zookeeper running. If your Hadoop cluster doesn't have Zookeeper installed you need to install and run it specifically for Spring XD. See the link:Running-Distributed-Mode#setting-up-zookeeper[Setting up ZooKeeper] section of the "Running Distributed Mode" chapter.
 
@@ -14,7 +14,7 @@ Lastly, you need an RDBMs to support batch jobs and JDBC operations.
 In addition to the regular `spring-xd-<version>-dist.zip` files we also distribute a zip file that includes all you need to deploy on YARN. The name of this zip file is `spring-xd-<version>-yarn.zip`. You can download it from the link:http://repo.spring.io/libs-snapshot/org/springframework/xd/spring-xd/1.0.0.BUILD-SNAPSHOT/[Spring Repo]. Unzip the downloaded file and you should see a `spring-xd-<version>-yarn` directory.
 
 === Configure your deployment
-Configuration options are contained in a `spring-xd-<version>-yarn\config\xd-config.yml` file. You need to configure the transport, redis/rabbit settings and the hadoop options.
+Configuration options are contained in a `spring-xd-<version>-yarn\config\xd-config.yml` file. You need to configure the hadoop settings, the transport choice plus redis/rabbit settings, the zookeeper settings and the JDBC datasource properties.
 
 ==== XD options
 For Spring XD you need to define how many admin servers and containers you need. You also need to define the HDFS location (spring.yarn.applicationDir) where the Spring XD binary and config files will be stored.
@@ -58,6 +58,32 @@ spring:
    username: guest
    password: guest
    virtual_host: /
+----
+
+==== Zookeeper settings
+You should specify the Zookeeper connection settings 
+----
+---
+#Zookeeper properties
+# client connect string: host1:port1,host2:port2,...,hostN:portN
+zk:
+  client:
+     connect: localhost:2181
+----
+
+==== JDBC datasource properties
+You should specify the JDBC connection properties based on the RDBMs that you use for the job and JDBC sink
+
+----
+---
+#Config for use with MySQL - uncomment and edit with relevant values for your environment
+spring:
+  datasource:
+    url: jdbc:mysql://yourDBhost:3306/yourDB
+    username: yourUsername
+    password: yourPassword
+    driverClassName: com.mysql.jdbc.Driver
+
 ----
 
 === Push and start the jobs
