@@ -278,11 +278,12 @@ xd:> job undeploy helloSpringXD
 
 Spring XD comes with several batch import and export modules. You can run them out of the box or use them as a basis for building your own custom modules.
 
-===== Note HDFS Configuration
+==== Note HDFS Configuration
+
 To use the hdfs based jobs below, XD needs to have append enabled for hdfs.
 Update the hdfs-site.xml with the following settings:
 
-====== For Hadoop 1.x
+===== For Hadoop 1.x
 
 ----   
     <property>
@@ -291,7 +292,7 @@ Update the hdfs-site.xml with the following settings:
     </property>
 ----
 
-====== For Hadoop 2.x
+===== For Hadoop 2.x
 
 ----
     <property>

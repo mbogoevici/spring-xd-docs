@@ -51,12 +51,12 @@ which has core abstractions for implementing that mapping via *InputMapper* and 
 Since *Spring XD 1.0.0.M6* we support the integration of analytical models, also called statistical models or mining models, that are defined via http://en.wikipedia.org/wiki/Predictive_Model_Markup_Language[*PMML*].
 *PMML* is the abreviation for *Predictive Model Markup Language* and is a standard XML representation that allows specifications of different mining models, their ensembles, and associated preprocessing. 
 
-[Note]
-====
+[NOTE]
+=====================================================================
 *PMML* is maintained by the *Data Mining Group* (*DMG*) and supported by several state-of-the-art statistics and data mining software tools such as InfoSphere Warehouse, R / Rattle, SAS Enterprise Miner, SPSS®, and Weka. 
 The current version of the *PMML* specification is http://www.dmg.org/v4-2/GeneralStructure.html[*4.2*] at the time of this writing.
 Applications can produce and consume *PMML* models, thus allowing an analytical model created in one application to be implemented and used for scoring or prediction in another.
-====
+=====================================================================
 
 *PMML* is just one of many other technologies that one can integrate to implement analytics with, more will follow in upcoming releases.
 
