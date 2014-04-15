@@ -7,7 +7,7 @@ This is our biggest release yet!  The team has been hard at work, and this relea
 * [Run XD on YARN](https://github.com/spring-projects/spring-xd/wiki/Running-on-YARN) - Run admin and container nodes on a HADOOP YARN cluster rather than on VMs or physical servers that you need to manage.  There are simple configuration and shell scripts that make this process very easy.
 * [Real-Time Evaluation of Machine Learning Scoring Algorithms](https://github.com/spring-projects/spring-xd/wiki/Analytics) - Integration with the [JPMML-Evaluator](https://github.com/jpmml/jpmml-evaluator) library that provides support for a wide range of [model types](https://github.com/jpmml/jpmml-evaluator#features) and is interoperable with models exported from popular data analysis package such as [R](http://www.r-project.org/).  Integration with other libraries is supported by providing an implementation of XD's Analytic and MappedAnalytic abstractions.
 * [Updated UI](https://github.com/spring-projects/spring-xd/wiki/AdminUI) - A redesign and rewrite of the UI that has a modern look and feel.  
-* [High performance tcp source](https://github.com/spring-projects/spring-xd/wiki/Sources#reactor-tcp) - Based on the Reactor project - the Reactor TCP source on commodity hardware can consume ~1 Million msgs/second.
+* [High performance TCP/UDP source](https://github.com/spring-projects/spring-xd/wiki/Sources#reactor-ip) - Based on the Reactor project - the Reactor IP source on commodity hardware can consume ~1 Million msgs/second.
 * [FTP to HDFS job](https://github.com/spring-projects/spring-xd/wiki/Batch-Jobs#ftp-to-hdfs-export-ftphdfs) - Out of the box support for jobs to transfer files from FTP to HDFS.
 
 
