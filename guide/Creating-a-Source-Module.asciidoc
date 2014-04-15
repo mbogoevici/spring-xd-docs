@@ -167,12 +167,15 @@ Spring XD looks for modules in the ${xd.home}/modules directory. The modules dir
       modules/sink
       modules/source
 
-Simply drop _feed.xml_ into the _modules/source_ directory and add the dependencies to the lib directory. For now, all module dependencies need to be added to ${xd.home}/lib. Future versions of Spring XD will provide a more elegant module packaging approach. Copy the following jars from your gradle cache to ${xd.home}/lib:
+Simply drop _feed.xml_ into the _modules/source_ directory and add the dependencies to the lib directory under ${xd.home}/lib by copying the following jars from your gradle cache to ${xd.home}/lib:
 
     spring-integration-feed-4.0.0.M4.jar
     jdom-1.0.jar
     rome-1.0.0.jar
     rome-fetcher-1.0.0.jar
+
+[NOTE]
+For a more sophisticated handling of module dependencies, please see https://github.com/spring-projects/spring-xd/wiki/Modules#modules-with-isolated-classpath[Modules with isolated classpath]
 
 Now fire up the server. See link:Getting-Started#getting-started[Getting Started] to learn how to start the Spring XD server. 
 
