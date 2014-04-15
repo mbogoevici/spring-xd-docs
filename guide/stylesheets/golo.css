@@ -315,14 +315,18 @@ p a > code:hover { color: #541312; }
 #header:after, #content:after, #footnotes:after, #footer:after { clear: both; }
 
 #header { margin-bottom: 2.5em; }
-#header > h1 { color: #693c16; font-weight: normal; border-bottom: 1px solid #dcd2c9; margin-bottom: -28px; padding-bottom: 32px; }
+#header > h1 { color: #693c16; font-weight: normal; border-bottom: 1px solid #dcd2c9;}
 #header span { color: #846b55; }
 #header #revnumber { text-transform: capitalize; }
 #header br { display: none; }
 #header br + span { padding-left: 3px; }
-#header br + span:before { content: "\2013 \0020"; }
 #header br + span.author { padding-left: 0; }
 #header br + span.author:before { content: ", "; }
+
+#revdate {
+	display: block;
+	margin-bottom: 2.5em;
+}
 
 #toc { border-bottom: 1px solid #e6dfd8; padding-bottom: 1.25em; }
 #toc > ul { margin-left: 0.25em; }
