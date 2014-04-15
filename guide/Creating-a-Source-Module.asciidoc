@@ -175,7 +175,7 @@ Simply drop _feed.xml_ into the _modules/source_ directory and add the dependenc
     rome-fetcher-1.0.0.jar
 
 [NOTE]
-For a more sophisticated handling of module dependencies, please see https://github.com/spring-projects/spring-xd/wiki/Modules#modules-with-isolated-classpath[Modules with isolated classpath]
+For a more sophisticated handling of module dependencies, please see https://github.com/spring-projects/spring-xd/wiki/Modules#modules-with-isolated-classpath[Modules with isolated classpath].
 
 Now fire up the server. See link:Getting-Started#getting-started[Getting Started] to learn how to start the Spring XD server. 
 
