@@ -1,9 +1,11 @@
 === Introduction
+
 One of the features that XD offers is the ability to launch and monitor batch jobs based on http://www.springsource.org/spring-batch[Spring Batch].  The Spring Batch project was started in 2007 as a collaboration between SpringSource and Accenture to provide a comprehensive framework to support the development of robust batch applications.  Batch jobs have their own set of best practices and domain concepts which have been incorporated into Spring Batch building upon Accenture's consulting business.  Since then Spring Batch has been used in thousands of enterprise applications and is the basis for the recent JSR standardization of batch processing, https://jcp.org/en/jsr/detail?id=352[JSR-352].
 
 Spring XD builds upon Spring Batch to simplify creating batch workflow solutions that span traditional use-cases such as moving data between flat files and relational databases as well as Hadoop use-cases where analysis logic is broken up into several steps that run on a Hadoop cluster.  Steps specific to Hadoop in a workflow can be MapReduce jobs, executing Hive/Pig scripts or HDFS operations.
 
 === Workflow
+
 The concept of a workflow translates to a Job, not to be confused with a MapReduce job. A Job is a directed graph, each node of the graph is a processing Step. Steps can be executed sequentially or in parallel, depending on the configuration. Jobs can be started, stopped, and restarted. Restarting
 jobs is possible since the progress of executed steps in a Job is persisted in a database via a JobRepository.  The following figures shows the basic components of a workflow.
 
@@ -151,6 +153,7 @@ To test the stream you can execute a http post, like the following:
 xd:> http post --target http://localhost:9000 --data "{\"param1\":\"fixedDelayKenny\"}"
 ----
 === Retrieve job notifications
+
 Spring XD offers the facilities to capture the notifications that are sent from the job as it is executing.
 When a batch job is deployed, by default it registers the following listeners along with pub/sub channels that these listeners send messages to.
 
@@ -164,7 +167,7 @@ Along with the pub/sub channels for each of these listeners, there will also be 
 
 In the following example, we setup a Batch Job called _myHttpJob_. Afterwards we create a stream that will tap into the pub/sub channels that were implicitly generated when the _myHttpJob_ job was deployed. 
 
-===== To receive aggregated events
+==== To receive aggregated events
 
 The stream receives aggregated event messages from all the default batch job listeners and sends those messages to the log.
 ----
@@ -186,7 +189,7 @@ In the logging output of the container you should see something like the followi
 09:55:53,580  WARN SimpleAsyncTaskExecutor-1 logger.aggregatedEvents:150 - JobExecution: id=2, version=1, startTime=Sat Apr 12 09:55:53 PDT 2014, endTime=Sat Apr 12 09:55:53 PDT 2014, lastUpdated=Sat Apr 12 09:55:53 PDT 2014, status=COMPLETED, exitStatus=exitCode=COMPLETED;exitDescription=, job=[JobInstance: id=2, version=0, Job=[myHttpJob]], jobParameters=[{random=0.07002785662707867}]
 ----
 
-===== To receive job execution events
+==== To receive job execution events
 
 ----
 xd>job create --name myHttpJob --definition "httpJob" --deploy
@@ -203,7 +206,7 @@ In the logging output of the container you should see something like the followi
 
 ----
 
-===== To receive step execution events
+==== To receive step execution events
 
 ----
 xd>job create --name myHttpJob --definition "httpJob" --deploy
@@ -220,7 +223,7 @@ In the logging output of the container you should see something like the followi
 
 ----
 
-===== To receive item, skip and chunk events
+==== To receive item, skip and chunk events
 
 ----
 xd>job create --name myHttpJob --definition "httpJob" --deploy
@@ -235,13 +238,13 @@ xd>job launch myHttpJob
 
 **Note:** The syntax for the tap that receives the item events: `tap:job:<job-name>.item`,for skip events: `tap:job:<job-name>.skip` and for chunk events: `tap:job:<job-name>.chunk`
 
-===== To disable the default listeners
+==== To disable the default listeners
 
 ----
 xd>job create --name myHttpJob --definition "httpJob --listeners=disable" --deploy
 ----
 
-===== To select specific listeners
+==== To select specific listeners
 
 To select specific listeners, specify comma seperated list in `--listeners` option. 
 Following example illustrates the selection of job and step execution listeners only:

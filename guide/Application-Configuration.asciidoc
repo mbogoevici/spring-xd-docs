@@ -209,7 +209,7 @@ consumerKey=${sharedConsumerKey}
 consumerSecret=${sharedConsumerSecret}
 ----
 
-===== Profiles
+==== Profiles
 
 When resolving property file names, the server will look to load profile specific variants based on the naming convention `<name>-{profile}.properties`.  For example, if given the OS environment variable `spring_profiles_active=default,qa` the following configuration file names for the twittersearch module would be searched in this order
 
@@ -223,7 +223,7 @@ Also, the shared module configuration file is refernced using profile variants, 
 . `XD_MODULE_CONFIG_LOCATION\modules-default.yml`
 . `XD_MODULE_CONFIG_LOCATION\modules-qa.yml`
 
-===== Batch Jobs or modules accessing JDBC
+==== Batch Jobs or modules accessing JDBC
 
 Another common case is access to a relational database from a job or the JDBC Sink module.
 
