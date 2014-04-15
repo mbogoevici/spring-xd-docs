@@ -24,7 +24,7 @@ The Sinks covered are
 
 * <<splunk-server, Splunk Server>>
 
-* <<mqtt, MQTT>>
+* <<mqtt-sink, MQTT>>
 
 * <<dynamic-router, Dynamic Router>>
 
@@ -524,8 +524,8 @@ An example stream would be to take data from a twitter search and push it throug
 
     xd:> stream create --name springone2gx --definition "twittersearch --consumerKey= --consumerSecret= --query='#LOTR' | splunk" --deploy
 
-[[mqtt]]
-=== MQTT
+[[mqtt-sink]]
+=== MQTT Sink
 The mqtt sink connects to an mqtt server and publishes telemetry messages.
 
 ==== Options
