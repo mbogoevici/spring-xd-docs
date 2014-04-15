@@ -16,15 +16,15 @@ The Sinks covered are
 
 * <<tcp, TCP>>
 
-* <<mail_sink, Mail>>
+* <<mail, Mail>>
 
-* <<rabbit_sink, RabbitMQ>>
+* <<rabbitmq, RabbitMQ>>
 
 * <<gemfire,GemFire Server>>
 
 * <<splunk,Splunk Server>>
 
-* <<mqtt_sink, MQTT>>
+* <<mqtt, MQTT>>
 
 * <<router_sink, Dynamic Router>>
 
@@ -524,7 +524,7 @@ An example stream would be to take data from a twitter search and push it throug
 
     xd:> stream create --name springone2gx --definition "twittersearch --consumerKey= --consumerSecret= --query='#LOTR' | splunk" --deploy
 
-[[mqtt_sink]]
+[[mqtt]]
 === MQTT
 The mqtt sink connects to an mqtt server and publishes telemetry messages.
 
