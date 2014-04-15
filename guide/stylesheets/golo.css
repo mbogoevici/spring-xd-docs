@@ -325,7 +325,7 @@ p a > code:hover { color: #541312; }
 
 #revdate {
 	display: block;
-	margin-bottom: 2.5em;
+	margin-top: 2.5em;
 }
 
 #toc { border-bottom: 1px solid #e6dfd8; padding-bottom: 1.25em; }
