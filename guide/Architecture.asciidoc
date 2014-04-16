@@ -16,7 +16,7 @@ Modules share data by passing messages using a configured messaging middleware (
 
 [[simple-distributed-runtime]]
 .The XD Admin Server sending module definitions to each XD Container
-image::images/distributed-node.png[]
+image::images/distributed-node.png[scaledwidth="100%"]
 
 How the processing task is broken down into modules is discussed in the section link:Architecture#container-server-arch[Container Server Architecture].
 
@@ -30,7 +30,7 @@ In the 1.0 release, you are responsible for starting up a single XD Admin server
 For testing and development purposes, a single node runtime is provided that runs the Admin and Container servers, ZooKeeper, and HSQLDB in the same process. The communication to the XD Admin server is over HTTP and the XD Admin server communicates to an in-process XD Container using an embedded ZooKeeper server.
 
 .Single Node Runtime
-image::images/local-mode.png[]
+image::images/local-mode.png[scaledwidth="100%"]
 
 [[admin-server-arch]]
 ==== Admin Server Architecture
@@ -56,7 +56,7 @@ Taps are used to process data in a non-invasive way as data is being processed b
 
 [[taps-jobs-streams]]
 .Taps, Jobs, and Streams
-image::images/tap-jobs-streams.png[]
+image::images/tap-jobs-streams.png[scaledwidth="100%"]
 
 [[architecture_streams]]
 ==== Streams
