@@ -9,7 +9,7 @@ This is our biggest release yet!  The team has been hard at work, and this relea
 * [Updated UI](https://github.com/spring-projects/spring-xd/wiki/AdminUI) - A redesign and rewrite of the UI that has a modern look and feel.  
 * [High performance TCP/UDP source](https://github.com/spring-projects/spring-xd/wiki/Sources#reactor-ip) - Based on the Reactor project - the Reactor IP source on commodity hardware can consume ~1 Million msgs/second.
 * [FTP to HDFS job](https://github.com/spring-projects/spring-xd/wiki/Batch-Jobs#ftp-to-hdfs-export-ftphdfs) - Out of the box support for jobs to transfer files from FTP to HDFS.
-
+* Code completion of Stream/Job definitions in the shell, thanks to [descriptive metadata](https://github.com/spring-projects/spring-xd/wiki/ModuleOptionsMetadata) about modules.
 
 TODO 
 
