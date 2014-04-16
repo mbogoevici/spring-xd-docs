@@ -22,7 +22,7 @@ How the processing task is broken down into modules is discussed in the section 
 
 ===== Support for other distributed runtimes
 
-In the 1.0 release, you are responsible for starting up a single XD Admin server and one or more XD Containers.  The 1.1 release will support running XD on top of other distributed runtime environments such as Hadoop's YARN architecture and CloudFoundry.  
+In the 1.0 release, You can run Spring XD natively, in which case you are responsible for starting up the XD Admin and XD Container instances. Alternately you can run Spring XD on Hadoop's YARN, see link:Running-on-YARN[Running XD on YARN]. Pivotal Cloud Foundry support is planned for a future release. 
 
 [[single-node-runtime]]
 ==== Single Node Runtime
