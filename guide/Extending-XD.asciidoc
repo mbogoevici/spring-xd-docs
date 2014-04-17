@@ -32,7 +32,7 @@ the intention is to minimize any unintended side effects.
 * *Lifecycle management* - Plugins and Initializers used to configure application contexts are themselves configured as Spring beans are "discovered" during initialization. These must be fully instantiated prior to the creation of application context on which they operate. 
 
 .The XD Spring Application Contexts
-image::images/xd-application-contexts.png
+image::images/xd-application-contexts.png[scaledwidth="100%"]
 
 [[Plugin-Architecture]]
 ==== Plugin Architecture
