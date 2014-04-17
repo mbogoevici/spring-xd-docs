@@ -20,12 +20,11 @@ This document provides an overview of XD Container internals and covers each of 
 
 The diagram below shows how Spring XD is partitioned into several application contexts. It is included here to provide some context for extending XD configuration. In the diagram, solid arrows indicate a parent-child relationship. With any Spring application a child context has access to beans defined in the parent, but the parent cannot access beans defined in the child context. It is important to keep in mind that a bean definition in a child context with the same id as a bean in the parent context will override or replace that bean definition. Likewise a bean added to any context will override an earlier bean definition with the same id. 
 
-Most, but not all, of XD's extension hooks target the *Plugin Context* shown below. That means it is possible to override bean definitions defined in the *Global Context* and the *Shared Server Context* as well as configuring the Plugin Context itself.
+Most, but not all, of XD's extension hooks target the 'Plugin Context' shown below. That means it is possible to override bean definitions defined in the *Global Context* and the 'Shared Server Context' as well as configuring the Plugin Context itself.
 
 While this arrangement may appear overly complex at first, the partitioning is done for the following reasons:
 
-* *Bean isolation* - Some beans are "global" in that they are shared by the Admin, Container, and Modules. Others are shared only by Admin and Container. Some beans must must be available to Plugins used to configure the Module Context but Plugins and Modules should not have access to critical runtime components. While complete isolation has proven difficult to achieve,
-the intention is to minimize any unintended side effects. 
+* *Bean isolation* - Some beans are "global" in that they are shared by the Admin, Container, and Modules. Others are shared only by Admin and Container. Some beans must must be available to Plugins used to configure the 'Module Context' but Plugins and Modules should not have access to certain critical runtime components. While complete isolation has proven difficult to achieve, the intention is to minimize any unintended side effects. 
 
 * *Bean scoping* - To ensure that single node and multi node configurations are logically equivalent, these beans are configured as singletons in the single node runtime. Also, this avoids unnecessary replication of bean definitions.
 
@@ -37,23 +36,24 @@ image::images/xd-application-contexts.png[scaledwidth="100%"]
 [[Plugin-Architecture]]
 ==== Plugin Architecture
 
-The XD Container at its core is simply a runtime environment for deploying Spring applications called `Modules`. Each module runs in an isolated application context (*Module Context*), a child of *Global Context*. This is key to the XD design, allowing each module to define its own `input` and `output` channels for instance and to allow different property values to be bound to different deployed instances of the same module definition. http://docs.spring.io/spring-xd/docs/1.0.0.M6/api/org/springframework/xd/module/core/Module.html[Module] object is a thin wrapper on an ApplicationContext into which properties may be set, profiles activated, and beans added or further configured.
+The XD Container at its core is simply a runtime environment for deploying Spring applications called 'Modules'. Each module runs in an isolated application context ('Module Context'), a child of 'Global Context'. This is key to the XD design, allowing each module to define its own 'input' and 'output' channels for instance and to allow different property values to be bound to different deployed instances of the same module definition. The http://docs.spring.io/spring-xd/docs/1.0.0.M6/api/org/springframework/xd/module/core/Module.html[Module] object is a thin wrapper around a Spring ApplicationContext into which properties may be set, profiles activated, and beans added or further configured.
 
-The `ModuleDeployer` itself is unaware of a module's configuration or how to wire the module into the XD runtime. Wiring a modules channels to the data bus, for example, is the responsibility of the http://docs.spring.io/spring-xd/docs/1.0.0.M6/api/org/springframework/integration/x/bus/MessageBus.html[MessageBus] implemented for the transport and configured for the container. The MessageBus binding methods are invoked by the `StreamPlugin` during the initialization of a stream module. To support jobs, XD provides a 'JobPlugin' to wire the Spring Batch components defined in the module during deployment, also invoking the MessageBus. These, and other functions critical to XD are performed by classes which implement the http://docs.spring.io/spring-xd/docs/1.0.0.M6/api/org/springframework/xd/module/core/Plugin.html[Plugin] interface. a Plugin oprates on every deployed Module it supports. Thus the ModuleDeployer simply invokes the deployment lifecycle methods on all Plugins registered in the Plugin Context. Any questions?
+The 'ModuleDeployer' itself is unaware of a module's configuration or how to wire the module into the XD runtime. Wiring a module's channels to the data bus, for example, is the responsibility of the http://docs.spring.io/spring-xd/docs/1.0.0.M6/api/org/springframework/integration/x/bus/MessageBus.html[MessageBus] implemented for the transport and configured for the container. The MessageBus binding methods are invoked by the 'StreamPlugin' during the initialization of a stream module. To support jobs, XD provides a 'JobPlugin' to wire the Spring Batch components defined in the module during deployment, also invoking the MessageBus. These, and other functions critical to XD are performed by classes which implement the http://docs.spring.io/spring-xd/docs/1.0.0.M6/api/org/springframework/xd/module/core/Plugin.html[Plugin] interface. a Plugin oprates on every deployed Module it supports. Thus the ModuleDeployer simply invokes the deployment lifecycle methods on all Plugins registered in the Plugin Context. Any questions?
 
-The ModuleDeployer calls `getBeansOfType(Plugin.class)` on it's application context's parent, namely, the *Plugin Context*. This means that adding your own plugin comes down to three things:
-  * Write a class to implement the http://docs.spring.io/spring-xd/docs/1.0.0.M6/api/org/springframework/xd/module/core/Plugin.html[Plugin] interface
-  * Add it to XD's classpath
-  * Allow XD to register it as a Spring bean in the Plugin Context
+The ModuleDeployer calls `getBeansOfType(Plugin.class)` on it's application context's parent, namely, the 'Plugin Context'. This means that adding your own plugin comes down to three things:
+  
+ * Write a class to implement the http://docs.spring.io/spring-xd/docs/1.0.0.M6/api/org/springframework/xd/module/core/Plugin.html[Plugin] interface
+ * Add it to XD's classpath
+ * Allow XD to register it as a Spring bean in the Plugin Context
 
-  All this is the topic of the next section      
+ All this is the topic of the next section      
 
 [[How-to-Add-a-Spring-Bean-to-the-XD-Container]]
 ==== How to Add a Spring bean to the XD Container
 
-This section applies to adding a `Plugin`, which might be a useful thing to do since a Plugin has access to every module is it is being deployed (see the previous section on Plugin Architecture) but really describes a generic mechanism for adding any bean definition to the Containers *Plugin Context*.  XD uses Spring's classpath component scanning and wildcard resource loaders to find components which you add to the classpath. This means you can provide java @Configuration or @Component classes in a configured base package and or XML bean definitions (and Groovy beans at some point) in a configured resource path. These are given by the properties `xd.extensions.locations` and `xd.extensions.basepackages` in `servers.yml` down at the bottom:
+This section applies to adding a 'Plugin', which might be a useful thing to do since a Plugin has access to every module as it is being deployed (see the previous section on Plugin Architecture) but really describes a generic mechanism for adding any bean definition to the Container's 'Plugin Context'.  XD uses Spring's classpath component scanning and wildcard resource loaders to find any components you add to the classpath. This means you can provide java @Configuration or @Component classes in a configured base package and or XML bean definitions (and Groovy beans at some point) in a configured resource path. These configured locations are given by the properties `xd.extensions.locations` and `xd.extensions.basepackages` in `servers.yml` down at the bottom:
 
-````
+----
 # User Extensions: Where XD scans the classpath to discover extended container configuration
 # Each property may be a comma delimited string. 'basepackages' refers to package names used for
 # annotated component (@Configuration or @Component stereotypes) scanning. 'locations' is a list of root resource directories containing xml configuration. 
@@ -63,26 +63,30 @@ This section applies to adding a `Plugin`, which might be a useful thing to do s
 #    basepackages: com.acme.xd.extensions
 #    locations: classpath*:META-INF/spring-xd/ext
 
-````    
-As the pluralization of these property names suggests, you may define multiple values with a comma delimited string. Also note that there is no default for base packages since Spring developers are partial to `org.springframework` packages and no other value is feasible. So if you want to use annotation based configuration, you need to first set the base package. The XML resource location(s) are the root location of any XML Spring bean definition file in any subdirectory. (Currently, this extensions path is limited to XML). 
+----    
 
-So the basic extension mechanism looks for any bean definitions at configured locations in the class path and adds them to the Plugin Context. This is the appropriate place for these to go because to make use of these beans in XD modules, you will likely want to write a Plugin. The system is pretty open since you can in theory add BeanPostProcessers, or BeanFactoryPostProcessers, or ApplicationListeners to manipulate these XD Application Contexts but do this at your own risk as the XD initialization lifecycle is fairly complex.
+As the pluralization of these property names suggests, you may define multiple values with a comma delimited string. Also note that there is no default for base packages. So if you want to use annotation based configuration, you must first set up one or more base package locations. The XML resource location(s) are the root location of any XML Spring bean definition file in any subdirectory. (Currently, this extensions path is limited to XML) and defaults to `classpath*:META-INF/spring-xd/ext`
 
-To add your jar to XD's classpath, you must manually distribute it to $XD_HOME/lib for each container instance. To implement a plugin, you need to have a compile dependency on `spring-xd-module`. To access other container classes, you will also  require `spring-xd-dirt`. 
+XD looks for any bean definitions at configured locations in the class path and adds them to the Plugin Context. This is the appropriate context for these beans to go because in order to make use of these beans in XD modules, you will likely want to write a Plugin as well. 
+
+NOTE: The configuration is pretty open since you can in theory add BeanPostProcessors, or BeanFactoryPostProcessors, or ApplicationListeners to manipulate these XD Application Contexts but do this at your own risk as the XD initialization lifecycle is fairly complex, and not all beans are designed to be extensible.
+
+To add your jar to XD's classpath, you must manually distribute it to `$XD_HOME/lib` for each container instance. To implement a plugin, you need to have a compile time dependency on `spring-xd-module`. To access other container classes, you will also  require `spring-xd-dirt`. 
 
 [[Providing-a-New-Type-Converter]]
 ==== Providing A new Type Converter
 
-XD supports link:Type-conversion[automatic type conversion] to convert payloads to JSON using `--outputType=application/json` on any module definition for example. This is performed by a `Plugin` that binds a Spring http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/messaging/converter/MessageConverter.html[MessageConverter] to a media type. The type converters are currently configured in https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/resources/META-INF/spring-xd/plugins/streams.xml[streams.xml] deployed in `spring-xd-dirt-<version>.jar`. If you look at that file, you can see an empty list defined. 
+XD supports link:Type-conversion[automatic type conversion] to convert payloads to JSON using `--outputType=application/json` on any module definition for example. This is performed by a 'Plugin' that binds a Spring http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/messaging/converter/MessageConverter.html[MessageConverter] to a media type. The type converters are currently configured in https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/resources/META-INF/spring-xd/plugins/streams.xml[streams.xml], packaged in `spring-xd-dirt-<version>.jar`. If you look at that file, you can see an empty list defined. 
 
-````
+[source,xml]
+----
 <!-- Users can override this to add converters.-->
 	<util:list id="customMessageConverters"/>
-````
+----
 
-So registering a new type converter is a matter of registering an alternate list called `customMessageConverters` to the context. Spring XD will replace the default empty list with yours. This list is injected separately and processed after the default `xd.messageConverters` bean provided. Therefore it is a little more involved to override one or more existing message converter. `xd.messageConverters` and `customMessageConverters` are two lists used by the `ModuleTypeConversionPlugin` to build an instance of http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/messaging/converter/CompositeMessageConverter.html[CompositeMessageConverter] which delegates to the first converter in the list that reports that it can do the conversion. The Plugin wires the CompositeMessageConverter into the module's `input` or `output` the http://docs.spring.io/spring-integration/docs/4.0.0.RC1/api/org/springframework/integration/channel/AbstractMessageChannel.html[MessageChannel], depending on which property (inputType or outputType) is set for the module.
+So registering a new type converter is a matter of registering an alternate list called `customMessageConverters` to the context. Spring XD will replace the default empty list with yours. `xd.messageConverters` and `customMessageConverters` are two lists used by the 'ModuleTypeConversionPlugin' to build an instance of http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/messaging/converter/CompositeMessageConverter.html[CompositeMessageConverter] which delegates to the first converter in the list that reports that it can do the conversion. The Plugin wires the CompositeMessageConverter into the module's 'input' or 'output' the http://docs.spring.io/spring-integration/docs/4.0.0.RC1/api/org/springframework/integration/channel/AbstractMessageChannel.html[MessageChannel], associated with properties `inputType` or `outputType` declared with the module in the stream definition.
 
-The CompositeMessageConverter provides additional flexibility important because a module does not know, generally what payload type it will get from its predecessor. For example, the provided converters can convert any Java object, including a http://docs.spring.io/spring-xd/docs/1.0.0.M6/api/org/springframework/xd/tuple/Tuple.html[Tuple] and a byte array to a JSON String. However the methods for converting a byte array or a Tuple are optimized for those specific types. The CompositeMessageConverter for --outputType=application/json must provide all three methods and chooses the first one that matches. So the ordering of these things is important. The `customMessageConverters` are added last in the order defined. So it's easier in general to add a new set of converters than to replace existing functionality. 
+The CompositeMessageConverter provides additional flexibility important because a module does not know generally what payload type it will get from its predecessor. For example, the provided converters can convert any Java object, including a http://docs.spring.io/spring-xd/docs/1.0.0.M6/api/org/springframework/xd/tuple/Tuple.html[Tuple] and a byte array to a JSON String. However the methods for converting a byte array or a Tuple are optimized for those specific types. The CompositeMessageConverter for --outputType=application/json must provide all three methods and chooses the first one that matches. So the ordering of the converters is important. The `customMessageConverters` are added last in the order defined. So it's easier in general to add a new set of converters than to replace existing functionality. 
 
 One use case XD developers encountered was a user who enquired if XD supports https://developers.google.com/protocol-buffers/[google protocol buffers]. This user works with an existing messaging system that uses GPB heavily so it would be useful to convert incoming and outgoing payloads for use with XD streams. This could be done for example by providing a `customMessageConverters` bean. Writing a custom converter to work with XD requires subclassing http://docs.spring.io/spring-xd/docs/1.0.0.M6/api/org/springframework/integration/x/bus/converter/AbstractFromMessageConverter.html[AbstractFromMessageConverter] provided by `spring-xd-dirt`. It is recommended to review the existing implementations listed in https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/resources/META-INF/spring-xd/plugins/streams.xml[streams.xml] to get a feel for how to do this. In addition, you would define a new http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/util/MimeType.html[MimeType] such as `application/gpb`. 
 
@@ -91,11 +95,12 @@ One use case XD developers encountered was a user who enquired if XD supports ht
 
 XD provides redis and rabbit for data transport out of the box. It is configured simply by setting the property `xd.transport` to one of these values. In addition xd-singlenode supports a `--transport` command line option that can accept 'local' as well as `redis` and `rabbit`. This simple configuration is supported by
 
-`````
+[source,xml]
+-----
 <import resource="classpath*:/META-INF/spring-xd/transports/${XD_TRANSPORT}-bus.xml"/>
-`````
+-----
 
-which is from an internal configuration loaded by the *Shared Server Context*. This means you can provide a new MessageBus implementation and any dependencies configured in an XML bean definition file bound by the `xd.transport` property. For example, to implement a JMS MessageBus you would add a jar with `/META-INF/spring-xd/transports/jms-bus.xml` in the classpath declaring a bean of type `MessageBus` and ID `messageBus`, along with the MessageBus implementation and any dependendencies to `$XD_HOME/lib`. 
+which is from an internal configuration file loaded by the 'Shared Server Context'. This means you can provide a new MessageBus implementation and any dependencies configured in an XML bean definition file bound by the `xd.transport` property. For example, to implement a JMS MessageBus you would add a jar with `/META-INF/spring-xd/transports/jms-bus.xml` in the classpath declaring a bean of type 'MessageBus' and ID `messageBus`, along with the MessageBus implementation and any dependendencies to `$XD_HOME/lib`. 
 
 [[Using an Alternate Serialization Library]]
 ==== Using an Alternate Serialization Library
