@@ -46,7 +46,7 @@ The ModuleDeployer calls `getBeansOfType(Plugin.class)` on it's application cont
  * Add it to XD's classpath
  * Allow XD to register it as a Spring bean in the Plugin Context
 
- All this is the topic of the next section      
+This is the topic of the next section      
 
 [[How-to-Add-a-Spring-Bean-to-the-XD-Container]]
 ==== How to Add a Spring bean to the XD Container
