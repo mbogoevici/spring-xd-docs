@@ -23,7 +23,7 @@ Obviously ZooKeeper is critically important to the XD runtime and must itself be
 
 In addition to performing CRUD operations on nodes, A ZooKeeper client can register a callback on a node to respond to  any events or state changes to that node or any of its children. Such node operations and callbacks are the mechanism that control the XD runtime. 
 
-image::images/xd-cluster.png[Spring XD and ZK Ensemble]
+image::images/xd-cluster.png[Spring XD and ZK Ensemble, width=500]
 
 === The Admin Server Internals
 
@@ -53,7 +53,7 @@ This will create a new node /xd/deployments/streams/ticktock
 
 If the Admin instance connected to the shell is not the Leader, it will perform no further action. The Leader listening to /xd/deployments/streams will respond to the newly added child node and deploy each module in the stream definition to a different Container, if possible, and update the runtime state accordingly.
 
-image::images/xd-admin-internals.png[XD Admin Internals]
+image::images/xd-admin-internals.png[XD Admin Internals, width=500]
 
 ==== Example
 
@@ -182,7 +182,7 @@ xd:>runtime modules
 
 A Stream is composed of Modules. In general, each module is deployed to one or more Container instance(s). In this way the Stream processing is distributed among multiple containers. The Admin decides to which container(s) each Module is deployed and writes the module information to _/xd/deployments/modules/<container-id>_. The Container has a Deploymentlistener to monitor this node for new modules to deploy. If the deployment is successful, the Container writes it's id as an ephemeral node to _xd/streams/<stream_name>/<module-type>/<module-name>-<module-index>/<container-id>_.
 
-image::images/module-deployment.png[XD Admin Internals]
+image::images/module-deployment.png[XD Admin Internals, width=500]
 
 By default, deploying a stream in a distributed configuration uses simple round robin logic. For example if there are 3 containers and 3 modules in a stream definition,  s1= m1 | m2 | m3,  then XD will attempt distribute the work load evenly among each container. This is a very simplistic strategy and does not take into account things like:
 

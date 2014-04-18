@@ -9,11 +9,11 @@ Spring XD builds upon Spring Batch to simplify creating batch workflow solutions
 The concept of a workflow translates to a Job, not to be confused with a MapReduce job. A Job is a directed graph, each node of the graph is a processing Step. Steps can be executed sequentially or in parallel, depending on the configuration. Jobs can be started, stopped, and restarted. Restarting
 jobs is possible since the progress of executed steps in a Job is persisted in a database via a JobRepository.  The following figures shows the basic components of a workflow.
 
-image::images/batch-overview.png[The Spring XD Workflow overview, scaledwidth="75%"]
+image::images/batch-overview.png[The Spring XD Workflow overview, width=500]
 
 A Job that has steps specific to Hadoop is shown below.
 
-image::images/batch-hadoop-overview.png[Steps in a workflow that execute Hadoop HDFS operations and run Pig, MapReduce and Hive jobs, scaledwidth="75%"]
+image::images/batch-hadoop-overview.png[Steps in a workflow that execute Hadoop HDFS operations and run Pig, MapReduce and Hive jobs, width=200]
 
 A JobLauncher is responsible for starting a job and is often triggered via a scheduler.  Other options to launch a job are through Spring XD's RESTful administration API, the XD web application, or in response to an external event from and XD stream definition, _e.g._ file polling using the file source.
 

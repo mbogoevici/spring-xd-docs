@@ -14,7 +14,7 @@ The XD distributed runtime architecture consists of the following distributed co
 
 In addition, XD  provides a Command Line Interface (CLI), XD Shell as well as a web application, XD-UI to interact with the XD runtime.
 
-image::images/distributed-runtime-overview.png[Spring XD Distributed Runtime]
+image::images/distributed-runtime-overview.png[Spring XD Distributed Runtime, width=500]
 
 ==== XD CommandLine Options
 

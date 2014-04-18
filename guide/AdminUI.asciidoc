@@ -4,7 +4,8 @@ Spring XD provides a browser-based GUI which currently allows you to perform Bat
 
 http://localhost:9393/admin-ui
 
-image::images/spring-xd-admin-ui-about.png[The Spring XD Admin UI, scaledwidth="75%"]
+.The Spring XD Admin UI
+image::images/spring-xd-admin-ui-about.png[The Spring XD Admin UI, width=500]
 
 
 The admin UI currently has four main tabs for *Batch Jobs*
@@ -18,28 +19,31 @@ The admin UI currently has four main tabs for *Batch Jobs*
 
 This page lists the available batch job modules and more details (such as the job module options and the module XML configuration file).
 
-
-image::images/spring-xd-admin-ui-list-modules.png[List Job Modules, scaledwidth="75%"]
+.List Job Modules
+image::images/spring-xd-admin-ui-list-modules.png[List Job Modules, width=500]
 
 === List job definitions
 
 This page lists the XD batch job definitions and provides actions to *deploy* or *un-deploy* those jobs.
 
-image::images/spring-xd-admin-ui-definitions.png[List Job Modules, scaledwidth="75%"]
+.List Job Definitions
+image::images/spring-xd-admin-ui-definitions.png[List Job Definitions, width=500]
 
 
 === List job deployments
 
 This page lists all the deployed jobs and provides option to *launch* the deployed job.
 
-image::images/spring-xd-admin-ui-deployments.png[List Job Modules, scaledwidth="75%"]
+.List Job Deployments
+image::images/spring-xd-admin-ui-deployments.png[List Job Deployments, width=500]
 
 
 ==== Launching a batch Job
 
 Once the job is deployed, they can be launched through the Admin UI as well. Navigate to the *Deployments* tab. Select the job you want to launch and press `Launch`. The following modal dialog should appear:
 
-image::images/spring-xd-admin-ui-launch-job.png[Launch a Batch Job with parameters, scaledwidth="75%"]
+.Launch a Batch Job with parameters
+image::images/spring-xd-admin-ui-launch-job.png[Launch a Batch Job with parameters, width=500]
 
 Using this screen, you can define one or more job parameters. Job parameters can be typed and the following data types are available:
 
@@ -52,4 +56,5 @@ Using this screen, you can define one or more job parameters. Job parameters can
 
 This page lists the batch job executions and provides option to *restart* if the batch job is restartable and stopped/failed.
 
-image::images/spring-xd-admin-ui-executions.png[List Job Executions, scaledwidth="75%"]
+.List Job Executions
+image::images/spring-xd-admin-ui-executions.png[List Job Executions, width=500]

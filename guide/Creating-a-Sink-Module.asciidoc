@@ -47,14 +47,14 @@ Users may want to specify a different Redis server or key to use for storing dat
 
 [source,xml]
 ----
-        <int-redis:store-outbound-channel-adapter
-		id="redisListAdapter" collection-type="LIST" channel="input" key="${key:myCollection}" />
+<int-redis:store-outbound-channel-adapter id="redisListAdapter"
+  collection-type="LIST" channel="input" key="${key:myCollection}" />
 
-	<bean id="redisConnectionFactory"
-		class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory">
-		<constructor-arg index="0" value="${hostname:localhost}" />
-		<constructor-arg index="1" value="${port:6379}" />
-	</bean>
+<bean id="redisConnectionFactory"
+  class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory">
+  <constructor-arg index="0" value="${hostname:localhost}" />
+  <constructor-arg index="1" value="${port:6379}" />
+</bean>
 ----
 
 Now users can optionally pass _key_, _hostname_, and _port_ property values on stream creation. If not present, the specified defaults will be used.

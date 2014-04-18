@@ -49,61 +49,61 @@ NOTE: The use of _MessageCoverter_ for data type channels was introduced in Spri
 When XD processes a module with a declared type conversion, it modifies the module's input and/or output channel definition to set the required Java type and registers MessageConverters associated with the target media type and Java type to the channel. The type conversions XD provides out of the box are summarized in the following table:
 
 |===
-|Source Payload |Target Payload |content-type header | outputType/inputType | Comments |
+|Source Payload |Target Payload |content-type header | outputType/inputType | Comments
 
 |POJO
 |JSON String
 |ignored
 |application/json
-||
+|
 
 |Tuple
 |JSON String
 |ignored
 |application/json
-|JSON is tailored for Tuple|
+|JSON is tailored for Tuple
 
 |POJO
 |String (toString())
 |ignored
 |text/plain, java.lang.String
-||
+|
 
 |POJO
 |byte[] (java.io serialized)
 |ignored
 |application/x-java-serialized-object
-||
+|
 
 |JSON byte[] or String
 |POJO
 |application/json (or none)
 |application/x-java-object
-||
+|
 
 |byte[] or String
 |Serializable
 |application/x-java-serialized-object
 |application/x-java-object
-||
+|
 
 |JSON byte[] or String
 |Tuple
 |application/json (or none)
 |application/x-xd-tuple
-||
+|
 
 |byte[]
 |String
 |any
 |text/plain, java.lang.String
-|will apply any Charset specified in the content-type header|
+|will apply any Charset specified in the content-type header
 
 |String
 |byte[]
 |any
 |application/octet-stream
-|will apply any Charset specified in the content-type header|
+|will apply any Charset specified in the content-type header
 
 |===
 

@@ -29,21 +29,22 @@ For example, here is part of the Spring configuration for a _twittersearch_ sour
 <beans>
   ...
   <int:inbound-channel-adapter id="results" auto-startup="false"
-	ref="twitterSearchMessageSource" method="getTweets">
-	<int:poller fixed-delay="${fixedDelay:5000}"/>
+    ref="twitterSearchMessageSource" method="getTweets">
+    <int:poller fixed-delay="${fixedDelay:5000}"/>
   </int:inbound-channel-adapter>
 
-  <bean id="twitterSearchMessageSource" class="org.springframework.integration.x.twitter.TwitterSearchMessageSource">
-	<constructor-arg ref="oauth2Template"/>
-	<constructor-arg value="${query}"/>
+  <bean id="twitterSearchMessageSource"
+    class="org.springframework.integration.x.twitter.TwitterSearchMessageSource">
+    <constructor-arg ref="oauth2Template"/>
+    <constructor-arg value="${query}"/>
   </bean>
 
   <bean id="oauth2Template" class="org.springframework.social.oauth2.OAuth2Template">
-	<constructor-arg index="0" value="${consumerKey:${twitter.oauth.consumerKey}}" />
-	<constructor-arg index="1" value="${consumerSecret:${twitter.oauth.consumerSecret}}" />
-	<constructor-arg index="2" value="http://notused" />
-	<constructor-arg index="3" value="http://notused" />
-	<constructor-arg index="4" value="https://api.twitter.com/oauth2/token" />
+    <constructor-arg index="0" value="${consumerKey:${twitter.oauth.consumerKey}}"/>
+    <constructor-arg index="1" value="${consumerSecret:${twitter.oauth.consumerSecret}}"/>
+    <constructor-arg index="2" value="http://notused"/>
+    <constructor-arg index="3" value="http://notused"/>
+    <constructor-arg index="4" value="https://api.twitter.com/oauth2/token"/>
   </bean>
 </beans>
 ----

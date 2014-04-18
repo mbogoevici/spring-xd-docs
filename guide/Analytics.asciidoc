@@ -11,9 +11,14 @@ That module integrates with the https://github.com/jpmml/jpmml-evaluator[JPMML-E
 Incorporating the evaluation of machine learning algorithms into stream processing is as easy as using any other processing module.  Here is a simple example
 
 ----
-http --outputType=application/x-xd-tuple | analytic-pmml --location=/models/iris-flower-naive-bayes.pmml.xml
-     	 --inputFieldMapping='sepalLength:Sepal.Length,sepalWidth:Sepal.Width,petalLength:Petal.Length,petalWidth:Petal.Width' 
-	 --outputFieldMapping='Predicted_Species:predictedSpecies' | log"
+http --outputType=application/x-xd-tuple | analytic-pmml
+     --location=/models/iris-flower-naive-bayes.pmml.xml
+     --inputFieldMapping=
+       'sepalLength:Sepal.Length,
+        sepalWidth:Sepal.Width,
+        petalLength:Petal.Length,
+        petalWidth:Petal.Width'
+     --outputFieldMapping='Predicted_Species:predictedSpecies' | log"
 ----
 
 The `http` source converts posted data to a Tuple.  The `analytic-pmml` processor loads the model from the specifed file and creates two mappings so that fields from the Tuple can be mapped into the input and output model names.  The `log` sink writes the payload of the event message to the log file of the XD container.
@@ -132,27 +137,32 @@ from the training dataset of the IRIS dataset.
   <Value value="virginica"/>
  </DataField>
  <DataField name="Sepal.Length" optype="continuous" dataType="double"/>
- <DataField name="Sepal.Width" optype="continuous" dataType="double"/>
+ <DataField name="Sepal.Width"  optype="continuous" dataType="double"/>
  <DataField name="Petal.Length" optype="continuous" dataType="double"/>
- <DataField name="Petal.Width" optype="continuous" dataType="double"/>
+ <DataField name="Petal.Width"  optype="continuous" dataType="double"/>
  <DataField name="DiscretePlaceHolder" optype="categorical" dataType="string">
   <Value value="pseudoValue"/>
  </DataField>
 </DataDictionary>
-<NaiveBayesModel modelName="iris-flower-classifier;42" functionName="classification" threshold="0.001">
+<NaiveBayesModel modelName="iris-flower-classifier;42"
+                 functionName="classification" threshold="0.001">
  <MiningSchema>
-  <MiningField name="Species" usageType="predicted"/>
+  <MiningField name="Species"      usageType="predicted"/>
   <MiningField name="Sepal.Length" usageType="active"/>
-  <MiningField name="Sepal.Width" usageType="active"/>
+  <MiningField name="Sepal.Width"  usageType="active"/>
   <MiningField name="Petal.Length" usageType="active"/>
-  <MiningField name="Petal.Width" usageType="active"/>
-  <MiningField name="DiscretePlaceHolder" usageType="active" missingValueReplacement="pseudoValue"/>
+  <MiningField name="Petal.Width"  usageType="active"/>
+  <MiningField name="DiscretePlaceHolder" usageType="active"
+               missingValueReplacement="pseudoValue"/>
  </MiningSchema>
  <Output>
   <OutputField name="Predicted_Species" feature="predictedValue"/>
-  <OutputField name="Probability_setosa" optype="continuous" dataType="double" feature="probability" value="setosa"/>
-  <OutputField name="Probability_versicolor" optype="continuous" dataType="double" feature="probability" value="versicolor"/>
-  <OutputField name="Probability_virginica" optype="continuous" dataType="double" feature="probability" value="virginica"/>
+  <OutputField name="Probability_setosa" optype="continuous"
+               dataType="double" feature="probability" value="setosa"/>
+  <OutputField name="Probability_versicolor" optype="continuous"
+               dataType="double" feature="probability" value="versicolor"/>
+  <OutputField name="Probability_virginica" optype="continuous"
+               dataType="double" feature="probability" value="virginica"/>
  </Output>
  <BayesInputs>
   <Extension>
@@ -174,6 +184,11 @@ from the training dataset of the IRIS dataset.
    <BayesInput fieldName="Sepal.Width">
     <TargetValueStats>
      <TargetValueStat value="setosa">
+...
+----
+[source, xml]
+----
+...
       <GaussianDistribution mean="3.428" variance="0.143689795918367"/>
      </TargetValueStat>
      <TargetValueStat value="versicolor">
@@ -258,7 +273,14 @@ The result of that is a new record extended by a new attribute *predictedSpecies
 The definition of the stream, which we call *iris-flower-classification*, looks as follows:
 
 ----
-xd:>stream create --name iris-flower-classification --definition "http --outputType=application/x-xd-tuple | analytic-pmml --location=/models/iris-flower-classification-naive-bayes-1.pmml.xml --inputFieldMapping='sepalLength:Sepal.Length,sepalWidth:Sepal.Width,petalLength:Petal.Length,petalWidth:Petal.Width' --outputFieldMapping='Predicted_Species:predictedSpecies' | log" --deploy
+xd:>stream create --name iris-flower-classification
+  --definition "http --outputType=application/x-xd-tuple | analytic-pmml
+  --location=/models/iris-flower-classification-naive-bayes-1.pmml.xml
+  --inputFieldMapping='sepalLength:Sepal.Length,
+                       sepalWidth:Sepal.Width,
+                       petalLength:Petal.Length,
+                       petalWidth:Petal.Width'
+  --outputFieldMapping='Predicted_Species:predictedSpecies' | log" --deploy
 ----
 
 * The *location* parameter can be used to specify the exact location of the pmml document. The value must be a valid spring http://www.springindepth.com/2.5.x/0.10/ch05.html[*resource*] location
