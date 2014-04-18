@@ -8,7 +8,7 @@ XD allows you to declaratively configure type conversion within processing strea
 * *String* to/from *byte[]*
 * *Object* to *plain text* (invokes the object's _toString()_ method)
 
-Where _JSON_ represents JSON content. Currently, Objects may be unmarshalled from a JSON byte array or String. Converting to JSON produces a String. Registration of custom type converters will likely be supported in a future release.
+Where _JSON_ represents JSON content. Currently, Objects may be unmarshalled from a JSON byte array or String. Converting to JSON produces a String. Registration of custom type converters is covered link:Extending-XD#Providing-a-New-Type-Converter[in this section].
 
 [[MimeTypes]]
 === MIME media types
