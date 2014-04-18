@@ -20,7 +20,10 @@ This document provides an overview of XD Container internals and covers each of 
 
 The diagram below shows how Spring XD is partitioned into several application contexts. It is included here to provide some context for extending XD configuration. In the diagram, solid arrows indicate a parent-child relationship. With any Spring application a child context has access to beans defined in the parent, but the parent cannot access beans defined in the child context. It is important to keep in mind that a bean definition in a child context with the same id as a bean in the parent context will override or replace that bean definition. Likewise a bean added to any context will override an earlier bean definition with the same id. 
 
-Most, but not all, of XD's extension hooks target the 'Plugin Context' shown below. That means it is possible to override bean definitions defined in the *Global Context* and the 'Shared Server Context' as well as configuring the Plugin Context itself.
+Most, but not all, of XD's extension hooks target the 'Plugin Context' shown below. That means it is possible to override bean definitions defined in the 'Global Context' and the 'Shared Server Context' as well as configuring the Plugin Context itself.
+
+.The XD Spring Application Contexts
+image::images/xd-application-contexts.png[scaledwidth="100%"]
 
 While this arrangement may appear overly complex at first, the partitioning is done for the following reasons:
 
@@ -30,8 +33,6 @@ While this arrangement may appear overly complex at first, the partitioning is d
 
 * *Lifecycle management* - Plugins and Initializers used to configure application contexts are themselves configured as Spring beans are "discovered" during initialization. These must be fully instantiated prior to the creation of application context on which they operate. 
 
-.The XD Spring Application Contexts
-image::images/xd-application-contexts.png[scaledwidth="100%"]
 
 [[Plugin-Architecture]]
 ==== Plugin Architecture
