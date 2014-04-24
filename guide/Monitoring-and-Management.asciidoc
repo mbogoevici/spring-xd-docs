@@ -45,13 +45,34 @@ Set `XD_JMX_ENABLED=false` in config/servers.yml or set it as an environment var
 
 When a module is deployed (with JMX is enabled on the XD container), the **IntegrationMBeanExporter** is injected into module's context via MBeanExportingPlugin and this exposes all the spring integration components inside the module. For the given module, the IntegrationMBeanExporter uses a specific object naming strategy that assigns domain name as `xd.<stream/job name>` and, object name as `<module name>.<module index>`. 
 
+==== Streams
 For a stream name `mystream` with DSL `http | log` will have
 
 MBeans with domain name `xd.mystream` with two objects `http.0` and `log.1`
 
+Source, processor, and sink modules will generally have the following attributes and operations 
+
+[width="50%",frame="topbot",options="header"]
+|======================
+|Module Type | Attributes and Operations
+|Source      |http://docs.spring.io/spring-integration/docs/4.0.0.RC1/api/org/springframework/integration/monitor/LifecycleMessageSourceMetrics.html[MessageSourceMetrics]
+|Processor,Sink   |http://docs.spring.io/spring-integration/docs/4.0.0.RC1/api/org/springframework/integration/monitor/LifecycleMessageHandlerMetrics.html[MessageHandlerMetrics]
+|======================
+
+
+In addition, each module has channel attributes and operations defined by http://docs.spring.io/spring-integration/docs/4.0.0.RC1/api/org/springframework/integration/monitor/MessageChannelMetrics.html[MessageChannelMetrics].
+
+==== Jobs
+
 For a job name `myjob` with DSL `jdbchdfs` will have
 
 MBeans with domain name `xd.myjob` with an object `jdbchdfs.0`
+
+You can also obtain monitoring information for Jobs using the UI or accessing the Job management REST API.  Documentation for the Job Management REST API is forthcoming, but until then please reference the request mappings in https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/rest/BatchJobsController.java[BatchJobsController], 
+https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/rest/BatchJobExecutionsController.java[BatchJobExecutionsController],
+https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/rest/BatchStepExecutionsController.java[BatchStepExecutionsController], and
+https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/rest/BatchJobInstancesController.java[BatchJobInstancesController]. 
+
 
 
 === Using Jolokia to access JMX over http
