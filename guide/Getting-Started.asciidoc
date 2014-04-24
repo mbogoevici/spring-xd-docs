@@ -134,11 +134,17 @@ Brew install also allows you to run _Spring XD_ in distributed mode on you OSx. 
 
 === RedHat/CentOS Installation
 
-If you are using RHEL or CentOS (5 or 6) you can install _Spring XD_ using our yum repository. 
+If you are using RHEL or CentOS you can install _Spring XD_ using our yum repository. 
 
 [source,sh]
 ----
-wget -q -O http://packages.gopivotal.com | sh
+wget -q -O - http://packages.gopivotal.com/pub/rpm/rhel5/app-suite/app-suite-installer | sh
+yum install spring-xd
+----
+
+[source,sh]
+----
+wget -q -O - http://packages.gopivotal.com/pub/rpm/rhel6/app-suite/app-suite-installer | sh
 yum install spring-xd
 ----
 
