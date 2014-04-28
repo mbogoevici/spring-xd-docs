@@ -140,6 +140,7 @@ When implementing a MessageBus, it is advisable to review and understand the exi
 <bean id="messageBus" class="my.example.JmsMessageBus">
 	<constructor-arg ref="jmsConnectionFactory" />
 	<constructor-arg ref="codec"/>
+</bean>
 -----
 
 where JmsMessageBus extends MessageBusSupport and the developer is responsible for configuring any JMS resources appropriately.
