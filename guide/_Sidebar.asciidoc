@@ -10,6 +10,7 @@ link:Application-Configuration[Application Configuration] +
 *link:Technical-Documentation[Technical Documentation]* +
 link:Architecture[Architecture] +
 link:XD-Distributed-Runtime[XD Distributed Runtime] +
+link:Extending-XD[Extending Spring XD] +
 link:Streams[Streams] +
 link:Modules[Modules] +
 link:Sources[Sources] +
