@@ -22,7 +22,7 @@ How the processing task is broken down into modules is discussed in the section 
 
 ===== Support for other distributed runtimes
 
-In the 1.0 release, You can run Spring XD natively, in which case you are responsible for starting up the XD Admin and XD Container instances. Alternately you can run Spring XD on Hadoop's YARN, see link:Running-on-YARN[Running XD on YARN]. Pivotal Cloud Foundry support is planned for a future release. 
+In the 1.0 release, You can run Spring XD natively, in which case you are responsible for starting up the XD Admin and XD Container instances. Alternately you can run Spring XD on Hadoop's YARN, see link:Running-on-YARN[Running XD on YARN]. Pivotal Cloud Foundry support is planned for a future release. If you are feeling a adventurous, you can also take a look at our scripts for https://github.com/spring-projects/spring-xd-ec2[deploying Spring XD to EC2].  These are used as part of our https://build.spring.io/browse/XD-ATEC2[system integration tests].
 
 [[single-node-runtime]]
 ==== Single Node Runtime
