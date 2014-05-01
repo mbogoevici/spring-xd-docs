@@ -39,6 +39,7 @@ Make sure that you set `JAVA_HOME` in the `etc/hadoop/hadoop-env.sh` script, or 
   export JAVA_HOME=/usr/lib/jdk1.6.0_45
 
 TIP: When using _Mac OS X_ you can determine the _Java_ home directory by executing `$ /usr/libexec/java_home -v 1.6`
+
 TIP: When using _Ubuntu_ you can determine the _Java_ home directory by executing `$ sudo update-java-alternatives -l`
 
 IMPORTANT: When using _MAC OS X_ (Other systems possible also) you may still encounter `Unable to load realm info from SCDynamicStore` (For details see https://issues.apache.org/jira/browse/HADOOP-7489[Hadoop Jira HADOOP-7489]). In that case, please also add to `conf/hadoop-env.sh` the following line: `export HADOOP_OPTS="-Djava.security.krb5.realm= -Djava.security.krb5.kdc="`.
