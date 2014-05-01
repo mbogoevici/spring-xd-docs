@@ -54,7 +54,7 @@ As described in the installation guide, you also need to set up http://en.wikipe
 Make sure you can log in at the command line using `ssh localhost` and `ssh 0.0.0.0` before trying to start _Hadoop_:
 
   $ ssh localhost
-  Last login: Thu May 30 12:52:47 2013
+  Last login: Thu May  1 15:02:32 2014 from localhost
 
   $ ssh 0.0.0.0
   Last login: Thu May  1 15:06:02 2014 from localhost
