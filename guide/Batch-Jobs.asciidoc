@@ -393,6 +393,6 @@ Full path is preserved so that above command would result files in HDFS shown be
 /ftp/pub/files/file2.txt
 ----
 
-Parameters for Job definition `host`, `port`, `username` and `password` can be used to control access to the FTP server. Additionally parameter `stepConcurrency` which defaults to `2` can be used to control how many simultaneous connections are used towards the FTP server.
+Parameters for Job definition `host`, `port`, `username` and `password` can be used to control access to the FTP server.
 
 Parameters for Job execution, `remoteDirectory` and `hdfsDirectory` are used to define source and destination directories.
