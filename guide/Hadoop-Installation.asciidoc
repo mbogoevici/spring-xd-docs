@@ -6,7 +6,7 @@ TIP: This guide is intended to serve as a quick guide to get you started in the 
 
 ==== Download
 
-First, http://archive.apache.org/dist/hadoop/common/[download an installation archive] and unpack it locally. Linux users can also install _Hadoop_ through the system package manager and on Mac OS X, you can use http://brew.sh/[Homebrew]. However, the manual installation is self-contained and it's easier to see what's going on if you just unpack it to a known location.
+First, http://archive.apache.org/dist/hadoop/common/hadoop-2.2.0/[download an installation archive] (hadoop-2.2.0.tar.gz) and unpack it locally. Linux users can also install _Hadoop_ through the system package manager and on Mac OS X, you can use http://brew.sh/[Homebrew]. However, the manual installation is self-contained and it's easier to see what's going on if you just unpack it to a known location.
 
 If you have `wget` available on your system, you can also execute:
 
