@@ -1,6 +1,6 @@
 === Installing Hadoop
 
-If you don't have a local _Hadoop_ cluster available already, you can do a local http://hadoop.apache.org/docs/r1.2.1/single_node_setup.html[single node installation (v1.2.1)] and use that to try out _Hadoop_ with _Spring XD_. 
+If you don't have a local _Hadoop_ cluster available already, you can do a local http://hadoop.apache.org/docs/r2.2.0/hadoop-project-dist/hadoop-common/SingleCluster.html[single node installation (v2.2.0)] and use that to try out _Hadoop_ with _Spring XD_. 
 
 TIP: This guide is intended to serve as a quick guide to get you started in the context of _Spring XD_. For more complete documentation please refer back to the documentation provided by your respective _Hadoop_ distribution.
 
@@ -10,35 +10,36 @@ First, http://archive.apache.org/dist/hadoop/common/[download an installation ar
 
 If you have `wget` available on your system, you can also execute:
 
-  $ wget http://archive.apache.org/dist/hadoop/common/hadoop-1.2.1/hadoop-1.2.1.tar.gz
+  $ wget http://archive.apache.org/dist/hadoop/common/hadoop-2.2.0/hadoop-2.2.0.tar.gz
 
 Unpack the distribution with:
 
-  $ tar xzf hadoop-1.2.1.tar.gz
+  $ tar xzf hadoop-2.2.0.tar.gz
 
 Change into the directory and have a look around
 
-  $ cd hadoop-1.2.1
+  $ cd hadoop-2.2.0
   $ ls
   $ bin/hadoop
   Usage: hadoop [--config confdir] COMMAND
-  where COMMAND is one of:
-    namenode -format     format the DFS filesystem
-    secondarynamenode    run the DFS secondary namenode
-    namenode             run the DFS namenode
+         where COMMAND is one of:
+    fs                   run a generic filesystem user client
+    version              print the version
+    jar <jar>            run a jar file
     ...
 
-The `bin` directory contains the start and stop scripts as well as the `hadoop` script which allows us to interact with _Hadoop_ from the command line. The next place to look at is the `conf` directory.
+The `bin` directory contains the start and stop scripts as well as the `hadoop` and `hdfs` scripts which allow us to interact with _Hadoop_ from the command line. The next place to look at is the `etc/hadoop` directory.
 
 ==== Java Setup
 
-Make sure that you set `JAVA_HOME` in the `conf/hadoop-env.sh` script, or you will get an error when you start _Hadoop_. For example:
+Make sure that you set `JAVA_HOME` in the `etc/hadoop/hadoop-env.sh` script, or you will get an error when you start _Hadoop_. For example:
 
   # The java implementation to use.  Required.
   # export JAVA_HOME=/usr/lib/j2sdk1.5-sun
   export JAVA_HOME=/usr/lib/jdk1.6.0_45
 
-TIP: When using _Mac OS X_ you can determine the _Java 6_ home directory by executing `$ /usr/libexec/java_home -v 1.6`
+TIP: When using _Mac OS X_ you can determine the _Java_ home directory by executing `$ /usr/libexec/java_home -v 1.6`
+TIP: When using _Ubuntu_ you can determine the _Java_ home directory by executing `$ sudo update-java-alternatives -l`
 
 IMPORTANT: When using _MAC OS X_ (Other systems possible also) you may still encounter `Unable to load realm info from SCDynamicStore` (For details see https://issues.apache.org/jira/browse/HADOOP-7489[Hadoop Jira HADOOP-7489]). In that case, please also add to `conf/hadoop-env.sh` the following line: `export HADOOP_OPTS="-Djava.security.krb5.realm= -Djava.security.krb5.kdc="`.
 
@@ -49,10 +50,13 @@ As described in the installation guide, you also need to set up http://en.wikipe
     $ ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa 
     $ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
 
-Make sure you can log in at the command line using `ssh localhost` before trying to start _Hadoop_:
+Make sure you can log in at the command line using `ssh localhost` and `ssh 0.0.0.0` before trying to start _Hadoop_:
 
   $ ssh localhost
   Last login: Thu May 30 12:52:47 2013
+
+  $ ssh 0.0.0.0
+  Last login: Thu May  1 15:06:02 2014 from localhost
 
 You also need to decide where in your local filesystem you want _Hadoop_ to store its data. Let's say you decide to use `/data`.
 
@@ -61,7 +65,7 @@ First create the directory and make sure it is writeable:
   $ mkdir /data
   $ chmod 777 /data
 
-Now edit `conf/core-site.xml` and add the following property:
+Now edit `etc/hadoop/core-site.xml` and add the following property:
 
    <property>
        <name>hadoop.tmp.dir</name>
@@ -74,69 +78,107 @@ You're then ready to format the filesystem for use by HDFS
 
 ==== Setting the Namenode Port
 
-By default Spring XD will use a _Namenode_ setting of `hdfs://localhost:8020` which is defined in `${xd.home}/config/hadoop.properties`, depending on the used _Hadoop_ distribution and version the by-default-defined port `8020` may be different, e.g. port `9000`. Therefore, please ensure you have the following setting in `conf/core-site.xml`:
+By default Spring XD will use a _Namenode_ setting of `hdfs://localhost:8020` which is defined in `${xd.home}/config/server.yml`, depending on the used _Hadoop_ distribution and version the by-default-defined port `8020` may be different, e.g. port `9000`. Therefore, please ensure you have the following property setting in `etc/hadoop/core-site.xml`:
 
-   <configuration>
-       <property>
-           <name>fs.default.name</name>
-           <value>hdfs://localhost:8020</value>
-       </property>
-   </configuration>
+   <property>
+       <name>fs.defaultFS</name>
+       <value>hdfs://localhost:8020</value>
+   </property>
 
 ==== Further Configuration File Changes
 
-In `conf/hdfs-site.xml` add:
+In `etc/hadoop/hdfs-site.xml` add the following properties:
+
+   <property>
+       <name>dfs.replication</name>
+       <value>1</value>
+   </property>
+   <property>
+       <name>dfs.support.append</name>
+       <value>true</value>
+   </property>
+   <property>
+       <name>dfs.webhdfs.enabled</name>
+       <value>true</value>
+   </property>
+
+Create `etc/hadoop/mapred-site.xml` and add:
+
+   <?xml version="1.0"?>
+   <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 
    <configuration>
        <property>
-           <name>dfs.replication</name>
-           <value>1</value>
+           <name>mapreduce.framework.name</name>
+           <value>yarn</value>
        </property>
-   </configuration>
+	</configuration>
 
-In `conf/mapred-site.xml` add:
+In `etc/hadoop/yarn-site.xml` add these properties:
 
-   <configuration>
-       <property>
-           <name>mapred.job.tracker</name>
-           <value>localhost:9001</value>
-       </property>
-   </configuration>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+        <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+    </property>
 
 === Running Hadoop
 
-You should now finally be ready to run _Hadoop_. Run the `start-all.sh` script 
+First we need to set up the environment settings. It's convenient to add these to a file that you can source when you want to work with Hadoop. We create a file called `hadoop-env` and add the following content:
 
-  $ bin/start-all.sh
+   # The directory of the unpacked distribution
+   export HADOOP_INSTALL="$HOME/Downloads/hadoop-2.2.0"
 
-You should see five Hadoop Java processes running:
+   # The JAVE_HOME (see above how to determine this)
+   export JAVA_HOME=/usr/lib/jdk1.6.0_45
+
+   # Some HOME settings
+   export HADOOP_MAPRED_HOME=$HADOOP_INSTALL
+   export HADOOP_YARN_HOME=$HADOOP_INSTALL
+   export HADOOP_COMMON_HOME=$HADOOP_INSTALL
+
+   # Add Hadoop scripts to the PATH
+   export PATH=$HADOOP_INSTALL/bin:$HADOOP_INSTALL/sbin:$PATH
+
+To use these settings we need to source this script:
+
+  $ source hadoop-env
+
+You should now finally be ready to run _Hadoop_. Run the following commands 
+
+  $ start-dfs.sh
+  $ start-yarn.sh
+  $ mr-jobhistory-daemon.sh start historyserver
+
+You should see six Hadoop Java processes running:
 
   $ jps
-  4039 TaskTracker
-  3713 NameNode
-  3802 DataNode
-  3954 JobTracker
-  3889 SecondaryNameNode
-  4061 Jps 
+  21636 NameNode
+  22004 SecondaryNameNode
+  22360 NodeManager
+  22425 JobHistoryServer
+  21808 DataNode
+  22159 ResourceManager
+  22471 Jps
 
-Try a few commands with `hadoop dfs` to make sure the basic system works
+Try a few commands with `hdfs dfs` to make sure the basic system works
 
-  $ bin/hadoop dfs -ls /
+  $ hdfs dfs -ls /
   Found 1 items
-  drwxr-xr-x   - luke supergroup          0 2013-05-30 17:28 /data
+  drwxrwx---   - trisberg supergroup          0 2014-05-01 15:31 /tmp
   
-  $ bin/hadoop dfs -mkdir /test
+  $ hdfs dfs -mkdir /xd
   $ bin/hadoop dfs -ls /
   Found 2 items
-  drwxr-xr-x   - luke supergroup          0 2013-05-30 17:28 /data
-  drwxr-xr-x   - luke supergroup          0 2013-05-30 17:31 /test
+  drwxrwx---   - trisberg supergroup          0 2014-05-01 15:31 /tmp
+  drwxr-xr-x   - trisberg supergroup          0 2014-05-01 15:34 /xd
   
-  $ bin/hadoop dfs -rmr /test
-  Deleted hdfs://localhost:8020/test
-
-Lastly, you can also browse the web interface for _NameNode_ and _JobTracker_ at:
+Lastly, you can also browse the web interface for _NameNode_ and _ResourceManager_ at:
 
 * NameNode: http://localhost:50070/
-* JobTracker: http://localhost:50030/
+* ResourceManager: http://localhost:8088/
 
 At this point you should be good to create a _Spring XD_ link:Streams#streams[stream] using a _Hadoop_ link:Sinks#sinks[sink].
