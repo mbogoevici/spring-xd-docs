@@ -81,11 +81,9 @@ When JMX is enabled (which is **default** via `XD_JMX_ENABLED` property), Joloki
 
 For example, with XD singlenode running management port 9080
 
- http://localhost:9080/jolokia/search/xd.*:type=*,*
+ http://localhost:9080/management/jolokia/search/xd.*:type=*,*
 
  
-will list all the MBeans exposed in XD admin/container servers. Apart from this, other available domain and types can be accessed via Jolokia.
-
-Please note that the deployed modules MBeans aren't exposed via Jolokia yet.But, those are accessible using tools like jconsole etc.,
+will list all the MBeans exposed in XD admin/container servers and the deployed modules. Apart from this, other available domain and types can be accessed via Jolokia.
 
 
