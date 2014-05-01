@@ -28,7 +28,7 @@ Change into the directory and have a look around
     jar <jar>            run a jar file
     ...
 
-The `bin` directory contains the start and stop scripts as well as the `hadoop` and `hdfs` scripts which allow us to interact with _Hadoop_ from the command line. The next place to look at is the `etc/hadoop` directory.
+The `bin` directory contains the start and stop scripts as well as the `hadoop` and `hdfs` scripts which allow us to interact with _Hadoop_ from the command line.
 
 ==== Java Setup
 
