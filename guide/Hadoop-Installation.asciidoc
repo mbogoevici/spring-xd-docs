@@ -132,19 +132,21 @@ In `etc/hadoop/yarn-site.xml` add these properties:
 
 First we need to set up the environment settings. It's convenient to add these to a file that you can source when you want to work with Hadoop. We create a file called `hadoop-env` and add the following content:
 
-   # The directory of the unpacked distribution
-   export HADOOP_INSTALL="$HOME/Downloads/hadoop-2.2.0"
+```
+# The directory of the unpacked distribution
+export HADOOP_INSTALL="$HOME/Downloads/hadoop-2.2.0"
 
-   # The JAVE_HOME (see above how to determine this)
-   export JAVA_HOME=/usr/lib/jdk1.6.0_45
+# The JAVE_HOME (see above how to determine this)
+export JAVA_HOME=/usr/lib/jdk1.6.0_45
 
-   # Some HOME settings
-   export HADOOP_MAPRED_HOME=$HADOOP_INSTALL
-   export HADOOP_YARN_HOME=$HADOOP_INSTALL
-   export HADOOP_COMMON_HOME=$HADOOP_INSTALL
+# Some HOME settings
+export HADOOP_MAPRED_HOME=$HADOOP_INSTALL
+export HADOOP_YARN_HOME=$HADOOP_INSTALL
+export HADOOP_COMMON_HOME=$HADOOP_INSTALL
 
-   # Add Hadoop scripts to the PATH
-   export PATH=$HADOOP_INSTALL/bin:$HADOOP_INSTALL/sbin:$PATH
+# Add Hadoop scripts to the PATH
+export PATH=$HADOOP_INSTALL/bin:$HADOOP_INSTALL/sbin:$PATH
+```
 
 To use these settings we need to source this script:
 
