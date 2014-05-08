@@ -149,11 +149,7 @@ In addition, the following default settings for the rabbit message bus can be mo
         transacted:                false # <13>
         txSize:                    1     # <14>
 ```
-<1> AUTO (container acks), NONE (broker acks), MANUAL (consumer acks).
-     Upper case only.
-     Note: MANUAL requires specialized code in the consuming module and is unlikely to be
-     used in an XD application. For more information, see
-     http://docs.spring.io/spring-integration/reference/html/amqp.html#amqp-inbound-ack
+<1> AUTO (container acks), NONE (broker acks), MANUAL (consumer acks). Upper case only. Note: MANUAL requires specialized code in the consuming module and is unlikely to be used in an XD application. For more information, see http://docs.spring.io/spring-integration/reference/html/amqp.html#amqp-inbound-ack
 
 <2> The time in milliseconds before retrying a failed message delivery
 
