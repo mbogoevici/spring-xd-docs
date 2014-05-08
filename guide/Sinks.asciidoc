@@ -43,11 +43,19 @@ You can then try adding some data. We've used the `http` source on port 8000 her
 
 and you should see the following output in the XD container console.
 
-  13/06/07 16:12:18 WARN logger.mylogstream: hello
+  13/06/07 16:12:18 INFO sink.mylogstream: hello
 
-The logger name is the sink name prefixed with the string "logger.". The sink name is the same as the stream name by default, but you can set it by passing the `--name` parameter 
+The logger name is the sink name prefixed with the string "xd.sink.". The sink name is the same as the stream name by default, but you can set it by passing the `--name` parameter 
 
   xd:> stream create --name myotherlogstream --definition "http --port=8001 | log --name=mylogger" --deploy
+
+The log level is `INFO` by default; this can be changed with the `--level` property (`FATAL`, `ERROR`, `WARN`, `INFO`, `DEBUG`, or `TRACE`)
+
+  xd:> stream create --name mylogstream --definition "http --port=8001 | log --level=WARN" --deploy
+
+By default, the message payload is logged; this can be changed with the `--expression` property (e.g. `payload.foo` to log some property `foo` of the payload, or `#root` to log the entire message
+
+  xd:> stream create --name mylogstream --definition "http --port=8001 | log --expression=#root" --deploy
 
 [[file-sink]]
 === File Sink
