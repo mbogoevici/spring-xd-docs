@@ -62,7 +62,7 @@ Usage:
 === Setting up a RDBMS
 
 The distributed runtime requires an RDBMS. The XD distrubution comes with an HSQLDB in memory database for testing purposes, but an alternate is expected. To start HSQLDB:
-[source,sh]
+[source,bash]
 ----
 $ cd hsqldb/bin
 $ ./hsqldb-server
@@ -83,7 +83,7 @@ Currently XD does not ship with ZooKeeper. At the time of this writing, the comp
 If you already have a running instance of *Redis* it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*. You can change that in the `servers.yml` file residing in the `config/` directory.
 
 If you don't have a pre-existing installation of _Redis_, you can use the _Spring XD_ provided instance (For Linux and Mac). Inside the _Spring XD_ installation directory (spring-xd) do:
-[source,sh]
+[source,bash]
 ----
 $ cd redis/bin
 $ ./install-redis
@@ -99,7 +99,7 @@ This will compile the _Redis_ source tar and add the _Redis_ executables under r
 
 You are now ready to start _Redis_ by executing
 
-[source,sh]
+[source,bash]
 ----
 $ ./redis-server
 ----
@@ -124,7 +124,7 @@ Redis does not seem to be running. Did you install and start Redis? Please see t
 
 ==== Starting Redis
 
-[source,sh]
+[source,bash]
 ----
 $ redis-server
 ----
@@ -166,7 +166,7 @@ If you don't have a _RabbitMQ_ installation already, head over to http://www.rab
 ==== Launching RabbitMQ
 
 Start the *RabbitMQ* broker by running the rabbitmq-server script:
-[source,sh]
+[source,bash]
 ----
 $ rabbitmq-server
 ----
@@ -192,7 +192,7 @@ Spring XD consists of two servers
 
 You can start the +xd-container+ and +xd-admin+ servers individually as follows:
 
-[source,sh]
+[source,bash]
 ----
 xd/bin>$ ./xd-admin
 xd/bin>$ ./xd-container
@@ -216,7 +216,7 @@ If you have multiple XD instances running share a single RabbitMQ server for tra
 
 ==== Choosing an Analytics provider
 By default, the xd-container will store Analytics data in redis. At the time of writing, this is the only supported option (when running in distributed mode). Use the --analytics option to specify another backing store for Analytics data.
-[source,sh]
+[source,bash]
 ----
 xd/bin>$ ./xd-container --analytics redis
 ----
@@ -226,14 +226,14 @@ There are additional configuration options available for these scripts:
  
 To specify the location of the Spring XD install other than the default configured in the script
 
-[source,sh]
+[source,bash]
 ----
 export XD_HOME=<Specific XD install directory>
 ----
 
 To specify the http port of the XDAdmin server,
 
-[source,sh]
+[source,bash]
 ----
 xd/bin>$ ./xd-admin --httpPort <httpPort> 
 ----
@@ -256,7 +256,7 @@ Spring XD supports the following Hadoop distributions:
 
 To specify the distribution to use for Hadoop client connections,
 
-[source,sh]
+[source,bash]
 ----
 xd/bin>$ ./xd-shell --hadoopDistro <distribution> 
 xd/bin>$ ./xd-admin --hadoopDistro <distribution> 

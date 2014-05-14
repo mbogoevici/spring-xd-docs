@@ -603,7 +603,7 @@ Check the gauge:
 Spring XD has a discoverable RESTful API based on the Spring HATEAOS library.  You can discover the resources available by making a GET request on the root resource of the Admin server.  Here is an example where navigate down to find the data for a counter named 'httptap' that was created by these commands
 
 
-[source,sh]
+[source,bash]
 ----
 xd:>stream create --name httpStream --definition "http | file" --deploy
 xd:>stream create --name httptap --definition "tap:stream:httpStream > counter" --deploy
@@ -611,7 +611,7 @@ xd:>http post --target http://localhost:9000 --data "helloworld"
 ----
 
 The root resource returns 
-[source,sh]
+[source,bash]
 ----
 xd:>! wget  -q -S -O - http://localhost:9393/
 {
@@ -659,7 +659,7 @@ xd:>! wget  -q -S -O - http://localhost:9393/
 
 Following the resource location for the counter
 
-[source,sh]
+[source,bash]
 ----
 xd:>! wget  -q -S -O - http://localhost:9393/metrics/counters
 {
@@ -687,7 +687,7 @@ xd:>! wget  -q -S -O - http://localhost:9393/metrics/counters
 ----
 
 And then the data for the counter itself
-[source,sh]
+[source,bash]
 ----
 xd:>! wget  -q -S -O - http://localhost:9393/metrics/counters/httptap
 {

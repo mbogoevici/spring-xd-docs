@@ -248,7 +248,7 @@ This source requires a cache server to be running in a separate process and its 
 
 Run Gemfire cache server by changing to the gemfire/bin directory and execute
 
-[source,sh]
+[source,bash]
 ----
 $ ./gemfire-server ../config/cq-demo.xml
 ----
