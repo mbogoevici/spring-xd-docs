@@ -18,6 +18,8 @@ Configuration options are contained in a `spring-xd-<version>-yarn\config\xd-con
 
 ==== XD options
 For Spring XD you need to define how many admin servers and containers you need. You also need to define the HDFS location (spring.yarn.applicationDir) where the Spring XD binary and config files will be stored.
+
+[source,yaml]
 ----
 spring:
     xd:
@@ -29,6 +31,8 @@ spring:
 
 ==== Hadoop settings
 You need to specify the host where the YARN Resource Manager is running as well as the HDFS URL.
+
+[source,yaml]
 ----
 # Hadoop configuration
 spring:
@@ -38,6 +42,8 @@ spring:
 ---- 
 ==== Transport options
 You should choose either redis (default) or rabbit as the transport and include the host and port for the choice you made.
+
+[source,yaml]
 ----
 # Transport used
 transport: rabbit
@@ -62,6 +68,8 @@ spring:
 
 ==== Zookeeper settings
 You should specify the Zookeeper connection settings 
+
+[source,yaml]
 ----
 ---
 #Zookeeper properties
@@ -74,6 +82,7 @@ zk:
 ==== JDBC datasource properties
 You should specify the JDBC connection properties based on the RDBMs that you use for the batch jobs and JDBC sink
 
+[source,yaml]
 ----
 ---
 #Config for use with MySQL - uncomment and edit with relevant values for your environment
@@ -93,6 +102,8 @@ Change current directory to be the directory that was unzipped (spring-xd-<versi
 ==== Push the Spring XD application binaries and config to HDFS
 
 Run the command
+
+[source,bash]
 ----
 ./bin/xd-yarn push
 ----
@@ -100,6 +111,8 @@ Run the command
 ==== Submit the Spring XD admin server
 
 Run the command
+
+[source,bash]
 ----
 ./bin/xd-yarn start admin
 ----
@@ -107,6 +120,8 @@ Run the command
 ==== Submit the Spring XD container
 
 Run the command
+
+[source,bash]
 ----
 ./bin/xd-yarn start container
 ----
@@ -114,6 +129,8 @@ Run the command
 ==== Check the status of the app
 
 You can use the regular `yarn` command to check the status. Simply run:
+
+[source,bash]
 ----
 yarn application -list
 ----
