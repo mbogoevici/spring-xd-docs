@@ -102,12 +102,12 @@ To override these settings set an OS environment variable such as `spring_dataso
 If you want to use Redis for analytics or data transport you should set the host and port of the Redis server.
 
 
-```
+----
 spring:
   redis:
    port: 6379
    host: localhost
-```
+----
 
 To override these settings set an OS environment variable such as `spring_redis_port` to the value you require.
 
@@ -115,7 +115,7 @@ To override these settings set an OS environment variable such as `spring_redis_
 
 If you want to use RabbitMQ as a data transport use the following configuration setting
 
-```
+----
 spring:
   rabbitmq:
    host: localhost
@@ -123,14 +123,14 @@ spring:
    username: guest
    password: guest
    virtual_host: /
-```
+----
 
 To override these settings set an OS environment variable such as `spring_rabbitmq_host` to the value you require.
 
 
 In addition, the following default settings for the rabbit message bus can be modified in `servers.yml`...
 
-```
+----
   messagebus:
     rabbit:
       default:
@@ -148,7 +148,7 @@ In addition, the following default settings for the rabbit message bus can be mo
         requeue:                   true  # <12>
         transacted:                false # <13>
         txSize:                    1     # <14>
-```
+----
 
 <1> AUTO (container acks), NONE (broker acks), MANUAL (consumer acks). Upper case only. Note: MANUAL requires specialized code in the consuming module and is unlikely to be used in an XD application. For more information, see http://docs.spring.io/spring-integration/reference/html/amqp.html#amqp-inbound-ack
 

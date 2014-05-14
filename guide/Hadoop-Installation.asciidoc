@@ -68,11 +68,13 @@ First create the directory and make sure it is writeable:
 
 Now edit `etc/hadoop/core-site.xml` and add the following property:
 
-   <property>
-       <name>hadoop.tmp.dir</name>
-       <value>/data</value>
-   </property>
-
+[source,xml]
+----
+<property>
+    <name>hadoop.tmp.dir</name>
+    <value>/data</value>
+</property>
+----
 You're then ready to format the filesystem for use by HDFS
 
   $ bin/hadoop namenode -format
@@ -81,31 +83,37 @@ You're then ready to format the filesystem for use by HDFS
 
 By default Spring XD will use a _Namenode_ setting of `hdfs://localhost:8020` which can be overridden in `${xd.home}/config/server.yml`, depending on the used _Hadoop_ distribution and version the by-default-defined port `8020` may be different, e.g. port `9000`. Therefore, please ensure you have the following property setting in `etc/hadoop/core-site.xml`:
 
-   <property>
-       <name>fs.defaultFS</name>
-       <value>hdfs://localhost:8020</value>
-   </property>
-
+[source,xml]
+----
+<property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://localhost:8020</value>
+</property>
+----
 ==== Further Configuration File Changes
 
 In `etc/hadoop/hdfs-site.xml` add the following properties:
 
-   <property>
-       <name>dfs.replication</name>
-       <value>1</value>
-   </property>
-   <property>
-       <name>dfs.support.append</name>
-       <value>true</value>
-   </property>
-   <property>
-       <name>dfs.webhdfs.enabled</name>
-       <value>true</value>
-   </property>
+[source,xml]
+----
+<property>
+    <name>dfs.replication</name>
+    <value>1</value>
+</property>
+<property>
+    <name>dfs.support.append</name>
+    <value>true</value>
+</property>
+<property>
+    <name>dfs.webhdfs.enabled</name>
+    <value>true</value>
+</property>
+----
 
 Create `etc/hadoop/mapred-site.xml` and add:
 
-```
+[source,xml]
+----
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 
@@ -115,24 +123,26 @@ Create `etc/hadoop/mapred-site.xml` and add:
         <value>yarn</value>
     </property>
 </configuration>
-```
+----
 
 In `etc/hadoop/yarn-site.xml` add these properties:
 
-    <property>
-        <name>yarn.nodemanager.aux-services</name>
-        <value>mapreduce_shuffle</value>
-    </property>
-    <property>
-        <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
-        <value>org.apache.hadoop.mapred.ShuffleHandler</value>
-    </property>
-
+[source,xml]
+----
+<property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+</property>
+<property>
+    <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
+    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+</property>
+----
 === Running Hadoop
 
 First we need to set up the environment settings. It's convenient to add these to a file that you can source when you want to work with Hadoop. We create a file called `hadoop-env` and add the following content:
 
-```
+----
 # The directory of the unpacked distribution
 export HADOOP_INSTALL="$HOME/Downloads/hadoop-2.2.0"
 
@@ -146,7 +156,7 @@ export HADOOP_COMMON_HOME=$HADOOP_INSTALL
 
 # Add Hadoop scripts to the PATH
 export PATH=$HADOOP_INSTALL/bin:$HADOOP_INSTALL/sbin:$PATH
-```
+----
 
 To use these settings we need to source this script:
 

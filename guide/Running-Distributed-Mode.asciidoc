@@ -271,12 +271,14 @@ If you wish to use a XD-Shell that is on a different machine than where you depl
 
 1) Open your shell 
 
-```
+[source,bash]
+----
 shell/bin>$ ./xd-shell
-```
+----
 
 2) From the xd shell use the "admin config server" command i.e. 
 
-```
+[source,bash]
+----
 admin config server <yourhost>:9393
-```
+----

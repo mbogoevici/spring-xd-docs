@@ -84,9 +84,10 @@ makeUnique:: Shall job parameters be made unique? *(default: `true`)*
 Also, similar to the `stream create` command, the `job create` command has an optional `--deploy` option to create the job definition and deploy it. `--deploy` option is false by default.
 
 Below is an example of some of these options combined:
-```
+
+----
 job create myjob --definition "fooJob --makeUnique=false"
-```
+----
 
 Remember that you can always find out about available options for a job by using the link:Modules.asciidoc#module_info[`module info`] command.
 
