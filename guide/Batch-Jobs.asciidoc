@@ -286,6 +286,7 @@ Update the hdfs-site.xml with the following settings:
 
 ===== For Hadoop 1.x
 
+[source,xml]
 ----   
     <property>
       <name>dfs.support.broken.append</name>
@@ -295,6 +296,7 @@ Update the hdfs-site.xml with the following settings:
 
 ===== For Hadoop 2.x
 
+[source,xml]
 ----
     <property>
         <name>dfs.support.append</name>

@@ -188,6 +188,7 @@ In addition, the following default settings for the rabbit message bus can be mo
 
 The default HTTP port of the `xd-admin` server is 9393.  To change the value use the following configuration setting
 
+[source,yaml]
 ----
 server:
   port: 9876
