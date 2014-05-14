@@ -183,6 +183,9 @@ Note that you need to have a consumer key and secret to use the `twittersearch` 
 
 Fire up the redis-cli and verify that tweets are being stored:
 
-   $ redis-cli
-   redis 127.0.0.1:6379> lrange javatweets 0 -1
-   1) {\"id\":342386150738120704,\"text\":\"Now Hiring: Senior Java Developer\",\"createdAt\":1370466194000,\"fromUser\":\"jencompgeek\",...\"}"
+[source,bash]
+----
+$ redis-cli
+redis 127.0.0.1:6379> lrange javatweets 0 -1
+1) {\"id\":342386150738120704,\"text\":\"Now Hiring: Senior Java Developer\",\"createdAt\":1370466194000,\"fromUser\":\"jencompgeek\",...\"}"
+----
