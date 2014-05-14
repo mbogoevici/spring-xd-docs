@@ -313,7 +313,9 @@ source.file.pattern: *.txt
 source.http.port: 1234
 ----
 
-one can write 
+one can write
+
+[source,yaml]
 ----
 source:
   file:

@@ -77,7 +77,7 @@ Create an empty file to tail (this is not needed on some platforms such as Linux
 
 [source,bash]
 ----
-touch /tmp/xd/input/tailtest  
+$ touch /tmp/xd/input/tailtest  
 ----
 
 To create a stream definition using the XD shell
@@ -306,7 +306,7 @@ As updates are posted to the cache you should see them captured in the output fi
 
 [source,bash]
 ----
-$cat /tmp/xd/output/cqtest.out
+$ cat /tmp/xd/output/cqtest.out
 
 {"symbol":"FAKE","price":73}
 {"symbol":"FAKE","price":78}
@@ -566,7 +566,8 @@ That "stimulus" counter concept bears some explanation. By default, the module w
 By using another expression, or more certainly a `script`, one can implement a simple conversation, assuming it is time based. As an example, let's assume we want to join some kind of chat server where one first needs to authenticate, then specify which rooms to join. Lastly, all clients are supposed to send some keepalive commands to make sure that the connection is open.
 
 The following groovy script could be used to that effect:
-[source,java]
+
+[source,groovy]
 ----
 def commands = ['', // index 0 is not used
 'LOGIN user=johndoe', // first command sent
