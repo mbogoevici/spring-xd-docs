@@ -39,7 +39,10 @@ Post some data to the http server on the default port of 9000
 
 See if the data ended up in the file
 
-     $ cat /tmp/xd/output/httptest
+[source,bash]
+----
+$ cat /tmp/xd/output/httptest
+----
 
 ==== HTTP with options
 
@@ -55,18 +58,27 @@ Post some data to the new port
 
     xd:> http post --target http://localhost:9020 --data "hello world"
 
-    $ cat /tmp/xd/output/httptest9020
+[source,bash]
+----
+$ cat /tmp/xd/output/httptest9020
+----
 
 [[tail]]
 === Tail
 
 Make sure the default input directory exists
 
-     $ mkdir -p /tmp/xd/input
+[source,bash]
+----
+$ mkdir -p /tmp/xd/input
+----
 
 Create an empty file to tail (this is not needed on some platforms such as Linux)
 
-     touch /tmp/xd/input/tailtest  
+[source,bash]
+----
+touch /tmp/xd/input/tailtest  
+----
 
 To create a stream definition using the XD shell
 
@@ -74,12 +86,17 @@ To create a stream definition using the XD shell
 
 Send some text into the file being monitored 
 
-     $ echo blah >> /tmp/xd/input/tailtest
+[source,bash]
+----
+$ echo blah >> /tmp/xd/input/tailtest
+----
 
 See if the data ended up in the file
-     
-     $ cat /tmp/xd/output/tailtest
 
+[source,bash]
+----
+$ cat /tmp/xd/output/tailtest
+----
 ==== Tail with options
 
 The tail source has 3 options:
@@ -92,10 +109,12 @@ Here is an example
 
      xd:> stream create --name tailtest --definition "tail --name=/tmp/foo | file --name=bar" --deploy
 
-     $ echo blah >> /tmp/foo
+[source,bash]
+----
+$ echo blah >> /tmp/foo
 
-     $ cat /tmp/xd/output/bar
-
+$ cat /tmp/xd/output/bar
+-----
 
 ==== Tail Status Events
 
@@ -183,12 +202,18 @@ To create a stream definition in the server using the XD shell
 
 Make sure the default output directory for the `file` sink exists
 
-     $ mkdir -p /tmp/xd/output/
+[source,bash]
+----
+$ mkdir -p /tmp/xd/output/
+----
 
 Let the twittersearch run for a little while and then check to see 
 if some data ended up in the file
 
-     $ cat /tmp/xd/output/springone2gx
+[source,bash]
+----
+$ cat /tmp/xd/output/springone2gx
+----
 
 TIP: For both `twittersearch` and `twitterstream` you can put the keys in a module properties file instead of supplying them in the stream definition. For twittersearch, the file would be `config/modules/source/twittersearch/twittersearch.properties`.
 
@@ -279,11 +304,14 @@ The _cqtest_ stream is now listening for any stock quote updates for VMW. Presum
 
 As updates are posted to the cache you should see them captured in the output file:
 
-    $cat /tmp/xd/output/cqtest.out
+[source,bash]
+----
+$cat /tmp/xd/output/cqtest.out
 
-   {"symbol":"FAKE","price":73}
-   {"symbol":"FAKE","price":78}
-   {"symbol":"FAKE","price":80}
+{"symbol":"FAKE","price":73}
+{"symbol":"FAKE","price":78}
+{"symbol":"FAKE","price":80}
+----
 
 [[syslog]]
 === Syslog
@@ -311,8 +339,11 @@ Send a test message to the syslog
      logger -p local3.info -t TESTING "Test Syslog Message"
 
 See if the data ended up in the file
-     
-     $ cat /tmp/xd/output/syslogtest
+
+[source,bash]
+----
+$ cat /tmp/xd/output/syslogtest
+----
 
 Refer to your syslog documentation to configure the syslog daemon to forward syslog messages to the stream; some examples are:
 
@@ -340,6 +371,7 @@ This will create the default TCP source and send data read from it to the `tcpte
 
 TCP is a streaming protocol and some mechanism is needed to frame messages on the wire. A number of decoders are available, the default being 'CRLF' which is compatible with Telnet.
 
+[source,bash]
 ----
 $ telnet localhost 1234
 Trying ::1...
@@ -354,7 +386,10 @@ Connection closed.
 
 See if the data ended up in the file
 
-     $ cat /tmp/xd/output/tcptest
+[source,bash]
+----
+$ cat /tmp/xd/output/tcptest
+----
 
 ==== TCP with options
 
@@ -397,67 +432,115 @@ The echo options `-en` allows echo to interpret escape sequences and not send a 
 
 This uses the default (CRLF) decoder and port 1234; send some data
 
-     $ echo -en 'foobar\r\n' | netcat localhost 1234
+[source,bash]
+----
+$ echo -en 'foobar\r\n' | netcat localhost 1234
+----
 
 See if the data ended up in the file
 
-     $ cat /tmp/xd/output/tcptest
+[source,bash]
+----
+$ cat /tmp/xd/output/tcptest
+----
 
 .LF Decoder
 
      xd:> stream create --name tcptest2 --definition "tcp --decoder=LF --port=1235 | file" --deploy
 
-     $ echo -en 'foobar\n' | netcat localhost 1235
+[source,bash]
+----
+$ echo -en 'foobar\n' | netcat localhost 1235
+----
 
-     $ cat /tmp/xd/output/tcptest2
+[source,bash]
+----
+$ cat /tmp/xd/output/tcptest2
+----
 
 .NULL Decoder
 
      xd:> stream create --name tcptest3 --definition "tcp --decoder=NULL --port=1236 | file" --deploy
 
-     $ echo -en 'foobar\x00' | netcat localhost 1236
+[source,bash]
+----
+$ echo -en 'foobar\x00' | netcat localhost 1236
+----
 
-     $ cat /tmp/xd/output/tcptest3
+[source,bash]
+----
+$ cat /tmp/xd/output/tcptest3
+----
 
 .STXETX Decoder
 
      xd:> stream create --name tcptest4 --definition "tcp --decoder=STXETX --port=1237 | file" --deploy
 
-     $ echo -en '\x02foobar\x03' | netcat localhost 1237
+[source,bash]
+----
+$ echo -en '\x02foobar\x03' | netcat localhost 1237
+----
 
-     $ cat /tmp/xd/output/tcptest4
+[source,bash]
+----
+$ cat /tmp/xd/output/tcptest4
+----
 
 .RAW Decoder
 
      xd:> stream create --name tcptest5 --definition "tcp --decoder=RAW --port=1238 | file" --deploy
 
-     $ echo -n 'foobar' | netcat localhost 1238
+[source,bash]
+----
+$ echo -n 'foobar' | netcat localhost 1238
+----
 
-     $ cat /tmp/xd/output/tcptest5
+[source,bash]
+----
+$ cat /tmp/xd/output/tcptest5
+----
 
 .L1 Decoder
 
      xd:> stream create --name tcptest6 --definition "tcp --decoder=L1 --port=1239 | file" --deploy
 
-     $ echo -en '\x06foobar' | netcat localhost 1239
+[source,bash]
+----
+$ echo -en '\x06foobar' | netcat localhost 1239
+----
 
-     $ cat /tmp/xd/output/tcptest6
+[source,bash]
+----
+$ cat /tmp/xd/output/tcptest6
+----
 
 .L2 Decoder
 
      xd:> stream create --name tcptest7 --definition "tcp --decoder=L2 --port=1240 | file" --deploy
 
-     $ echo -en '\x00\x06foobar' | netcat localhost 1240
+[source,bash]
+----
+$ echo -en '\x00\x06foobar' | netcat localhost 1240
+----
 
-     $ cat /tmp/xd/output/tcptest7
+[source,bash]
+----
+$ cat /tmp/xd/output/tcptest7
+----
 
 .L4 Decoder
 
      xd:> stream create --name tcptest8 --definition "tcp --decoder=L4 --port=1241 | file" --deploy
 
-     $ echo -en '\x00\x00\x00\x06foobar' | netcat localhost 1241
+[source,bash]
+----
+$ echo -en '\x00\x00\x00\x06foobar' | netcat localhost 1241
+----
 
-     $ cat /tmp/xd/output/tcptest8
+[source,bash]
+----
+$ cat /tmp/xd/output/tcptest8
+----
 
 ==== Binary Data Example
 
@@ -465,8 +548,12 @@ See if the data ended up in the file
 
 Note that we configure the `file` sink with `binary=true` so that a newline is not appended.
 
-     $ echo -en '\x08foo\x00bar\x0b' | netcat localhost 1242
+[source,bash]
+----
+$ echo -en '\x08foo\x00bar\x0b' | netcat localhost 1242
+----
 
+[source,bash]
 ----
 $ hexdump -C /tmp/xd/output/tcptest9
 00000000  66 6f 6f 00 62 61 72 0b                           |foo.bar.|
@@ -589,6 +676,7 @@ To destroy the stream, enter the following at the shell prompt:
 
 To test the above stream, you can use something like the following...
 
+[source,java]
 ----
 public class Broker {
 
@@ -664,4 +752,7 @@ There isn't actually a source named "stdin" but it is easy to capture stdin by r
 
 You can then capture the output from commands using the `netcat` command:
 
-     $ cat mylog.txt | netcat localhost 1234
+[source,bash]
+----
+$ cat mylog.txt | netcat localhost 1234
+----

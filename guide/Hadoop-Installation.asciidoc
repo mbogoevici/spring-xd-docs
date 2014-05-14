@@ -10,23 +10,32 @@ First, http://archive.apache.org/dist/hadoop/common/hadoop-2.2.0/[download an in
 
 If you have `wget` available on your system, you can also execute:
 
-  $ wget http://archive.apache.org/dist/hadoop/common/hadoop-2.2.0/hadoop-2.2.0.tar.gz
+[source,bash]
+----
+$ wget http://archive.apache.org/dist/hadoop/common/hadoop-2.2.0/hadoop-2.2.0.tar.gz
+----
 
 Unpack the distribution with:
 
-  $ tar xzf hadoop-2.2.0.tar.gz
+[source,bash]
+----
+$ tar xzf hadoop-2.2.0.tar.gz
+----
 
 Change into the directory and have a look around
 
-  $ cd hadoop-2.2.0
-  $ ls
-  $ bin/hadoop
-  Usage: hadoop [--config confdir] COMMAND
-         where COMMAND is one of:
-    fs                   run a generic filesystem user client
-    version              print the version
-    jar <jar>            run a jar file
-    ...
+[source,bash]
+----
+$ cd hadoop-2.2.0
+$ ls
+$ bin/hadoop
+Usage: hadoop [--config confdir] COMMAND
+       where COMMAND is one of:
+  fs                   run a generic filesystem user client
+  version              print the version
+  jar <jar>            run a jar file
+  ...
+----
 
 The `bin` directory contains the start and stop scripts as well as the `hadoop` and `hdfs` scripts which allow us to interact with _Hadoop_ from the command line.
 
@@ -34,9 +43,12 @@ The `bin` directory contains the start and stop scripts as well as the `hadoop` 
 
 Make sure that you set `JAVA_HOME` in the `etc/hadoop/hadoop-env.sh` script, or you will get an error when you start _Hadoop_. For example:
 
-  # The java implementation to use.  Required.
-  # export JAVA_HOME=/usr/lib/j2sdk1.5-sun
-  export JAVA_HOME=/usr/lib/jdk1.6.0_45
+[source,bash]
+----
+# The java implementation to use.  Required.
+# export JAVA_HOME=/usr/lib/j2sdk1.5-sun
+export JAVA_HOME=/usr/lib/jdk1.6.0_45
+----
 
 TIP: When using _Mac OS X_ you can determine the _Java_ home directory by executing `$ /usr/libexec/java_home -v 1.6`
 
@@ -48,23 +60,32 @@ IMPORTANT: When using _MAC OS X_ (Other systems possible also) you may still enc
 
 As described in the installation guide, you also need to set up http://en.wikipedia.org/wiki/Secure_Shell[SSH] login to `localhost` without a passphrase. On Linux, you may need to install the `ssh` package and ensure the `sshd` daemon is running. On Mac OS X, ssh is already installed but the `sshd` daemon isn't usually running. To start it, you need to enable "Remote Login" in the "Sharing" section of the control panel. Then you can carry on and setup SSH keys as described in the installation guide:
 
-    $ ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa 
-    $ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+[source,bash]
+----
+$ ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa 
+$ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+----
 
 Make sure you can log in at the command line using `ssh localhost` and `ssh 0.0.0.0` before trying to start _Hadoop_:
 
-  $ ssh localhost
-  Last login: Thu May  1 15:02:32 2014 from localhost
-
-  $ ssh 0.0.0.0
-  Last login: Thu May  1 15:06:02 2014 from localhost
+[source,bash]
+----
+$ ssh localhost
+Last login: Thu May  1 15:02:32 2014 from localhost
+...
+$ ssh 0.0.0.0
+Last login: Thu May  1 15:06:02 2014 from localhost
+----
 
 You also need to decide where in your local filesystem you want _Hadoop_ to store its data. Let's say you decide to use `/data`.
 
 First create the directory and make sure it is writeable:
 
-  $ mkdir /data
-  $ chmod 777 /data
+[source,bash]
+----
+$ mkdir /data
+$ chmod 777 /data
+----
 
 Now edit `etc/hadoop/core-site.xml` and add the following property:
 
@@ -77,7 +98,10 @@ Now edit `etc/hadoop/core-site.xml` and add the following property:
 ----
 You're then ready to format the filesystem for use by HDFS
 
-  $ bin/hadoop namenode -format
+[source,bash]
+----
+$ bin/hadoop namenode -format
+----
 
 ==== Setting the Namenode Port
 
@@ -142,6 +166,7 @@ In `etc/hadoop/yarn-site.xml` add these properties:
 
 First we need to set up the environment settings. It's convenient to add these to a file that you can source when you want to work with Hadoop. We create a file called `hadoop-env` and add the following content:
 
+[source,bash]
 ----
 # The directory of the unpacked distribution
 export HADOOP_INSTALL="$HOME/Downloads/hadoop-2.2.0"
@@ -160,17 +185,25 @@ export PATH=$HADOOP_INSTALL/bin:$HADOOP_INSTALL/sbin:$PATH
 
 To use these settings we need to source this script:
 
-  $ source hadoop-env
+[source,bash]
+----
+$ source hadoop-env
+----
 
 You should now finally be ready to run _Hadoop_. Run the following commands 
 
-  $ start-dfs.sh
-  $ start-yarn.sh
-  $ mr-jobhistory-daemon.sh start historyserver
+[source,bash]
+----
+$ start-dfs.sh
+$ start-yarn.sh
+$ mr-jobhistory-daemon.sh start historyserver
+----
 
 You should see six Hadoop Java processes running:
 
-  $ jps
+[source,bash]
+----
+$ jps
   21636 NameNode
   22004 SecondaryNameNode
   22360 NodeManager
@@ -178,18 +211,21 @@ You should see six Hadoop Java processes running:
   21808 DataNode
   22159 ResourceManager
   22471 Jps
-
+----
 Try a few commands with `hdfs dfs` to make sure the basic system works
 
-  $ hdfs dfs -ls /
-  Found 1 items
-  drwxrwx---   - trisberg supergroup          0 2014-05-01 15:31 /tmp
-  
-  $ hdfs dfs -mkdir /xd
-  $ bin/hadoop dfs -ls /
-  Found 2 items
-  drwxrwx---   - trisberg supergroup          0 2014-05-01 15:31 /tmp
-  drwxr-xr-x   - trisberg supergroup          0 2014-05-01 15:34 /xd
+[source,bash]
+----
+$ hdfs dfs -ls /
+Found 1 items
+drwxrwx---   - trisberg supergroup          0 2014-05-01 15:31 /tmp
+
+$ hdfs dfs -mkdir /xd
+$ bin/hadoop dfs -ls /
+Found 2 items
+drwxrwx---   - trisberg supergroup          0 2014-05-01 15:31 /tmp
+drwxr-xr-x   - trisberg supergroup          0 2014-05-01 15:34 /xd
+----
   
 Lastly, you can also browse the web interface for _NameNode_ and _ResourceManager_ at:
 

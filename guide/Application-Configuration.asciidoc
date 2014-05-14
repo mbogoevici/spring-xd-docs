@@ -20,6 +20,7 @@ The location and name of this resourse can be changed by using the environment v
 
 It is common to keep your server configuration separate form the installation directory of XD itself.  To do this, here is an example environment variable setting 
 
+[source,bash]
 ----
 export XD_CONFIG_LOCATION=file:/xd/config/
 export XD_CONFIG_NAME=region1-servers
@@ -50,6 +51,7 @@ The provided configuration file `servers.yml` located in `$XD_HOME\config` has c
 
 When in distributed mode and you want to use HSQLDB, you need to change the value of `spring.datasource` properties.  As an example, 
 
+[source,yaml]
 ----
 hsql:
  server:
@@ -70,6 +72,7 @@ The properties under `hsql.server` are substituted in the `spring.datasource.url
 
 When in distributed mode and you want to use MySQL, you need to change the value of `spring.datasource.*` properties.  As an example, 
 
+[source,yaml]
 ----
 spring:
  datasource:
@@ -86,6 +89,7 @@ To override these settings set an OS environment variable such as `spring_dataso
 
 When in distributed mode and you want to use PostgreSQL, you need to change the value of `spring.datasource.*` properties.  As an example, 
 
+[source,yaml]
 ----
 spring:
   datasource:
@@ -101,7 +105,7 @@ To override these settings set an OS environment variable such as `spring_dataso
 
 If you want to use Redis for analytics or data transport you should set the host and port of the Redis server.
 
-
+[source,yaml]
 ----
 spring:
   redis:
@@ -115,6 +119,7 @@ To override these settings set an OS environment variable such as `spring_redis_
 
 If you want to use RabbitMQ as a data transport use the following configuration setting
 
+[source,yaml]
 ----
 spring:
   rabbitmq:
@@ -130,6 +135,7 @@ To override these settings set an OS environment variable such as `spring_rabbit
 
 In addition, the following default settings for the rabbit message bus can be modified in `servers.yml`...
 
+[source,yaml]
 ----
   messagebus:
     rabbit:
@@ -193,6 +199,7 @@ The XD servers provide general http://docs.spring.io/spring-boot/docs/current-SN
 
 By default the management and health endpoints are available on port 9393.  To change the value of the port use the following configuration setting.
 
+[source,yaml]
 ----
 management:
   port: 9876
@@ -239,6 +246,8 @@ Values in `XD_MODULE_CONFIG_LOCATION\<type>\<name>\<name>.properties` can be pro
 The `modules.yml` file can be used to specify the values of keys that should be shared across different modules.  For example, it is common to use the same twitter developer credentials in both the twittersearch and twitterstream modules.  To avoid repeating the same credentials in two property files, you can use the following setup.
 
 `modules.yml` contains
+
+[source,yaml]
 ----
 sharedConsumerKey: alsdjfqwopieur
 sharedConsumerSecret: pqwieouralsdjkqwpo
@@ -247,6 +256,7 @@ sharedAccessTokenSecret: ewoqirudhdsldke
 ----
 
 and `XD_MODULE_CONFIG_LOCATION\source\twitterstream\twitterstream.properties` contains
+
 ----
 consumerKey=${sharedConsumerKey}
 consumerSecret=${sharedConsumerSecret}

@@ -70,8 +70,11 @@ We've used the `http` source again, so run the following command to send a messa
 
 The `file` sink uses the stream name as the default name for the file it creates, and places the file in the `/tmp/xd/output/` directory.
 
-  $ less /tmp/xd/output/myfilestream
-  hello
+[source,bash]
+----
+$ less /tmp/xd/output/myfilestream
+hello
+----
 
 You can cutomize the behavior and specify the `name` and `dir` options of the output file. For example
 
@@ -251,8 +254,11 @@ To create a stream using a `jdbc` sink relying on all defaults you would use a c
 This will insert the time messages into a 'payload' column in a table named 'mydata'. Since the default is using the XD batch metadata HSQLDB database we can connect to this database instance from an external tool. After we let the stream run for a little while, we can connect to the database and look at the data stored in the database.
 
 You can query the database with your favorite SQL tool using the following database URL: `jdbc:hsqldb:hsql://localhost:9101/xdjob` with `sa` as the user name and a blank password. You can also use the HSQL provided SQL Tool (download from link:http://hsqldb.org/[HSQLDB]) to run a quick query from the command line:
- 
-  $ java -cp ~/Downloads/hsqldb-2.3.0/hsqldb/lib/sqltool.jar org.hsqldb.cmdline.SqlTool --inlineRc url=jdbc:hsqldb:hsql://localhost:9101/xdjob,user=sa,password= --sql "select payload from mydata;"
+
+[source,bash]
+----
+$ java -cp ~/Downloads/hsqldb-2.3.0/hsqldb/lib/sqltool.jar org.hsqldb.cmdline.SqlTool --inlineRc url=jdbc:hsqldb:hsql://localhost:9101/xdjob,user=sa,password= --sql "select payload from mydata;"
+----
 
 This should result in something similar to the following output:
 
@@ -298,7 +304,10 @@ The following examples use `netcat` (linux) to receive the data; the equivalent 
 
 First, start a netcat to receive the data, and background it
 
-     $ netcat -l 1234 &
+[source,bash]
+----
+$ netcat -l 1234 &
+----
 
 Now, configure a stream
 
@@ -361,7 +370,10 @@ L4:: data preceded by a four byte (signed) length field (up to 2^31^-1 bytes)
 
 Start netcat in the background and redirect the output to a file `foo`
 
-     $ netcat -l 1235 > foo &
+[source,bash]
+----
+$ netcat -l 1235 > foo &
+----
 
 Create the stream, using the `L4` encoder
 
@@ -373,6 +385,7 @@ Destroy the stream
 
 Check the output
 
+[source,bash]
 ----
 $ hexdump -C foo
 00000000  00 00 00 1c 54 68 75 20  4d 61 79 20 33 30 20 31  |....Thu May 30 1|

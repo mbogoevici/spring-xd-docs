@@ -100,6 +100,7 @@ The above reflects the initial state of XD. Nothing is deployed yet and there ar
 
 Start the XD Shell in a new terminal session and create a stream:
 
+[source,bash]
 ----
 $ shell/bin/xd-shell
  _____                           __   _______
