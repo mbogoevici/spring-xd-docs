@@ -94,6 +94,13 @@ image::images/spring-xd-admin-ui-executions.png[List Job Executions, width=500]
 .Job Execution Details
 image::images/spring-xd-admin-ui-jobs-job-execution-details.png[Job Execution Details, width=500]
 
+The same screen also contains a list of the executed steps:
+
+.Job Execution Details - Steps
+image::images/spring-xd-admin-ui-jobs-job-execution-details-steps.png[Job Execution Details - Steps, width=500]
+
+From there you can drill deeper into the _Step Execution Details_.
+
 ===== Step execution details
 
 .Step Execution Details
