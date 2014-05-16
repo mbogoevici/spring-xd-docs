@@ -1,28 +1,41 @@
 === Introduction
 
-Spring XD provides a browser-based GUI which currently allows you to perform Batch Job related tasks. Upon starting Spring XD, the Admin UI is available at:
+Spring XD provides a browser-based GUI which currently has 2 sections allowing you to
+
+* perform Batch Job related tasks
+* deploy/undeploy Stream Definitions
+
+Upon starting Spring XD, the Admin UI is available at:
 
 http://localhost:9393/admin-ui
 
 .The Spring XD Admin UI
 image::images/spring-xd-admin-ui-about.png[The Spring XD Admin UI, width=500]
 
+=== Streams
 
-The admin UI currently has four main tabs for *Batch Jobs*
+The _Streams_ section of the admin UI provides the _Definitions_ tab that provides a listing of Stream definitions. There you have the option to *deploy* or *undeploy* those streams.
+
+.List of Stream Definitions
+image::images/spring-xd-admin-ui-streams-list-definitions.png[List of Stream Definitions, width=500]
+
+=== Jobs
+
+The _Jobs_ section of the admin UI currently has four main tabs for *Batch Jobs*
 
 * Modules
 * Definitions
 * Deployments
 * Executions
 
-=== List available batch job modules
+==== List available batch job modules
 
 This page lists the available batch job modules and more details (such as the job module options and the module XML configuration file).
 
 .List Job Modules
 image::images/spring-xd-admin-ui-list-modules.png[List Job Modules, width=500]
 
-=== List job definitions
+==== List job definitions
 
 This page lists the XD batch job definitions and provides actions to *deploy* or *un-deploy* those jobs.
 
@@ -30,7 +43,7 @@ This page lists the XD batch job definitions and provides actions to *deploy* or
 image::images/spring-xd-admin-ui-definitions.png[List Job Definitions, width=500]
 
 
-=== List job deployments
+==== List job deployments
 
 This page lists all the deployed jobs and provides option to *launch* the deployed job.
 
@@ -38,7 +51,7 @@ This page lists all the deployed jobs and provides option to *launch* the deploy
 image::images/spring-xd-admin-ui-deployments.png[List Job Deployments, width=500]
 
 
-==== Launching a batch Job
+===== Launching a batch Job
 
 Once the job is deployed, they can be launched through the Admin UI as well. Navigate to the *Deployments* tab. Select the job you want to launch and press `Launch`. The following modal dialog should appear:
 
@@ -52,7 +65,7 @@ Using this screen, you can define one or more job parameters. Job parameters can
 * Long
 * Double
 
-=== List job executions
+==== List job executions
 
 This page lists the batch job executions and provides option to *restart* if the batch job is restartable and stopped/failed.
 
