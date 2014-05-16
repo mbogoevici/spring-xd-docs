@@ -88,3 +88,6 @@ This page lists the batch job executions and provides option to *restart* if the
 
 .List Job Executions
 image::images/spring-xd-admin-ui-executions.png[List Job Executions, width=500]
+
+===== 
+
