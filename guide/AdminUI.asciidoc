@@ -106,10 +106,15 @@ From there you can drill deeper into the _Step Execution Details_.
 .Step Execution Details
 image::images/spring-xd-admin-ui-jobs-step-execution-details.png[Step Execution Details, width=500]
 
-The Step Execution details screen also provides a complete list of all Step Execution Context key/value pairs. For example, the _Spring for Apache Hadoop_ steps provides exhaustive detail information including a link back to the _Job History UI_ of the Hadoop Cluster.
+The Step Execution details screen also provides a complete list of all Step Execution Context key/value pairs. For example, the _Spring for Apache Hadoop_ steps provides exhaustive detail information.
 
 .Step Execution Context
 image::images/spring-xd-admin-ui-jobs-step-execution-context.png[Step Execution Context, width=500]
+
+This includes a link back to the _Job History UI_ of the Hadoop Cluster.
+
+.Job History UI
+image::images/spring-xd-admin-ui-jobs-step-execution-context-hadoop-link.png[Job History UI, width=500]
 
 ===== Step execution history
 
