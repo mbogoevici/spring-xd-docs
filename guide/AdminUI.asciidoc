@@ -89,5 +89,22 @@ This page lists the batch job executions and provides option to *restart* if the
 .List Job Executions
 image::images/spring-xd-admin-ui-executions.png[List Job Executions, width=500]
 
-===== 
+===== Job execution details
 
+.Job Execution Details
+image::images/spring-xd-admin-ui-jobs-job-execution-details.png[Job Execution Details, width=500]
+
+===== Step execution details
+
+.Step Execution Details
+image::images/spring-xd-admin-ui-jobs-step-execution-details.png[Step Execution Details, width=500]
+
+The Step Execution details screen also provides a complete list of all Step Execution Context key/value pairs. For example, the _Spring for Apache Hadoop_ steps provides exhaustive detail information including a link back to the _Job History UI_ of the Hadoop Cluster.
+
+.Step Execution Context
+image::images/spring-xd-admin-ui-jobs-step-execution-context.png[Step Execution Context, width=500]
+
+===== Step execution history
+
+.Step Execution History
+image::images/spring-xd-admin-ui-jobs-step-execution-history.png[Step Execution History, width=500]
