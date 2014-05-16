@@ -28,12 +28,24 @@ The _Jobs_ section of the admin UI currently has four main tabs for *Batch Jobs*
 * Deployments
 * Executions
 
-==== List available batch job modules
+==== Modules
+
+===== List available batch job modules
 
 This page lists the available batch job modules and more details (such as the job module options and the module XML configuration file).
 
 .List Job Modules
 image::images/spring-xd-admin-ui-list-modules.png[List Job Modules, width=500]
+
+===== Create a Job Definition from a selected Job Module
+
+.Create a Job Definition
+image::images/spring-xd-admin-ui-jobs-create-job-definition.png[Create a Job Definition, width=500]
+
+===== View Job Module Details
+
+.View Job Module Details
+image::images/spring-xd-admin-ui-jobs-view-module-details.png[View Job Module Details, width=500]
 
 ==== List job definitions
 
