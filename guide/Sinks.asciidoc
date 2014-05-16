@@ -501,7 +501,7 @@ We want this to be cached using the stock symbol as the key. The stream definiti
 
 The keyExpression is a SpEL expression that depends on the payload type. In this case, _com.gemstone.org.json.JSONObject. JSONObject_ which  provides the _getField_ method. To run this example:
 
-    xd:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')"
+    xd:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')" --deploy
     
     xd:> http post --target http://localhost:9090 --data {"symbol":"FAKE","price":73}
 
