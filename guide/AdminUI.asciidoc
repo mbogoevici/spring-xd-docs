@@ -77,6 +77,11 @@ Using this screen, you can define one or more job parameters. Job parameters can
 * Long
 * Double
 
+===== Schedule Batch Job Execution
+
+.Schedule a Batch Job
+image::images/spring-xd-admin-ui-schedule-job.png[Schedule a Batch Job, width=500]
+
 ==== List job executions
 
 This page lists the batch job executions and provides option to *restart* if the batch job is restartable and stopped/failed.
