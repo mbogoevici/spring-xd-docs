@@ -597,8 +597,8 @@ xd:>http post --data "b"
 In the server log you should see the following output:
 
 ----
-11:54:19,868  WARN ThreadPoolTaskScheduler-1 logger.f:145 - a-foo
-11:54:25,669  WARN ThreadPoolTaskScheduler-1 logger.b:145 - b-bar
+11:54:19,868  WARN ThreadPoolTaskScheduler-1 sink.f:145 - a-foo
+11:54:25,669  WARN ThreadPoolTaskScheduler-1 sink.b:145 - b-bar
 ----
 
 For more information, please also consult the Spring Integration Reference manual: http://static.springsource.org/spring-integration/reference/html/messaging-routing-chapter.html#router-namespace particularly the section "Routers and the Spring Expression Language (SpEL)".	
@@ -646,9 +646,9 @@ In the server log you should see the following output:
 
 ----
 Groovy processing payload 'a'
-11:29:27,274  WARN ThreadPoolTaskScheduler-1 logger.f:145 - a-foo
+11:29:27,274  WARN ThreadPoolTaskScheduler-1 sink.f:145 - a-foo
 Groovy processing payload 'b'
-11:34:09,797  WARN ThreadPoolTaskScheduler-1 logger.b:145 - b-bar
+11:34:09,797  WARN ThreadPoolTaskScheduler-1 sink.b:145 - b-bar
 ----
 
 [NOTE]
