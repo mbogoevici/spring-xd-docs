@@ -1,6 +1,6 @@
 === Introduction
 Each available module can expose metadata about the options it accepts. This is useful to enhance the user experience, and is the foundation to advanced features like contextual help and code completion.
-
+the
 For example, provided that the file source module has been enriched with options metadata (and it has), one can use the `module info` command in the shell to get information about the module:
 
 ----
@@ -80,11 +80,6 @@ then in `foo.xml`:
 <!-- this is incorrect/not needed -->
 <feature the-bar="${bar:5}" />
 ----
-
-The only case(s) where using a default in the `${}` construct is necessary are
-
-. when the default is computed from a value known only at deployment time. This is typically the case of `${xd.stream.name}`
-. when the default should be sourced from some configuration file. There will then typically be a `PropertyPlaceholderConfigurer` defined in the module and the default will read like `${<option>:<key-in-thefile>}`
 
 ==== Exposing the option type
 Lastly, one can document the option type using a construct like
