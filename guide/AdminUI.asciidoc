@@ -30,7 +30,7 @@ The _Jobs_ section of the admin UI currently has four main tabs for *Batch Jobs*
 
 ==== Modules
 
-*Modules* encapsulate a unit of work into a reusable component. Within the XD runtime environment Modules allow users to create definitions for link:Streams[Streams] as well as link:Batch-Jobs[Batch Jobs]. The *Modules* tab within the *Jobs* section allows users to create Batch Job definitions. In order to learn more about *Modules*, please see the chapter on link:Modules[Modules].
+_Modules_ encapsulate a unit of work into a reusable component. Within the XD runtime environment Modules allow users to create definitions for link:Streams[Streams] as well as link:Batch-Jobs[Batch Jobs]. The _Modules_ tab within the _Jobs_ section allows users to create _Batch Job_ definitions. In order to learn more about _Modules_, please see the chapter on link:Modules[Modules].
 
 ===== List available batch job modules
 
