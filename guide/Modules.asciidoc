@@ -15,7 +15,6 @@ A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/mai
 
 * name - the name of the component, normally a single word representing the purpose of the module. Examples are _file_, _http_, _syslog_.
 * type - the module type, current XD module types include _source_, _sink_, and _processor_
-* instance id - This represents a named instance of a module with a given name and type, with a specific configuration.
 
 ==== Modules and Spring
 At the core, a module is any component that may be implemented using a Spring application context. In this respect, the concept may be extended for purposes other than data ingestion. The types mentioned above (source, processor,sink) are specific to XD and constructing streams. But other module types are envisioned.
@@ -30,7 +29,7 @@ For example, here is part of the Spring configuration for a _twittersearch_ sour
   ...
   <int:inbound-channel-adapter id="results" auto-startup="false"
     ref="twitterSearchMessageSource" method="getTweets">
-    <int:poller fixed-delay="${fixedDelay:5000}"/>
+    <int:poller fixed-delay="${fixedDelay}"/>
   </int:inbound-channel-adapter>
 
   <bean id="twitterSearchMessageSource"
@@ -40,8 +39,8 @@ For example, here is part of the Spring configuration for a _twittersearch_ sour
   </bean>
 
   <bean id="oauth2Template" class="org.springframework.social.oauth2.OAuth2Template">
-    <constructor-arg index="0" value="${consumerKey:${twitter.oauth.consumerKey}}"/>
-    <constructor-arg index="1" value="${consumerSecret:${twitter.oauth.consumerSecret}}"/>
+    <constructor-arg index="0" value="${consumerKey}"/>
+    <constructor-arg index="1" value="${consumerSecret}"/>
     <constructor-arg index="2" value="http://notused"/>
     <constructor-arg index="3" value="http://notused"/>
     <constructor-arg index="4" value="https://api.twitter.com/oauth2/token"/>
@@ -49,15 +48,13 @@ For example, here is part of the Spring configuration for a _twittersearch_ sour
 </beans>
 ----
 
-Note the property placeholders for _query_, _fixedDelay_, _consumerKey_ and _consumerSecret_. The _query_ property defines no default value, so it is a required attribute for this module. _fixedDelay_ defaults to 5000, so it is an optional attribute. Note the defaults for _consumerKey_ and _consumerSecret_. The property names prefixed by _twitter_ are globally defined for the entire XD system in _config/twitter.properties_. So if the user does not specify a _consumerKey_ or _consumerSecret_ when creating the stream, XD's twitter configuration will be used instead.
-
-The XD server will substitute values for all of these properties as configured for each module instance.  For example, we can create two streams each creating an instance of the _twittersearch_ module with a different configuration.
+Note the property placeholders for _query_, _fixedDelay_, _consumerKey_ and _consumerSecret_. The XD server will substitute values for all of these properties as configured for each module instance.  For example, we can create two streams each creating an instance of the _twittersearch_ module with a different configuration.
 
     xd:> stream create --name tweettest --definition "twittersearch --query='java' | file"
 
 or
 
-    xd:> stream create --name tweettest2 --definition "twittersearch --query-'java' --consumerKey='mykey' --consumerSecret='mysecret' | file"
+    xd:> stream create --name tweettest2 --definition "twittersearch --query='spring' --consumerKey='mykey' --consumerSecret='mysecret' | file"
 
 In addition to properties, modules may reference Spring beans which are defined externally such that each module instance may inject a different implementation of a bean. The ability to configure each module instance differently is only possible if each module is created in its own application context. The module may be configured with a parent context, but this should be done with care. In the simplest case, the module context is completely separate. This results in some very useful features, such as being able to create multiple bean instances with the same id, possibly with different configurations. More generally, this allows modules to adhere to the KISS principle.
 
@@ -75,9 +72,52 @@ Modules of type source, processor, and sink are built with Spring Integration an
 
 For example, take a look at the https://github.com/spring-projects/spring-xd/blob/master/modules/source/file/config/file.xml[file source] which simply polls a directory using a file inbound adapter and https://github.com/spring-projects/spring-xd/blob/master/modules/sink/file/config/file.xml[file sink] which appends incoming message payloads to a file using a file outbound adapter. On the surface, there is nothing special about these components. They are plain old Spring XML bean definition files.
 
-Upon closer inspection, you will notice that modules adhere to some important conventions. For one thing, the file name is the module name. Also note the channels named  _input_ and _output_, in keeping with the KISS principle (let us know if you come up with some simpler names). These names are by convention what XD uses to discover a module's input and/or output channels which it wires together to compose streams. Another thing you will observe is the use of property placeholders with sensible defaults where possible.  For example, the file source requires a directory. An appropriate strategy is to define a common root path for XD input files (At the time of this writing it is /tmp/xd/input/. This is subject to change, but illustrates the point). An instance of this module may specify the directory by providing _name_ property. If not provided, it will default to the stream name, which is contained in the _xd.stream.name_ property defined by the XD runtime. By convention, XD defined properties are prefixed with _xd_
+Upon closer inspection, you will notice that modules adhere to some important conventions. For one thing, the file name is the module name. Also note the channels named  _input_ and _output_, in keeping with the KISS principle (let us know if you come up with some simpler names). These names are by convention what XD uses to discover a module's input and/or output channels which it wires together to compose streams.
 
-    directory="/tmp/xd/input/${name:${xd.stream.name}}"
+Another thing you will observe is the use of property placeholders with sensible defaults where possible.  For example, the file source requires a directory. An appropriate strategy is to define a common root path for XD input files (At the time of this writing it is /tmp/xd/input/. This is subject to change, but illustrates the point). An instance of this module may specify the directory by providing _name_ property. If not provided, it will default to the stream name, which is contained in the `xd.stream.name` property defined by the XD runtime. By convention, XD defined properties are prefixed with _xd_. This can be seen when using the `module info` command:
+
+----
+xd:>module info --name sink:file
+Information about sink module 'file':
+
+  Option Name  Description                                           Default           Type
+  -----------  ----------------------------------------------------- ---------------   --------
+  binary       if false, will append a newline character at the end  false             boolean
+  charset      the charset to use when writing a String payload      UTF-8             String
+  dir          the directory in which files will be created          /tmp/xd/output/   String
+  mode         what to do if the file already exists                 APPEND            Mode
+  name         filename pattern to use                               ${xd.stream.name} String
+  suffix       filename extension to use                             <none>            String
+  inputType    how this module should interpret messages it consumes <none>            MimeType
+----
+
+==== Placeholders available to all modules
+Below is the list of all available `${xd.xxx}` keys that module authors may use in their declaration.
+
+[NOTE]
+.Using placeholders in stream definitions
+====
+One can also use the `${xd.xxx}` notation directly inside the DSL definition of a stream or a job. For example:
+----
+xd:>stream create foo --definition "http | filter --expression=\"'${xd.stream.name}'\" | log"
+----
+will only let messages that read "foo" pass through.
+====
+
+[options=header]
+|======================
+|Placeholder             |Context           |Meaning         
+|`${xd.stream.name}`     |streams           |the name of the stream the module lives in    
+|`${xd.job.name}`        |jobs              |the name of the job the module lives in    
+|`${xd.module.name}`     |streams, jobs     |the technical name of the module    
+|`${xd.module.type}`     |streams, jobs     |the type of the module    
+|`${xd.module.index}`    |streams           |the 0-based position of the module inside the stream
+|`${xd.container.id}`    |streams, jobs     |the generated unique id of the container the module is deployed in
+|`${xd.container.host}`  |streams, jobs     |the hostname of the container the module is deployed in
+|`${xd.container.pid}`   |streams, jobs     |the process id of the container the module is deployed in
+|`${xd.container.ip}`    |streams, jobs     |the IP address of the container the module is deployed in
+|`${xd.container.<foo>}` |streams, jobs     |the value of the custom attribute `<foo>` for the container
+|======================
 
 === Registering a Module
 
