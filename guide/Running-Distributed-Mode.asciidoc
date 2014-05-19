@@ -50,7 +50,7 @@ Usage:
 * *analytics* - The data store that will be used to store the analytics data. The default is *redis*
 * *help* - Displays help for the command args.  Help information may be accessed with a -? or -h.  
 * *httpPort* - The http port for the REST API server.  Defaults to 9393.
-* *mgmtPort* - The port for the management server.  Defaults to 9393.
+* *mgmtPort* - The port for the management server.  Defaults to the admin server port.
 
 ===== xd-container command line args:
 * *analytics* - How to persist analytics such as counters and gauges. The default is *redis* 
@@ -259,7 +259,7 @@ To specify the distribution to use for Hadoop client connections,
 [source,bash]
 ----
 xd/bin>$ ./xd-shell --hadoopDistro <distribution> 
-xd/bin>$ ./xd-admin --hadoopDistro <distribution> 
+xd/bin>$ ./xd-admin
 xd/bin>$ ./xd-container --hadoopDistro <distribution> 
 ----
 
