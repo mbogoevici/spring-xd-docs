@@ -10,7 +10,7 @@ The XD distributed runtime architecture consists of the following distributed co
 
 * A Message Broker - Used for data transport. XD data transport is designed to be pluggable. Currently XD supports Rabbit MQ and Redis for messaging during stream and job processing. A production installation must configure one of these transport options. Rabbit MQ is recommended as it is considered the more reliable of the two. In either case, a separate server must be running to provide the messaging middleware.
 
-* Analytics Repository - XD currently uses Redis to store the counters and gauges provided link:Analytics#analytics[Analytics]) 
+* Analytics Repository - XD currently uses Redis to store the counters and gauges provided link:Analytics#analytics[Analytics]
 
 In addition, XD  provides a Command Line Interface (CLI), XD Shell as well as a web application, XD-UI to interact with the XD runtime.
 
