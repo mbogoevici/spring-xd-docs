@@ -29,7 +29,7 @@ image::images/xd-cluster.png[Spring XD and ZK Ensemble, width=500]
 
 Assuming more than one Admin instance is running, Each instance requests leadership at start up. If there is already a designated leader, the instance will watch the _xd/admin_ node to be notified if the Leader goes away. The instance designated as the "Leader", using the Leader Selector recipe provided by http://curator.apache.org[Curator], a ZooKeeper client library that implements some common patterns. Curator also provides some Listener callback interfaces that the client can register on a node. The AdminServer creates the top level nodes for xd:
 
-* */xd/admin* - children are ephemeral nodes for each available Admin instance and used for Leader Selector 
+* */xd/admins* - children are ephemeral nodes for each available Admin instance and used for Leader Selector 
 * */xd/containers* - children are ephemeral nodes containing runtime attributes for each available container
 * */xd/streams* - children are persistent nodes containing the definition for each stream, however the leaf nodes for a deployed stream, at the module level, are ephemeral nodes added by the container to which the module is deployed. 
 * */xd/jobs* - children are persistent nodes containing the definition for each job, however the leaf node for a deployed job is an ephemeral node added by the container to which the job is deployed.
