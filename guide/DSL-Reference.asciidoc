@@ -84,13 +84,13 @@ Those three components (shell, XD parser and SpEL) have rules about how they han
 [NOTE]
 .It's not always that complicated
 ====
-This section focuses on the most complicated cases, when all 3 layers are involved. Of course, if you don't use the XD shell (for example if you're using the REST API directly), or if the module options you're dealing with are not SpEL expressions, then escaping rules can be much simpler
+This section focuses on the most complicated cases, when all 3 layers are involved. Of course, if you don't use the XD shell (for example if you're using the REST API directly) or if module option values are not SpEL expressions, then escaping rules can be much simpler
 ====
 
 ==== Spring Shell
 Arguably, the most complex component when it comes to quotes is the shell. The rules can be laid out quite simply, though:
 
-* a shell command is made of keys (`--foo`) and corresponding values. There is a special, no-key mapping though, see below
+* a shell command is made of keys (`--foo`) and corresponding values. There is a special, key-less mapping though, see below
 * a value can not normally contain spaces, as space is the default delimiter for commands
 * spaces can be added though, by surrounding the value with quotes (only double quotes at the time of writing)
 * if surrounded with quotes, a value can embed a literal quote by prefixing it with a backslash (`\`)

@@ -11,16 +11,17 @@ link:Application-Configuration[Application Configuration] +
 link:Architecture[Architecture] +
 link:XD-Distributed-Runtime[XD Distributed Runtime] +
 link:Extending-XD[Extending Spring XD] +
+link:Shell[Interactive Shell] +
 link:Streams[Streams] +
 link:Modules[Modules] +
 link:Sources[Sources] +
 link:Processors[Processors] +
+link:Analytics[Analytics] +
 link:Sinks[Sinks] +
 link:Taps[Taps] +
 link:Type-Conversion[Type Conversion] +
 link:Monitoring-and-Management[Monitoring and Management] +
 link:Batch-Jobs[Batch Jobs] +
-link:Analytics[Analytics] +
 link:DSL-Reference[DSL Reference] +
 link:Tuples[Tuples] +
 link:Samples[Samples] +
