@@ -21,9 +21,11 @@ When starting admin, container or singlenode server, the command-line option `--
 
 For instance, once XD admin is started on localhost and the management port set to use the admin port (9393)
 ----
-http://localhost:9393/health
-http://localhost:9393/env
-http://localhost:9393/beans etc.,
+http://localhost:9393/management/health
+http://localhost:9393/management/env
+http://localhost:9393/management/beans
+
+etc..
 ----
 
 ==== To disable boot endpoints over HTTP
