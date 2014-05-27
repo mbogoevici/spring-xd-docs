@@ -525,6 +525,8 @@ You should see a message on STDOUT for the process running the GemFire server li
 
     INFO [LoggingCacheListener] - updated entry FAKE
 
+NOTE: In order to use locators you must add the `use-locator` to the active profile via server.yml or the spring.profiles_active environment variable.   
+
 [[splunk-server]]
 === Splunk Server
 A http://www.splunk.com/[Splunk] sink that writes data to a TCP Data Input type for Splunk. 
