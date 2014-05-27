@@ -138,10 +138,11 @@ http --outputType=   http --port=
 
 Entering the port number and also the pipel `|` symbol and hitting tab will show completions for candidate processor and sink modules.  The same process of tab completion for module options applies to each module in the chain.
 
+==== Executing a script
+You can execute a script by either passing in the `--cmdfile` argument when starting the shell or by executing the `script` command inside the shell.  When using scripts it is common to add comments using either `//` or `;` characters at the start of the line for one line comments or use `/*` and `*/` for multiline comments
 
-
-
-
+==== Single quotes, Double quotes, Escaping
+There are often three layers of parsing when passing entering commands to the shell.  The shell parses the command to recognize `--` options, inside the body of a stream/job definition the values are parsed until the first space character, and inside some command options SpEL is used (e.g. router).  Understanding the interaction between these layers can cause some confusion. The DSL Reference section link:DSL-Reference#dsl-quotes-escaping[on quotes and escaping] will help you if you run into any issues.
 
 
 

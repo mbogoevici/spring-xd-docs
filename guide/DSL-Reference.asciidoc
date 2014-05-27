@@ -75,6 +75,7 @@ Labels are especially useful for disambiguating when multiple modules of the sam
 
 Refer to link:Taps#example---using-a-label[this section] of the Taps chapter to see how labels facilitate the creation of taps in these cases where a stream contains ambiguous modules.
 
+[[dsl-quotes-escaping]]
 === Single quotes, Double quotes, Escaping
 
 Spring XD is a complex runtime that involves a lot of systems when you look at the complete picture. There is a *Spring Shell based client* that talks to the admin that is responsible for *parsing*. In turn, modules may themselves rely on embedded languages (like the *Spring Expression Language*) to accomplish their behavior.
