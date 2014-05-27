@@ -260,6 +260,8 @@ The Gemfire CacheListener source has the following options
 
 regionName:: The name of the region for which events are to be monitored *(required, String)*
 cacheEventExpression:: An optional SpEL expression referencing the event. *(default: `newValue`)*
+host:: The host on which the GemFire server is running. *(default: `localhost`)*
+port:: The port on which the GemFire server is running. *(default: `40404`)*
 
 ==== Example
 Use of the gemfire source requires an external process that creates or updates entries in a GemFire region. Such events may trigger an XD process. For example, suppose a sales application creating and updating orders in a replicated GemFire region named `orders` . To trigger an XD stream, the XD container must join the GemFire distributed system and create a replica of the region, to which a cache listener is bound via the GemFire inbound channel adapter.
