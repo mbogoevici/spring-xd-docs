@@ -251,7 +251,7 @@ partitionPath:: This option lets you specify one or more paths that will be used
  * hash (works well with all data types)
    - specify function plus field name and number of buckets like: `hash('lastname',10)`
 
-Multiple expressions can be specified by separating them with a '/' like: 'identity('region','R',T(String),10)/year('timestamp')/month('timestamp')'
+Multiple expressions can be specified by separating them with a '/' like: `identity('region','R',T(String),10)/year('timestamp')/month('timestamp')`
 
 
 [[jdbc]]
