@@ -18,7 +18,7 @@ Configuration options are contained in a `spring-xd-<version>-yarn\config\server
 
 Depending on the distribution used you might need to change the `siteYarnAppClasspath` and `siteMapreduceAppClasspath`. We have provided basic settings for the supported distros, you just need to sucomment the ones for the distro you use.
 
-These are the settings used for HAdoop 2.2.0:
+These are the settings used for Hadoop 2.2.0:
 
 [source,yaml]
 ----
