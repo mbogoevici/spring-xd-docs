@@ -243,7 +243,7 @@ partitionPath:: This option lets you specify one or more paths that will be used
  * year, month, day, hour, minute  (works well with fields of datatype long)
    - specify function plus field name like: `year('timestamp')`
  * dateformat (works well with fields of datatype long)
-   - specify function plus field name, a name for the partition and the date format like: `dateFormat('timestamp', 'YEAR-MTH', 'yyyMM')`
+   - specify function plus field name, a name for the partition and the date format like: `dateFormat('timestamp', 'YEAR-MTH', 'yyyyMM')`
  * range (works well with fields of datatype int)
    - specify function plus field name and the upper bounds for each partition bucket like: `range('age',20,50,80,T(Integer).MAX_VALUE)` (Note that you can use SpEL expressions like we just did for the Integer.MAX_VALUE) 
  * identity (works well with fields of datatype string and int)
