@@ -246,9 +246,9 @@ partitionPath:: This option lets you specify one or more paths that will be used
    - specify function plus field name, a name for the partition and the date format like: `dateFormat('timestamp', 'Y-M', 'yyyyMM')`
  * _range_ creates partitions based on a field value and the upper bounds for each bucket that is specified (works well with fields of datatype int and string)
    - specify function plus field name and the upper bounds for each partition bucket like: `range('age',20,50,80,T(Integer).MAX_VALUE)` (Note that you can use SpEL expressions like we just did for the Integer.MAX_VALUE) 
- * identity creates partitions based on the exact value of a field (works well with fields of datatype string, long and int)
+ * _identity_ creates partitions based on the exact value of a field (works well with fields of datatype string, long and int)
    - specify function plus field name, a name for the partition, the type of the field (String or Integer) and the number of values/buckets for the partition like: `identity('region','R',T(String),10)`
- * hash creates partitions based on the hash created from the value of a field divided into a number of buckets that is specified (works well with all data types)
+ * _hash_ creates partitions based on the hash calculated from the value of a field divided into a number of buckets that is specified (works well with all data types)
    - specify function plus field name and number of buckets like: `hash('lastname',10)`
 
 Multiple expressions can be specified by separating them with a '/' like: `identity('region','R',T(String),10)/year('timestamp')/month('timestamp')`
