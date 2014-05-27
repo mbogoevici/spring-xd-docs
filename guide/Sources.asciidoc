@@ -321,6 +321,8 @@ $ cat /tmp/xd/output/cqtest.out
 {"symbol":"FAKE","price":80}
 ----
 
+NOTE: In order to use locators you must add the `use-locator` to the active profile via server.yml or the spring.profiles_active environment variable.   
+
 [[syslog]]
 === Syslog
 
