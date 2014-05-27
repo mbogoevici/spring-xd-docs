@@ -11,12 +11,12 @@ You also need Zookeeper running. If your Hadoop cluster doesn't have Zookeeper i
 Lastly, you need an RDBMs to support batch jobs and JDBC operations.
 
 === Download Spring XD on YARN binaries
-In addition to the regular `spring-xd-<version>-dist.zip` files we also distribute a zip file that includes all you need to deploy on YARN. The name of this zip file is `spring-xd-<version>-yarn.zip`. You can link:http://repo.spring.io/simple/libs-milestone-local/org/springframework/xd/spring-xd/1.0.0.M6/spring-xd-1.0.0.M6-yarn.zip[download zip for the the M6 release] or link:http://repo.spring.io/libs-snapshot/org/springframework/xd/spring-xd/1.0.0.BUILD-SNAPSHOT/[download snapshot builds]. Unzip the downloaded file and you should see a `spring-xd-<version>-yarn` directory.
+In addition to the regular `spring-xd-<version>-dist.zip` files we also distribute a zip file that includes all you need to deploy on YARN. The name of this zip file is `spring-xd-<version>-yarn.zip`. You can link:http://repo.spring.io/simple/libs-milestone-local/org/springframework/xd/spring-xd/1.0.0.M7/spring-xd-1.0.0.M7-yarn.zip[download zip for the the M7 release] or link:http://repo.spring.io/libs-snapshot/org/springframework/xd/spring-xd/1.0.0.BUILD-SNAPSHOT/[download snapshot builds]. Unzip the downloaded file and you should see a `spring-xd-<version>-yarn` directory.
 
 === Configure your deployment
 Configuration options are contained in a `spring-xd-<version>-yarn\config\servers.yml` file. You need to configure the hadoop settings, the transport choice plus redis/rabbit settings, the zookeeper settings and the JDBC datasource properties.
 
-Depending on the distribution used you might need to change the `siteYarnAppClasspath` and `siteMapreduceAppClasspath`. We have provided basic settings for the supported distros, you just need to sucomment the ones for the distro you use.
+Depending on the distribution used you might need to change the `siteYarnAppClasspath` and `siteMapreduceAppClasspath`. We have provided basic settings for the supported distros, you just need to uncomment the ones for the distro you use.
 
 These are the settings used for Hadoop 2.2.0:
 
