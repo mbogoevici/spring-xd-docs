@@ -178,6 +178,23 @@ If we repeat the command very quickly and then wait for the timeout we should be
   -rw-r--r--   3 jvalkealahti supergroup         24 2013-12-18 19:03 /xd/myhdfsstream5/myhdfsstream5-2.txt
   -rw-r--r--   3 jvalkealahti supergroup         18 2013-12-18 19:03 /xd/myhdfsstream5/myhdfsstream5-3.txt
 
+Files can be automatically partitioned using a `partitionPath` expression. If we create a stream with `idleTimeout` and `partitionPath` with simple format `yyyy/MM/dd/HH/mm` we should see writes ending into its own files within every minute boundary.
+
+  xd:>stream create --name myhdfsstream6 --definition "time|hdfs --idleTimeout=10000 --partitionPath=dateFormat('yyyy/MM/dd/HH/mm')" --deploy
+
+Let a stream run for a short period of time and list files.
+
+  xd:>hadoop fs ls --recursive true --dir /xd/myhdfsstream6
+  drwxr-xr-x   - jvalkealahti supergroup          0 2014-05-28 09:42 /xd/myhdfsstream6/2014
+  drwxr-xr-x   - jvalkealahti supergroup          0 2014-05-28 09:42 /xd/myhdfsstream6/2014/05
+  drwxr-xr-x   - jvalkealahti supergroup          0 2014-05-28 09:42 /xd/myhdfsstream6/2014/05/28
+  drwxr-xr-x   - jvalkealahti supergroup          0 2014-05-28 09:45 /xd/myhdfsstream6/2014/05/28/09
+  drwxr-xr-x   - jvalkealahti supergroup          0 2014-05-28 09:43 /xd/myhdfsstream6/2014/05/28/09/42
+  -rw-r--r--   3 jvalkealahti supergroup        140 2014-05-28 09:43 /xd/myhdfsstream6/2014/05/28/09/42/myhdfsstream6-0.txt
+  drwxr-xr-x   - jvalkealahti supergroup          0 2014-05-28 09:44 /xd/myhdfsstream6/2014/05/28/09/43
+  -rw-r--r--   3 jvalkealahti supergroup       1200 2014-05-28 09:44 /xd/myhdfsstream6/2014/05/28/09/43/myhdfsstream6-0.txt
+  drwxr-xr-x   - jvalkealahti supergroup          0 2014-05-28 09:45 /xd/myhdfsstream6/2014/05/28/09/44
+  -rw-r--r--   3 jvalkealahti supergroup       1200 2014-05-28 09:45 /xd/myhdfsstream6/2014/05/28/09/44/myhdfsstream6-0.txt
 
 ==== HDFS with Options
 
@@ -192,6 +209,108 @@ idleTimeout::  Idle timeout in millis when Hadoop file resource is automatically
 inUseSuffix:: Temporary file suffix indicating that file is currently written and in use. *(default: `.tmp`)*
 inUsePrefix:: Temporary file prefix indicating that file is currently written and in use. *(default: `none`)*
 overwrite:: Flag indicating if file resources in Hadoop is allowed to be overwritten. *(default: `false`)*
+fileUuid:: Flag indicating if filename should have automatically created uuid part in it. *(default: `false`)*
+partitionPath:: Partition path as SpEL exression. *(default: `none`)*
+fileOpenAttempts:: Maximum number of path open attempts. Attempt is either one rollover request or failed stream open request for a path(if other writer came up with a same path and already opened it). *(default: `10`)*
+
+==== Partition Path Expression
+
+SpEL expression is evaluated against a Spring Messaging `Message` passed internally into a HDFS writer. This allows expression to use `headers` and `payload` from that message. While you could do a custom processing within a stream and add custom headers, `timestamp` is always going to be there. Data to be written is then available in a `payload`.
+
+===== Accessing Properties
+
+Using a `payload` simply returns whatever is currently being written. Access to headers is via `headers` property. Any other property is automatically resolved from headers if found. For example `headers.timestamp` is equivalent to `timestamp`.
+
+===== Custom Methods
+
+Addition to a normal SpEL functionality, few custom methods has been added to make it easier to build partition paths. These custom methods can be used to work with a normal partition concepts like `date formatting`, `lists`, `ranges` and `hashes`.
+
+====== path
+[source,text]
+----
+path(String... paths)
+----
+
+Concatenates paths together with a delimiter `/`. This method can be used to make the expression less verbose than using a native SpEL functionality to combine path parts together. To create a path `part1/part2`, expression `'part1' + '/' + 'part2'` is equivalent to `path('part1','part2')`.
+
+.Parameters
+paths:: Any number of path parts
+
+.Return Value
+Concatenated value of paths delimited with `/`.
+
+====== dateFormat
+[source,text]
+----
+dateFormat(String pattern)
+dateFormat(String pattern, Long epoch)
+dateFormat(String pattern, Date date)
+dateFormat(String pattern, String datestring)
+dateFormat(String pattern, String datestring, String dateformat)
+----
+
+Creates a path using date formatting. Internally this method delegates into `SimpleDateFormat` and needs a `Date` and a `pattern`. On default if no parameter used for conversion is given, `timestamp` is expected. Effectively `dateFormat('yyyy')` equals to `dateFormat('yyyy', timestamp)` or `dateFormat('yyyy', headers.timestamp)`.
+
+Method signature with three parameters can be used to create a custom `Date` object which is then passed to `SimpleDateFormat` conversion using a `dateformat` pattern. This is useful in use cases where partition should be based on a date or time string found from a payload content itself. Default `dateformat` pattern if omitted is `yyyy-MM-dd`.
+
+.Parameters
+pattern:: Pattern compatible with `SimpleDateFormat` to produce a final output.
+epoch:: Timestamp as `Long` which is converted into a `Date`.
+date:: A `Date` to be formatted.
+dateformat:: Secondary pattern to convert `datestring` into a `Date`.
+datestring:: `Date` as a `String`
+
+.Return Value
+A path part representation which can be a simple file or directory name or a directory structure.
+
+====== list
+[source,text]
+----
+list(Object source, List<List<Object>> lists)
+----
+
+Creates a partition path part by matching a `source` against a lists denoted by `lists`.
+
+Lets assume that data is being written and it's possible to extrace an `appid` either from headers or payload. We can automatically do a list based partition by using a partition method `list(headers.appid,{{'1TO3','APP1','APP2','APP3'},{'4TO6','APP4','APP5','APP6'}})`. This method would create three partitions, `1TO3_list`, `4TO6_list` and `list`. Latter is used if no match is found from partition lists passed to `lists`.
+
+.Parameters
+source:: An `Object` to be matched against `lists`.
+lists:: A definition of list of lists.
+
+.Return Value
+A path part prefixed with a matched key i.e. `XXX_list` or `list` if no match.
+
+====== range
+[source,text]
+----
+range(Object source, List<Object> list)
+----
+
+Creates a partition path part by matching a `source` against a list denoted by `list` using a simple binary search.
+
+The partition method takes a `source` as first argument and `list` as a second argument. Behind the scenes this is using jvm’s `binarySearch` which works on an `Object` level so we can pass in anything. Remember that meaningful range match only works if passed in `Object` and types in list are of same type like `Integer`. Range is defined by a binarySearch itself so mostly it is to match against an upper bound except the last range in a list. Having a list of `{1000,3000,5000}` means that everything above 3000 will be matched with 5000. If that is an issue then simply adding `Integer.MAX_VALUE` as last range would overflow everything above 5000 into a new partition. Created partitions would then be `1000_range`, `3000_range` and `5000_range`. 
+
+.Parameters
+source:: An `Object` to be matched against `list`.
+list:: A definition of list.
+
+.Return Value
+A path part prefixed with a matched key i.e. `XXX_range`.
+
+====== hash
+[source,text]
+----
+hash(Object source, int bucketcount)
+----
+
+Creates a partition path part by calculating hashkey using `source`s` `hashCode` and `bucketcount`. Using a partition method `hash(timestamp,2)` would then create partitions named `0_hash`, `1_hash` and `2_hash`. Number suffixed with `_hash` is simply calculated using `Object.hashCode() % bucketcount`.
+
+.Parameters
+source:: An `Object` which `hashCode` will be used.
+bucketcount:: A number of buckets
+
+.Return Value
+A path part prefixed with a hash key i.e. `XXX_hash`.
 
 [[hdfs-dataset-avroparquet]]
 === HDFS Dataset (Avro/Parquet)
