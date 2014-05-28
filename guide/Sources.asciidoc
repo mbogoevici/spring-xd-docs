@@ -191,93 +191,103 @@ Of special attention are the `markAsRead` and `delete` options, which by default
 [[twittersearch]]
 === Twitter Search
 
-The twittersearch source has four parameters
+The twittersearch source runs a continuous query against Twitter and has following parameters
 
-query:: The query that will be run against Twitter *(required)*  For information on how to construct a query, visit https://dev.twitter.com/docs/using-search[Using Search].
+query:: The query that will be run against Twitter. For information on how to construct a query, visit https://dev.twitter.com/docs/api/1.1/get/search/tweets[The Search API].
 consumerKey:: An application consumer key issued by twitter
 consumerSecret:: The secret corresponding to the `consumerKey`
-fixedDelay:: The fixed delay polling interval specified in miliseconds *(default: 5000)*
+geocode:: Limit the search to a geographic area given by latitude,longitude,radius
+readTimeout:: The timeout in ms for each read
+connectTimeout: The timeout in ms for connecting to Twitter
+language:: The language code (e.g., 'en') to include in the search
+includeEntities:: Include entities (hashtag metadata, etc) - default is true
+resultType:: popular, recent, mixed(default)
 
 To get a `consumerKey` and `consumerSecret` you need to register a twitter application. If you don't already have one set up, you can create an app at the https://dev.twitter.com/apps[Twitter Developers] site to get these credentials.
 
-To create a stream definition in the server using the XD shell
+TIP: For both `twittersearch` and `twitterstream` you can put these keys in a module properties file instead of supplying them in the stream definition. If both sources share the same credentials, it is easiest to configure the required credentials in `config/modules/modules.yml`. Alternately, each module has its own properties file. For twittersearch, the file would be `config/modules/source/twittersearch/twittersearch.properties`.
 
-    xd:> stream create --name springone2gx --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query='#springone2gx' | file" --deploy
+To create and deploy a stream definition in the server using the XD shell:
 
-Make sure the default output directory for the `file` sink exists
+    xd:> stream create --name springone2gx --definition "twittersearch --query='#springone2gx' | file" --deploy
 
-[source,bash]
-----
-$ mkdir -p /tmp/xd/output/
-----
-
-Let the twittersearch run for a little while and then check to see 
-if some data ended up in the file
+Let the twittersearch run for a little while and then check to see if some data ended up in the file
 
 [source,bash]
 ----
 $ cat /tmp/xd/output/springone2gx
-----
+---- 
 
-TIP: For both `twittersearch` and `twitterstream` you can put the keys in a module properties file instead of supplying them in the stream definition. For twittersearch, the file would be `config/modules/source/twittersearch/twittersearch.properties`.
-
-NOTE: `twittersearch` by default emits http://docs.spring.io/spring-social-twitter/docs/1.0.5.RELEASE/api/org/springframework/social/twitter/api/Tweet.html[Spring Social Tweet] objects. You may easily configure `twittersearch` to emit JSON by setting --output=application/json. This will cause XD to transform the objects JSON internally, resulting in properties corresponding to the Java type. This yields a format slightly different than the native Twitter JSON emitted by `twitterstream`. While logically identical, property names and types, notably dates, are different. Thus the JSON strings produced by `twittersearch` and `twitterstream` are generally incompatible.   
+NOTE: Both `twittersearch` and `twitterstream` emit JSON in a native Twitter format. 
 
 [[twitterstream]]
 === Twitter Stream
 
 This source ingests data from Twitter's https://dev.twitter.com/docs/streaming-apis/streams/public[streaming] API. It uses the https://dev.twitter.com/docs/streaming-apis/streams/public[sample and filter] stream endpoints rather than the full "firehose" which needs special access. The endpoint used will depend on the parameters you supply in the stream definition (some are specific to the filter endpoint).
 
-You need to supply all keys and secrets (both consumer and accessToken) to authenticate for this source, so it is easiest if you just add these to the `XD_HOME/config/modules/source/twitterstream/twitterstream.properties` file. Stream creation is then straightforward:
+You need to supply all keys and secrets (both consumer and accessToken) to authenticate for this source, so it is easiest if you just add these to  `XD_HOME/config/modules/modules.yml` or `XD_HOME/config/modules/source/twitterstream/twitterstream.properties` file. 
+
+Stream creation is then straightforward:
 
     xd:> stream create --name tweets --definition "twitterstream | file" --deploy
 
 The parameters available are pretty much the same as those listed in the https://dev.twitter.com/docs/streaming-apis/parameters[API docs] and unless otherwise stated, the accepted formats are the same.
 
 https://dev.twitter.com/docs/streaming-apis/parameters#delimited[delimited]:: set to `true` to get length delimiters in the stream data (defaults to `false`)
-
 https://dev.twitter.com/docs/streaming-apis/parameters#stall_warnings[stallWarnings]:: set to `true` to enable stall warnings (defaults to `false`)
-
 https://dev.twitter.com/docs/streaming-apis/parameters#filter_level[filterLevel]:: controls which tweets make it through to the stream (defaults to `null`)
-
-https://dev.twitter.com/docs/streaming-apis/parameters#language[language]:: comma delimited set of languages to retain (defaults to `null`)
-
-https://dev.twitter.com/docs/streaming-apis/parameters#follow[follow]:: comma delimited set of user ids whose tweets should be sent to the stream (defaults to `null`)
-
-https://dev.twitter.com/docs/streaming-apis/parameters#track[track]:: which terms to look for in tweets (defaults to `null`)
-
+https://dev.twitter.com/docs/streaming-apis/parameters#language[language]:: comma delimited set of languages to include (defaults to `null`)
+https://dev.twitter.com/docs/streaming-apis/parameters#follow[follow]:: comma delimited set of user ids whose tweets should be included in the stream (defaults to `null`)
+https://dev.twitter.com/docs/streaming-apis/parameters#track[track]:: which terms to filter for in tweets
 https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]:: a comma-separated list of longitude,latitude pairs specifying a set of bounding boxes to filter Tweets (defaults to `null`)
+readTimeout:: The timeout in ms for each read
+connectTimeout: The timeout in ms for connecting to Twitter
 
-NOTE: `twitterstream` emits JSON in a native Twitter format. This format is incompatible with content produced by `twittersearch` (see note above regarding `twittersearch`)
+NOTE: Both `twittersearch` and `twitterstream` emit JSON in a native Twitter format. 
 
 [[gemfire-source]]
 === GemFire
-This source configures a cache and replicated region in the XD container process along with a Spring Integration GemFire inbound channel adapter, backed by a CacheListener that outputs messages triggered by an external entry event on the region. By default the payload contains the updated entry value, but may be controlled by passing in a SpEL expression that uses the http://www.vmware.com/support/developer/vfabric-gemfire/700-api/com/gemstone/gemfire/cache/EntryEvent.html[EntryEvent] as the evaluation context. 
+This source configures a client cache and client region, along with the necessary subscriptions enabled, in the XD container process along with a Spring Integration GemFire inbound channel adapter, backed by a CacheListener that outputs messages triggered by an external entry event on the region. By default the payload contains the updated entry value, but may be controlled by passing in a SpEL expression that uses the http://www.vmware.com/support/developer/vfabric-gemfire/700-api/com/gemstone/gemfire/cache/EntryEvent.html[EntryEvent] as the evaluation context. 
 
 ==== Options
 
 The Gemfire CacheListener source has the following options
 
-regionName:: The name of the region for which events are to be monitored *(required, String)*
-cacheEventExpression:: An optional SpEL expression referencing the event. *(default: `newValue`)*
-host:: The host on which the GemFire server is running. *(default: `localhost`)*
-port:: The port on which the GemFire server is running. *(default: `40404`)*
+regionName:: The name of the region for which events are to be monitored *(default: stream name)*
+cacheEventExpression:: An optional SpEL expression referencing the EntryEvent object. *(default: `newValue`)*
+host:: The host of the cache server or locator *(default: localhost)*
+port:: The port of the cache server or locator *(default: 40404)*
+useLocator:: Set to true if using a locator *(default:false)
 
 ==== Example
-Use of the gemfire source requires an external process that creates or updates entries in a GemFire region. Such events may trigger an XD process. For example, suppose a sales application creating and updating orders in a replicated GemFire region named `orders` . To trigger an XD stream, the XD container must join the GemFire distributed system and create a replica of the region, to which a cache listener is bound via the GemFire inbound channel adapter.
+Use of the gemfire source requires an external process (or a separate stream) that creates or updates entries in a GemFire region configured for a cache server. Such events may feed an XD stream. To enable such a stream, the XD container must join a GemFire distributed client-server system as a client, creating a client region corresponding to an existingregion on a cache server. The client region registers a cache listener via the Spring Integration GemFire inbound channel adapter. The client region and pool are configured for a subscription on all keys in the region.  
 
-     xd:>stream create --name orderStream --definition "gemfire --regionName=orders | file --inputType=application/json"
+The following example creates two streams: One to write http messages to a Gemfire region named _Stocks_, and another to listen for cache events and record the updates to a file. This works with the Cache Server and sample configuration included with the Spring XD distribution:
 
-In the above example, it is presumed the cache entries are Order POJOs. In this case, it may be convenient to convert to JSON before writing to the file. 
+     xd:> stream create --name gftest --definition "gemfire --regionName="Stocks" | file" --deploy
+     xd:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')" --deploy
 
-NOTE: In order to use locators you must add the `use-locator` to the active profile via server.yml or the spring.profiles_active environment variable.   
+Now send some messages to the stocks stream.
 
-[[gemfire-cq]]
-=== GemFire Continuous Query (CQ)
-Continuous query allows client applications to create a GemFire query using Object Query Language(OQL) and register a CQ listener which subscribes to the query and is notified every time the query 's result set changes. The _gemfire_cq_ source registers a CQ which will post CQEvent messages to the stream. 
+     xd:> http post --target http://localhost:9090 --data {"symbol":"FAKE","price":73}
+     xd:> http post --target http://localhost:9090 --data {"symbol":"FAKE","price":78}
+     xd:> http post --target http://localhost:9090 --data {"symbol":"FAKE","price":80}
+
+NOTE: Avoid spaces in the JSON when using the shell to post data. 
+
+As updates are posted to the cache you should see them captured in the output file:
+
+[source,bash]
+----
+$ cat /tmp/xd/output/gftest.out
+
+{"symbol":"FAKE","price":73}
+{"symbol":"FAKE","price":78}
+{"symbol":"FAKE","price":80}
+----
 
 ==== Launching the XD GemFire Server
-This source requires a cache server to be running in a separate process and its host and port must be known (NOTE: GemFire locators are not supported yet). The XD distribution includes a GemFire server executable suitable for development and test purposes. This is a Java main class that runs with a Spring configured cache server. The configuration is passed as a command line argument to the server's main method. The configuration includes a cache server port and one or more configured region. XD includes a sample cache configuration called  https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[cq-demo]. This starts a server on port 40404 and creates a region named _Stocks_. A Logging cache listener is configured  for the region to log region events.  
+This source requires a cache server to be running in a separate process and its host and port, or a locator host and port must be configured. The XD distribution includes a GemFire server executable suitable for development and test purposes. This is a Java main class that runs with a Spring configured cache server. The configuration is passed as a command line argument to the server's main method. The configuration includes a cache server port and one or more configured region. XD includes a sample cache configuration called  https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[cq-demo]. This starts a server on port 40404 and creates a region named _Stocks_. A Logging cache listener is configured  for the region to log region events.  
 
 Run Gemfire cache server by changing to the gemfire/bin directory and execute
 
@@ -287,15 +297,21 @@ $ ./gemfire-server ../config/cq-demo.xml
 ----
 
 
+
+[[gemfire-cq]]
+=== GemFire Continuous Query (CQ)
+Continuous query allows client applications to create a GemFire query using Object Query Language(OQL) and register a CQ listener which subscribes to the query and is notified every time the query 's result set changes. The _gemfire_cq_ source registers a CQ which will post CQEvent messages to the stream. 
+
 ==== Options
 
 The qemfire-cq source has the following options
 
 query:: The query string in Object Query Language(OQL) *(required, String)*
-host:: The host on which the GemFire server is running. *(default: `localhost`)*
-port:: The port on which the GemFire server is running. *(default: `40404`)*
+host:: The host on which the GemFire server or locator is running. *(default: `localhost`)*
+port:: The port on which the GemFire server or locator is running. *(default: `40404`)*
+useLocator:: Set to true if using a locator *(default:false)
 
-Here is an example. Create two streams: One to write http messages to a Gemfire region named _Stocks_, and another to execute the CQ.
+The example is similar to that presented for the <<gemfire-source, gemfire source>> above, and requires an external cache server as described in the above section. In this case the query provides a finer filter on data events. In the example below, the `cqtest` stream will only receive events matching a single ticker symbol, whereas the `gftest` stream example above will receive updates to every entry in the region. 
 
     xd:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')" --deploy
     xd:> stream create --name cqtest --definition "gemfire-cq --query='Select * from /Stocks where symbol=''FAKE''' | file" --deploy
@@ -306,11 +322,8 @@ Now send some messages to the stocks stream.
      xd:> http post --target http://localhost:9090 --data {"symbol":"FAKE","price":78}
      xd:> http post --target http://localhost:9090 --data {"symbol":"FAKE","price":80}
 
-Please do not put spaces when separating the JSON key-value pairs, only a comma. 
 
-The _cqtest_ stream is now listening for any stock quote updates for VMW. Presumably, another process is updating the cache. You may create a separate stream to test this (see https://github.com/SpringSource/spring-xd/wiki/GemfireServer[GemfireServer] for instructions).
-
-As updates are posted to the cache you should see them captured in the output file:
+The _cqtest_ stream is now listening for any stock quote updates for the ticker symbol `FAKE`. As updates are posted to the cache you should see them captured in the output file:
 
 [source,bash]
 ----
@@ -320,8 +333,6 @@ $ cat /tmp/xd/output/cqtest.out
 {"symbol":"FAKE","price":78}
 {"symbol":"FAKE","price":80}
 ----
-
-NOTE: In order to use locators you must add the `use-locator` to the active profile via server.yml or the spring.profiles_active environment variable.   
 
 [[syslog]]
 === Syslog
