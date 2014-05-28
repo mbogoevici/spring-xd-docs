@@ -1,3 +1,0 @@
-. Follow common release procedure as described here https://github.com/spring-projects/spring-framework/wiki/Gradle-build-and-release-FAQ#wiki-release_process
-. Make sure no dependencies on snapshot builds
-. Tag the wiki
