@@ -197,11 +197,11 @@ query:: The query that will be run against Twitter. For information on how to co
 consumerKey:: An application consumer key issued by twitter
 consumerSecret:: The secret corresponding to the `consumerKey`
 geocode:: Limit the search to a geographic area given by latitude,longitude,radius
-readTimeout:: The timeout in ms for each read
-connectTimeout: The timeout in ms for connecting to Twitter
 language:: The language code (e.g., 'en') to include in the search
 includeEntities:: Include entities (hashtag metadata, etc) - default is true
 resultType:: popular, recent, mixed(default)
+readTimeout:: The timeout in ms for each read
+connectTimeout:: The timeout in ms for connecting to Twitter
 
 To get a `consumerKey` and `consumerSecret` you need to register a twitter application. If you don't already have one set up, you can create an app at the https://dev.twitter.com/apps[Twitter Developers] site to get these credentials.
 
@@ -241,7 +241,7 @@ https://dev.twitter.com/docs/streaming-apis/parameters#follow[follow]:: comma de
 https://dev.twitter.com/docs/streaming-apis/parameters#track[track]:: which terms to filter for in tweets
 https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]:: a comma-separated list of longitude,latitude pairs specifying a set of bounding boxes to filter Tweets (defaults to `null`)
 readTimeout:: The timeout in ms for each read
-connectTimeout: The timeout in ms for connecting to Twitter
+connectTimeout:: The timeout in ms for connecting to Twitter
 
 NOTE: Both `twittersearch` and `twitterstream` emit JSON in a native Twitter format. 
 
@@ -257,10 +257,10 @@ regionName:: The name of the region for which events are to be monitored *(defau
 cacheEventExpression:: An optional SpEL expression referencing the EntryEvent object. *(default: `newValue`)*
 host:: The host of the cache server or locator *(default: localhost)*
 port:: The port of the cache server or locator *(default: 40404)*
-useLocator:: Set to true if using a locator *(default:false)
+useLocator:: Set to true if using a locator *(default:false)*
 
 ==== Example
-Use of the gemfire source requires an external process (or a separate stream) that creates or updates entries in a GemFire region configured for a cache server. Such events may feed an XD stream. To enable such a stream, the XD container must join a GemFire distributed client-server system as a client, creating a client region corresponding to an existingregion on a cache server. The client region registers a cache listener via the Spring Integration GemFire inbound channel adapter. The client region and pool are configured for a subscription on all keys in the region.  
+Use of the gemfire source requires an external process (or a separate stream) that creates or updates entries in a GemFire region configured for a cache server. Such events may feed an XD stream. To enable such a stream, the XD container must join a GemFire distributed client-server system as a client, creating a client region corresponding to an existing region on a cache server. The client region registers a cache listener via the Spring Integration GemFire inbound channel adapter. The client region and pool are configured for a subscription on all keys in the region.  
 
 The following example creates two streams: One to write http messages to a Gemfire region named _Stocks_, and another to listen for cache events and record the updates to a file. This works with the Cache Server and sample configuration included with the Spring XD distribution:
 
@@ -309,7 +309,7 @@ The qemfire-cq source has the following options
 query:: The query string in Object Query Language(OQL) *(required, String)*
 host:: The host on which the GemFire server or locator is running. *(default: `localhost`)*
 port:: The port on which the GemFire server or locator is running. *(default: `40404`)*
-useLocator:: Set to true if using a locator *(default:false)
+useLocator:: Set to true if using a locator *(default:false)*
 
 The example is similar to that presented for the <<gemfire-source, gemfire source>> above, and requires an external cache server as described in the above section. In this case the query provides a finer filter on data events. In the example below, the `cqtest` stream will only receive events matching a single ticker symbol, whereas the `gftest` stream example above will receive updates to every entry in the region. 
 
