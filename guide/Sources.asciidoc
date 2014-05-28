@@ -237,7 +237,7 @@ https://dev.twitter.com/docs/streaming-apis/parameters#delimited[delimited]:: se
 https://dev.twitter.com/docs/streaming-apis/parameters#stall_warnings[stallWarnings]:: set to `true` to enable stall warnings *(default: false)*
 https://dev.twitter.com/docs/streaming-apis/parameters#filter_level[filterLevel]:: controls which tweets make it through to the stream
 https://dev.twitter.com/docs/streaming-apis/parameters#language[language]:: comma delimited set of languages to include
-https://dev.twitter.com/docs/streaming-apis/parameters#follow[follow]:: comma delimited set of user ids whose tweets should be included in the stream *(default: null)*
+https://dev.twitter.com/docs/streaming-apis/parameters#follow[follow]:: comma delimited set of user ids whose tweets should be included in the stream
 https://dev.twitter.com/docs/streaming-apis/parameters#track[track]:: which terms to filter for in tweets
 https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]:: a comma-separated list of longitude,latitude pairs specifying a set of bounding boxes to filter Tweets
 readTimeout:: The timeout in ms for each read *(default: 9000 ms)*
