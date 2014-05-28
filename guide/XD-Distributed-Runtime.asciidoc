@@ -196,7 +196,7 @@ By default, deploying a stream in a distributed configuration uses simple round 
 
 More complex strategies are critical to tuning and operating XD. Additionally, we must consider various features and constraints when deploying to a PaaS, Yarn or some other cluster manager. Furthermore, such deployment concerns should be addressed independently from the stream definition which is really an expression of the processing logic. To accommodate deployment concerns, XD provides a Deployment Manifest which is submitted with the deployment request, in the form of in-line properties, or a reference to a persisted document containing deployment properties.
 
-When you execute a _stream deploy_ shell command, you can optionally pass a --properties parameter which is a comma delimited list of key=value pairs. The key is either _module.[modulename].count_ or _module.[modulename].criteria_. The value for a count is a positive integer, and the value for criteria is a valid SpEL expression. The Admin server will match the available containers to the deployment manifest. The stream is considered to be successfully deployed if at least one of each module instance is deployed to a container. For example, 
+When you execute a _stream deploy_ shell command, you can optionally pass a --properties parameter which is a comma delimited list of key=value pairs. Examples for the key include *module.[modulename].count* and *module.[modulename].criteria* (for a full list of properties, see below). The value for a count is a positive integer, and the value for criteria is a valid SpEL expression. The Admin server will match the available containers to the deployment manifest. The stream is considered to be successfully deployed if at least one of each module instance is deployed to a container. For example, 
 
 ----
 xd:>stream create test1 --definition "http | transform --expression=payload.toUpperCase() | log"
@@ -212,6 +212,45 @@ Deployed stream 'test1'
 
 If there are only two container instances available, only two instances of transform will be deployed. The stream deployment is successful since it is functional. However the unfulfilled deployment request remains active and a third instance will be deployed if a new container comes on line that matches the criteria.
 
+==== Deployment Properties
+
+===== General Properties
+
+module.[modulename].count:: See above.
+module.[modulename].criteria:: See above.
+
+===== Bus Properties
+
+The following properties are currently only implemented when using a _RabbitMessageBus_.
+
+See the Spring AMQP reference documentation for information about the RabbitMQ-specific attributes.
+
+module.[modulename].consumer.ackMode:: Controls message acknowledgements *(default AUTO)*
+module.[modulename].consumer.backOffInitialInterval:: The number of milliseconds to wait for the first delivery retry *(default 1000)*
+module.[modulename].consumer.backOffMaxInterval:: The maximum number of milliseconds to wait betwwen retries *(default 10000)*
+module.[modulename].consumer.backOffMultiplier:: The previous retry interval is multiplied by this to determine the current interval (but see _backOffMaxInterval_) *(default 2.0)*
+module.[modulename].consumer.concurrency:: The number of concurrent consumers for the module *(default 1)*.
+module.[modulename].consumer.maxAttempts:: The maximum number of attempts to make a delivery when a failure occurs *(default 3)*
+module.[modulename].consumer.maxConcurrency:: The maximum number of concurrent consumers for the module *(default 1)*.
+module.[modulename].consumer.prefetch:: The number of messages prefetched from the RabbitMQ broker *(default 1)*
+module.[modulename].consumer.prefix:: A prefix applied to all queues/exchanges that are declared by the bus - allows policies to be applied *(default 'xdbus.')*
+module.[modulename].consumer.requestHeaderPatterns:: Controls which message headers are passed between modules **(default 'STANDARD_REQUEST_HEADERS,*')**
+module.[modulename].consumer.requeue:: Whether messages will be requeued (and retried) on failure *(default true)*
+module.[modulename].consumer.transacted:: Whether consumers use transacted channels *(default false)*
+module.[modulename].consumer.txSize:: The number of delivered messages between acknowledgements (when _ackMode=AUTO_) *(default 1)*
+module.[modulename].producer.deliveryMode:: THe delivery mode of messages sent to RabbitMQ (_PERSISTENT_ or _NON_PERSISTENT_) *(default PERSISTENT)*
+module.[modulename].producer.requestHeaderPatterns:: Controls which message headers are passed between modules **(default 'STANDARD_REQUEST_HEADERS,*')**
+module.[modulename].producer.replyHeaderPatterns:: Controls which message headers are passed between modules (only used in partitioned jobs) **(default 'STANDARD_REPLY_HEADERS,*')**
+
+
+===== Partition Properties
+
+module.[modulename].producer.partitionKeyExtractorClass:: The class name of a _PartitionKeyExtractorStrategy_ *(default null)*
+module.[modulename].producer.partitionKeyExpression:: A _SpEL_ expression, evaluated against the message, to determine the partition key; only applies if _partitionKeyExtractorClass_ is null. If both are null, the module is not partitioned *(default null)*
+module.[modulename].producer.partitionSelectorClass:: The class name of a _PartitionSelectorStrategy_ *(default null)*
+module.[modulename].producer.partitionSelectorExpression:: A _SpEL_ expression, evaluated against the partition key, to determine the partition index to which the message will be routed. The final partition index will be the return value (an integer) modulo _producer.partitionCount_ If both the class and expression are null, the bus's default _PartitionSelectorStrategy_ will be applied to the key *(default null)* 
+
+See below for examples of deploying partitioned modules.
 
 ==== Container Attributes
 
@@ -301,10 +340,51 @@ xd:>runtime modules
 Note that there are only two instances of _log_ deployed. We asked for three however the criteria specified only containers not in _group1_ are eligible. Since only two containers matched the criteria, we have a _log_ module deployed on each one. If we start a new container not in _group1_, the third instance will be deployed. The stream is currently shown as deployed since it is functional even though the manifest is not completely satisfied.
 
 
+=== Partitioned Stream Deployment Examples
 
+==== Using SpEL Expressions
 
+First, create a stream:
 
+----
+xd:>stream create partitioned --definition "jms | transform --expression=#expensiveTransformation(payload) | log"
 
+Created new stream 'partitioned'
+----
+
+(hypothetical SpEL function 'expensiveTransformation')
+
+Next, deploy it using a manifest:
+
+----
+xd:>stream deploy --name partitioned --properties "module.jms.producer.partitionKeyExpression=payload.customerId, module.jms.producer.partitionSelectorExpression=hashCode(),module.transform.count=3"
+
+Deployed stream 'partitioned'
+----
+
+In this example three instances of the transformer will be created (with partition index of 0, 1, and 2). When the jms module sends a message it will take the _customerId_ property on the message payload, invoke its _hashCode()_ method and apply the modulo function with the divisor being the _transform.count_ property to determine which instance of the transform will process the message (*payload.getCustomerId().hashCode() % 3*). Messages with the same _customerId_ will always be processed by the same instance.
+
+==== Using Custom Partitioning Strategies
+
+First, create a stream:
+
+----
+xd:>stream create partitioned --definition "jms | transform --expression=#expensiveTransformation(payload) | log"
+
+Created new stream 'partitioned'
+----
+
+(hypothetical SpEL function 'expensiveTransformation')
+
+Next, deploy it using a manifest:
+
+----
+xd:>stream deploy --name partitioned --properties "module.jms.producer.partitionKeyExtractionClass=foo.MyKeyExtractor, module.jms.producer.partitionSelectorClass=foo.MySelector,module.transform.count=3"
+
+Deployed stream 'partitioned'
+----
+
+In this example three instances of the transformer will be created (with partition index of 0, 1, and 2). When the jms module sends a message it will pass the Message to an instance of _foo.MyKeyExtractor_ with the result being passed to an instance of _foo.MySelector_; the selector must return a value less than the _transform.count_ property so the message can be routed to one of the transformer instances.
 
 
 
