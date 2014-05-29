@@ -252,7 +252,7 @@ module.[modulename].producer.partitionSelectorExpression:: A _SpEL_ expression, 
 
 ===== Partitioning
 
-To summarize, a module is partitioned if its _count_ is > 1 and the previous module has a _partitionKeyExtractorClass_ or _partitionKeyExpression_ (class takes precedence). When a partition key is extracted the partitioned module instance is determined by invoking the _partitionSelectorClass_, if present, or the _partitionSelectorExpression_. If neither is present the result is _key.hashCode() % count_.
+To summarize, a module is partitioned if its _count_ is > 1 and the previous module has a _partitionKeyExtractorClass_ or _partitionKeyExpression_ (class takes precedence). When a partition key is extracted the partitioned module instance is determined by invoking the _partitionSelectorClass_, if present, or the _partitionSelectorExpression % count_. If neither is present the result is _key.hashCode() % count_.
 
 See below for examples of deploying partitioned modules.
 
