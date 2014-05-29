@@ -248,7 +248,9 @@ module.[modulename].producer.replyHeaderPatterns:: Controls which message header
 module.[modulename].producer.partitionKeyExtractorClass:: The class name of a _PartitionKeyExtractorStrategy_ *(default null)*
 module.[modulename].producer.partitionKeyExpression:: A _SpEL_ expression, evaluated against the message, to determine the partition key; only applies if _partitionKeyExtractorClass_ is null. If both are null, the module is not partitioned *(default null)*
 module.[modulename].producer.partitionSelectorClass:: The class name of a _PartitionSelectorStrategy_ *(default null)*
-module.[modulename].producer.partitionSelectorExpression:: A _SpEL_ expression, evaluated against the partition key, to determine the partition index to which the message will be routed. The final partition index will be the return value (an integer) modulo _producer.partitionCount_ If both the class and expression are null, the bus's default _PartitionSelectorStrategy_ will be applied to the key *(default null)* 
+module.[modulename].producer.partitionSelectorExpression:: A _SpEL_ expression, evaluated against the partition key, to determine the partition index to which the message will be routed. The final partition index will be the return value (an integer) modulo _[nextModule].count_ If both the class and expression are null, the bus's default _PartitionSelectorStrategy_ will be applied to the key *(default null)* 
+
+To summarize, a module is partitioned if its _count_ is > 1 and the previous module has a _partitionKeyExtractorClass_ or _partitionKeyExtractorExpression_ (class takes precedence). When a partition key is extracted the partitioned module instance is determined by invoking the _partitionSelectorClass_, if present, or the _partitionSelectorExpression_. If neither is present the result is _key.hashCode() % count_.
 
 See below for examples of deploying partitioned modules.
 
@@ -357,40 +359,10 @@ Created new stream 'partitioned'
 Next, deploy it using a manifest:
 
 ----
-xd:>stream deploy --name partitioned --properties "module.jms.producer.partitionKeyExpression=payload.customerId, module.jms.producer.partitionSelectorExpression=hashCode(),module.transform.count=3"
+xd:>stream deploy --name partitioned --properties "module.jms.producer.partitionKeyExpression=payload.customerId,module.transform.count=3"
 
 Deployed stream 'partitioned'
 ----
 
 In this example three instances of the transformer will be created (with partition index of 0, 1, and 2). When the jms module sends a message it will take the _customerId_ property on the message payload, invoke its _hashCode()_ method and apply the modulo function with the divisor being the _transform.count_ property to determine which instance of the transform will process the message (*payload.getCustomerId().hashCode() % 3*). Messages with the same _customerId_ will always be processed by the same instance.
-
-==== Using Custom Partitioning Strategies
-
-First, create a stream:
-
-----
-xd:>stream create partitioned --definition "jms | transform --expression=#expensiveTransformation(payload) | log"
-
-Created new stream 'partitioned'
-----
-
-(hypothetical SpEL function 'expensiveTransformation')
-
-Next, deploy it using a manifest:
-
-----
-xd:>stream deploy --name partitioned --properties "module.jms.producer.partitionKeyExtractionClass=foo.MyKeyExtractor, module.jms.producer.partitionSelectorClass=foo.MySelector,module.transform.count=3"
-
-Deployed stream 'partitioned'
-----
-
-In this example three instances of the transformer will be created (with partition index of 0, 1, and 2). When the jms module sends a message it will pass the Message to an instance of _foo.MyKeyExtractor_ with the result being passed to an instance of _foo.MySelector_; the selector must return a value less than the _transform.count_ property so the message can be routed to one of the transformer instances.
-
-
-
-
-
-
-
-
 
