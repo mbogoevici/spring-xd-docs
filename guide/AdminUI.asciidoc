@@ -103,6 +103,13 @@ When clicking on *Schedule*, you have the option to run the job:
 * on a specific data/time
 * using a valid CRON expression
 
+==== Job Deployment Details
+
+On this screen, you can view additional deployment details. Besides viewing the stream definition, the available Module Metadata is shown as well, e.g. on which Node the definition has been deployed to.
+
+.Job Deployment Details
+image::images/spring-xd-admin-ui-jobs-deployment-details.png[Job Deployment Details, width=500]
+
 ==== List job executions
 
 This page lists the batch job executions and provides option to *restart* specific job executions, provided the batch job is restartable and stopped/failed.
