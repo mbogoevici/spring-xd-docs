@@ -250,7 +250,9 @@ module.[modulename].producer.partitionKeyExpression:: A _SpEL_ expression, evalu
 module.[modulename].producer.partitionSelectorClass:: The class name of a _PartitionSelectorStrategy_ *(default null)*
 module.[modulename].producer.partitionSelectorExpression:: A _SpEL_ expression, evaluated against the partition key, to determine the partition index to which the message will be routed. The final partition index will be the return value (an integer) modulo _[nextModule].count_ If both the class and expression are null, the bus's default _PartitionSelectorStrategy_ will be applied to the key *(default null)* 
 
-To summarize, a module is partitioned if its _count_ is > 1 and the previous module has a _partitionKeyExtractorClass_ or _partitionKeyExtractorExpression_ (class takes precedence). When a partition key is extracted the partitioned module instance is determined by invoking the _partitionSelectorClass_, if present, or the _partitionSelectorExpression_. If neither is present the result is _key.hashCode() % count_.
+===== Partitioning
+
+To summarize, a module is partitioned if its _count_ is > 1 and the previous module has a _partitionKeyExtractorClass_ or _partitionKeyExpression_ (class takes precedence). When a partition key is extracted the partitioned module instance is determined by invoking the _partitionSelectorClass_, if present, or the _partitionSelectorExpression_. If neither is present the result is _key.hashCode() % count_.
 
 See below for examples of deploying partitioned modules.
 
