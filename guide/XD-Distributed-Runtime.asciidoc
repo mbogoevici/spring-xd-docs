@@ -245,6 +245,8 @@ module.[modulename].producer.replyHeaderPatterns:: Controls which message header
 
 ===== Partition Properties
 
+NOTE: The following properties are currently only implemented when using a _RabbitMessageBus_.  Support for Redis will be available in the RC1 release.
+
 module.[modulename].producer.partitionKeyExtractorClass:: The class name of a _PartitionKeyExtractorStrategy_ *(default null)*
 module.[modulename].producer.partitionKeyExpression:: A _SpEL_ expression, evaluated against the message, to determine the partition key; only applies if _partitionKeyExtractorClass_ is null. If both are null, the module is not partitioned *(default null)*
 module.[modulename].producer.partitionSelectorClass:: The class name of a _PartitionSelectorStrategy_ *(default null)*
