@@ -8,11 +8,11 @@ If you want to try out Spring XD, we'd recommend downloading a snapshot build, s
 
 Unzip the distribution which will unpack to a single installation directory. All the commands below are executed from this directory, so change into it before proceeding.
 
-If you are sure you want the previous milestone release, you can also download the distribution http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M6/spring-xd-1.0.0.M6-dist.zip[*spring-xd-1.0.0.M6-dist.zip*] and http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M6/spring-xd-1.0.0.M6-docs.zip[its accompanying documentation]. 
+If you are sure you want the previous milestone release, you can also download the distribution http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M7/spring-xd-1.0.0.M7-dist.zip[*spring-xd-1.0.0.M7-dist.zip*] and http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M7/spring-xd-1.0.0.M7-docs.zip[its accompanying documentation]. 
 
 [source,bash]
 ----
-$ cd spring-xd-1.0.0.M6
+$ cd spring-xd-1.0.0.M7
 ----
 
 Set the environment variable `XD_HOME` to the installation directory `<root-install-dir>\spring-xd\xd`
@@ -46,7 +46,7 @@ shell/bin>$ ./xd-shell
       | |                  __/ |
       |_|                 |___/
 eXtreme Data
-1.0.0.M6 | Admin Server Target: http://localhost:8080
+1.0.0.M7 | Admin Server Target: http://localhost:8080
 Welcome to the Spring XD shell. For assistance hit TAB or type "help".
 xd:>
 ----

@@ -157,5 +157,5 @@ If you wish to use Spring XD Tuples in you project add the following dependencie
 maven { url "http://repo.spring.io/libs-snapshot" }
 
 //Add this dependency
-compile 'org.springframework.xd:spring-xd-tuple:1.0.0.M6'
+compile 'org.springframework.xd:spring-xd-tuple:1.0.0.M7'
 ----
