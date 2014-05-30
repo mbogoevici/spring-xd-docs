@@ -93,10 +93,10 @@ Remember that you can always find out about available options for a job by using
 
 === Deployment manifest support for job
 
-When deploying batch job, like stream modules the deployment manifest can be provided.
-It could be:
-   * Count for the number of job modules
-   * Criteria to deploy the job modules into matching containers
+When deploying batch job you can provide a link:XD-Distributed-Runtime#deployment-manifest[deployment manifest].  Deployment manifest properties for jobs are the same as for streams, you can declare
+
+* The number of job modules to deploy
+* The criteria expression to use for matching the job to available containers
 
 For example,
 
@@ -108,7 +108,9 @@ job deploy myjob --properties "module.fooJob.count=3,module.fooJob.criteria=grou
 
 The above deployment manifest would deploy 3 number of `fooJob` modules into containers whose group name matches "hdfs-containers-group".
 
-**Note:** When a batch job is launched/scheduled, the job execution is executed on only one of these modules. The job module that picks up the job launching request message executes the batch job. The **partitioning** support needs to be explicitly added to the step like https://github.com/spring-projects/spring-xd/wiki/Batch-Jobs#ftp-to-hdfs-export-ftphdfs[here]
+When a batch job is launched/scheduled, the job module that picks up the job launching request message executes the batch job.  To support partitioning of the job across multiple containers, the job definition needs to define how the job will be partitioned.  The type of partitioning depends on the type of the job, for example a job reading from JDBC would partition the data in a table by dividing up the number of rows and a job reading files form a directory would partition on the number of files available.  
+
+In the M7 release, only the FTP to HDFS job includes support for partitioning.  Support for other out of the box jobs will be provided in a future release.  To add partitioning support for your own jobs you should import https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/resources/META-INF/spring-xd/batch/singlestep-partition-support.xml[singlestep-partition-support.xml] in your job definition.  This provides the infrastructure so that the job module that processes the launch request can communicate as the master with the other job modules that have been deployed.  You will also need to provide an implementation of the http://docs.spring.io/spring-batch/apidocs/org/springframework/batch/core/partition/support/Partitioner.html[Partitioner] interface.
 
 For more information on the deployment manifest, please refer https://github.com/spring-projects/spring-xd/wiki/XD-Distributed-Runtime#deployment-manifest[here]
 
