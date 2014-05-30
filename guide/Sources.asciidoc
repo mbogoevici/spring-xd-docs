@@ -218,7 +218,7 @@ Let the twittersearch run for a little while and then check to see if some data 
 $ cat /tmp/xd/output/springone2gx
 ---- 
 
-NOTE: Both `twittersearch` and `twitterstream` emit JSON in a native Twitter format. 
+NOTE: Both `twittersearch` and `twitterstream` emit JSON in a https://dev.twitter.com/docs/platform-objects/tweets[native Twitter format]. 
 
 [[twitterstream]]
 === Twitter Stream
@@ -243,7 +243,7 @@ https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]:: a 
 readTimeout:: The timeout in ms for each read *(default: 9000 ms)*
 connectTimeout:: The timeout in ms for connecting to Twitter *(default: 5000 ms)*
 
-NOTE: Both `twittersearch` and `twitterstream` emit JSON in a native Twitter format. 
+NOTE: Both `twittersearch` and `twitterstream` emit JSON in a https://dev.twitter.com/docs/platform-objects/tweets[native Twitter format].  
 
 [[gemfire-source]]
 === GemFire
