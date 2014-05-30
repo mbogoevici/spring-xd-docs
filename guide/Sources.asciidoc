@@ -193,7 +193,7 @@ Of special attention are the `markAsRead` and `delete` options, which by default
 
 The twittersearch source runs a continuous query against Twitter and has following parameters
 
-query:: The query that will be run against Twitter. For information on how to construct a query, visit https://dev.twitter.com/docs/api/1.1/get/search/tweets[The Search API].
+query:: The query that will be run against Twitter. For information on how to construct a query, see the https://dev.twitter.com/docs/api/1.1/get/search/tweets[Search API v1.1].
 consumerKey:: An application consumer key issued by twitter
 consumerSecret:: The secret corresponding to the `consumerKey`
 geocode:: Limit the search to a geographic area given by latitude,longitude,radius
@@ -218,12 +218,12 @@ Let the twittersearch run for a little while and then check to see if some data 
 $ cat /tmp/xd/output/springone2gx
 ---- 
 
-NOTE: Both `twittersearch` and `twitterstream` emit JSON in a https://dev.twitter.com/docs/platform-objects/tweets[native Twitter format]. 
+NOTE: Both `twittersearch` and `twitterstream` emit JSON in the https://dev.twitter.com/docs/platform-objects/tweets[native Twitter format]. 
 
 [[twitterstream]]
 === Twitter Stream
 
-This source ingests data from Twitter's https://dev.twitter.com/docs/streaming-apis/streams/public[streaming] API. It uses the https://dev.twitter.com/docs/streaming-apis/streams/public[sample and filter] stream endpoints rather than the full "firehose" which needs special access. The endpoint used will depend on the parameters you supply in the stream definition (some are specific to the filter endpoint).
+This source ingests data from Twitter's https://dev.twitter.com/docs/streaming-apis/streams/public[streaming API v1.1]. It uses the https://dev.twitter.com/docs/streaming-apis/streams/public[sample and filter] stream endpoints rather than the full "firehose" which needs special access. The endpoint used will depend on the parameters you supply in the stream definition (some are specific to the filter endpoint).
 
 You need to supply all keys and secrets (both consumer and accessToken) to authenticate for this source, so it is easiest if you just add these to  `XD_HOME/config/modules/modules.yml` or `XD_HOME/config/modules/source/twitterstream/twitterstream.properties` file. 
 
