@@ -103,7 +103,7 @@ For example,
 ----
 job create myjob --definition "fooJob --makeUnique=false"
 
-job deploy myjob --properties "module.fooJob.count=3,module.fooJob.criteria=groups.contains('hdfs-containers-group')
+job deploy myjob --properties "module.fooJob.count=3,module.fooJob.criteria=groups.contains('hdfs-containers-group')"
 ----
 
 The above deployment manifest would deploy 3 number of `fooJob` modules into containers whose group name matches "hdfs-containers-group".
