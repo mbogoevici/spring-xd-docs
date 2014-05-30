@@ -91,6 +91,26 @@ job create myjob --definition "fooJob --makeUnique=false"
 
 Remember that you can always find out about available options for a job by using the link:Modules.asciidoc#module_info[`module info`] command.
 
+=== Deployment manifest support for job
+
+When deploying batch job, like stream modules the deployment manifest can be provided.
+It could be:
+   * Count for the number of job modules
+   * Criteria to deploy the job modules into matching containers
+
+For example,
+
+----
+job create myjob --definition "fooJob --makeUnique=false"
+
+job deploy myjob --properties "module.fooJob.count=3,module.fooJob.criteria=groups.contains('hdfs-containers-group')
+----
+
+The above deployment manifest would deploy 3 number of `fooJob` modules into containers whose group name matches "hdfs-containers-group".
+
+**Note:** When a batch job is launched/scheduled, the job execution is executed on only one of these modules. The job module that picks up the job launching request message executes the batch job. The **partitioning** support needs to be explicitly added to the step like https://github.com/spring-projects/spring-xd/wiki/Batch-Jobs#ftp-to-hdfs-export-ftphdfs[here]
+
+For more information on the deployment manifest, please refer https://github.com/spring-projects/spring-xd/wiki/XD-Distributed-Runtime#deployment-manifest[here]
 
 === Launching a job
 XD uses triggers as well as regular event flow to launch the batch jobs.  So in this section we will cover how to:
