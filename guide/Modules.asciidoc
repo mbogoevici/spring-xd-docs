@@ -168,14 +168,22 @@ Now let's look at an example. Returning to the two similar streams above, the fi
     xd:> module compose foo --definition "filter --expression=payload.contains('foo') | file"
 
 Then, to verify the new module composition was successful, check if it exists:
+----
+xd:>module list
+      Source              Processor           Sink                     Job
+  ------------------  ------------------  -----------------------  ----------------
+      file                aggregator          aggregate-counter        filejdbc
+      gemfire             http-client         counter                  ftphdfs
 
-    xd:> module list --type sink
-    Module Name          Module Type
-    -------------------  -----------
-    ...
-    foo                  sink
+                                   (....)
 
-Notice that the composed module shows up in the list of *sink* modules. That is because logically, it has the structure of a sink: it provides an input channel (which is bridged to the filter processor's input channel), but it provides no output channel (since the file sink has no output).
+      trigger                                 splunk
+      twittersearch                           tcp
+      twitterstream                           throughput-sampler
+      time                                (c) foo
+----
+
+Notice that the composed module shows up in the list of *sink* modules. That is because logically, it has the structure of a sink: it provides an input channel (which is bridged to the filter processor's input channel), but it provides no output channel (since the file sink has no output). Also notice that the module has a small `(c)` prefixed to it, to indicate that it is a composed module.
 
 If a module were composed of two processors, it would be classified as a processor itself:
 
@@ -209,7 +217,7 @@ To test the "filefoo" stream, echo "foo" to a file in the /tmp/xd/input/filefoo 
 
 When you no longer need a composed module, you may delete it with the "module delete" command in the shell. However, if that composed module is currently being used by one or more streams, the deletion will fail as shown below:
 
-    xd:> module delete --name foo --type sink
+    xd:> module delete --name sink:foo
     16:51:37,349  WARN Spring Shell client.RestTemplate:566 - DELETE request for "http://localhost:9393/modules/sink/foo" resulted in 500 (Internal Server Error); invoking error handler
     Command failed org.springframework.xd.rest.client.impl.SpringXDException: Cannot delete module sink:foo because it is used by [stream:filefoo, stream:httpfoo]
 
@@ -221,7 +229,7 @@ If you destroy both of those streams and try again, it will work:
     Destroyed stream 'filefoo'
     xd:> stream destroy --name httpfoo
     Destroyed stream 'httpfoo'
-    xd:> module delete --name foo --type sink
+    xd:> module delete --name sink:foo
     Successfully destroyed module 'foo' with type sink
 
 When creating a module, if you duplicate the name of an existing module for the same type, you will receive an error.  In the example below the user tried to compose a tcp module, however one already exists:
@@ -296,7 +304,7 @@ To display the actual definition file of a module use the `module display --name
 
 [source,bash]
 ----
-xd:>module display --name tcp --type source
+xd:>module display --name source:tcp
 Configuration file contents for module definition 'tcp' (source):
 
 -------------------------------------------------------------------------------
