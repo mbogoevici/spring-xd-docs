@@ -1,3 +1,5 @@
+include::foo.asciidoc[]
+
 === Introduction
 In this section we will show some variations on input sources.  As a prerequisite start the XD Container
 as instructed in the link:Getting-Started#getting-started[Getting Started] page.
