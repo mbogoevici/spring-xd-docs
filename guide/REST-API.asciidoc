@@ -1,0 +1,366 @@
+=== Introduction
+The Spring XD Administrator process (Admin) provides a REST API to access various Spring XD resources such as streams, jobs, metrics, modules, Spring batch resources, and container runtime information. The HTTP port is configurable and may be set as a command line argument when starting the Admin server, or set in $XD_HOME/config/servers.yml. The default port is 9393:
+
+----
+> $XD_HOME/bin/xd-admin --httpPort <port>
+----
+
+The Admin Server also provides runtime management services enabled by Spring Boot under the `/management` context path, e.g., localhost:9393/management/metrics. These endpoints are covered in the http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready-monitoring[Spring Boot] documentation. 
+
+NOTE: There is also a `mgmtPort` command line argument which assigns a separate port for management services. Normally the same port is used for everything.
+
+=== XD Resources
+
+.Table XD REST endpoints
+[cols="2*", width="25%"]
+|===
+|stream definitions     
+|<<stream-definitions,/streams/definitions>>         
+
+|stream deployments     
+|<<stream-deployments,/streams/deployments>>         
+
+|job module definitions
+|<<job-definitions,/jobs/definitions>>         
+
+|job deployments
+|<<job-deployments,/jobs/deployments>>            
+
+|module definitions       
+|<<module-definitions,/modules>>                      
+
+|deployed modules
+|<<runtime-modules,/runtime/modules>>               
+
+|containers               
+|<<runtime-containers,/runtime/containers>>       
+
+|batch job definitions
+|<<batch-jobs,/batch/jobs>>         
+
+|batch executions
+|<<batch-executions,/batch/executions>>            
+
+|job instances
+|<<job-instances,/batch/instances>>
+
+|counters
+|<<counters,/metrics/counters>>
+
+|field value counters
+|<<field-value-counters,/metrics/field-value-counters>>
+
+|aggregate counters
+|<<aggregate-counters,/metrics/aggregate-counters>>
+
+|gauges
+|<<gauges,/metrics/gauges>>
+
+|rich-gauges
+|<<rich-gauges,/metrics/rich-gauges>>
+|===
+
+[[stream-definitions]]
+=== Stream Definitions
+
+.Table Stream Definitions
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/streams/definitions
+|GET
+|list defined streams along with optional deployment state if `deployments=true` request parameter provided (TBD. Is this needed? If so how does it change when we have deployment state?)
+
+|/streams/definitions
+|DELETE
+|delete all stream definitions, undeploying deployed streams
+
+|/streams/definitions/\{name\}
+|GET
+|get a stream definition (currently no deployment information is included)
+
+|/streams/definitions
+|POST
+|create a new stream, optionally deploying it if `deploy=true` request parameter is provided. The request body is application/x-www-form-urlencoded and requires two parameters, `name` and `definition` (DSL)
+
+|/streams/definitions/\{name\}
+|DELETE
+|delete a stream, undeploying if deployed.
+|===
+
+[[stream-deployments]]
+=== Stream Deployments
+
+.Table Stream Deployments
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/streams/deployments/
+|GET
+|get detailed deployment state for all streams (TBD)
+
+|/streams/deployments
+|DELETE
+|undeploy all streams
+
+|/streams/deployments/\{name\}
+|GET
+|get detailed deployment state for a stream (TBD)
+
+|/streams/deployments
+|POST
+|deploy a stream, where the request body contains the stream name and deployment properties application/x-www-form-urlencoded
+
+|/streams/deployments/\{name\}
+|DELETE
+|undeploy a stream
+|===
+
+[[job-definitions]]
+=== Job Definitions
+
+.Table Job Definitions
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/jobs/definitions
+|GET
+|list defined jobs along with optional deployment state if `deployments=true` request parameter provided (TBD. Is this needed? If so how does it change when we have deployment state?)
+
+|/jobs/definitions
+|DELETE
+|delete all job definitions, undeploying deployed jobs
+
+|/jobs/definitions/\{name\}
+|GET
+|get a job definition (currently no deployment information is included)
+
+|/jobs/definitions
+|POST
+|create a new job, where the The request body is application/x-www-form-urlencoded and requires two parameters, `name` and `definition` (DSL)
+
+|/jobs/definitions/\{name\}
+|DELETE
+|delete a job, undeploying if deployed
+|===
+
+[[job-deployments]]
+=== Job Deployments
+
+.Table Job Deployments
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/jobs/deployments/
+|GET
+|get detailed deployment state for all jobs (TBD)
+
+|/jobs/deployments
+|DELETE
+|undeploy all jobs
+
+|/jobs/deployments/\{name\}
+|GET
+|get detailed deployment state for a job (TBD. Probably not in 1.0)
+
+|/jobs/deployments
+|POST
+|deploy a job, where the request body contains the job name and the deployment properties
+
+|/jobs/deployments/\{name\}
+|DELETE
+|undeploy a job
+|===
+
+[[module-definitions]]
+=== Module Definitions
+
+.Table Module Definitions
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/modules
+|GET
+|list all registered modules
+
+|/modules
+|POST
+|create a composite module, where The request body is application/x-www-form-urlencoded and requires two parameters, `name` and `definition` (DSL)
+
+|/modules/\{type\}/\{name\}
+|GET
+|list a module along with options metadata, where type is `source`,`processor`,`sink`, or `job`
+
+|/modules/\{type\}/\{name\}/definition
+|GET
+|display the module bean definition file (NOTE: currently only XML response supported)
+|===
+
+[[runtime-modules]]
+=== Runtime Modules
+
+.Table Runtime Modules
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/runtime/modules
+|GET
+|display runtime module option values and deployment information for deployed modules, optional parameters are `moduleId` (<stream>.<type>.<moduleName>,`containerId`,`jobname` 
+|===
+
+[[runtime-containers]]
+=== Runtime Containers
+
+.Table Runtime Containers
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|===
+
+[[batch-jobs]]
+=== Batch Jobs
+
+.Table Batch Jobs
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|===
+
+[[batch-executions]]
+=== Batch Executions
+
+.Table Batch Executions
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/batch/executions
+|GET
+|list all job executions
+
+|/batch/executions
+|PUT
+|stop all jobs (stop=true)
+
+|/batch/executions/\{jobExecutionId\}
+|PUT
+|restart (restart=true) or stop (stop=true)
+
+|/batch/executions/\{jobExecutionId\}/steps
+|GET
+|list the steps for a job execution
+
+|/batch/executions/\{jobExecutionId\}/steps/\{stepExecutionId\}
+|GET
+|get a step execution
+
+|/batch/executions/\{jobExecutionId\}/steps/\{stepExecutionId\}/progress
+|GET
+|get the step execution progress
+|===
+
+
+[[job-instances]]
+=== Batch Job Instances
+
+.Table Batch Job Instances
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|===
+
+[[counters]]
+=== Counters
+
+.Table Counters
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/metrics/counters/\{name\}
+|GET
+|get the current metric value
+
+|/metrics/counters/\{name\}
+|DELETE
+|delete the metric
+|===
+
+[[field-value-counters]]
+=== Field Value Counters
+
+.Table Field Value Counters
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/metrics/field-value-counters/\{name\}
+|GET
+|get the current metric values
+
+|/metrics/field-value-counters/\{name\}
+|DELETE
+|delete the metric
+|===
+
+[[aggregate-counters]]
+=== Aggregate Counters
+
+.Table Aggregate Counters
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/metrics/aggregate-counters/\{name\}
+|GET
+|get the current metric values
+
+|/metrics/aggregate-counters/\{name\}
+|DELETE
+|delete the metric
+|===
+
+[[gauges]]
+=== Gauges
+
+.Table Gauges
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/metrics/gauges/\{name\}
+|GET
+|get the current metric values
+
+|/metrics/gauges/\{name\}
+|DELETE
+|delete the metric
+|===
+
+[[rich-gauges]]
+=== Rich Gauges
+
+.Table Rich Gauges
+[cols="3*", width="50%", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/metrics/rich-gauges/\{name\}
+|GET
+|get the current metric values
+
+|/metrics/rich-gauges/\{name\}
+|DELETE
+|delete the metric
+|===
+
+   
