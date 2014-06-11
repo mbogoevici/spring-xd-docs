@@ -12,7 +12,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === XD Resources
 
 .Table XD REST endpoints
-[cols="2*", width="25%"]
+[cols="2*"]
 |===
 |stream definitions     
 |<<stream-definitions,/streams/definitions>>         
@@ -64,7 +64,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Stream Definitions
 
 .Table Stream Definitions
-[cols="3*", width="50%", options="header"]
+[cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -93,7 +93,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Stream Deployments
 
 .Table Stream Deployments
-[cols="3*", width="50%", options="header"]
+[cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -122,7 +122,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Job Definitions
 
 .Table Job Definitions
-[cols="3*", width="50%", options="header"]
+[cols="3*",  options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -151,7 +151,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Job Deployments
 
 .Table Job Deployments
-[cols="3*", width="50%", options="header"]
+[cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -180,7 +180,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Module Definitions
 
 .Table Module Definitions
-[cols="3*", width="50%", options="header"]
+[cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -205,7 +205,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Runtime Modules
 
 .Table Runtime Modules
-[cols="3*", width="50%", options="header"]
+[cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -218,7 +218,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Runtime Containers
 
 .Table Runtime Containers
-[cols="3*", width="50%", options="header"]
+[cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -228,7 +228,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Batch Jobs
 
 .Table Batch Jobs
-[cols="3*", width="50%", options="header"]
+[cols="3*",  options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -238,7 +238,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Batch Executions
 
 .Table Batch Executions
-[cols="3*", width="50%", options="header"]
+[cols="3*",  options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -272,7 +272,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Batch Job Instances
 
 .Table Batch Job Instances
-[cols="3*", width="50%", options="header"]
+[cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -282,7 +282,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Counters
 
 .Table Counters
-[cols="3*", width="50%", options="header"]
+[cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -299,7 +299,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Field Value Counters
 
 .Table Field Value Counters
-[cols="3*", width="50%", options="header"]
+[cols="3*",  options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -316,7 +316,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Aggregate Counters
 
 .Table Aggregate Counters
-[cols="3*", width="50%", options="header"]
+[cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -333,7 +333,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Gauges
 
 .Table Gauges
-[cols="3*", width="50%", options="header"]
+[cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
 
@@ -350,7 +350,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 === Rich Gauges
 
 .Table Rich Gauges
-[cols="3*", width="50%", options="header"]
+[cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
 
