@@ -1,11 +1,13 @@
 === Introduction
-The Spring XD Administrator process (Admin) provides a REST API to access various Spring XD resources such as streams, jobs, metrics, modules, Spring batch resources, and container runtime information. The HTTP port is configurable and may be set as a command line argument when starting the Admin server, or set in $XD_HOME/config/servers.yml. The default port is 9393:
+The Spring XD Administrator process (Admin) provides a REST API to access various Spring XD resources such as streams, jobs, metrics, modules, Spring batch resources, and container runtime information. The REST API is used internally by the XD Shell and Admin UI and can support any custom client application that requires interaction with XD. 
+
+The HTTP port is configurable and may be set as a command line argument when starting the Admin server, or set in $XD_HOME/config/servers.yml. The default port is 9393:
 
 ----
 > $XD_HOME/bin/xd-admin --httpPort <port>
 ----
 
-The Admin Server also provides runtime management services enabled by Spring Boot under the `/management` context path, e.g., localhost:9393/management/metrics. These endpoints are covered in the http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready-monitoring[Spring Boot] documentation. 
+The Admin server also exposes runtime management resources enabled by Spring Boot under the `/management` context path, e.g., http://localhost:9393/management/metrics[]. These resources are covered in the http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#production-ready-monitoring[Spring Boot] documentation. 
 
 NOTE: There is also a `mgmtPort` command line argument which assigns a separate port for management services. Normally the same port is used for everything.
 
