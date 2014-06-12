@@ -340,7 +340,15 @@ xd:> stream create csvStream --definition "file --ref=true --dir=/mycsvdir --pat
 
 ----
 
-The job also supports a boolean `deleteFiles` option if you want the files to be removed after they have been successfully imported.
+The **filepollhdfs** job has the following options:
+
+deleteFiles:: whether to delete files after successful import *(boolean, default: `false`)*
+directory:: the directory to write the file(s) to in HDFS *(String, default: `/xd/<job name>`)*
+fileExtension:: the file extension to use *(String, default: `csv`)*
+fileName:: the filename to use in HDFS *(String, default: `<job name>`)*
+names:: the field names in the CSV file *(String, no default)*
+restartable:: whether the job should be restartable or not in case of failure *(boolean, default: `false`)*
+rollover:: the number of bytes to write before creating a new file in HDFS *(int, default: `1000000`)*
 
 ==== Import CSV Files to JDBC (`filejdbc`)
 
