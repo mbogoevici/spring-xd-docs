@@ -1,0 +1,16 @@
+The **aggregator** processor has the following options:
+
+aggregation:: how to construct the aggregated message (SpEL expression against a collection of messages) *(String, default: `#this.![payload]`)*
+correlation:: how to correlate messages (SpEL expression against each message) *(String, default: `'<stream name>'`)*
+count:: the number of messages to group together before emitting a group *(int, default: `50`)*
+dbkind:: which flavor of init scripts to use for the jdbc store (blank to attempt autodetection) *(String, no default)*
+driverClassName:: the jdbc driver to use when using the jdbc store *(String, no default)*
+hostname:: hostname of the redis instance to use as a store *(String, default: `localhost`)*
+initializeDatabase:: whether to auto-create the database tables for the jdbc store *(boolean, default: `false`)*
+password:: the password to use when using the jdbc or redis store *(String, default: ``)*
+port:: port of the redis instance to use as a store *(int, default: `6379`)*
+release:: when to release messages (SpEL expression against a collection of messages accumulated so far) *(String, no default)*
+store:: the kind of store to use to retain messages *(StoreKind, default: `memory`, possible values: `memory,jdbc,redis`)*
+timeout:: the delay (ms) after which messages should be released, even if the completion criteria is not met *(int, default: `50000`)*
+url:: the jdbc url to connect to when using the jdbc store *(String, no default)*
+username:: the username to use when using the jdbc store *(String, no default)*

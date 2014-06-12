@@ -1,0 +1,9 @@
+The **mqtt** sink has the following options:
+
+clientId:: identifies the client *(String, default: `xd.mqtt.client.id.snk`)*
+password:: the password to use when connecting to the broker *(String, default: `guest`)*
+qos:: the quality of service to use *(int, default: `1`)*
+retained:: whether to set the 'retained' flag *(boolean, default: `false`)*
+topic:: the topic to which the sink will publish *(String, default: `xd.mqtt.test`)*
+url:: location of the mqtt broker *(String, default: `tcp://localhost:1883`)*
+username:: the username to use when connecting to the broker *(String, default: `guest`)*

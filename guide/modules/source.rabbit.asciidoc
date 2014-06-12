@@ -1,0 +1,16 @@
+The **rabbit** source has the following options:
+
+ackMode:: the acknowledge mode (AUTO, NONE, MANUAL) *(String, default: `AUTO`)*
+concurrency:: the minimum number of consumers *(int, default: `1`)*
+converterClass:: the class name of the message converter *(String, default: `org.springframework.amqp.support.converter.SimpleMessageConverter`)*
+host:: the host (or IP Address) to connect to *(String, default: `localhost`)*
+maxConcurrency:: the maximum number of consumers *(int, default: `1`)*
+password:: the password to use to connect to the broker *(String, default: `guest`)*
+port:: the port to connect to *(int, default: `5672`)*
+prefetch:: the prefetch size *(int, default: `1`)*
+queues:: the queue(s) from which messages will be received *(String, default: `<stream name>`)*
+requeue:: whether rejected messages will be requeued by default *(boolean, default: `true`)*
+transacted:: true if the channel is to be transacted *(boolean, default: `false`)*
+txSize:: the number of messages to process before acking *(int, default: `1`)*
+username:: the username to use to connect to the broker *(String, default: `guest`)*
+vhost:: the RabbitMQ virtual host to use *(String, default: `/`)*

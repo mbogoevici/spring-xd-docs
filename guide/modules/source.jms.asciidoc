@@ -1,0 +1,9 @@
+The **jms** source has the following options:
+
+amqUrl:: the ActiveMQ broker URL *(String, default: `tcp://localhost:61616`)*
+clientId:: an identifier for the client, to be associated with a durable topic subscription *(String, no default)*
+destination:: the destination name from which messages will be received *(String, default: `<stream name>`)*
+durableSubscription:: when true, indicates the subscription to a topic is durable *(boolean, default: `false`)*
+provider:: the JMS provider *(String, default: `activemq`)*
+pubSub:: when true, indicates that the destination is a topic *(boolean, default: `false`)*
+subscriptionName:: a name that will be assigned to the topic subscription *(String, no default)*

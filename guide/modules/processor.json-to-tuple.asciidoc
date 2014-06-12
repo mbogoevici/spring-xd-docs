@@ -1,0 +1,2 @@
+The **json-to-tuple** processor has the following options:
+

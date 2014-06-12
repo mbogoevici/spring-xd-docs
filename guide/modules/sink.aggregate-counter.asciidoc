@@ -1,0 +1,5 @@
+The **aggregate-counter** sink has the following options:
+
+dateFormat:: a pattern (as in SimpleDateFormat) for parsing/formatting dates and timestamps *(String, default: `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`)*
+name:: the name of the metric to contribute to (will be created if necessary) *(String, default: `<stream name>`)*
+timeField:: name of a field in the message that contains the timestamp to contribute to *(String, default: `null`)*

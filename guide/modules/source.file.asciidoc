@@ -1,0 +1,7 @@
+The **file** source has the following options:
+
+dir:: the absolute path to the directory to monitor for files *(String, default: `/tmp/xd/input/<stream name>`)*
+fixedDelay:: the fixed delay polling interval specified in seconds *(int, default: `5`)*
+pattern:: a filter expression (Ant style) to accept only files that match the pattern *(String, default: `*`)*
+preventDuplicates:: whether to prevent the same file from being processed twice *(boolean, default: `true`)*
+ref:: set to true to output the File object itself *(boolean, default: `false`)*

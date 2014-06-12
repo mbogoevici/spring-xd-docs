@@ -1,0 +1,11 @@
+The **twittersearch** source has the following options:
+
+connectTimeout:: the connection timeout for making a connection to Twitter (ms) *(int, default: `5000`)*
+consumerKey:: a consumer key issued by twitter *(String, no default)*
+consumerSecret:: consumer secret corresponding to the consumer key *(String, no default)*
+geocode:: geo-location given as latitude,longitude,radius. e.g., '37.781157,-122.398720,1mi' *(String, default: ``)*
+includeEntities:: whether to include entities such as urls, media and hashtags *(boolean, default: `true`)*
+language:: language code e.g. 'en' *(String, default: ``)*
+query:: the query string *(String, default: ``)*
+readTimeout:: the read timeout for the underlying URLConnection to the twitter stream (ms) *(int, default: `9000`)*
+resultType:: result type: recent, popular, or mixed *(ResultType, default: `mixed`, possible values: `mixed,recent,popular`)*

@@ -1,0 +1,10 @@
+The **tcp** source has the following options:
+
+bufferSize:: the size of the buffer (bytes) to use when encoding/decoding *(int, default: `2048`)*
+charset:: the charset used when converting from bytes to String *(String, default: `UTF-8`)*
+decoder:: the decoder to use when receiving messages *(Encoding, default: `CRLF`, possible values: `CRLF,LF,NULL,STXETX,RAW,L1,L2,L4`)*
+nio:: whether or not to use NIO *(boolean, default: `false`)*
+port:: the port on which to listen *(int, default: `1234`)*
+reverseLookup:: perform a reverse DNS lookup on the remote IP Address *(boolean, default: `false`)*
+socketTimeout:: the timeout (ms) before closing the socket when no data is received *(int, default: `120000`)*
+useDirectBuffers:: whether or not to use direct buffers *(boolean, default: `false`)*

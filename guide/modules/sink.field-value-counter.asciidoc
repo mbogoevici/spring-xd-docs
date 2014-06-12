@@ -1,0 +1,4 @@
+The **field-value-counter** sink has the following options:
+
+fieldName:: the name of the field for which values are counted *(String, no default)*
+name:: the name of the metric to contribute to (will be created if necessary) *(String, default: `<stream name>`)*

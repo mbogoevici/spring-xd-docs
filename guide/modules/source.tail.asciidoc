@@ -1,0 +1,9 @@
+The **tail** source has the following options:
+
+delay:: how often (ms) to poll for new lines (forces use of the Apache Tailer, requires nativeOptions='') *(long, no default)*
+fileDelay:: on platforms that don't wait for a missing file to appear, how often (ms) to look for the file *(long, default: `5000`)*
+fromEnd:: whether to tail from the end (true) or from the start (false) of the file (forces use of the Apache Tailer, requires nativeOptions='') *(boolean, no default)*
+lines:: the number of lines prior to the end of an existing file to tail; does not apply if 'nativeOptions' is provided *(int, default: `0`)*
+name:: the absolute path of the file to tail *(String, default: `/tmp/xd/input/<stream name>`)*
+nativeOptions:: options for a native tail command; do not set and use 'end', 'delay', and/or 'reOpen' to use the Apache Tailer *(String, no default)*
+reOpen:: whether to reopen the file each time it is polled (forces use of the Apache Tailer, requires nativeOptions='') *(boolean, no default)*

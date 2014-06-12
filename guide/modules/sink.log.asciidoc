@@ -1,0 +1,5 @@
+The **log** sink has the following options:
+
+expression:: the expression to be evaluated for the log content; use '#root' to log the full message *(String, default: `payload`)*
+level:: the log level *(String, default: `INFO`)*
+name:: the name of the log category to log to (will be prefixed by 'xd.sink.') *(String, default: `<stream name>`)*

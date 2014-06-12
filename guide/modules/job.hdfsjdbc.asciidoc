@@ -1,0 +1,14 @@
+The **hdfsjdbc** job has the following options:
+
+deleteFiles:: whether to delete files after successful import *(boolean, default: `false`)*
+delimiter:: the delimiter for the delimited file *(String, default: `,`)*
+driverClassName:: the JDBC driver to use *(String, no default)*
+initializeDatabase:: whether the database initialization script should be run *(boolean, default: `false`)*
+initializerScript:: the name of the SQL script (in /config) to run if 'initializeDatabase' is set *(String, default: `init_batch_import.sql`)*
+names:: the field names in the CSV file *(String, no default)*
+password:: the JDBC password *(String, no default)*
+resources:: the list of paths to import (Spring resources) *(String, no default)*
+restartable:: whether the job should be restartable or not in case of failure *(boolean, default: `false`)*
+tableName:: the database table to which the data will be written *(String, default: `<job name>`)*
+url:: the JDBC URL for the database *(String, no default)*
+username:: the JDBC username *(String, no default)*

@@ -1,0 +1,7 @@
+The **ftphdfs** job has the following options:
+
+host:: the host name for the FTP server *(String, no default)*
+partitionResultsTimeout:: time (ms) that the partition handler will wait for results *(long, default: `300000`)*
+password:: the password for the FTP connection *(String, no default)*
+port:: the port for the FTP server *(int, default: `21`)*
+username:: the username for the FTP connection *(String, no default)*

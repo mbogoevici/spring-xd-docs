@@ -1,0 +1,4 @@
+The **time** source has the following options:
+
+fixedDelay:: how often to emit a message, expressed in seconds *(int, default: `1`)*
+format:: how to render the current time, using SimpleDateFormat *(String, default: `yyyy-MM-dd HH:mm:ss`)*

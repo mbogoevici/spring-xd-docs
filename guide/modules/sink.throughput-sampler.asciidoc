@@ -1,0 +1,5 @@
+The **throughput-sampler** sink has the following options:
+
+endMessage:: the message payload to demarcate the end of a sampling *(String, default: `END`)*
+sampleUnit:: the TimeUnit in which throughput measurements are to be reported *(String, default: `seconds`)*
+startMessage:: the message payload to demarcate the start of a sampling *(String, default: `START`)*

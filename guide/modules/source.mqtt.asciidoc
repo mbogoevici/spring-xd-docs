@@ -1,0 +1,7 @@
+The **mqtt** source has the following options:
+
+clientId:: identifies the client *(String, default: `xd.mqtt.client.id.src`)*
+password:: the password to use when connecting to the broker *(String, default: `guest`)*
+topics:: the topic(s) to which the source will subscribe *(String, default: `xd.mqtt.test`)*
+url:: location of the mqtt broker *(String, default: `tcp://localhost:1883`)*
+username:: the username to use when connecting to the broker *(String, default: `guest`)*
