@@ -23,9 +23,10 @@ link:Batch-Jobs[Batch Jobs] +
 link:Type-Conversion[Type Conversion] +
 link:Monitoring-and-Management[Monitoring and Management] +
 link:DSL-Reference[DSL Reference] +
+link:AdminUI[Admin UI] +
+link:REST-API[REST API] +
 link:Tuples[Tuples] +
 link:Samples[Samples] +
-link:AdminUI[Admin UI] +
 --
 link:Hadoop-Installation[Appendix A: Installing Hadoop] +
 link:Creating-a-Source-Module[Appendix B: Creating a Source Module] +

@@ -58,6 +58,9 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 
 |rich-gauges
 |<<rich-gauges,/metrics/rich-gauges>>
+
+|completions
+|<<completions,/completions>>
 |===
 
 [[stream-definitions]]
@@ -222,6 +225,9 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 |===
 |Resource URL | Request Method | Description
 
+|/runtime/containers
+|GET
+|display all available containers along with runtime and user-defined container attributes
 |===
 
 [[batch-jobs]]
@@ -232,6 +238,21 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 |===
 |Resource URL | Request Method | Description
 
+|/batch/jobs
+|GET
+|get information about all batch jobs
+
+|/batch/jobs/\{jobName\}
+|GET
+|get information about a batch job
+
+|/batch/jobs/\{jobName\}/executions
+|GET
+|get information about all executions of a job
+
+|/batch/jobs/\{jobName\}/instances
+|GET
+|get information about all instances of a job
 |===
 
 [[batch-executions]]
@@ -276,6 +297,9 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 |===
 |Resource URL | Request Method | Description
 
+|/batch/instances/\{instanceId\}
+|GET
+|get information about a batch job instance
 |===
 
 [[counters]]
@@ -361,6 +385,28 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 |/metrics/rich-gauges/\{name\}
 |DELETE
 |delete the metric
+|===
+
+[[completions]]
+=== Tab Completions
+Used to support DSL tab completion for the XD Shell. All requests require the `start` parameter which contains the incomplete definition.
+
+.Table Tab Completions
+[cols="3*", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/completions/stream
+|GET
+|retrieve valid choices to complete a stream definition
+
+|/completions/job
+|GET
+|retrieve valid choices to complete a job definition
+
+|/completions/module
+|GET
+|retrieve valid choices to complete a module definition
 |===
 
    
