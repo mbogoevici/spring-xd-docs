@@ -86,6 +86,8 @@ The file sink, by default, will add a newline at the end of each line; the actua
 
 This can be disabled by using `--binary=true`.
 
+include::modules/sink.file.asciidoc[]
+
 [[hadoop-hdfs]]
 === Hadoop (HDFS)
 
