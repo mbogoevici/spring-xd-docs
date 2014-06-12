@@ -22,29 +22,29 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 |stream deployments     
 |<<stream-deployments,/streams/deployments>>         
 
-|job module definitions
+|job definitions
 |<<job-definitions,/jobs/definitions>>         
 
 |job deployments
-|<<job-deployments,/jobs/deployments>>            
+|<<job-deployments,/jobs/deployments>>
+
+|batch job configurations
+|<<batch-jobs,/jobs/configurations>>         
+
+|batch job executions
+|<<batch-executions,/jobs/executions>>            
+
+|batch job instances
+|<<job-instances,/jobs/instances>>          
 
 |module definitions       
 |<<module-definitions,/modules>>                      
 
 |deployed modules
-|<<runtime-modules,/runtime/modules>>               
+|<<runtime-modules,/runtime/modules>>              
 
 |containers               
-|<<runtime-containers,/runtime/containers>>       
-
-|batch job definitions
-|<<batch-jobs,/batch/jobs>>         
-
-|batch executions
-|<<batch-executions,/batch/executions>>            
-
-|job instances
-|<<job-instances,/batch/instances>>
+|<<runtime-containers,/runtime/containers>>
 
 |counters
 |<<counters,/metrics/counters>>
@@ -75,7 +75,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 
 |/streams/definitions
 |GET
-|list defined streams along with optional deployment state if `deployments=true` request parameter provided (TBD. Is this needed? If so how does it change when we have deployment state?)
+|list defined streams along with deployment state
 
 |/streams/definitions
 |DELETE
@@ -87,7 +87,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 
 |/streams/definitions
 |POST
-|create a new stream, optionally deploying it if `deploy=true` request parameter is provided. The request body is application/x-www-form-urlencoded and requires two parameters, `name` and `definition` (DSL)
+|create a new stream, optionally deploying it if `deploy=true`(default). The request body is application/x-www-form-urlencoded and requires two parameters, `name` and `definition` (DSL)
 
 |/streams/definitions/\{name\}
 |DELETE
@@ -133,7 +133,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 
 |/jobs/definitions
 |GET
-|list defined jobs along with optional deployment state if `deployments=true` request parameter provided (TBD. Is this needed? If so how does it change when we have deployment state?)
+|list defined jobs along with deployment state
 
 |/jobs/definitions
 |DELETE
@@ -141,7 +141,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 
 |/jobs/definitions/\{name\}
 |GET
-|get a job definition (currently no deployment information is included)
+|get a job definition
 
 |/jobs/definitions
 |POST
@@ -179,6 +179,83 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 |/jobs/deployments/\{name\}
 |DELETE
 |undeploy a job
+|===
+
+[[batch-jobs]]
+=== Batch Job Configurations
+Spring Batch configured jobs stored in the Spring Batch Repository 
+
+.Table Batch Jobs
+[cols="3*",  options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/jobs/configurations
+|GET
+|get configuration information about all batch jobs
+
+|/jobs/configurations/\{jobName\}
+|GET
+|get configuration information about a batch job
+|===
+
+[[batch-executions]]
+=== Batch Job Executions
+
+.Table Batch Executions
+[cols="3*",  options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/jobs/executions
+|GET
+|list all job executions
+
+|/jobs/executions?stop=true
+|PUT
+|stop all jobs
+
+|/jobs/executions/\{jobName\}
+|GET
+|get information about all executions of a job
+
+|/jobs/executions/\{jobExecutionId\}?restart=true
+|PUT
+|restart a job
+
+|/jobs/executions/\{jobExecutionId\}?stop=true
+|PUT
+|stop a job
+
+|/jobs/executions/\{jobExecutionId\}/steps
+|GET
+|list the steps for a job execution
+
+|/jobs/executions/\{jobExecutionId\}/steps/\{stepExecutionId\}
+|GET
+|get a step execution
+
+|/jobs/executions/\{jobExecutionId\}/steps/\{stepExecutionId\}/progress
+|GET
+|get the step execution progress
+|===
+
+
+[[job-instances]]
+=== Batch Job Instances
+
+.Table Batch Job Instances
+[cols="3*", options="header"]
+|===
+|Resource URL | Request Method | Description
+
+|/jobs/instances?jobname=\{jobName\}
+|GET
+|get information about all instances of a job
+
+|/jobs/instances?instance=\{instanceId\}
+|GET
+|get information about a batch job instance
 |===
 
 [[module-definitions]]
@@ -230,78 +307,6 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 |/runtime/containers
 |GET
 |display all available containers along with runtime and user-defined container attributes
-|===
-
-[[batch-jobs]]
-=== Batch Jobs
-
-.Table Batch Jobs
-[cols="3*",  options="header"]
-|===
-|Resource URL | Request Method | Description
-
-|/batch/jobs
-|GET
-|get information about all batch jobs
-
-|/batch/jobs/\{jobName\}
-|GET
-|get information about a batch job
-
-|/batch/jobs/\{jobName\}/executions
-|GET
-|get information about all executions of a job
-
-|/batch/jobs/\{jobName\}/instances
-|GET
-|get information about all instances of a job
-|===
-
-[[batch-executions]]
-=== Batch Executions
-
-.Table Batch Executions
-[cols="3*",  options="header"]
-|===
-|Resource URL | Request Method | Description
-
-|/batch/executions
-|GET
-|list all job executions
-
-|/batch/executions
-|PUT
-|stop all jobs (stop=true)
-
-|/batch/executions/\{jobExecutionId\}
-|PUT
-|restart (restart=true) or stop (stop=true)
-
-|/batch/executions/\{jobExecutionId\}/steps
-|GET
-|list the steps for a job execution
-
-|/batch/executions/\{jobExecutionId\}/steps/\{stepExecutionId\}
-|GET
-|get a step execution
-
-|/batch/executions/\{jobExecutionId\}/steps/\{stepExecutionId\}/progress
-|GET
-|get the step execution progress
-|===
-
-
-[[job-instances]]
-=== Batch Job Instances
-
-.Table Batch Job Instances
-[cols="3*", options="header"]
-|===
-|Resource URL | Request Method | Description
-
-|/batch/instances/\{instanceId\}
-|GET
-|get information about a batch job instance
 |===
 
 [[counters]]
@@ -398,15 +403,15 @@ Used to support DSL tab completion for the XD Shell. All requests require the `s
 |===
 |Resource URL | Request Method | Description
 
-|/completions/stream
+|/completions/stream?start=\{start\}
 |GET
 |retrieve valid choices to complete a stream definition
 
-|/completions/job
+|/completions/job?start=\{start\}
 |GET
 |retrieve valid choices to complete a job definition
 
-|/completions/module
+|/completions/module?start=\{start\}
 |GET
 |retrieve valid choices to complete a module definition
 |===
