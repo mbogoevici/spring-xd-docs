@@ -6,8 +6,3 @@ Welcome to *Spring XD* - a unified, distributed, and extensible system for data 
 |What is Spring XD? Why did we build it?|Learn about the open source project and how to contribute|Get started using Spring XD in a few easy steps|Learn all about the architecture and components of Spring XD
 
 
-link:sink.file[]
-
-
-
-
