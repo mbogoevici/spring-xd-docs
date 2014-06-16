@@ -114,9 +114,9 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 |GET
 |get detailed deployment state for a stream (TBD)
 
-|/streams/deployments
+|/streams/deployments/\{name\}
 |POST
-|deploy a stream, where the request body contains the stream name and deployment properties application/x-www-form-urlencoded
+|deploy a stream, where the request body contains the deployment properties application/x-www-form-urlencoded
 
 |/streams/deployments/\{name\}
 |DELETE
@@ -172,9 +172,9 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 |GET
 |get detailed deployment state for a job (TBD. Probably not in 1.0)
 
-|/jobs/deployments
+|/jobs/deployments\{name\}
 |POST
-|deploy a job, where the request body contains the job name and the deployment properties
+|deploy a job, where the request body contains the deployment properties
 
 |/jobs/deployments/\{name\}
 |DELETE
