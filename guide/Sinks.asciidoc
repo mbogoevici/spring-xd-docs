@@ -81,10 +81,11 @@ You can cutomize the behavior and specify the `name` and `dir` options of the ou
   xd:> stream create --name otherfilestream --definition "http --port=8000 | file --name=myfile --dir=/some/custom/directory" --deploy
 
 ==== File with Options
-
+//^sink.file
 The file sink, by default, will add a newline at the end of each line; the actual newline will depend on the operating system.
 
 This can be disabled by using `--binary=true`.
+//$sink.file
 
 [[hadoop-hdfs]]
 === Hadoop (HDFS)
