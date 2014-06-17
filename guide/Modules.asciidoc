@@ -300,33 +300,6 @@ Information about source module 'file':
 
 ----
 
-To display the actual definition file of a module use the `module display --name <module type>:<module name>` command. For example:
-
-[source,bash]
-----
-xd:>module display --name source:tcp
-Configuration file contents for module definition 'tcp' (source):
-
--------------------------------------------------------------------------------
-...
-    <int-ip:tcp-connection-factory id="connectionFactory"
-        type="server"
-        port="${port}"
-        lookup-host="${reverseLookup}"
-        so-timeout="${socketTimeout}"
-        using-nio="${nio}"
-        using-direct-buffers="${useDirectBuffers}"
-        deserializer="${decoder}"/>
-
-    <int-ip:tcp-inbound-channel-adapter id="adapter" channel="toString"
-        auto-startup="false"
-        connection-factory="connectionFactory"/>
-
-    <int:transformer input-channel="toString" output-channel="output" expression="new String(payload, '${charset}')"/>
-
-    <int:channel id="output"/>
-...
-----
 
 [[module_values]]
 === How module options are resolved
