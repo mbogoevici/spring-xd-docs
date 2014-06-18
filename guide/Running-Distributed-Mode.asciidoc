@@ -82,7 +82,7 @@ Currently XD does not ship with ZooKeeper. At the time of this writing, the comp
 
 If you already have a running instance of *Redis* it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*. You can change that in the `servers.yml` file residing in the `config/` directory.
 
-If you don't have a pre-existing installation of _Redis_, you can use the _Spring XD_ provided instance (For Linux and Mac). Inside the _Spring XD_ installation directory (spring-xd) do:
+If you don't have a pre-existing installation of _Redis_, you can use the _Spring XD_ provided instance (For Linux and Mac) which is included in the .zip download.  If you are installing using brew or rpm you should install Redis using those installers or download the source tarball and compile Redis yourself.  If you used the .zip download then inside the _Spring XD_ installation directory (spring-xd) do:
 [source,bash]
 ----
 $ cd redis/bin
