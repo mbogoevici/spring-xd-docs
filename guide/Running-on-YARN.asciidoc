@@ -2,7 +2,7 @@
 The Spring XD distributed runtime (DIRT) supports distribution of processing tasks across multiple nodes. See link:Running-Distributed-Mode[Running Distributed Mode] for information on running Spring XD in distributed mode. One option is to run these nodes on a Hadoop YARN cluster rather than on VMs or physical servers managed by you.
 
 === What do you need?
-To begin with, you need to have access to a Hadoop cluster running a version based on Apache Hadoop 2.2.0 or later. This includes link:http://www.us.apache.org/dist/hadoop/common/hadoop-2.2.0/[Apache Hadoop 2.2.0], link:http://hortonworks.com/hdp/[Hortonworks HDP 2.1] and link:http://www.cloudera.com/content/cloudera/en/products-and-services/cloudera-express.html[Cloudera CDH5].
+To begin with, you need to have access to a Hadoop cluster running a version based on Apache Hadoop 2.2.0 or later. This includes link:http://www.us.apache.org/dist/hadoop/common/hadoop-2.2.0/[Apache Hadoop 2.2.0], link:http://www.gopivotal.com/big-data/pivotal-hd[Pivotal HD 2.0], link:http://hortonworks.com/hdp/[Hortonworks HDP 2.1] and link:http://www.cloudera.com/content/cloudera/en/products-and-services/cloudera-express.html[Cloudera CDH5].
 
 You also need a supported transport, see link:Running-Distributed-Mode[Running Distributed Mode] for installation of Redis or Rabbit MQ. Spring XD on YARN currently uses Redis as the default data transport.
 
