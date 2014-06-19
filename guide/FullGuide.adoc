@@ -128,7 +128,6 @@ include::Building-Spring-XD.asciidoc[]
 include::Monitoring-and-Management.asciidoc[]
 
 // The following is generated at release-time
-// As a consequence, it needs not be present in the _Sidebar file
 [appendix]
 [[shell-command-reference]]
 == XD Shell Command Reference

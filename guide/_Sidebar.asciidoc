@@ -33,5 +33,8 @@ link:Creating-a-Source-Module[Appendix B: Creating a Source Module] +
 link:Creating-a-Processor-Module[Appendix C: Creating a Processor Module] +
 link:Creating-a-Sink-Module[Appendix D: Creating a Sink Module] +
 link:ModuleOptionsMetadata[Appendix E: Providing Module Options Metadata] +
-link:Building-Spring-XD[Appendix F: Building Spring XD]
+link:Building-Spring-XD[Appendix F: Building Spring XD] +
+link:Monitoring-and-Management[Appendix G: Monitoring and Management] +
+link:ShellReference[Appendix H: XD Shell Command Reference]
+
 ****
