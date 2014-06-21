@@ -43,9 +43,12 @@ Spring XD saves the state of the batch job workflows in a relational database.  
 
 When deploying in a production environment, you will need to select another database.  Spring XD is actively tested on MySql (Version: 5.1.23) and Postgres (Version 9.2-1002).  All batch workflow tables are automatically created, if they do not exist, for HSQLDB, MySQL and Postgres.  The JDBC driver jars for the HSQLDB, MySql, and Postgres are already on the XD classpath.
 
+The provided configuration file `servers.yml` located in `$XD_HOME\config` has commented out configuration for some commonly used databases.  You can use these as a basis to support your database environment.
+
 NOTE: Until full schema support is added for Oracle, Sybase and other database, you will need to put a .jar file in the `xd/lib` directory that contains the equivalent functionality as these https://github.com/spring-projects/spring-xd/tree/master/spring-xd-batch/src/main/resources/org/springframework/xd/batch/schema[DDL scripts].  
 
-The provided configuration file `servers.yml` located in `$XD_HOME\config` has commented out configuration for some commonly used databases.  You can use these as a basis to support your database environment.
+NOTE: There was a schema change in version 1.0 RC1.  Use or adapt the the https://gist.github.com/ilayaperumalg/3f379eb7f4527f6f6da4[sample migration class] to update your schema.
+
 
 ===== HSQLDB 
 
