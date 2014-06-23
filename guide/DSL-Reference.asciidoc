@@ -93,8 +93,8 @@ Arguably, the most complex component when it comes to quotes is the shell. The r
 
 * a shell command is made of keys (`--foo`) and corresponding values. There is a special, key-less mapping though, see below
 * a value can not normally contain spaces, as space is the default delimiter for commands
-* spaces can be added though, by surrounding the value with quotes (only double quotes at the time of writing)
-* if surrounded with quotes, a value can embed a literal quote by prefixing it with a backslash (`\`)
+* spaces can be added though, by surrounding the value with quotes (either single [`'`] or double [`"`] quotes)
+* if surrounded with quotes, a value can embed a literal quote of the same kind by prefixing it with a backslash (`\`)
 * Other escapes are available, such as `\t`, `\n`, `\r`, `\f` and unicode escapes of the form `\uxxxx`
 * Lastly, the key-less mapping is handled in a special way in the sense that if does not need quoting to contain spaces
 
