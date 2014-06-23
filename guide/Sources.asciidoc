@@ -50,9 +50,8 @@ To send binary data, set the `Content-Type` header to `application/octet-string`
 
 ==== HTTP with options
 
-The http source has one option
-
-port:: The http port where data will be posted *(default: `9000`)*
+//^source.http
+//$source.http
 
 Here is an example 
 
@@ -103,11 +102,8 @@ $ cat /tmp/xd/output/tailtest
 ----
 ==== Tail with options
 
-The tail source has 3 options:
-
-name:: the absolute path to the file to tail *(default: `/tmp/xd/input/<streamName>`)*
-lines:: the number of lines from the end of an existing file to tail *(default: `0`)*
-fileDelay:: on platforms that don't wait for a missing file to appear, how often (ms) to look for the file *(default: `5000`)*
+//^source.tail
+//$source.tail
 
 Here is an example 
 
@@ -150,13 +146,10 @@ Copy a file into the directory `/tmp/xd/input/filetest` and observe its contents
 
 ==== File with options
 
-The file source has 5 options
+//^source.file
+//$source.file
 
-dir:: The absolute path to the directory to monitor for files *(default: `/tmp/xd/input/<streamName>`)*
-preventDuplicates:: Default value is `true` to prevent the same file from being processed twice.
-pattern:: A filter expression (Ant style) that accepts only files that match the pattern.
-fixedDelay:: The fixed delay polling interval specified in seconds *(default: 5)*
-ref:: Set to true to output the File object itself. This is useful in some cases in which the file contents are large and it would be more efficient to send the file path across the network than the contents. This option requires that the file be in a shared file system.
+The `ref` option is useful in some cases in which the file contents are large and it would be more efficient to send the file path.
 
 [[mail_source]]
 === Mail
@@ -170,19 +163,8 @@ Then send an email to yourself and you should see it appear inside a file at `/t
 
 The full list of options for the `mail` source is below:
 
-protocol:: the protocol to use amongst pop3, pop3s, imap, imaps *(default: `imaps`)*
-username:: the username to use to connect to the mail server *(no default)*
-password:: the password to use to connect to the mail server *(no default)*
-host:: the hostname of the mail server *(default: `localhost`)*
-port:: the port of the mail server *(default: `25`)*
-folder:: the folder to take emails from *(default: `INBOX`)*
-markAsRead:: whether to mark emails as read once they've been fetched by the module *(default: `false`)*
-delete:: whether to delete the emails once they've been fetched by the module *(default: `true`)*
-usePolling:: whether to use polling or not (no-polling works with imap(s) only) *(default: `false`)*
-fixedDelay:: the polling interval used for looking up messages, expressed in seconds. *(default: `60`)*
-charset:: the charset used to transform the body of the incoming emails to Strings. *(default: `UTF-8`)*
-expression:: a SpEL expression which filters which mail messages will be processed (non polling imap only) *(no default)*
-
+//^source.mail
+//$source.mail
 
 [WARNING]
 Of special attention are the `markAsRead` and `delete` options, which by default will *delete* the emails once they are consumed. It is hard to come up with a sensible default option for this (please refer to the Spring Integration documentation section on mail handling for a discussion about this), so just be aware that the default for XD is to delete incoming messages.
@@ -191,9 +173,10 @@ Of special attention are the `markAsRead` and `delete` options, which by default
 [[twittersearch]]
 === Twitter Search
 
-The twittersearch source runs a continuous query against Twitter and has following parameters
+The twittersearch source runs a continuous query against Twitter.
 
-query:: The query that will be run against Twitter. For information on how to construct a query, see the https://dev.twitter.com/docs/api/1.1/get/search/tweets[Search API v1.1].
+//^source.twittersearch
+query:: The query that will be run against Twitter. 
 consumerKey:: An application consumer key issued by twitter
 consumerSecret:: The secret corresponding to the `consumerKey`
 geocode:: Limit the search to a geographic area given by latitude,longitude,radius
@@ -202,6 +185,9 @@ includeEntities:: Include entities (hashtag metadata, etc) *(default:true)*
 resultType:: popular, recent, mixed *(default: mixed)*
 readTimeout:: The timeout in ms for each read *(default: 9000 ms)*
 connectTimeout:: The timeout in ms for connecting to Twitter *(default: 5000 ms)*
+//$source.twittersearch
+
+For information on how to construct a query, see the https://dev.twitter.com/docs/api/1.1/get/search/tweets[Search API v1.1].
 
 To get a `consumerKey` and `consumerSecret` you need to register a twitter application. If you don't already have one set up, you can create an app at the https://dev.twitter.com/apps[Twitter Developers] site to get these credentials.
 
@@ -231,17 +217,11 @@ Stream creation is then straightforward:
 
     xd:> stream create --name tweets --definition "twitterstream | file" --deploy
 
-The parameters available are pretty much the same as those listed in the https://dev.twitter.com/docs/streaming-apis/parameters[API docs] and unless otherwise stated, the accepted formats are the same.
+//^source.twitterstream
+//$source.twitterstream
 
-https://dev.twitter.com/docs/streaming-apis/parameters#delimited[delimited]:: set to `true` to get length delimiters in the stream data *(default: false)*
-https://dev.twitter.com/docs/streaming-apis/parameters#stall_warnings[stallWarnings]:: set to `true` to enable stall warnings *(default: false)*
-https://dev.twitter.com/docs/streaming-apis/parameters#filter_level[filterLevel]:: controls which tweets make it through to the stream
-https://dev.twitter.com/docs/streaming-apis/parameters#language[language]:: comma delimited set of languages to include
-https://dev.twitter.com/docs/streaming-apis/parameters#follow[follow]:: comma delimited set of user ids whose tweets should be included in the stream
-https://dev.twitter.com/docs/streaming-apis/parameters#track[track]:: which terms to filter for in tweets
-https://dev.twitter.com/docs/streaming-apis/parameters#locations[locations]:: a comma-separated list of longitude,latitude pairs specifying a set of bounding boxes to filter Tweets
-readTimeout:: The timeout in ms for each read *(default: 9000 ms)*
-connectTimeout:: The timeout in ms for connecting to Twitter *(default: 5000 ms)*
+Note: The options available are pretty much the same as those listed in the https://dev.twitter.com/docs/streaming-apis/parameters[Twitter API docs] and unless otherwise stated, the accepted formats are the same.
+
 
 NOTE: Both `twittersearch` and `twitterstream` emit JSON in the https://dev.twitter.com/docs/platform-objects/tweets[native Twitter format].  
 
@@ -251,13 +231,8 @@ This source configures a client cache and client region, along with the necessar
 
 ==== Options
 
-The Gemfire CacheListener source has the following options
-
-regionName:: The name of the region for which events are to be monitored *(default: stream name)*
-cacheEventExpression:: An optional SpEL expression referencing the EntryEvent object. *(default: `newValue`)*
-host:: The host of the cache server or locator *(default: localhost)*
-port:: The port of the cache server or locator *(default: 40404)*
-useLocator:: Set to true if using a locator *(default:false)*
+//^source.gemfire
+//$source.gemfire
 
 ==== Example
 Use of the gemfire source requires an external process (or a separate stream) that creates or updates entries in a GemFire region configured for a cache server. Such events may feed an XD stream. To enable such a stream, the XD container must join a GemFire distributed client-server system as a client, creating a client region corresponding to an existing region on a cache server. The client region registers a cache listener via the Spring Integration GemFire inbound channel adapter. The client region and pool are configured for a subscription on all keys in the region.  
@@ -273,7 +248,7 @@ Now send some messages to the stocks stream.
      xd:> http post --target http://localhost:9090 --data {"symbol":"FAKE","price":78}
      xd:> http post --target http://localhost:9090 --data {"symbol":"FAKE","price":80}
 
-NOTE: Avoid spaces in the JSON when using the shell to post data. 
+NOTE: Avoid spaces in the JSON when using the shell to post data
 
 As updates are posted to the cache you should see them captured in the output file:
 
@@ -304,12 +279,8 @@ Continuous query allows client applications to create a GemFire query using Obje
 
 ==== Options
 
-The qemfire-cq source has the following options
-
-query:: The query string in Object Query Language(OQL) *(required, String)*
-host:: The host on which the GemFire server or locator is running. *(default: `localhost`)*
-port:: The port on which the GemFire server or locator is running. *(default: `40404`)*
-useLocator:: Set to true if using a locator *(default:false)*
+//^source.gemfire-cq
+//$source.gemfire-cq
 
 The example is similar to that presented for the <<gemfire-source, gemfire source>> above, and requires an external cache server as described in the above section. In this case the query provides a finer filter on data events. In the example below, the `cqtest` stream will only receive events matching a single ticker symbol, whereas the `gftest` stream example above will receive updates to every entry in the region. 
 
@@ -337,9 +308,17 @@ $ cat /tmp/xd/output/cqtest.out
 [[syslog]]
 === Syslog
 
-Three syslog sources are provided: `reactor-syslog`, `syslog-udp`, and `syslog-tcp`. The reactor-syslog adapter uses tcp and builds upon the functionality available in the https://github.com/reactor/reactor[Reactor] project and provides improved throughput over the syslog-tcp adapter. They all support the following option:
+Three syslog sources are provided: `reactor-syslog`, `syslog-udp`, and `syslog-tcp`. The reactor-syslog adapter uses tcp and builds upon the functionality available in the https://github.com/reactor/reactor[Reactor] project and provides improved throughput over the syslog-tcp adapter.
 
-port:: the port on which the system will listen for syslog messages *(default: `5140`)*
+//^source.reactor-syslog
+//$source.reactor-syslog
+
+//^source.syslog-udp
+//$source.syslog-udp
+
+//^source.syslog-tcp
+//$source.syslog-tcp
+
 
 To create a stream definition (using shell command)
 
@@ -416,13 +395,8 @@ By default, the TCP module will emit a `byte[]`; to convert to a String, add `--
 
 ==== TCP with options
 
-The TCP source has the following options
-
-port:: the port on which to listen *(default: `1234`)*
-reverseLookup:: perform a reverse DNS lookup on the remote IP Address *(default: `false`)*
-socketTimeout:: the timeout (ms) before closing the socket when no data received *(default: `120000`)*
-nio:: whether or not to use NIO. NIO is more efficient when there are many connections. *(default: `false`)*
-decoder:: how to decode the stream - see below. *(default: `CRLF`)*
+//^source.tcp
+//$source.tcp
 
 ==== Available Decoders
 
@@ -581,6 +555,14 @@ $ hexdump -C /tmp/xd/output/tcptest9
 00000008
 ----
 
+[[tcp-client]]
+=== TCP Client
+The `tcp-client` source module uses raw tcp sockets, as does the `tcp` module but contrary to the `tcp` module, acts as a client. Whereas the `tcp` module will open a listening socket and wait for connections from a remote party, the `tcp-client` will initiate the connection to a remote server and emit as messages what that remote server sends over the wire. As an optional feature, the `tcp-client` can itself emit messages to the remote server, so that a simple conversation can take place.
+
+==== TCP Client options
+//^source.tcp-client
+//$source.tcp-client
+
 ==== Implementing a simple conversation
 That "stimulus" counter concept bears some explanation. By default, the module will emit (at interval set by `fixedDelay`) an incrementing number, starting at 1. Given that the default is to use an `expression` of `payload.toString()`, this results in the module sending `1, 2, 3, ...` to the remote server.
 
@@ -606,26 +588,6 @@ else
 
 ----
 
-
-[[tcp-client]]
-=== TCP Client
-The `tcp-client` source module uses raw tcp sockets, as does the `tcp` module but contrary to the `tcp` module, acts as a client. Whereas the `tcp` module will open a listening socket and wait for connections from a remote party, the `tcp-client` will initiate the connection to a remote server and emit as messages what that remote server sends over the wire. As an optional feature, the `tcp-client` can itself emit messages to the remote server, so that a simple conversation can take place.
-
-==== TCP Client options
-The following options are supported:
-
-host:: the host to connect to *(default: `localhost`)*
-port:: the port to connect to *(default: `1234`)*
-reverseLookup:: whether to attempt to resolve the host address *(default: `false`)*
-nio:: whether to use NIO *(default: `false`)*
-encoder:: the encoder to use when sending messages *(default: `LF`, see <<tcp, TCP module>>)*
-decoder:: the decoder to use when receiving messages *(default: `LF`, see <<tcp, TCP module>>)*
-charset:: the charset to use when converting bytes to String *(default: `UTF-8`)*
-bufferSize:: the size of the emitting/receiving buffers *(default: `2048`, _i.e._ 2KB)*
-fixedDelay:: the rate at which 'stimulus' messages will be emitted *(default: `5` seconds)*
-script:: reference to a script that should transform the counter stimulus to messages to send *(default: use `expression`)*
-expression:: a SpEL expression to convert the counter stimulus to a message *(default: `payload.toString()`, _i.e._ emit "1", "2", "3", _etc._)*
-
 [[reactor-ip]]
 === Reactor IP
 The `reactor-ip` source acts as a server and allows a remote party to connect to XD and submit data over a raw TCP or UDP socket.  The reactor-ip source differs from the standard tcp source in that it is based on the https://github.com/reactor/reactor[Reactor Project] and can be configured to use the http://martinfowler.com/articles/lmax.html[LMAX Disruptor RingBuffer] library allowing for extremely high ingestion rates, e.g. ~ 1M/sec.
@@ -636,16 +598,8 @@ To create a stream definition use the following XD shell command
 
 This will create the reactor TCP source and send data read from it to the file named tcpReactor.
 
-The reactor-ip source has the following options
-
-transport:: `tcp` or `udp` *(default: `tcp`)*
-framing:: `linefeed` or `length`.  How to frame the data to tell individual messages apart. *(default: `linefeed`)*
-lengthFieldLength:: Byte precision of the length field when using `length` framing. 2, 4 or 8.  *(default: `4`)*
-codec:: How to decode the stream. Either bytes, string or syslog. *(default: `string`)*
-dispatcher:: `ringBuffer`, `threadPoolExecutor`, `workQueue`, `sync`. *(default: `ringBuffer`)*
-host:: the host to connect to *(default: `0.0.0.0`)*
-port:: the port to connect to *(default: `3000`)*
-
+//^source.reactor-ip
+//$source.reactor-ip
 
 [[rabbit]]
 === RabbitMQ
@@ -670,6 +624,7 @@ To destroy the stream, enter the following at the shell prompt:
 
 ==== RabbitMQ with Options
 
+//^source.rabbit
 The RabbitMQ Source has the following options
 
 username:: the username to connect to the RabbitMQ broker *(default: `guest`)*
@@ -678,6 +633,7 @@ host:: the host (or IP Address) to connect to *(default: `localhost`)*
 port:: the port on the `host` *(default: `5672`)*
 vhost:: the virtual host *(default: `/` unless)*
 queues:: the queue(s) from which messages will be received; use a comma-delimited list to receive messages from multiple queues *(default: `<streamname>`)*
+//$source.rabbit
 
 [[jms]]
 === JMS
@@ -724,23 +680,17 @@ Run this as a Java application; each time you hit <enter> in the console, it wil
 
 ==== JMS with Options
 
-The JMS Source has the following options
+//^source.jms
+//$source.jms
 
-provider:: the JMS provider *(default: `activemq`)*
-destination:: the destination name (a `queue` by default) from which messages will be received *(default: `[stream name]`)*
-pubSub:: when true, indicates that the destination is a `topic` *(default: `false`)*
-durableSubScription:: when true, indicates the subscription to a topic is durable *(default: `false`)*
-subscriptionName:: a name that will be assigned to the topic subscription *(default: `[none]`)*
-clientId:: an identifier for the client, to be associated with a durable topic subscription *(default: `[none]`)*
-
-Note: the selected broker requires an infrastructure configuration file `jms-<provider>-infrastructure-context.xml` in `modules/common`. This is used to declare any infrastructure beans needed by the provider. See the default (`jms-activemq-infrastructure-context.xml`) for an example. Typically, all that is required is a `ConnectionFactory`. The activemq provider uses a properties file `jms-activemq.properties` which can be found in the `config` directory. This contains the broker URL.
+NOTE: the selected broker requires an infrastructure configuration file `jms-<provider>-infrastructure-context.xml` in `modules/common`. This is used to declare any infrastructure beans needed by the provider. See the default (`jms-activemq-infrastructure-context.xml`) for an example. Typically, all that is required is a `ConnectionFactory`. The activemq provider uses a properties file `jms-activemq.properties` which can be found in the `config` directory. This contains the broker URL.
 
 [[time]]
 === Time
-The time source will simply emit a String with the current time every so often. It supports the following options:
+The time source will simply emit a String with the current time every so often.
 
-fixedDelay:: how often to emit a message, expressed in seconds *(default: `1` second)*
-format:: how to render the current time, using SimpleDateFormat *(default: `'yyyy-MM-dd HH:mm:ss'`)*
+//^source.time
+//$source.time
 
 
 [[mqtt]]
@@ -758,13 +708,11 @@ If you wish to use the MQTT Source defaults you can execute the command as follo
 
 ==== Options
 
-The defaults are set up to connect to the RabbitMQ MQTT adapter on localhost:
 
-url:: location of the mqtt broker *(default: `tcp://localhost:1883`)*
-clientId:: identifies the client *(default: `xd.mqtt.client.id.snk`)*
-username:: the username to use when connecting to the broker *(default: `guest`)*
-password:: the password to use when connecting to the broker *(default: `guest`)*
-topics:: the topic(s) to which the source will subscribe *(default: `xd.mqtt.test`)*
+//^source.mqtt
+//$source.mqtt
+
+NOTE: The defaults are set up to connect to the RabbitMQ MQTT adapter on localhost.
 
 [[stdout]]
 === Stdout Capture
