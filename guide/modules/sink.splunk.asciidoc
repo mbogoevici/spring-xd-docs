@@ -1,8 +1,0 @@
-The **splunk** sink has the following options:
-
-host:: the host name or IP address of the Splunk server *(String, default: `localhost`)*
-owner:: the owner of the tcpPort *(String, default: `admin`)*
-password:: the password associated with the username *(String, default: `password`)*
-port:: the TCP port number of the Splunk server *(int, default: `8089`)*
-tcpPort:: the TCP port number to where XD will send the data *(int, default: `9500`)*
-username:: the login name that has rights to send data to the tcpPort *(String, default: `admin`)*

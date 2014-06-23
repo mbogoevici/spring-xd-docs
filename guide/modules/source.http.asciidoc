@@ -1,3 +1,0 @@
-The **http** source has the following options:
-
-port:: the port to listen to *(int, default: `9000`)*

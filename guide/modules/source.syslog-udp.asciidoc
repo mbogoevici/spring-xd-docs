@@ -1,3 +1,0 @@
-The **syslog-udp** source has the following options:
-
-port:: the port on which the system will listen for syslog messages *(int, default: `5140`)*

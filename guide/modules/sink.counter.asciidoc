@@ -1,3 +1,0 @@
-The **counter** sink has the following options:
-
-name:: the name of the metric to contribute to (will be created if necessary) *(String, default: `<stream name>`)*

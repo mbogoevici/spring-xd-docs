@@ -1,7 +1,0 @@
-The **trigger** source has the following options:
-
-cron:: cron expression specifying when the trigger should fire *(String, no default)*
-date:: the date when the trigger should fire *(String, default: `06/13/14 15:36:27`)*
-dateFormat:: the format specifying how the date should be parsed *(String, default: `MM/dd/yy HH:mm:ss`)*
-fixedDelay:: number of seconds between executions *(Integer, no default)*
-payload:: the message that will be sent when the trigger fires *(String, default: ``)*

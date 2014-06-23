@@ -1,2 +1,0 @@
-The **object-to-json** processor has the following options:
-

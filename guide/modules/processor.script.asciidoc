@@ -1,3 +1,0 @@
-The **script** processor has the following options:
-
-location:: the script to use (Spring resource, uses classpath: when no scheme given) *(String, no default)*

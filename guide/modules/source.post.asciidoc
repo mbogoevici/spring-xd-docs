@@ -1,3 +1,0 @@
-The **post** source has the following options:
-
-post:: the subpath (under /post/) where http data will be POSTed *(String, default: `<stream name>`)*

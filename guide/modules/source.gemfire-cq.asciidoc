@@ -1,6 +1,0 @@
-The **gemfire-cq** source has the following options:
-
-host:: the host on which the GemFire server is running *(String, default: `localhost`)*
-port:: the port on which the GemFire server is running *(int, default: `40404`)*
-query:: the query string in Object Query Language (OQL) *(String, no default)*
-useLocator:: set to true if using a locator *(boolean, default: `false`)*

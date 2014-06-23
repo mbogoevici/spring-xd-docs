@@ -1,6 +1,0 @@
-The **mongodb** sink has the following options:
-
-collectionName:: the MongoDB collection to store *(String, default: `<stream name>`)*
-databaseName:: the MongoDB database name *(String, default: `xd`)*
-host:: the MongoDB host *(String, default: `localhost`)*
-port:: the MongoDB port *(int, default: `27017`)*

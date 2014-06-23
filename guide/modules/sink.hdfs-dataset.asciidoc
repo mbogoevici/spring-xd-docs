@@ -1,8 +1,0 @@
-The **hdfs-dataset** sink has the following options:
-
-allowNullValues:: whether null property values are allowed, if set to true then schema will use UNION for each field *(boolean, default: `false`)*
-batchSize:: threshold in number of messages when file will be automatically flushed and rolled over *(long, default: `10000`)*
-directory:: where the files will be written in the Hadoop FileSystem *(String, default: `/xd/<stream name>`)*
-format:: the format to use, valid options are avro and parquet *(String, default: `avro`)*
-idleTimeout:: idle timeout in milliseconds when Hadoop file resource is automatically closed *(long, default: `-1`)*
-partitionPath:: the partition path strategy to use, a list of KiteSDK partition expressions separated by a '/' symbol *(String, default: ``)*

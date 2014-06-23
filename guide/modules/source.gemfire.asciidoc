@@ -1,7 +1,0 @@
-The **gemfire** source has the following options:
-
-cacheEventExpression:: an optional SpEL expression referencing the event *(String, default: `newValue`)*
-host:: host name of the cache server or locator (if useLocator=true) *(String, default: `localhost`)*
-port:: port of the cache server or locator (if useLocator=true) *(int, default: `40404`)*
-regionName:: the name of the region for which events are to be monitored *(String, default: `<stream name>`)*
-useLocator:: set to true if using a locator *(boolean, default: `false`)*

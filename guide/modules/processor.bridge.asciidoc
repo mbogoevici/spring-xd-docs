@@ -1,2 +1,0 @@
-The **bridge** processor has the following options:
-

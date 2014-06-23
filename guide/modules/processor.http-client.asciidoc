@@ -1,6 +1,0 @@
-The **http-client** processor has the following options:
-
-charset:: the charset to use when in the Content-Type header when emitting Strings *(String, default: `UTF-8`)*
-httpMethod:: the http method to use when performing the request *(HttpMethod, default: `POST`, possible values: `OPTIONS,GET,HEAD,POST,PUT,PATCH,DELETE,TRACE,CONNECT`)*
-replyTimeout:: the amount of time to wait (ms) for a response from the remote server *(int, default: `0`)*
-url:: the url to perform an http request on *(String, no default)*

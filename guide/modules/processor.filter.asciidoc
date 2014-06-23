@@ -1,4 +1,0 @@
-The **filter** processor has the following options:
-
-expression:: a SpEL expression to evaluate as a predicate *(String, no default)*
-script:: location of a groovy script to use as a predicate to the filter *(String, no default)*

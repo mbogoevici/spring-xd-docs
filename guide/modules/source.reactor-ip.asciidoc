@@ -1,9 +1,0 @@
-The **reactor-ip** source has the following options:
-
-codec:: codec used to transcode data *(String, default: `string`)*
-dispatcher:: type of Reactor Dispatcher to use *(String, default: `ringBuffer`)*
-framing:: method of framing the data *(String, default: `linefeed`)*
-host:: host to bind the server to *(String, default: `0.0.0.0`)*
-lengthFieldLength:: byte precision of the number used in the length field *(int, default: `4`)*
-port:: port to bind the server to *(int, default: `3000`)*
-transport:: whether to use TCP or UDP as a transport *(String, default: `tcp`)*

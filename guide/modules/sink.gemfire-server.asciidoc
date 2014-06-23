@@ -1,7 +1,0 @@
-The **gemfire-server** sink has the following options:
-
-host:: host name of the cache server or locator (if useLocator=true) *(String, default: `localhost`)*
-keyExpression:: a SpEL expression which is evaluated to create a cache key *(String, default: `'<stream name>'`)*
-port:: port of the cache server or locator (if useLocator=true) *(int, default: `40404`)*
-regionName:: name of the region to use when storing data *(String, default: `<stream name>`)*
-useLocator:: indicates whether a locator is used to access the cache server *(boolean, default: `false`)*
