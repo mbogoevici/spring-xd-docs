@@ -37,25 +37,6 @@ tap:stream:mystream.filter > ....
 ----
 
 
-==== Example - using the module index ====
-
-If the module name is repeated in the target stream, use tap:stream:<stream_name>.<module_name>.<module_index> .
-
-If you have a stream called `mystream`, defined as
-
-----
-http | transform --expression=payload.toLowerCase() | transform --expression=payload+'!' | file
-----
-
-Create a tap after the first transformer is applied using
-
-----
-tap:stream:mystream.transform.1 > ....
-----
-
-NOTE: the `module index` is the position of the module in the stream, starting with 0. It is also valid to tap the source using this syntax, e.g., tap:stream:mystream.http.0
-
-
 ==== Example - using a label ====
 
 You may also use labels to create an alias for a module and reference the label in the tap
@@ -63,7 +44,7 @@ You may also use labels to create an alias for a module and reference the label 
 If you have a stream called `mystream`, defined as
 
 ----
-http | transform --expression=payload.toLowerCase() | flibble: transform --expression=payload.reverse() | file
+http | transform --expression=payload.toLowerCase() | flibble: transform --expression=payload.substring(3) | file
 ----
 
 Create a tap after the second transformer is applied using
@@ -78,6 +59,9 @@ A primary use case for a Tap is to perform realtime analytics at the same time a
 Creating a tap on a named channel, a stream whose source is a named channel, or a label is not yet supported. This is planned for a future release.   
 
 You'll find specific examples of creating taps on existing streams in the link:Analytics#analytics[Analytics] section.
+
+NOTE: In cases where a multiple modules with the same module name, a label must be specified on the module to be tapped.  For example if you want to tap the 2nd transform:
+`http | transform --expression=payload.toLowerCase() | tapMe: transform --expression=payload.substring(3) | file` 
 
 === Tap Lifecycle
 
