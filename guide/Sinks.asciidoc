@@ -549,6 +549,8 @@ username:: the JDBC username *(String, no default)*
 
 NOTE: To include the whole message into a single column, use `payload` (the default) for the `columns` option
 
+TIP: The connection pool settings for xd are located in servers.yml (i.e. `spring.datasource.validationQuery: select 1` )  
+
 [[tcp-sink]]
 === TCP Sink
 
