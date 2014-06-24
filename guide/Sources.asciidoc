@@ -766,13 +766,11 @@ To destroy the stream, enter the following at the shell prompt:
 The **rabbit** source has the following options:
 
 ackMode:: the acknowledge mode (AUTO, NONE, MANUAL) *(String, default: `AUTO`)*
-addresses:: the list of 'host:port' addresses; comma separated - overrides host, port *(String, default: `localhost:5672`)*
+addresses:: a comma separated list of 'host[:port]' addresses *(String, default: `localhost:5672`)*
 concurrency:: the minimum number of consumers *(int, default: `1`)*
 converterClass:: the class name of the message converter *(String, default: `org.springframework.amqp.support.converter.SimpleMessageConverter`)*
-host:: the host (or IP Address) to connect to *(String, default: `localhost`)*
 maxConcurrency:: the maximum number of consumers *(int, default: `1`)*
 password:: the password to use to connect to the broker *(String, default: `guest`)*
-port:: the port to connect to *(int, default: `5672`)*
 prefetch:: the prefetch size *(int, default: `1`)*
 queues:: the queue(s) from which messages will be received *(String, default: `<stream name>`)*
 requeue:: whether rejected messages will be requeued by default *(boolean, default: `true`)*
