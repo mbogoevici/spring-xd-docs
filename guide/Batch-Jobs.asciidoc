@@ -340,19 +340,17 @@ xd:> stream create csvStream --definition "file --ref=true --dir=/mycsvdir --pat
 
 ----
 
-The **filepollhdfs** job has the following options:
-
-deleteFiles:: whether to delete files after successful import *(boolean, default: `false`)*
-directory:: the directory to write the file(s) to in HDFS *(String, default: `/xd/<job name>`)*
-fileExtension:: the file extension to use *(String, default: `csv`)*
-fileName:: the filename to use in HDFS *(String, default: `<job name>`)*
-names:: the field names in the CSV file *(String, no default)*
-restartable:: whether the job should be restartable or not in case of failure *(boolean, default: `false`)*
-rollover:: the number of bytes to write before creating a new file in HDFS *(int, default: `1000000`)*
+//^job.filepollhdfs
+//$job.filepollhdfs
 
 ==== Import CSV Files to JDBC (`filejdbc`)
 
-A module which loads CSV files into a JDBC table using a single batch job. By default it uses the internal HSQL DB which is used by Spring Batch. Refer to link:Modules#module_values[how module options are resolved] for further details on how to change defaults (one can of course always use `--foo=bar` notation in the job definition to achieve the same effect). The job should be defined with the `resources` parameter defining the files which should be loaded. It also requires a `names` parameter (for the CSV field names) and these should match the database column names into which the data should be stored. You can either pre-create the database table or the module will create it for you if you use `--initializeDatabase=true` when the job is created. The table initialization is configured in a similar way to the JDBC sink and uses the same parameters. The default table name is the job name and can be customized by setting the `tableName` parameter. As an example, if you run the command
+A module which loads CSV files into a JDBC table using a single batch job. By default it uses the internal HSQL DB which is used by Spring Batch. Refer to link:Modules#module_values[how module options are resolved] for further details on how to change defaults (one can of course always use `--foo=bar` notation in the job definition to achieve the same effect). 
+
+//^job.filejdbc
+//$job.filejdbc
+
+The job should be defined with the `resources` parameter defining the files which should be loaded. It also requires a `names` parameter (for the CSV field names) and these should match the database column names into which the data should be stored. You can either pre-create the database table or the module will create it for you if you use `--initializeDatabase=true` when the job is created. The table initialization is configured in a similar way to the JDBC sink and uses the same parameters. The default table name is the job name and can be customized by setting the `tableName` parameter. As an example, if you run the command
 
 ----
 xd:> job create myjob --definition "filejdbc --resources=file:///mycsvdir/*.csv --names=forename,surname,address --tableName=people --initializeDatabase=true" --deploy
@@ -380,6 +378,9 @@ Launch the job using:
 xd:> job launch myjob
 ----
 
+//^job.hdfsjdbc
+//$job.hdfsjdbc
+
 ==== JDBC to HDFS Import (`jdbchdfs`)
 
 Performs the reverse of the previous module. The database configuration is the same as for `filejdbc` but without the initialization options since you need to already have the data to import into HDFS. When creating the job, you must either supply the select statement by setting the `sql` parameter, or you can supply both `tableName` and `columns` options (which will be used to build the SQL statement).
@@ -398,6 +399,9 @@ Launch the job using:
 xd:> job launch myjob
 ----
 
+//^job.jdbchdfs
+//$job.jdbchdfs
+
 ==== HDFS to MongoDB Export (`hdfsmongodb`)
 
 Exports CSV data from HDFS and stores it in a MongoDB collection which defaults to the job name. This can be overridden with the `collectionName` parameter. Once again, the field names should be defined by supplying the `names` parameter. The data is converted internally to a Spring XD `Tuple` and the collection items will have an `id` matching the tuple's UUID. You can override this by setting the `idField` parameter to one of the field names if desired.
@@ -407,6 +411,9 @@ An example:
 ----
 xd:> job create myjob --definition "hdfsmongodb --resources=/data/*.log --names=employeeId,forename,surname,address --idField=employeeId --collectionName=people" --deploy
 ----
+
+//^job.hdfsmongodb
+//$job.hdfsmongodb
 
 ==== FTP to HDFS Export (`ftphdfs`)
 
@@ -426,6 +433,5 @@ Full path is preserved so that above command would result files in HDFS shown be
 /ftp/pub/files/file2.txt
 ----
 
-Parameters for Job definition `host`, `port`, `username` and `password` can be used to control access to the FTP server.
-
-Parameters for Job execution, `remoteDirectory` and `hdfsDirectory` are used to define source and destination directories.
+//^job.ftphdfs
+//$job.ftphdfs
