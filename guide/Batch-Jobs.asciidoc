@@ -393,6 +393,8 @@ Launch the job using:
 xd:> job launch myjob
 ----
 
+TIP: The connection pool settings for xd are located in servers.yml (i.e. `spring.datasource.*` )
+
 ==== HDFS to JDBC Export (`hdfsjdbc`)
 
 This module functions very similarly to the `filejdbc` one except that the resources you specify should actually be in HDFS, rather than the OS filesystem. 
@@ -426,6 +428,8 @@ tableName:: the database table to which the data will be written *(String, defau
 url:: the JDBC URL for the database *(String, no default)*
 username:: the JDBC username *(String, no default)*
 //$job.hdfsjdbc
+
+TIP: The connection pool settings for xd are located in servers.yml (i.e. `spring.datasource.*` )
 
 ==== JDBC to HDFS Import (`jdbchdfs`)
 
@@ -465,6 +469,8 @@ tableName:: the table to read data from *(String, default: ``)*
 url:: the JDBC URL for the database *(String, no default)*
 username:: the JDBC username *(String, no default)*
 //$job.jdbchdfs
+
+TIP: The connection pool settings for xd are located in servers.yml (i.e. `spring.datasource.*` )
 
 ==== HDFS to MongoDB Export (`hdfsmongodb`)
 
