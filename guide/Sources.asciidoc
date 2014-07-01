@@ -822,7 +822,7 @@ and `tail -f /tmp/xd/output/jmstest`
 
 Run this as a Java application; each time you hit <enter> in the console, it will send a message to queue `jmstest`.
 
-The out of the box configuration is setup to use ActiveMQ.  To use another JMS provider you will need to update a few files in the XD distribution.  Here is an example for https://github.com/garyrussell/spring-xd/commit/97d8a042479e49edb28f763974c289127da623f8[using HornetMQ].
+The out of the box configuration is setup to use ActiveMQ.  To use another JMS provider you will need to update a few files in the XD distribution.  There are sample files for HornetMQ in the distribution as an example for you to follow.  You will also need to add the appropriate libraries for your provider in the JMS module lib directory or in the main XD lib directory.
 
 ==== JMS with Options
 
