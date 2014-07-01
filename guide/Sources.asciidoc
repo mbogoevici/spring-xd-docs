@@ -769,6 +769,7 @@ ackMode:: the acknowledge mode (AUTO, NONE, MANUAL) *(String, default: `AUTO`)*
 addresses:: a comma separated list of 'host[:port]' addresses *(String, default: `localhost:5672`)*
 concurrency:: the minimum number of consumers *(int, default: `1`)*
 converterClass:: the class name of the message converter *(String, default: `org.springframework.amqp.support.converter.SimpleMessageConverter`)*
+mappedRequestHeaders:: request message header names to be propagated to/from the adpater/gateway *(String, default: `STANDARD_REQUEST_HEADERS`)*
 maxConcurrency:: the maximum number of consumers *(int, default: `1`)*
 password:: the password to use to connect to the broker *(String, default: `guest`)*
 prefetch:: the prefetch size *(int, default: `1`)*
