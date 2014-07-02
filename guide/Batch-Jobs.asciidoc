@@ -77,7 +77,7 @@ In the logging output of the XDContainer you should see the following:
 
 When creating jobs, the following options are available to all job definitions:
 
-dateFormat:: The optional date format for job parameters *(default: `yyyy/MM/dd`)*
+dateFormat:: The optional date format for job parameters *(default: `yyyy-MM-dd`)*
 numberFormat:: Defines the number format when parsing numeric parameters *(default: `NumberFormat.getInstance(Locale.US)`)*
 makeUnique:: Shall job parameters be made unique? *(default: `true`)*
 
