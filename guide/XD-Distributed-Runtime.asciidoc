@@ -391,3 +391,40 @@ Deployed stream 'partitioned'
 
 In this example three instances of the transformer will be created (with partition index of 0, 1, and 2). When the jms module sends a message it will take the _customerId_ property on the message payload, invoke its _hashCode()_ method and apply the modulo function with the divisor being the _transform.count_ property to determine which instance of the transform will process the message (*payload.getCustomerId().hashCode() % 3*). Messages with the same _customerId_ will always be processed by the same instance.
 
+
+=== Error Handling (Message Delivery Failures)
+
+Note: the following applies to normally deployed streams. When direct binding between modules is being used, exceptions thrown by the consumer are thrown back to the producer.
+
+==== RabbitMQ Message Bus
+
+When a consuming module (processor, sink) fails to handle a message, the bus will retry delivery based on the module (or default bus) retry configuration. The default configuration will make 3 attempts to deliver the message. The retry configuration can be modified at the bus level (in servers.yml), or for an individual stream/module using the deployment manifest.
+
+When retries are exhausted, by default, messages are discarded. However, using RabbitMQ, you can configure such messages to be routed to a dead-letter exchange/dead letter queue. See the https://www.rabbitmq.com/dlx.html[RabbitMQ Documentation] for more information.
+
+Consider a stream: +stream create foo --definition "source | processor | sink"+
+
+The first _pipe_ (by default) will be backed by a queue named +xdbus.foo.0+, the second by +xdbus.foo.1+. Messages are routed to these queues using the default exchange (with routing keys equal to the queue names).
+
+To enable dead lettering just for this stream, first configure a policy:
+
++rabbitmqctl set_policy foo.DLX "^xdbus\.foo\..*" '{"dead-letter-exchange":"foo.dlx"}' --apply-to queues+
+
+To configure dead-lettering for all streams:
+
++rabbitmqctl set_policy DLX "^xdbus\..*" '{"dead-letter-exchange":"dlx"}' --apply-to queues+
+
+The next step is to declare the dead letter exchange, and bind dead letter queues with the appropriate routing keys.
+
+For example, for the second "pipe" in the stream above we might bind a queue +foo.sink.dlq+ to exchange +foo.dlx+ with a routing key +xdbus.foo.1+ (remember, the original routing key was the queue name).
+
+Now, when the sink fails to handle a message, after the configured retries are exhausted, the failed message will be routed to +foo.sink.dlq+.
+
+There is no automated mechanism provided to move dead lettered messages back to the bus queue.
+
+
+==== Redis Message Bus
+
+When Redis is the transport, the failed messages (after retries are exhausted) are +LPUSH+ed to a +LIST ERRORS:<stream>.n+ (e.g. +ERRORS:foo.1+ in the above example in the _RabbitMQ Message Bus_ section.
+
+This is unconditional; the data in the +ERRORS LIST+ is in "bus" format; again, some external mechanism would be needed to move the data from the ERRORS LIST back to the bus's foo.1 LIST.
