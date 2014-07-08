@@ -11,6 +11,19 @@ XD requires that a single active Admin server handle interactions with the conta
 
 An HA XD installation also requires that additional required servers - ZooKeeper, messaging middleware, and data stores listed above - be configured for HA as well. Please consult the product documentation for specific recommendations regarding these components.
 
+==== HA Messsage Bus
+
+The +RabbitMessageBus+ allows for HA configuration using normal https://www.rabbitmq.com/ha.html[RabbitMQ HA Configuration]. 
+
+First, use the +addresses+ property in +servers.yml+ to include the host/port for each server in the cluster. See <<Application-Configuration.asciidoc>>.
+
+By default, queues and exchanges declared by the bus are prefixed with +xdbus.+ (this prefix can be changed as described in <<Application-Configuration.asciidoc>>).
+
+To configure the entire bus for HA, create a policy:
+
++rabbitmqctl set_policy ha-xdbus "^xdbus\." '{"ha-mode":"all"}'+
+
+
 === ZooKeeper Overview
 
 In the previous section, we claimed that if a container goes down, XD will redeploy anything that is deployed on that instance to another available container. We also claimed that if the Admin Leader goes down, another Admin server will assume that role. ZooKeeper is what makes this all possible. ZooKeeper is a widely used Apache project designed primarily for cluster management and coordination. This section will cover some basic concepts necessary to understand its role in XD. See https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index[The ZooKeeper Wiki] for a more complete overview.
