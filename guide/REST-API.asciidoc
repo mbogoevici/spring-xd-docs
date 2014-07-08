@@ -172,7 +172,7 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 |GET
 |get detailed deployment state for a job (TBD. Probably not in 1.0)
 
-|/jobs/deployments\{name\}
+|/jobs/deployments/\{name\}
 |POST
 |deploy a job, where the request body contains the deployment properties
 
