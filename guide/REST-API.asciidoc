@@ -223,6 +223,10 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |PUT
 |request the launch of a job
 
+|/jobs/executions/\{jobExecutionId\}
+|GET
+|get information about a particular execution of a job
+
 |/jobs/executions/\{jobExecutionId\}?restart=true
 |PUT
 |restart a job
