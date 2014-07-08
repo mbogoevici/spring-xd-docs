@@ -15,9 +15,9 @@ An HA XD installation also requires that additional required servers - ZooKeeper
 
 The +RabbitMessageBus+ allows for HA configuration using normal https://www.rabbitmq.com/ha.html[RabbitMQ HA Configuration]. 
 
-First, use the +addresses+ property in +servers.yml+ to include the host/port for each server in the cluster. See link:Application-Configuration.html#rabbitConfig[Application Configuration].
+First, use the +addresses+ property in +servers.yml+ to include the host/port for each server in the cluster. See link:Application-Configuration#rabbitConfig[Application Configuration].
 
-By default, queues and exchanges declared by the bus are prefixed with +xdbus.+ (this prefix can be changed as described in link:Application-Configuration.html#rabbitBusProps[Application Configuration]).
+By default, queues and exchanges declared by the bus are prefixed with +xdbus.+ (this prefix can be changed as described in link:Application-Configuration#rabbitBusProps[Application Configuration]).
 
 To configure the entire bus for HA, create a policy:
 
