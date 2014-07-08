@@ -119,7 +119,7 @@ spring:
 To override these settings set an OS environment variable such as `spring_redis_port` to the value you require.
 
 ==== RabbitMQ
-
+[[rabbitConfig]]
 If you want to use RabbitMQ as a data transport use the following configuration setting
 
 [source,yaml]
@@ -136,7 +136,7 @@ spring:
 
 To override these settings set an OS environment variable such as `spring_rabbitmq_host` to the value you require.
 
-
+[[rabbitBusProps]]
 In addition, the following default settings for the rabbit message bus can be modified in `servers.yml`...
 
 [source,yaml]
