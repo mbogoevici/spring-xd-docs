@@ -425,6 +425,6 @@ There is no automated mechanism provided to move dead lettered messages back to 
 
 ==== Redis Message Bus
 
-When Redis is the transport, the failed messages (after retries are exhausted) are +LPUSH+ed to a +LIST ERRORS:<stream>.n+ (e.g. +ERRORS:foo.1+ in the above example in the _RabbitMQ Message Bus_ section.
+When Redis is the transport, the failed messages (after retries are exhausted) are +LPUSH+ed to a +LIST ERRORS:<stream>.n+ (e.g. +ERRORS:foo.1+ in the above example in the _RabbitMQ Message Bus_ section).
 
 This is unconditional; the data in the +ERRORS LIST+ is in "bus" format; again, some external mechanism would be needed to move the data from the ERRORS LIST back to the bus's foo.1 LIST.
