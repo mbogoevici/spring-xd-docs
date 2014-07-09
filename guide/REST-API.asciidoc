@@ -220,7 +220,7 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |get information about all executions of a job
 
 |/jobs/executions?jobname=\{jobName\}
-|PUT
+|POST
 |request the launch of a job
 
 |/jobs/executions/\{jobExecutionId\}
