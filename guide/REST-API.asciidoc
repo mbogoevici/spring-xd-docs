@@ -261,7 +261,7 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |GET
 |get information about all instances of a job
 
-|/jobs/instances?instance=\{instanceId\}
+|/jobs/instances/\{instanceId\}
 |GET
 |get information about a batch job instance
 |===
