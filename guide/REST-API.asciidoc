@@ -286,6 +286,10 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |GET
 |list a module along with options metadata, where type is `source`,`processor`,`sink`, or `job`
 
+|/modules/\{type\}/\{name\}
+|DELETE
+|delete a composed module
+
 |/modules/\{type\}/\{name\}/definition
 |GET
 |display the module bean definition file (NOTE: currently only XML response supported)
@@ -325,6 +329,10 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |===
 |Resource URL | Request Method | Description
 
+|/metrics/counters/
+|GET
+|list all the known counters
+
 |/metrics/counters/\{name\}
 |GET
 |get the current metric value
@@ -341,6 +349,10 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 [cols="3*",  options="header"]
 |===
 |Resource URL | Request Method | Description
+
+|/metrics/field-value-counters/
+|GET
+|list all the known field value counters
 
 |/metrics/field-value-counters/\{name\}
 |GET
@@ -359,6 +371,10 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |===
 |Resource URL | Request Method | Description
 
+|/metrics/aggregate-counters/
+|GET
+|list all the known aggregate counters
+
 |/metrics/aggregate-counters/\{name\}
 |GET
 |get the current metric values
@@ -376,6 +392,10 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |===
 |Resource URL | Request Method | Description
 
+|/metrics/gauges/
+|GET
+|list all the known gauges
+
 |/metrics/gauges/\{name\}
 |GET
 |get the current metric values
@@ -392,6 +412,10 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 [cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
+
+|/metrics/rich-gauges/
+|GET
+|list all the known rich gauges
 
 |/metrics/rich-gauges/\{name\}
 |GET
