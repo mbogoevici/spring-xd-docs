@@ -8,7 +8,7 @@ They all require a little bit of tweaking to be used from Spring XD running outs
 
 ## Cloudera QuickStart VM
 
-Download from [Cloudera](http://www.cloudera.com/content/support/en/downloads.html) - for this guide we used version 4.4.0 for VMware.
+Download from [Cloudera](http://www.cloudera.com/content/support/en/downloads.html) - for this guide we used version 5.0.0 for VMware.
 
 **Create `/xd` directory:**
 
@@ -19,67 +19,31 @@ sudo -u hdfs hdfs dfs -mkdir /xd
 sudo -u hdfs hdfs dfs -chmod 777 /xd
 ``` 
 
-We also need to change the hostname settings so we can access HDFS from outside the VM.
+We have not been able to modify the VM so that we can access HDFS from the host system. We recommend that you install Spring XD on the VM and test from there.
 
-**In Cloudera Manager change to use hostname:**
+**Adjust the YARN memory setting:**
 
-Start the Firefox browser. The home page should have a link to start "Cloudera Manager". Start "Cloudera Manager" and log in. Click on the "hdfs1" service. Now, click on "Configuration" -> "View and Edit".
+The memory settings for YARN isn't enough to run the XD MapReduce jobs. Open the Cloudera Manager and go to the 'yarn' service. Then 
+select "Configuration - View and Edit". Under the "ResourceManager Base Group" category there is a "Resource Management" option. Under there, 
+you should see "Container Memory Maximum" (yarn.scheduler.maximum-allocation-mb). Change that to be 2 GiB. Save the changes and restart 
+the 'yarn' service.
 
-You should now have the configuration screen open. Under Category / Default in left hand navigation tree navigate to and modify:
-
-    Service-Wide -> Ports and Addresses -> Use DataNode Hostname [✓]
-
-Click "Save Changes", no need to restart the service since we will reboot the system soon any way.
-
-**Change VMs hostname:**
-
-Back to the terminal window, run these commands
-
-`$ sudo hostname cdh4`
+If you run MapReduce jobs you should also add the YARN application classpath to the hadoop configuration. You can change the `<hadoop:configuration>` entry 
+in the Spring configuration file for your job to the following:
 
 ```
-$ sudo vi /etc/sysconfig/network
-------------------------------
-NETWORKING=yes
-HOSTNAME=cdh4
-```
+	<hadoop:configuration>
+		fs.default.name=${hd.fs}
+		yarn.application.classpath=$HADOOP_CLIENT_CONF_DIR,$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$MR2_CLASSPATH
+	</hadoop:configuration>
+``` 
 
-**Add /etc/hosts entry:**
-
-First find out the IP address for the eth1 network connection
-
-```
-$ ifconfig
-eth1      Link encap:Ethernet  HWaddr 00:0C:29:9D:18:32  
-          inet addr:172.16.87.153  Bcast:172.16.87.255  Mask:255.255.255.0
-          ...
-```
-
-Now edit /etc/hosts and add an entry for cdh4 using IP address from above
-
-```
-$ sudo vi /etc/hosts
-------------------
-127.0.0.1   localhost.localdomain   localhost
-172.16.87.153   cdh4
-```
-
-**Restart VM**
-
-**Add /etc/hosts cdh4 entry on your local system:**
-
-Add the IP address from above to /etc/hosts
-`172.16.87.153   cdh4`
-
-You can now target `hdfs://cdh4:8020` in the XD shell and in _/config/hadoop.properties_
-
-Remember to use the `--hadoopDistro cdh4` when you start Spring XD and the Spring XD Shell.
-
+Remember to use the `--hadoopDistro cdh5` when you start Spring XD and the Spring XD Shell.
 
 
 ### Hortonworks Sandbox
 
-Download from [Hortonworks](http://hortonworks.com/products/hortonworks-sandbox/) - for this guide we used Hortonworks Sandbox Version 2.0 for VMware.
+Download from [Hortonworks](http://hortonworks.com/products/hortonworks-sandbox/) - for this guide we used Hortonworks Sandbox Version 2.1 for VMware.
 
 Import the VM and start it. The VM will display a banner page showing what IP address it is using. 
 
@@ -99,13 +63,25 @@ sudo -u hdfs hdfs dfs -chmod 777 /xd
 Add the IP address from the Sandbox VM banner to /etc/hosts
 `172.16.87.154   sandbox sandbox.hortonworks.com`
 
-You can now target `hdfs://sandbox:8020` in the XD shell and in _/config/hadoop.properties_
+You can now target `hdfs://sandbox:8020` in the XD shell and in _/config/servers.yml_
 
-Remember to use the `--hadoopDistro hdp20` when you start Spring XD and the Spring XD Shell.
+If you run MapReduce jobs you should also add the YARN application classpath to the hadoop configuration. You also need to add the address for the resource manager
+and for the job history server. You can change the `<hadoop:configuration>` entry in the Spring configuration file for your job to the following:
+
+```
+    <hadoop:configuration>
+        fs.default.name=hdfs://sandbox:8020
+        yarn.resourcemanager.address=sandbox:8050
+        yarn.application.classpath=/etc/hadoop/conf,/usr/lib/hadoop/*,/usr/lib/hadoop/lib/*,/usr/lib/hadoop-hdfs/*,/usr/lib/hadoop-hdfs/lib/*,/usr/lib/hadoop-yarn/*,/usr/lib/hadoop-yarn/lib/*,/usr/lib/hadoop-mapreduce/*,/usr/lib/hadoop-mapreduce/lib/*
+    </hadoop:configuration>
+``` 
+
+Remember to use the `--hadoopDistro hdp21` when you start Spring XD and the Spring XD Shell.
+
 
 ### Pivotal HD Single Node VM
 
-Download from [Pivotal](http://gopivotal.com/big-data/pivotal-hd) - for this guide we used version PIVHDSNE110_VMWARE_VM which is based on Pivotal HD 1.1.
+Download from [Pivotal](http://gopivotal.com/big-data/pivotal-hd) - for this guide we used "Pivotal HD 2.0 Single Node VM " which is based on Pivotal HD 2.0.
 
 Start the VM and open a terminal window (Applications -> System Tools -> Terminal). 
 
@@ -116,7 +92,7 @@ First find out the IP address for the eth1 network connection
 ```
 $ ifconfig
 eth1      Link encap:Ethernet  HWaddr 00:0C:29:B6:20:72  
-          inet addr:192.168.0.106  Bcast:192.168.0.255  Mask:255.255.255.0
+          inet addr:192.168.177.147  Bcast:192.168.177.255  Mask:255.255.255.0
           ...
 ```
 
@@ -127,7 +103,7 @@ $ sudo vi /etc/hosts
 ------------------
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-192.168.0.106   pivhdsne pivhdsne.localdomain
+192.168.177.147   pivhdsne pivhdsne.localdomain
 ```
 
 **Start Pivotal HD:**
@@ -146,9 +122,20 @@ sudo -u hdfs hdfs dfs -chmod 777 /xd
 **Add /etc/hosts pivhdsne entry on your local system:**
 
 Add the IP address from above to /etc/hosts
-`192.168.0.106   pivhdsne pivhdsne.localdomain`
+`192.168.177.147   pivhdsne pivhdsne.localdomain`
 
 You can now target `hdfs://pivhdsne:8020` in the XD shell and in _/config/hadoop.properties_
 
-Remember to use the `--hadoopDistro phd1` when you start Spring XD and the Spring XD Shell.
+If you run MapReduce jobs you should also add the YARN application classpath to the hadoop configuration. You also need to add the address for the resource manager
+and for the job history server. You can change the `<hadoop:configuration>` entry in the Spring configuration file for your job to the following:
 
+```
+    <hadoop:configuration>
+        fs.default.name=hdfs://pivhdsne:8020
+        yarn.resourcemanager.address=pivhdsne:8032
+        mapreduce.jobhistory.address=pivhdsne:10020
+        yarn.application.classpath=$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$USS_CONF/,$USS_HOME/*
+    </hadoop:configuration>
+``` 
+
+Remember to use the `--hadoopDistro phd20` when you start Spring XD and the Spring XD Shell.
