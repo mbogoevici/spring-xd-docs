@@ -65,8 +65,7 @@ Add the IP address from the Sandbox VM banner to /etc/hosts
 
 You can now target `hdfs://sandbox:8020` in the XD shell and in _/config/servers.yml_
 
-If you run MapReduce jobs you should also add the YARN application classpath to the hadoop configuration. You also need to add the address for the resource manager
-and for the job history server. You can change the `<hadoop:configuration>` entry in the Spring configuration file for your job to the following:
+If you run MapReduce jobs you should also add the YARN application classpath to the hadoop configuration. You also need to add the address for the resource manager. You can change the `<hadoop:configuration>` entry in the Spring configuration file for your job to the following:
 
 ```
     <hadoop:configuration>
