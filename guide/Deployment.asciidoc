@@ -35,13 +35,15 @@ To address such deployment concerns, Spring XD provides a _Deployment Manifest_ 
 
 ==== Deployment Properties
 
-When you execute the `stream deploy` shell command, you can optionally provide a `--properties_` parameter which is a comma delimited list of key=value pairs. Examples for the key include *module.[modulename].count* and *module.[modulename].criteria* (for a full list of properties, see below). The value for the count is a positive integer, and the value for criteria is a valid SpEL expression. The Spring XD runtime matches an  available container for each module according to the deployment manifest. 
+When you execute the `stream deploy` shell command, you can optionally provide a `properties` parameter which is a comma delimited list of key=value pairs. Examples for the key include *module.[modulename].count* and *module.[modulename].criteria* (for a full list of properties, see below). The value for the count is a positive integer, and the value for criteria is a valid SpEL expression. The Spring XD runtime matches an  available container for each module according to the deployment manifest. 
 
-The deployment properties contained in the manifest allow you to specify deployment instructions for each module. Currently, deployment properties can configure:
+The deployment properties allow you to specify deployment instructions for each module. Currently this includes:
 
 * The number of module instances
 * A target server or server group
 * MessageBus attributes required for a specific module
+* Stream Partitioning
+* Direct Binding
 
 ===== General Properties
 
