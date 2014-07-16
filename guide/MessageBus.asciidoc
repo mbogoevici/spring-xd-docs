@@ -12,7 +12,7 @@ By default, queues and exchanges declared by the bus are prefixed with +xdbus.+ 
 
 To configure the entire bus for HA, create a policy:
 
-+rabbitmqctl set_policy ha-xdbus "^xdbus\." '{"ha-mode":"all"}'+
++rabbitmqctl set_policy ha-xdbus "^xdbus\." \'{"ha-mode":"all"}'+
 
 
 === Error Handling (Message Delivery Failures)
@@ -32,11 +32,11 @@ The first _pipe_ (by default) will be backed by a queue named +xdbus.foo.0+, the
 
 To enable dead lettering just for this stream, first configure a policy:
 
-+rabbitmqctl set_policy foo.DLX "^xdbus\.foo\..*" '{"dead-letter-exchange":"foo.dlx"}' --apply-to queues+
++rabbitmqctl set_policy foo.DLX "^xdbus\.foo\..*" \'{"dead-letter-exchange":"foo.dlx"}' --apply-to queues+
 
 To configure dead-lettering for all streams:
 
-+rabbitmqctl set_policy DLX "^xdbus\..*" '{"dead-letter-exchange":"dlx"}' --apply-to queues+
++rabbitmqctl set_policy DLX "^xdbus\..*" \'{"dead-letter-exchange":"dlx"}' --apply-to queues+
 
 The next step is to declare the dead letter exchange, and bind dead letter queues with the appropriate routing keys.
 
