@@ -20,6 +20,8 @@ link:Analytics[Analytics] +
 link:Sinks[Sinks] +
 link:Taps[Taps] +
 link:Batch-Jobs[Batch Jobs] +
+link:Deployment[Deployment] +
+link:MessageBus[Message Bus Configuration]
 link:Type-Conversion[Type Conversion] +
 link:Monitoring-and-Management[Monitoring and Management] +
 link:DSL-Reference[DSL Reference] +

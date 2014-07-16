@@ -9,7 +9,7 @@ A production Spring XD environment is typically distributed among multiple hosts
 
 Spring XD requires that a single active Admin server handle interactions with the containers, such as stream deployment requests, as these types of operations must be processed serially in the order received. Without a backup, the Admin server becomes single point of failure. Therefore, two (or more for the risk averse) Admin servers are recommended for a production environment. Note that every Admin server can handle all requests via link:REST-API[REST] endpoints but only one instance, the "Leader", will actually perform requests that update the runtime state. If the Leader goes down, another available Admin server will assume the leader role. http://curator.apache.org/curator-recipes/leader-election.html[Leader Election] is an example of a common feature for distributed systems provided by the http://curator.apache.org[Curator Framework] which sits on top of ZooKeeper. 
 
-An HA Spring XD installation also requires that external servers - ZooKeeper, messaging middleware, and data stores needed for link:Running-Distributed-Mode[running Spring XD in distributed mode] must be configured for HA as well. Please consult the product documentation for specific recommendations regarding each of these external components. Also see link:MessageBus[MessageBus] for tips on configuring the MessageBus.
+An HA Spring XD installation also requires that external servers - ZooKeeper, messaging middleware, and data stores needed for link:Running-Distributed-Mode[running Spring XD in distributed mode] must be configured for HA as well. Please consult the product documentation for specific recommendations regarding each of these external components. Also see link:MessageBus[Message Bus Configuration] for tips on configuring the MessageBus for HA, error handling, etc.
 
 === ZooKeeper Overview
 
@@ -250,7 +250,7 @@ xd:>runtime modules
   ----------------------  ------------------------------------  -----------------------------------------------  ---------------------
   ticktock.sink.log.1     6cac85f8-4c52-4861-a225-cdad3675f6c9  {name=ticktock, expression=payload, level=INFO}  {count=1, sequence=1}
   ticktock.source.time.1  6cac85f8-4c52-4861-a225-cdad3675f6c9  {fixedDelay=1, format=yyyy-MM-dd HH:mm:ss}       {count=1, sequence=1}
- ----
+----
 
 Now if we kill the remaining container, we see warnings in the xd-admin log:
 
