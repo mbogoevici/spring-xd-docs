@@ -90,7 +90,7 @@ module.[modulename].producer.replyHeaderPatterns:: Controls which message header
 [[stream-partitioning]]
 ===== Stream Partitioning
 
-Note: Partitioning is only allowed when using a _RabbitMessageBus_ or a _RedisMessageBus_. 
+NOTE: Partitioning is only allowed when using a _RabbitMessageBus_ or a _RedisMessageBus_. 
 
 A common pattern in stream processing is to partition the data as it is streamed. This entails deploying multiple instances of a message consuming module and using content-based routing so that messages containing the identical data value(s) are always routed to the same module instance. You can use the Deployment Manifest to declaratively configure a partitioning strategy to route each message to a specific consumer instance. 
 
@@ -336,6 +336,6 @@ xd:>runtime modules
 
 Finally, we can still have the best of both worlds by enabling guaranteed delivery at one point in the stream, usually the source. If the tail of the stream is co-located and the source uses the message bus, the message bus may be configured so that if a container instance goes down, any unacknowledged messages will be retried until the container comes back or its modules are redeployed.
 
-#TODO a good example
+#TODO a realistic example
 
 An alternate scenario with similar characteristics would be if the stream uses a _rabbit_ or _jms_ source. In this case, guaranteed delivery would be configured in the external messaging system instead of the Spring XD transport. 
