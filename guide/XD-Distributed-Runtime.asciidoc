@@ -241,7 +241,7 @@ When you execute the _stream deploy_ shell command, you can optionally pass a --
 
 The ability to use criteria to match container instances and specify a number of instances for each module leads to one of several possible deployment states for the stream as a whole. First, consider a newly created stream in an initial _undeployed_ state. 
 
- image::images/deploy_states.png[Deploy States]
+image::images/deploy_states.png[Deploy States]
 
 The resulting state of the stream will be one of:
 
