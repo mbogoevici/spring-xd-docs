@@ -124,17 +124,17 @@ Using _module.\*.count=0_ is the most straightforward way to enable direct bindi
 [[deployment-states]]
 === Deployment States
 
-The ability to use criteria to match container instances and specify a number of instances for each module leads to one of several possible deployment states for the stream as a whole. First, consider a newly created stream in an initial _undeployed_ state. 
+The ability to specify criteria to match container instances and deploy multiple instances for each module leads to one of several possible deployment states for the stream as a whole. Consider a stream in an initial _undeployed_ state. 
 
 image::images/deploy_states.png[Deploy States]
 
-The resulting state of the stream will be one of:
+After executing the stream deployment request, the stream will be one of the following states:
 
-* *Deployed* - All modules deployed successfully.
-* *Incomplete* - One of the requested module instances could not be deployed, but at least one instance of each module was deployed. The stream is considered operational but the deployment request was not completely satisfied.
-* *Failed* - No instances were deployed for at least one of the modules.
+* *Deployed* - All modules deployed successfully as specified in the deployment manifest.
+* *Incomplete* - One of the requested module instances could not be deployed, but at least one instance of each module definition was successfully deployed. The stream is operational and can process messages end-to-end but the deployment manifest was not completely satisfied.
+* *Failed* - At least one of the module definitions was not deployed. The stream is not operational.
 
-NOTE: The state diagram implies these states are final. This is an over-simplification since these states are volatile in reality. When container goes down or a new one arrives, transitions among these states may occur. Such transitions have intentionally been omitted here. Also, there is an analogous state machine for undeploying a stream from any one of these states which is not shown here. 
+NOTE: The state diagram above represents these states as final. This is an over-simplification since these states are affected by container arrivals and departures that occur during or after the execution of a deployment request. Such transitions have been omitted intentionally but are worth considering. Also, there is an analogous state machine for undeploying a stream, initially in any of these states, which is left as an exercise for the reader.
 
 ==== Example
 ----
