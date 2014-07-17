@@ -737,7 +737,7 @@ port:: port to bind the server to *(int, default: `3000`)*
 transport:: whether to use TCP or UDP as a transport *(String, default: `tcp`)*
 //$source.reactor-ip
 
-[[rabbit]]
+[[rabbitmq]]
 === RabbitMQ
 
 The "rabbit" source enables receiving messages from RabbitMQ.

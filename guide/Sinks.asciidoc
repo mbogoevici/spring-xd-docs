@@ -753,10 +753,12 @@ vhost:: the RabbitMQ virtual host to use *(String, default: `${spring.rabbitmq.v
 
 [NOTE]
 ====
-Please be aware that the `routingKey` option is actually a SpEL. Hence if a simple, constant, string literal is to be used, make sure to use something like this:
+Please be aware that the `routingKey` option is actually a SpEL expression. Hence if a simple, constant, string literal is to be used, make sure to use something like this:
 
    xd:> stream create rabbitSinkStream --definition "http | rabbit --routingKey='\"myqueue\"'" --deploy
 ====
+
+See the link:MessageBus#rabbitssl[RabbitMQ MessageBus Documentation] for more information about SSL configuration.
 
 [[gemfire-server]]
 === GemFire Server
