@@ -42,8 +42,8 @@ Documentation: https://github.com/spring-projects/spring-xd/wiki
 Usage:
  --analytics [redis]   : How to persist analytics such as counters and gauges
  --help (-?, -h)       : Show this help screen
- --httpPort <httpPort>  : Http port for the REST API server
- --mgmtPort <mgmtPort>  : The port for the management server
+ --httpPort <httpPort> : Http port for the REST API server
+ --mgmtPort <mgmtPort> : The port for the management server
 ----
 
 ===== xd-admin command line args:
