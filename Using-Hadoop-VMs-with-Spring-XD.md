@@ -26,6 +26,8 @@ We have not been able to modify the VM so that we can access HDFS from the host 
 The memory setting for YARN isn't enough to run the XD MapReduce jobs. Open the Cloudera Manager and go to the 'yarn' service. Then select "Configuration - View and Edit". Under the "ResourceManager Base Group" category there is a "Resource Management" option. Under there, you should see "Container Memory Maximum" (yarn.scheduler.maximum-allocation-mb). Change that to be 2 GiB. Save the changes and restart 
 the 'yarn' service.
 
+**Using with Spring XD**
+
 If you run MapReduce jobs you should also add the YARN application classpath to the hadoop configuration. You can change the `<hadoop:configuration>` entry 
 in the Spring configuration file for your job to the following:
 
@@ -60,6 +62,8 @@ sudo -u hdfs hdfs dfs -chmod 777 /xd
 
 Add the IP address from the Sandbox VM banner to /etc/hosts
 `172.16.87.154   sandbox sandbox.hortonworks.com`
+
+**Using with Spring XD**
 
 You can now target `hdfs://sandbox:8020` in the XD shell and in _/config/servers.yml_
 
@@ -121,7 +125,9 @@ sudo -u hdfs hdfs dfs -chmod 777 /xd
 Add the IP address from above to /etc/hosts
 `192.168.177.147   pivhdsne pivhdsne.localdomain`
 
-You can now target `hdfs://pivhdsne:8020` in the XD shell and in _/config/hadoop.properties_
+**Using with Spring XD**
+
+You can now target `hdfs://pivhdsne:8020` in the XD shell and in _/config/servers.yml_
 
 If you run MapReduce jobs you should also add the YARN application classpath to the hadoop configuration. You also need to add the address for the resource manager
 and for the job history server. You can change the `<hadoop:configuration>` entry in the Spring configuration file for your job to the following:
