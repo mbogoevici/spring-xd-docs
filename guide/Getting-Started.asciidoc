@@ -3,9 +3,9 @@
 To get started, make sure your system has as a minimum  http://www.oracle.com/technetwork/java/javase/downloads/[*Java JDK 6*] or newer installed. *Java JDK 7* is recommended.
 
 === Download Spring XD
-To download the latest Milestone or GA release, you can download the distribution http://repo.springsource.org/libs-snapshot/org/springframework/xd/spring-xd/{appversion}/spring-xd-{appversion}-dist.zip[*spring-xd-{appversion}-dist.zip*] and http://repo.springsource.org/libs-snapshot/org/springframework/xd/spring-xd/{appversion}/spring-xd-{appversion}-docs.zip[its accompanying documentation]. 
+To download the latest Milestone release, you can download the distribution http://repo.spring.io/libs-milestone/org/springframework/xd/spring-xd/1.0.0.RC1/spring-xd-1.0.0.RC1-dist.zip[*spring-xd-1.0.0.RC1-dist.zip*] and http://repo.spring.io/libs-milestone/org/springframework/xd/spring-xd/1.0.0.RC1/spring-xd-1.0.0.RC1-docs.zip[its accompanying documentation]. 
 
-If you want to try out the latest build of Spring XD, You can download the snapshot distribution from http://repo.springsource.org/libs-snapshot-local/org/springframework/xd/spring-xd/1.0.0.BUILD-SNAPSHOT/[the spring snapshots repository]. You can also link:Building-Spring-XD#building-spring-xd[build the project from source] if you wish. The wiki content should also be kept up to date with the current snapshot so if you are reading this on the github website, things may have changed since the last milestone.
+If you want to try out the latest build of Spring XD, You can download the snapshot distribution from http://repo.spring.io/libs-snapshot/org/springframework/xd/spring-xd/1.0.0.BUILD-SNAPSHOT[the spring snapshots repository]. You can also link:Building-Spring-XD#building-spring-xd[build the project from source] if you wish. The wiki content should also be kept up to date with the current snapshot so if you are reading this on the github website, things may have changed since the last milestone.
 
 Unzip the distribution which will unpack to a single installation directory. All the commands below are executed from this directory, so change into it before proceeding.
 

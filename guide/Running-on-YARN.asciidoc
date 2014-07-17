@@ -12,10 +12,10 @@ Lastly, you need an RDBMs to support batch jobs and JDBC operations.
 
 
 === Download Spring XD on YARN binaries
-In addition to the regular `spring-xd-<version>-dist.zip` files we also distribute a zip file that includes all you need to deploy on YARN. The name of this zip file is `spring-xd-<version>-yarn.zip`. You can link:http://repo.spring.io/libs-snapshot/org/springframework/xd/spring-xd/{appversion}/spring-xd-{appversion}-yarn.zip[download zip for the current release] or link:http://repo.spring.io/libs-snapshot/org/springframework/xd/spring-xd/1.0.0.BUILD-SNAPSHOT/spring-xd-1.0.0.BUILD-SNAPSHOT-yarn.zip[download snapshot build]. Unzip the downloaded file and you should see a `spring-xd-{appversion}-yarn` directory.
+In addition to the regular `spring-xd-<version>-dist.zip` files we also distribute a zip file that includes all you need to deploy on YARN. The name of this zip file is `spring-xd-<version>-yarn.zip`. You can link:http://repo.spring.io/libs-milestone/org/springframework/xd/spring-xd/1.0.0.RC1/spring-xd-1.0.0.RC1-yarn.zip[download zip for the current release] or link:http://repo.spring.io/libs-snapshot/org/springframework/xd/spring-xd/1.0.0.BUILD-SNAPSHOT/spring-xd-1.0.0.BUILD-SNAPSHOT-yarn.zip[download snapshot build]. Unzip the downloaded file and you should see a `spring-xd-<version>-yarn` directory.
 
 === Configure your deployment
-Configuration options are contained in a `spring-xd-{appversion}-yarn/config/servers.yml` file. You need to configure the hadoop settings, the transport choice plus redis/rabbit settings, the zookeeper settings and the JDBC datasource properties.
+Configuration options are contained in a `config/servers.yml` file in the Spring XD YARN install directory. You need to configure the hadoop settings, the transport choice plus redis/rabbit settings, the zookeeper settings and the JDBC datasource properties.
 
 Depending on the distribution used you might need to change the `siteYarnAppClasspath` and `siteMapreduceAppClasspath`. We have provided basic settings for the supported distros, you just need to uncomment the ones for the distro you use.
 
