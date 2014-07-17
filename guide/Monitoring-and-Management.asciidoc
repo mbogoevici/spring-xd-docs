@@ -28,17 +28,17 @@ http://localhost:9393/management/beans
 etc..
 ----
 
-==== To disable boot endpoints over HTTP
+=== To disable boot endpoints over HTTP
 
 Set `management.port=-1` for both default and container profiles in config/servers.yml
 
-==== Management over JMX
+=== Management over JMX
 
 All the boot endpoints are exposed over JMX with the domain name `org.springframework.boot` 
 The MBeans that are exposed within XD admin, container server level are available with the domain names `xd.admin` (for XD admin), `xd.container` (for XD container),  `xd.shared.server` and `xd.parent` representing the application contexts common to both XD admin and container. Singlenode server will have all these domain names exposed.
 When the stream/job gets deployed into the XD container, the stream/job MBeans are exposed with specific domain/object naming strategy.
 
-==== To disable management over JMX
+=== To disable management over JMX
 
 Set `XD_JMX_ENABLED=false` in config/servers.yml or set it as an environment variable to disable the management over JMX
 
