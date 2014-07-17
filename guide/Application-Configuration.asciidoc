@@ -126,15 +126,17 @@ If you want to use RabbitMQ as a data transport use the following configuration 
 ----
 spring:
   rabbitmq:
-   host: localhost
-   port: 5672
-   # addresses: foo,bar:15672,baz # (instead of host/port for HA/cluster)
+   addresses: localhost:5672
    username: guest
    password: guest
    virtual_host: /
+   useSSL: false
+   sslProperties:
 ----
 
 To override these settings set an OS environment variable such as `spring_rabbitmq_host` to the value you require.
+
+See link:MessageBus#rabbitssl[Message Bus] regarding SSL configuration.
 
 [[rabbitBusProps]]
 In addition, the following default settings for the rabbit message bus can be modified in `servers.yml`...

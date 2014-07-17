@@ -52,7 +52,7 @@ When Redis is the transport, the failed messages (after retries are exhausted) a
 
 This is unconditional; the data in the +ERRORS LIST+ is in "bus" format; again, some external mechanism would be needed to move the data from the ERRORS LIST back to the bus's foo.1 LIST.
 
-
+[[rabbitssl]]
 === Rabbit Message Bus Secure Sockets Layer (SSL)
 
 If you wish to use SSL for communications with the RabbitMQ server, consult the https://www.rabbitmq.com/ssl.html[RabbitMQ SSL Support Documentation].
