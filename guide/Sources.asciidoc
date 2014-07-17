@@ -781,6 +781,8 @@ username:: the username to use to connect to the broker *(String, default: `${sp
 vhost:: the RabbitMQ virtual host to use *(String, default: `${spring.rabbitmq.virtual_host}`)*
 //$source.rabbit
 
+See the link:MessageBus#rabbitssl[RabbitMQ MessageBus Documentation] for more information about SSL configuration.
+
 [[jms]]
 === JMS
 
