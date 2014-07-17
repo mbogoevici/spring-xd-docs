@@ -90,6 +90,7 @@ Information about source module 'file':
   ref                set to true to output the File object itself                                 false                            boolean
   fixedDelay         the fixed delay polling interval specified in seconds                        5                                int
   outputType         how this module should emit messages it produces                             <none>                           MimeType
+----
 
 ==== Placeholders available to all modules
 Below is the list of all available `${xd.xxx}` keys that module authors may use in their declaration.
