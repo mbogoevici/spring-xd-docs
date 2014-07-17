@@ -1,8 +1,8 @@
 === Introduction
 
-This section contains additional information about configuring the Message Bus.
+This section contains additional information about configuring the Message Bus, including High Availability, SSL, and Error handling.
 
-=== HA Configuration
+=== Rabbit Message Bus High Availability (HA) Configuration
 
 The +RabbitMessageBus+ allows for HA configuration using normal https://www.rabbitmq.com/ha.html[RabbitMQ HA Configuration]. 
 
@@ -51,3 +51,42 @@ There is no automated mechanism provided to move dead lettered messages back to 
 When Redis is the transport, the failed messages (after retries are exhausted) are +LPUSH+ed to a +LIST ERRORS:<stream>.n+ (e.g. +ERRORS:foo.1+ in the above example in the _RabbitMQ Message Bus_ section).
 
 This is unconditional; the data in the +ERRORS LIST+ is in "bus" format; again, some external mechanism would be needed to move the data from the ERRORS LIST back to the bus's foo.1 LIST.
+
+
+=== Rabbit Message Bus Secure Sockets Layer (SSL)
+
+If you wish to use SSL for communications with the RabbitMQ server, consult the https://www.rabbitmq.com/ssl.html[RabbitMQ SSL Support Documentation].
+
+First configure the broker as described there. The message bus is a client of the broker and supports both of the described configurations for connecting clients (SSL _without certificate validation_ and _with certficate validation_).
+
+To use SSL without certificate validation, simply set 
+
+----
+spring:
+  rabbitmq:
+    useSSL: true
+----
+
+In +application.yml+ (and set the +port+ property appropriately).
+
+To use SSL with certificate validation, set 
+
+----
+spring:
+  rabbitmq:
+    useSSL: true
+    sslProperties: file:path/to/secret/ssl.properties
+----
+
+The +sslProperties+ property is a Spring resource (+file:+, +classpath:+ etc) that points to a properties file, Typically, this file would be secured by the operating system (and readable by the XD container) because it contains security information. Specifically:
+
+----
+keyStore=file:/secret/client/keycert.p12
+trustStore=file:/secret/trustStore
+keyStore.passPhrase=secret
+trustStore.passPhrase=secret
+----
+
+Where the +pkcs12+ keystore contains the client certificate and the truststore contains the server's certificate as described in the rabbit documentation. The key/trust store properties are Spring resources.
+
+NOTE: By default, the +rabbit+ source and sink modules inherit their default configuration from the container, but it can be overridden, either using +modules.yml+ or with specific module definitions.
