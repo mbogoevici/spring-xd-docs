@@ -61,7 +61,13 @@ sudo -u hdfs hdfs dfs -chmod 777 /xd
 **Add /etc/hosts sandbox entry on your local system:**
 
 Add the IP address from the Sandbox VM banner to /etc/hosts
-`172.16.87.154   sandbox sandbox.hortonworks.com`
+
+```
+$ sudo vi /etc/hosts
+------------------
+...
+172.16.87.154   sandbox sandbox.hortonworks.com
+```
 
 **Using with Spring XD**
 
@@ -123,7 +129,13 @@ sudo -u hdfs hdfs dfs -chmod 777 /xd
 **Add /etc/hosts pivhdsne entry on your local system:**
 
 Add the IP address from above to /etc/hosts
-`192.168.177.147   pivhdsne pivhdsne.localdomain`
+
+```
+$ sudo vi /etc/hosts
+------------------
+...
+192.168.177.147   pivhdsne pivhdsne.localdomain
+```
 
 **Using with Spring XD**
 
