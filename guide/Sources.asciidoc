@@ -766,19 +766,19 @@ To destroy the stream, enter the following at the shell prompt:
 The **rabbit** source has the following options:
 
 ackMode:: the acknowledge mode (AUTO, NONE, MANUAL) *(String, default: `AUTO`)*
-addresses:: a comma separated list of 'host[:port]' addresses *(String, default: `localhost:5672`)*
+addresses:: a comma separated list of 'host[:port]' addresses *(String, default: `${spring.rabbitmq.addresses}`)*
 concurrency:: the minimum number of consumers *(int, default: `1`)*
 converterClass:: the class name of the message converter *(String, default: `org.springframework.amqp.support.converter.SimpleMessageConverter`)*
 mappedRequestHeaders:: request message header names to be propagated to/from the adpater/gateway *(String, default: `STANDARD_REQUEST_HEADERS`)*
 maxConcurrency:: the maximum number of consumers *(int, default: `1`)*
-password:: the password to use to connect to the broker *(String, default: `guest`)*
+password:: the password to use to connect to the broker *(String, default: `${spring.rabbitmq.password}`)*
 prefetch:: the prefetch size *(int, default: `1`)*
 queues:: the queue(s) from which messages will be received *(String, default: `<stream name>`)*
 requeue:: whether rejected messages will be requeued by default *(boolean, default: `true`)*
 transacted:: true if the channel is to be transacted *(boolean, default: `false`)*
 txSize:: the number of messages to process before acking *(int, default: `1`)*
-username:: the username to use to connect to the broker *(String, default: `guest`)*
-vhost:: the RabbitMQ virtual host to use *(String, default: `/`)*
+username:: the username to use to connect to the broker *(String, default: `${spring.rabbitmq.username}`)*
+vhost:: the RabbitMQ virtual host to use *(String, default: `${spring.rabbitmq.virtual_host}`)*
 //$source.rabbit
 
 [[jms]]
