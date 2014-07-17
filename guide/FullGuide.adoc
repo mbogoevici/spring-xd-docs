@@ -64,7 +64,7 @@ include::Sinks.asciidoc[]
 include::Taps.asciidoc[]
 
 [[deployment]]
-=== Deployment
+== Deployment
 include::Deployment.asciidoc[]
 
 [[type-conversion]]
