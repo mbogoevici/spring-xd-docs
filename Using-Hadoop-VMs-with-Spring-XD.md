@@ -23,9 +23,7 @@ We have not been able to modify the VM so that we can access HDFS from the host 
 
 **Adjust the YARN memory setting:**
 
-The memory settings for YARN isn't enough to run the XD MapReduce jobs. Open the Cloudera Manager and go to the 'yarn' service. Then 
-select "Configuration - View and Edit". Under the "ResourceManager Base Group" category there is a "Resource Management" option. Under there, 
-you should see "Container Memory Maximum" (yarn.scheduler.maximum-allocation-mb). Change that to be 2 GiB. Save the changes and restart 
+The memory setting for YARN isn't enough to run the XD MapReduce jobs. Open the Cloudera Manager and go to the 'yarn' service. Then select "Configuration - View and Edit". Under the "ResourceManager Base Group" category there is a "Resource Management" option. Under there, you should see "Container Memory Maximum" (yarn.scheduler.maximum-allocation-mb). Change that to be 2 GiB. Save the changes and restart 
 the 'yarn' service.
 
 If you run MapReduce jobs you should also add the YARN application classpath to the hadoop configuration. You can change the `<hadoop:configuration>` entry 
