@@ -747,6 +747,8 @@ exchange:: the Exchange on the RabbitMQ broker to which messages should be sent 
 mappedRequestHeaders:: request message header names to be propagated to/from the adpater/gateway *(String, default: `STANDARD_REQUEST_HEADERS`)*
 password:: the password to use to connect to the broker *(String, default: `${spring.rabbitmq.password}`)*
 routingKey:: the routing key to be passed with the message, as a SpEL expression *(String, default: `'<stream name>'`)*
+sslPropertiesLocation:: resource containing SSL properties *(String, default: `${spring.rabbitmq.sslProperties}`)*
+useSSL:: true if SSL should be used for the connection *(String, default: `${spring.rabbitmq.useSSL}`)*
 username:: the username to use to connect to the broker *(String, default: `${spring.rabbitmq.username}`)*
 vhost:: the RabbitMQ virtual host to use *(String, default: `${spring.rabbitmq.virtual_host}`)*
 //$sink.rabbit
