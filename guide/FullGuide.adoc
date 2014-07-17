@@ -39,6 +39,10 @@ include::Architecture.asciidoc[]
 == XD Distributed Runtime
 include::XD-Distributed-Runtime.asciidoc[]
 
+[[extending-xd]]
+== Extending XD 
+include::Extending-XD.asciidoc[Extending Spring XD][]
+
 [[streams]]
 == Streams
 include::Streams.asciidoc[]

@@ -21,6 +21,7 @@ image::images/distributed-runtime-overview.png[Spring XD Distributed Runtime, wi
 The XD distribution provides shell scripts to start its runtime components under the _xd_ directory of the XD installation:
 
 Whether you are running _xd-admin, xd-container or even xd-singlenode you can always get help by typing the command followed by --help.  For example: 
+[subs="attributes"]
 ----
 xd/bin/xd-admin --help
 
@@ -32,7 +33,7 @@ xd/bin/xd-admin --help
 \____/| .__/|_|  |_|_| |_|\__, | \/   \/___/
       | |                  __/ |
       |_|                 |___/
-1.0.0.BUILD-SNAPSHOT             eXtreme Data
+{appversion}             eXtreme Data
 
 
 Started : AdminServerApplication

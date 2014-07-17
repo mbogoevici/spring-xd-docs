@@ -3,20 +3,17 @@
 To get started, make sure your system has as a minimum  http://www.oracle.com/technetwork/java/javase/downloads/[*Java JDK 6*] or newer installed. *Java JDK 7* is recommended.
 
 === Download Spring XD
+To download the latest Milestone or GA release, you can download the distribution http://repo.springsource.org/libs-snapshot/org/springframework/xd/spring-xd/{appversion}/spring-xd-{appversion}-dist.zip[*spring-xd-{appversion}-dist.zip*] and http://repo.springsource.org/libs-snapshot/org/springframework/xd/spring-xd/{appversion}/spring-xd-{appversion}-docs.zip[its accompanying documentation]. 
 
-If you want to try out Spring XD, we'd recommend downloading a snapshot build, since things are changing quite fast. A snapshot distribution can be downloaded from http://repo.springsource.org/libs-snapshot-local/org/springframework/xd/spring-xd/1.0.0.BUILD-SNAPSHOT/[the spring snapshots repository]. You can also link:Building-Spring-XD#building-spring-xd[build the project from source] if you wish. The wiki content should also be kept up to date with the current snapshot so if you are reading this on the github website, things may have changed since the last milestone.
+If you want to try out the latest build of Spring XD, You can download the snapshot distribution from http://repo.springsource.org/libs-snapshot-local/org/springframework/xd/spring-xd/1.0.0.BUILD-SNAPSHOT/[the spring snapshots repository]. You can also link:Building-Spring-XD#building-spring-xd[build the project from source] if you wish. The wiki content should also be kept up to date with the current snapshot so if you are reading this on the github website, things may have changed since the last milestone.
 
 Unzip the distribution which will unpack to a single installation directory. All the commands below are executed from this directory, so change into it before proceeding.
-
-If you are sure you want the previous milestone release, you can also download the distribution http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M7/spring-xd-1.0.0.M7-dist.zip[*spring-xd-1.0.0.M7-dist.zip*] and http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M7/spring-xd-1.0.0.M7-docs.zip[its accompanying documentation]. 
 
 [source,bash]
 [subs="attributes"]
 ----
 $ cd spring-xd-{appversion}
 ----
-
-Set the environment variable `XD_HOME` to the installation directory `<root-install-dir>\spring-xd\xd`
 
 === Install Spring XD
 
@@ -36,6 +33,7 @@ xd/bin>$ ./xd-singlenode
 In a separate terminal, `cd` into the `shell` directory and start the XD shell, which you can use to issue commands.
 
 [source]
+[subs="attributes"]
 ----
 shell/bin>$ ./xd-shell
  _____                           __   _______
@@ -47,7 +45,7 @@ shell/bin>$ ./xd-shell
       | |                  __/ |
       |_|                 |___/
 eXtreme Data
-1.0.0.M7 | Admin Server Target: http://localhost:8080
+{appversion} | Admin Server Target: http://localhost:9393
 Welcome to the Spring XD shell. For assistance hit TAB or type "help".
 xd:>
 ----
@@ -72,7 +70,7 @@ You should now be able to start using Spring XD.
 
 [TIP]
 ====
-Spring XD uses ZooKeeper internally which typically runs as an external process. XD singlenode runs with an embedded ZooKeeper server and assigns a random available port. This keeps things very simple. However if you already have a ZooKeeper ensemble set up and want to connect to it, you can edit `xd\config\servers.yml`:
+Spring XD uses ZooKeeper internally which typically runs as an external process. XD singlenode runs with an embedded ZooKeeper server and assigns a random available port. This keeps things very simple. However if you already have a ZooKeeper ensemble set up and want to connect to it, you can edit `xd/config/servers.yml`:
 
 ----
 #Zookeeper properties
@@ -82,7 +80,10 @@ zk:
      connect: localhost:2181
 ----
 
-Also, sometimes it is useful in troubleshooting to connect the ZooKeeper CLI to the embedded server. The assigned server port is listed in the console log, but you can also set the port directly by setting the property `zk.embedded.server.port` in `servers.yml`
+Also, sometimes it is useful in troubleshooting to connect the ZooKeeper CLI to the embedded server. The assigned server port is listed in the console log, but you can also set the port directly by setting the property `zk.embedded.server.port` in `servers.yml` or set `JAVA_OPTS` before starting xd-singlenode.
+----
+$export JAVA_OPTS=-Dzk.embedded.server.port=<port>
+----
 ====
 
 === Create a Stream

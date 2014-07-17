@@ -123,7 +123,8 @@ The above reflects the initial state of Spring XD with a running admin and conta
 
 Start the XD Shell in a new terminal session and create a stream:
 
-[source,bash]
+[source]
+[subs="attributes"]
 ----
 $ shell/bin/xd-shell
  _____                           __   _______
@@ -135,7 +136,7 @@ $ shell/bin/xd-shell
       | |                  __/ |
       |_|                 |___/
 eXtreme Data
-1.0.0.BUILD-SNAPSHOT | Admin Server Target: http://localhost:9393
+{appversion} | Admin Server Target: http://localhost:9393
 Welcome to the Spring XD shell. For assistance hit TAB or type "help".
 xd:>stream create ticktock --definition "time | log"
 Created new stream 'ticktock'
