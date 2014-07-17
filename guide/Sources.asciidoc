@@ -74,7 +74,7 @@ $ cat /tmp/xd/output/httptest9020
 hello world
 ----
 
-NOTE: When using +https+, you need to provide a properties file that references a pkcs12 key store and its passphrase. Setting +--https=true+ enables https:// and the module looks for the SSL properties in resource +classpath:httpSSL.properties+. This location can be overridden with the +--sslPropertiesLocation+ property. For example:
+NOTE: When using +https+, you need to provide a properties file that references a pkcs12 key store (containing the server certificate(s)) and its passphrase. Setting +--https=true+ enables https:// and the module looks for the SSL properties in resource +classpath:httpSSL.properties+. This location can be overridden with the +--sslPropertiesLocation+ property. For example:
 
     xd:> stream create --name https9021 --definition "http --port=9021 --https=true --sslPropertiesLocation=file:/secret/ssl.properties | file" --deploy
 
