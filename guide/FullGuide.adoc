@@ -63,6 +63,10 @@ include::Sinks.asciidoc[]
 == Taps
 include::Taps.asciidoc[]
 
+[[deployment]]
+=== Deployment
+include::Deployment.asciidoc[]
+
 [[type-conversion]]
 == Type Conversion
 include::Type-conversion.asciidoc[]
@@ -126,6 +130,12 @@ include::Building-Spring-XD.asciidoc[]
 [[monitoring-management]]
 == Monitoring and Management
 include::Monitoring-and-Management.asciidoc[]
+
+[appendix]
+[[messagebus]]
+== Message Bus Configuration
+include::MessageBus.asciidoc[]
+
 
 // The following is generated at release-time
 [appendix]

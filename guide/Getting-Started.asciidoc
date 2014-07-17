@@ -11,8 +11,9 @@ Unzip the distribution which will unpack to a single installation directory. All
 If you are sure you want the previous milestone release, you can also download the distribution http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M7/spring-xd-1.0.0.M7-dist.zip[*spring-xd-1.0.0.M7-dist.zip*] and http://repo.springsource.org/libs-milestone/org/springframework/xd/spring-xd/1.0.0.M7/spring-xd-1.0.0.M7-docs.zip[its accompanying documentation]. 
 
 [source,bash]
+[subs="attributes"]
 ----
-$ cd spring-xd-1.0.0.M7
+$ cd spring-xd-{appversion}
 ----
 
 Set the environment variable `XD_HOME` to the installation directory `<root-install-dir>\spring-xd\xd`
