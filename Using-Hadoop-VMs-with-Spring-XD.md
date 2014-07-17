@@ -82,7 +82,7 @@ Remember to use the `--hadoopDistro hdp21` when you start Spring XD and the Spri
 
 ### Pivotal HD Single Node VM
 
-Download from [Pivotal](http://gopivotal.com/big-data/pivotal-hd) - for this guide we used "Pivotal HD 2.0 Single Node VM " which is based on Pivotal HD 2.0.
+Download from [Pivotal](https://network.gopivotal.com/products/pivotal-hd) - for this guide we used "Pivotal HD 2.0 Single Node VM".
 
 Start the VM and open a terminal window (Applications -> System Tools -> Terminal). 
 
