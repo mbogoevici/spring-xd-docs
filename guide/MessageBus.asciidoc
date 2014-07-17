@@ -67,7 +67,7 @@ spring:
     useSSL: true
 ----
 
-In +application.yml+ (and set the +port+ property appropriately).
+In +application.yml+ (and set the port(s) +addresses+ property appropriately).
 
 To use SSL with certificate validation, set 
 
