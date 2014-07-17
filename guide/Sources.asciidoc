@@ -81,7 +81,7 @@ NOTE: When using +https+, you need to provide a properties file that references 
 [source,bash]
 ----
 $ cat /secret/ssl.properties
-keyStore=file:/secret/httpSource.pkcs12
+keyStore=file:/secret/httpSource.p12
 keyStore.passPhrase=secret
 ----
 
