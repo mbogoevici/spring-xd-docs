@@ -9,6 +9,7 @@ The Processors covered are
 * <<script, Script>>
 * <<splitter, Splitter>>
 * <<aggregator, Aggregator>>
+* <<json-to-tuple, JSON to Tuple>>
 
 See the section link:Creating-a-Processor-Module#creating-a-processor-module[Creating a Processor Module] for information on how to create custom processor modules.
 
@@ -54,12 +55,12 @@ Alternatively, if you send a different _firstName_, you shouldn't see the log en
 
 Here is another example usage of filter
 
-    filter --expression=#jsonPath(payload,'$.entities.hashtags[*].text').contains('obama') 
+    filter --expression=#jsonPath(payload,'$.entities.hashtags[*].text').contains('obama')
 
 This is an example that is operating on a JSON payload of tweets as consumed from the twitter search module.
 
 ==== Filter with Groovy Script
-For more complex filtering, you can pass the location of a Groovy script using the _script_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables. 
+For more complex filtering, you can pass the location of a Groovy script using the _script_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
 
 Note that an implicit variable named _payload_ is available to give you access to the data contained in a message.
 
@@ -67,7 +68,7 @@ Note that an implicit variable named _payload_ is available to give you access t
 
 By default, Spring XD will search the classpath for _custom-filter.groovy_ and _custom-filter.properties_. You can place the script in _${xd.home}/modules/processor/scripts_ and the properties file in _${xd.home}/config_ to make them available on the classpath.  Alternatively, you can prefix the _script_ and _properties-location_ values with _file:_ to load from the file system.
 
-[[transform]] 
+[[transform]]
 === Transform
 Use the transform module in a link:Streams#streams[stream] to convert a Message's content or structure.
 
@@ -100,7 +101,7 @@ By default, Spring XD will search the classpath for _custom-transform.groovy_ an
 
 [[script]]
 === Script
-The script processor contains a _Service Activator_ that invokes a specified Groovy script. This is a slightly more generic way to accomplish processing logic, as the provided script may simply terminate the stream as well as transform or filter Messages. 
+The script processor contains a _Service Activator_ that invokes a specified Groovy script. This is a slightly more generic way to accomplish processing logic, as the provided script may simply terminate the stream as well as transform or filter Messages.
 
 To use the module, pass the location of a Groovy script using the _location_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
 
@@ -187,3 +188,20 @@ username:: the username to use when using the jdbc store *(String, no default)*
 * About the `timeout` option: due to the way it is implemented (see MessageGroupStoreReaper in the Spring Integration documentation), the actual observed delay may vary between `timeout` and `2xtimeout`.
 ====
 
+[[json-to-tuple]]
+=== JSON to Tuple
+The `json-to-tuple` processor is able to transform a String representation of some JSON map into a link:Tuples#tuples[Tuple].
+
+Here is a simple example:
+----
+xd:>stream create tuples --definition "http | json-to-tuple | transform --expression='payload.firstName + payload.lastName' | log"
+
+xd:>http post --data '{"firstName": "Spring", "lastName": "XD"}'
+----
+
+[NOTE]
+====
+Transformation to Tuple can be used as an alternative or in addition of link:Type-conversion#type-conversion[Type Conversion], depending on your usecase.
+
+//^json-to-tuple
+//$json-to-tuple
