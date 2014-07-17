@@ -202,6 +202,7 @@ xd:>http post --data '{"firstName": "Spring", "lastName": "XD"}'
 [NOTE]
 ====
 Transformation to Tuple can be used as an alternative or in addition of link:Type-conversion#type-conversion[Type Conversion], depending on your usecase.
+====
 
 //^json-to-tuple
 //$json-to-tuple
