@@ -21,7 +21,7 @@ image::images/distributed-runtime-overview.png[Spring XD Distributed Runtime, wi
 The XD distribution provides shell scripts to start its runtime components under the _xd_ directory of the XD installation:
 
 Whether you are running _xd-admin, xd-container or even xd-singlenode you can always get help by typing the command followed by --help.  For example: 
-[subs="attributes"]
+[subs="attributes,specialcharacters"]
 ----
 xd/bin/xd-admin --help
 
@@ -42,8 +42,8 @@ Documentation: https://github.com/spring-projects/spring-xd/wiki
 Usage:
  --analytics [redis]   : How to persist analytics such as counters and gauges
  --help (-?, -h)       : Show this help screen
- --httpPort <\httpPort>  : Http port for the REST API server
- --mgmtPort <\mgmtPort>  : The port for the management server
+ --httpPort <httpPort>  : Http port for the REST API server
+ --mgmtPort <mgmtPort>  : The port for the management server
 ----
 
 ===== xd-admin command line args:
