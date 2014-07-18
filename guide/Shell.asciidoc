@@ -111,6 +111,7 @@ Information about sink module 'file':
 ----
 
 Note that the default value `${xd.stream.name}` will be resolved to the name of the stream that contains the module. 
+
 ==== Tab completion for Job and Stream DSL definitions
 
 When creating a stream defintion tab completion after `--definition` will enable you to see all the options that are available for a given module as well as a list of candidate modules for the subsequent module in the stream.  For example, hitting `TAB` after `http` as shown below
