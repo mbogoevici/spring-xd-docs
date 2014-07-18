@@ -411,7 +411,7 @@ Sets the Hadoop namenode.
 
     hadoop config fs [--namenode] <namenode>
 
-*namenode*:: namenode address - can be local|<namenode:port>. *(required)*
+*namenode*:: namenode URL - can be file:///|hdfs://<namenode>:<port>|webhdfs://<namenode>:<port>. *(required)*
 
 ==== hadoop config props set
 Sets the value for the given Hadoop property.
@@ -429,6 +429,15 @@ Returns the value of the given Hadoop property.
 
 
 === Hadoop FileSystem Commands
+==== hadoop fs chgrp
+Change group association of files.
+
+    hadoop fs chgrp [--recursive [<recursive>]] --group <group> [--path] <path>
+
+*recursive*:: whether with recursion. *(default: `false`, or `true` if +--recursive+ is specified without a value)*
+*group*:: group name. *(required)*
+*path*:: path of the file whose group will be changed. *(required)*
+
 ==== hadoop fs chown
 Change the owner of files.
 
@@ -559,15 +568,6 @@ Copy source paths to stdout.
     hadoop fs cat [--path] <path>
 
 *path*:: file name to be shown. *(required)*
-
-==== hadoop fs chgrp
-Change group association of files.
-
-    hadoop fs chgrp [--recursive [<recursive>]] --group <group> [--path] <path>
-
-*recursive*:: whether with recursion. *(default: `false`, or `true` if +--recursive+ is specified without a value)*
-*group*:: group name. *(required)*
-*path*:: path of the file whose group will be changed. *(required)*
 
 ==== hadoop fs get
 Copy files to the local file system.
