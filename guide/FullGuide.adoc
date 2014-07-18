@@ -43,6 +43,10 @@ include::XD-Distributed-Runtime.asciidoc[]
 == Extending XD 
 include::Extending-XD.asciidoc[Extending Spring XD][]
 
+[[interactive-shell]]
+== Interactive Shell 
+include::Shell.asciidoc[Interactive Shell][]
+
 [[streams]]
 == Streams
 include::Streams.asciidoc[]
