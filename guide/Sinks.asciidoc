@@ -703,8 +703,8 @@ In the mongo console you will see the document stored
   > db.names.find()
   { "_id" : ObjectId("53c93bc324ac76925a77b9df"), "firstName" : "mark" }
 
-//^sink.mongo
-//$sink.mongo
+//^sink.mongodb
+//$sink.mongodb
 
 
 [[mail]]
