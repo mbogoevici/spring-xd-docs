@@ -111,11 +111,6 @@ In the log you should see:
 ## MQTT Sink
 The MQTT sink module will publish messages for a topic to the broker for a specific topic.  
 
-### Note:  Rabbit MQTT support for the following settings
-* qos - The default is 1, meaning that it will guarantee that the message will be delivered at least once.
-Rabbit supports qos of 0 (delivered at most once) or 1 (at least once) .  Rabbit will only grant subscriptions up to qos 1.  
-* Retained flag is not supported
-
 ### Example 1: Using defaults
 In this example we will create a stream that will publish a message to topic using the defaults: 
 
