@@ -144,6 +144,11 @@ include::Monitoring-and-Management.asciidoc[]
 == Message Bus Configuration
 include::MessageBus.asciidoc[]
 
+[appendix]
+[[Module Usage]]
+== Using MQTT Modules on XD
+include::Using-MQTT-on-XD.asciidoc[]
+
 
 // The following is generated at release-time
 [appendix]
