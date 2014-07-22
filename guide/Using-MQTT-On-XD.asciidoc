@@ -10,8 +10,6 @@ To Activate:
 1. Shutdown the Rabbit MQ instance
 2. $RABBIT_HOME/sbin/rabbitmq-plugins list
  
- [source,bash] 
-  ----
   ...
   [ ] rabbitmq_federation_management    3.3.4
   [E] rabbitmq_management               3.3.4
@@ -21,16 +19,13 @@ To Activate:
   [ ] rabbitmq_shovel                   3.3.4
   [ ] rabbitmq_shovel_management        3.3.4
   …
-  ----  
-  
+   
 3.  We see that the rabitt_mqtt does not have a [E] denoted next to it.  Thus it is not enabled.  
 Note: if you do see the [E] next to the rabbitmq_mqtt then your plugin is enabled and all you need to do is restart your RabbitMQ.
 4. Now enable rabbit_mqtt plugin
   a. Run: $RABBIT_HOME/sbin/rabbitmq-plugins enable rabbitmq_mqtt
   b. Run: $RABBIT_HOME/sbin/rabbitmq-plugins list
  
- [source,bash]
-  ----
   ...
   [ ] rabbitmq_federation_management    3.3.4
   [E] rabbitmq_management               3.3.4
@@ -40,7 +35,6 @@ Note: if you do see the [E] next to the rabbitmq_mqtt then your plugin is enable
   [ ] rabbitmq_shovel                   3.3.4
   [ ] rabbitmq_shovel_management        3.3.4
   ...
-  ----
 
    c. Now we see that the rabbitmq_mqtt plugin is now active.
    d. Restart your RabbitMQ.
