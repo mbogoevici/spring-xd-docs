@@ -16,6 +16,10 @@ For example to see what modules are available issue the command
 xd:>module list
 ----
 
+[TIP]
+====
+The list of all Spring XD specific commands can be found in the link:ShellReference#shell-command-reference[Shell Reference]
+====
 The shell also provides extensive command completion capabilities.  For example, if you type 'mod' and hit TAB, you will be presented with all the matching commands. 
 [source]
 ----
