@@ -37,6 +37,6 @@ link:Creating-a-Sink-Module[Appendix D: Creating a Sink Module] +
 link:ModuleOptionsMetadata[Appendix E: Providing Module Options Metadata] +
 link:Building-Spring-XD[Appendix F: Building Spring XD] +
 link:Monitoring-and-Management[Appendix G: Monitoring and Management] +
-link:Using-MQTT-On-XD[Appendix H: Using MQTT On XD] +
+link:Using-MQTT-On-XD[Appendix H: Using MQTT on XD] +
 link:ShellReference[Appendix I: XD Shell Command Reference]
 ****
