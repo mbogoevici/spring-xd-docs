@@ -1,4 +1,13 @@
+Below is a reference list of all Spring XD specific commands you can use in the link:Shell#interactive-shell[XD Shell]
+
 === Configuration Commands
+==== admin config server
+Configure the XD admin server to use.
+
+    admin config server [[--uri] <uri>]
+
+*uri*:: the location of the XD Admin REST endpoint. *(default: `http://localhost:9393/`)*
+
 ==== admin config info
 Show the XD admin server being used.
 
@@ -11,13 +20,6 @@ List all timezones.
     admin config timezone list
 
 
-==== admin config server
-Configure the XD admin server to use.
-
-    admin config server [[--uri] <uri>]
-
-*uri*:: the location of the XD Admin REST endpoint. *(default: `http://localhost:9393/`)*
-
 ==== admin config timezone set
 Set the timezone of the Spring XD Shell (Not persisted).
 
@@ -27,6 +29,12 @@ Set the timezone of the Spring XD Shell (Not persisted).
 
 
 === Runtime Commands
+==== runtime containers
+List runtime containers.
+
+    runtime containers
+
+
 ==== runtime modules
 List runtime modules.
 
@@ -34,12 +42,6 @@ List runtime modules.
 
 *containerId*:: to filter by container id.
 *moduleId*:: to filter by module id.
-
-==== runtime containers
-List runtime containers.
-
-    runtime containers
-
 
 
 === Stream Commands
@@ -96,6 +98,12 @@ List created streams.
 
 
 === Job Commands
+==== job list
+List all jobs.
+
+    job list
+
+
 ==== job create
 Create a job.
 
@@ -104,12 +112,6 @@ Create a job.
 *name*:: the name to give to the job. *(required)*
 *definition*:: job definition using xd dsl . *(required)*
 *deploy*:: whether to deploy the job immediately. *(default: `false`, or `true` if +--deploy+ is specified without a value)*
-
-==== job list
-List all jobs.
-
-    job list
-
 
 ==== job execution list
 List all job executions.
@@ -251,6 +253,19 @@ List all modules.
 
 
 === Metrics Commands
+==== counter delete
+Delete the counter with the given name.
+
+    counter delete [--name] <name>
+
+*name*:: the name of the counter to delete. *(required)*
+
+==== counter list
+List all available counter names.
+
+    counter list
+
+
 ==== counter display
 Display the value of a counter.
 
@@ -259,18 +274,18 @@ Display the value of a counter.
 *name*:: the name of the counter to display. *(required)*
 *pattern*:: the pattern used to format the value (see DecimalFormat). *(default: `<use platform locale>`)*
 
-==== counter list
-List all available counter names.
 
-    counter list
+==== field-value-counter delete
+Delete the field-value-counter with the given name.
 
+    field-value-counter delete [--name] <name>
 
-==== counter delete
-Delete the counter with the given name.
+*name*:: the name of the field-value-counter to delete. *(required)*
 
-    counter delete [--name] <name>
+==== field-value-counter list
+List all available field-value-counter names.
 
-*name*:: the name of the counter to delete. *(required)*
+    field-value-counter list
 
 
 ==== field-value-counter display
@@ -282,18 +297,18 @@ Display the value of a field-value-counter.
 *pattern*:: the pattern used to format the field-value-counter's field count (see DecimalFormat). *(default: `<use platform locale>`)*
 *size*:: the number of values to display. *(default: `25`)*
 
-==== field-value-counter list
-List all available field-value-counter names.
 
-    field-value-counter list
+==== aggregate-counter delete
+Delete an aggregate counter.
 
+    aggregate-counter delete [--name] <name>
 
-==== field-value-counter delete
-Delete the field-value-counter with the given name.
+*name*:: the name of the aggregate counter to delete. *(required)*
 
-    field-value-counter delete [--name] <name>
+==== aggregate-counter list
+List all available aggregate counter names.
 
-*name*:: the name of the field-value-counter to delete. *(required)*
+    aggregate-counter list
 
 
 ==== aggregate-counter display
@@ -309,18 +324,18 @@ Display aggregate counter values by chosen interval and resolution(minute, hour)
 *resolution*:: the size of the bucket to aggregate (minute, hour, day, month). *(default: `hour`)*
 *pattern*:: the pattern used to format the count values (see DecimalFormat). *(default: `<use platform locale>`)*
 
-==== aggregate-counter list
-List all available aggregate counter names.
 
-    aggregate-counter list
+==== gauge delete
+Delete a gauge.
 
+    gauge delete [--name] <name>
 
-==== aggregate-counter delete
-Delete an aggregate counter.
+*name*:: the name of the gauge to delete. *(required)*
 
-    aggregate-counter delete [--name] <name>
+==== gauge list
+List all available gauge names.
 
-*name*:: the name of the aggregate counter to delete. *(required)*
+    gauge list
 
 
 ==== gauge display
@@ -331,18 +346,18 @@ Display the value of a gauge.
 *name*:: the name of the gauge to display. *(required)*
 *pattern*:: the pattern used to format the value (see DecimalFormat). *(default: `<use platform locale>`)*
 
-==== gauge list
-List all available gauge names.
 
-    gauge list
+==== rich-gauge delete
+Delete the richgauge.
 
+    rich-gauge delete [--name] <name>
 
-==== gauge delete
-Delete a gauge.
+*name*:: the name of the richgauge to delete. *(required)*
 
-    gauge delete [--name] <name>
+==== rich-gauge list
+List all available richgauge names.
 
-*name*:: the name of the gauge to delete. *(required)*
+    rich-gauge list
 
 
 ==== rich-gauge display
@@ -352,19 +367,6 @@ Display Rich Gauge value.
 
 *name*:: the name of the richgauge to display value. *(required)*
 *pattern*:: the pattern used to format the richgauge value (see DecimalFormat). *(default: `<use platform locale>`)*
-
-==== rich-gauge list
-List all available richgauge names.
-
-    rich-gauge list
-
-
-==== rich-gauge delete
-Delete the richgauge.
-
-    rich-gauge delete [--name] <name>
-
-*name*:: the name of the richgauge to delete. *(required)*
 
 
 === Http Commands
@@ -387,6 +389,20 @@ Make GET request to http endpoint.
 
 
 === Hadoop Configuration Commands
+==== hadoop config props set
+Sets the value for the given Hadoop property.
+
+    hadoop config props set [--property] <property>
+
+*property*:: what to set, in the form <name=value>. *(required)*
+
+==== hadoop config props get
+Returns the value of the given Hadoop property.
+
+    hadoop config props get [--key] <key>
+
+*key*:: property name. *(required)*
+
 ==== hadoop config info
 Returns basic info about the Hadoop configuration.
 
@@ -413,22 +429,64 @@ Sets the Hadoop namenode.
 
 *namenode*:: namenode URL - can be file:///|hdfs://<namenode>:<port>|webhdfs://<namenode>:<port>. *(required)*
 
-==== hadoop config props set
-Sets the value for the given Hadoop property.
-
-    hadoop config props set [--property] <property>
-
-*property*:: what to set, in the form <name=value>. *(required)*
-
-==== hadoop config props get
-Returns the value of the given Hadoop property.
-
-    hadoop config props get [--key] <key>
-
-*key*:: property name. *(required)*
-
 
 === Hadoop FileSystem Commands
+==== hadoop fs get
+Copy files to the local file system.
+
+    hadoop fs get --from <from> --to <to> [--ignoreCrc [<ignoreCrc>]] [--crc [<crc>]]
+
+*from*:: source file names. *(required)*
+*to*:: destination path name. *(required)*
+*ignoreCrc*:: whether ignore CRC. *(default: `false`, or `true` if +--ignoreCrc+ is specified without a value)*
+*crc*:: whether copy CRC. *(default: `false`, or `true` if +--crc+ is specified without a value)*
+
+==== hadoop fs put
+Copy single src, or multiple srcs from local file system to the destination file system.
+
+    hadoop fs put --from <from> --to <to>
+
+*from*:: source file names. *(required)*
+*to*:: destination path name. *(required)*
+
+==== hadoop fs count
+Count the number of directories, files, bytes, quota, and remaining quota.
+
+    hadoop fs count [--quota [<quota>]] --path <path>
+
+*quota*:: whether with quta information. *(default: `false`, or `true` if +--quota+ is specified without a value)*
+*path*:: path name. *(required)*
+
+==== hadoop fs mkdir
+Create a new directory.
+
+    hadoop fs mkdir [--dir] <dir>
+
+*dir*:: directory name. *(required)*
+
+==== hadoop fs tail
+Display last kilobyte of the file to stdout.
+
+    hadoop fs tail [--file] <file> [--follow [<follow>]]
+
+*file*:: file to be tailed. *(required)*
+*follow*:: whether show content while file grow. *(default: `false`, or `true` if +--follow+ is specified without a value)*
+
+==== hadoop fs ls
+List files in the directory.
+
+    hadoop fs ls [[--dir] <dir>] [--recursive [<recursive>]]
+
+*dir*:: directory to be listed. *(default: `.`)*
+*recursive*:: whether with recursion. *(default: `false`, or `true` if +--recursive+ is specified without a value)*
+
+==== hadoop fs cat
+Copy source paths to stdout.
+
+    hadoop fs cat [--path] <path>
+
+*path*:: file name to be shown. *(required)*
+
 ==== hadoop fs chgrp
 Change group association of files.
 
@@ -553,61 +611,5 @@ Create a file of zero length.
     hadoop fs touchz [--file] <file>
 
 *file*:: file to be touched. *(required)*
-
-==== hadoop fs ls
-List files in the directory.
-
-    hadoop fs ls [[--dir] <dir>] [--recursive [<recursive>]]
-
-*dir*:: directory to be listed. *(default: `.`)*
-*recursive*:: whether with recursion. *(default: `false`, or `true` if +--recursive+ is specified without a value)*
-
-==== hadoop fs cat
-Copy source paths to stdout.
-
-    hadoop fs cat [--path] <path>
-
-*path*:: file name to be shown. *(required)*
-
-==== hadoop fs get
-Copy files to the local file system.
-
-    hadoop fs get --from <from> --to <to> [--ignoreCrc [<ignoreCrc>]] [--crc [<crc>]]
-
-*from*:: source file names. *(required)*
-*to*:: destination path name. *(required)*
-*ignoreCrc*:: whether ignore CRC. *(default: `false`, or `true` if +--ignoreCrc+ is specified without a value)*
-*crc*:: whether copy CRC. *(default: `false`, or `true` if +--crc+ is specified without a value)*
-
-==== hadoop fs put
-Copy single src, or multiple srcs from local file system to the destination file system.
-
-    hadoop fs put --from <from> --to <to>
-
-*from*:: source file names. *(required)*
-*to*:: destination path name. *(required)*
-
-==== hadoop fs count
-Count the number of directories, files, bytes, quota, and remaining quota.
-
-    hadoop fs count [--quota [<quota>]] --path <path>
-
-*quota*:: whether with quta information. *(default: `false`, or `true` if +--quota+ is specified without a value)*
-*path*:: path name. *(required)*
-
-==== hadoop fs mkdir
-Create a new directory.
-
-    hadoop fs mkdir [--dir] <dir>
-
-*dir*:: directory name. *(required)*
-
-==== hadoop fs tail
-Display last kilobyte of the file to stdout.
-
-    hadoop fs tail [--file] <file> [--follow [<follow>]]
-
-*file*:: file to be tailed. *(required)*
-*follow*:: whether show content while file grow. *(default: `false`, or `true` if +--follow+ is specified without a value)*
 
 
