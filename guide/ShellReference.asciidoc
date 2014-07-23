@@ -1,4 +1,4 @@
-Below is a reference list of all Spring XD specific commands you can use in the link:Shell#interactive-shell[XD Shell]
+Below is a reference list of all Spring XD specific commands you can use in the link:Shell#interactive-shell[XD Shell].
 
 === Configuration Commands
 ==== admin config server
@@ -29,12 +29,6 @@ Set the timezone of the Spring XD Shell (Not persisted).
 
 
 === Runtime Commands
-==== runtime containers
-List runtime containers.
-
-    runtime containers
-
-
 ==== runtime modules
 List runtime modules.
 
@@ -42,6 +36,12 @@ List runtime modules.
 
 *containerId*:: to filter by container id.
 *moduleId*:: to filter by module id.
+
+==== runtime containers
+List runtime containers.
+
+    runtime containers
+
 
 
 === Stream Commands
@@ -226,9 +226,10 @@ Destroy all existing jobs.
 ==== module info
 Get information about a module.
 
-    module info [--name] <name>
+    module info [--name] <name> [--hidden [<hidden>]]
 
 *name*:: name of the module to query, in the form 'type:name'. *(required)*
+*hidden*:: whether to show 'hidden' options. *(default: `false`, or `true` if +--hidden+ is specified without a value)*
 
 ==== module compose
 Create a virtual module.
@@ -409,6 +410,13 @@ Returns basic info about the Hadoop configuration.
     hadoop config info
 
 
+==== hadoop config fs
+Sets the Hadoop namenode.
+
+    hadoop config fs [--namenode] <namenode>
+
+*namenode*:: namenode URL - can be file:///|hdfs://<namenode>:<port>|webhdfs://<namenode>:<port>. *(required)*
+
 ==== hadoop config load
 Loads the Hadoop configuration from the given resource.
 
@@ -421,13 +429,6 @@ Returns (all) the Hadoop properties.
 
     hadoop config props list
 
-
-==== hadoop config fs
-Sets the Hadoop namenode.
-
-    hadoop config fs [--namenode] <namenode>
-
-*namenode*:: namenode URL - can be file:///|hdfs://<namenode>:<port>|webhdfs://<namenode>:<port>. *(required)*
 
 
 === Hadoop FileSystem Commands
@@ -472,20 +473,14 @@ Display last kilobyte of the file to stdout.
 *file*:: file to be tailed. *(required)*
 *follow*:: whether show content while file grow. *(default: `false`, or `true` if +--follow+ is specified without a value)*
 
-==== hadoop fs ls
-List files in the directory.
+==== hadoop fs chmod
+Change the permissions of files.
 
-    hadoop fs ls [[--dir] <dir>] [--recursive [<recursive>]]
+    hadoop fs chmod [--recursive [<recursive>]] --mode <mode> [--path] <path>
 
-*dir*:: directory to be listed. *(default: `.`)*
 *recursive*:: whether with recursion. *(default: `false`, or `true` if +--recursive+ is specified without a value)*
-
-==== hadoop fs cat
-Copy source paths to stdout.
-
-    hadoop fs cat [--path] <path>
-
-*path*:: file name to be shown. *(required)*
+*mode*:: permission mode. *(required)*
+*path*:: path of the file whose permissions will be changed. *(required)*
 
 ==== hadoop fs chgrp
 Change group association of files.
@@ -505,14 +500,20 @@ Change the owner of files.
 *owner*:: owner name. *(required)*
 *path*:: path of the file whose ownership will be changed. *(required)*
 
-==== hadoop fs chmod
-Change the permissions of files.
+==== hadoop fs cat
+Copy source paths to stdout.
 
-    hadoop fs chmod [--recursive [<recursive>]] --mode <mode> [--path] <path>
+    hadoop fs cat [--path] <path>
 
+*path*:: file name to be shown. *(required)*
+
+==== hadoop fs ls
+List files in the directory.
+
+    hadoop fs ls [[--dir] <dir>] [--recursive [<recursive>]]
+
+*dir*:: directory to be listed. *(default: `.`)*
 *recursive*:: whether with recursion. *(default: `false`, or `true` if +--recursive+ is specified without a value)*
-*mode*:: permission mode. *(required)*
-*path*:: path of the file whose permissions will be changed. *(required)*
 
 ==== hadoop fs copyFromLocal
 Copy single src, or multiple srcs from local file system to the destination file system. Same as put.
