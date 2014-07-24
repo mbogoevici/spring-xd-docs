@@ -33,6 +33,41 @@ These are described in the section below.
 
 This purpose of this section is to show you how to create, schedule and monitor a job.
 
+=== The Lifecycle of a Job in Spring XD
+
+Before we dive deeper into the details of creating batch jobs with Spring XD, we need to understand the typical lifecycle for batch jobs in the context of Spring XD:
+
+ . Register a job module
+ . Create a job definition
+ . Deploy a job
+ . Launch a job
+ . Job Execution
+ . Undeploy a job 
+
+==== Register a job module
+
+Register a job module with the MoudleRegistry by putting a XML/jar files in the $XD_HOME/modules/jobs directory.
+
+==== Create a job definition
+
+Create a job definition from a job module by providing a name and properties that apply to all job instances can be configured at this point. The job is not yet deployed
+
+==== Deploy the job
+
+Deploy the job to an xd-container. A job instance can not be created by sending a message to a job queue that contains optional runtime job parameters
+
+==== Launch a job
+
+Launch a job by sending a message to the job queue with job parameters. A Job Instance is created, representing a specific run of the job. A Job Instance is the Job Definition plus the runtime job parameters. You can query for the Job Instances associated with a given job name
+
+==== Job Execution
+
+The job is executed creating a Job Execution object that captures the success or failure of the job. You can query for the Job Executions associated with a given job name.
+
+==== Undeploy a job
+
+This removes the job from xd-container.
+
 === Developing your Job
 
 The Jobs definitions provided as part of the Spring XD distribution as well as those included in the https://github.com/spring-projects/spring-xd-samples[Spring XD Samples] repository can be used a basis for building your own custom Jobs.  The development of a Job largely follows the development of a Spring Batch job, for which there are several references.
