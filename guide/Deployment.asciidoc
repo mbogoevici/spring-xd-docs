@@ -22,7 +22,7 @@ When you deploy a link:Streams[Stream] or link:Jobs[Job], the Spring XD Runtime 
 [[deployment-manifest]]
 === Deployment Manifest
 
-A stream is composed of modules. Each module is deployed to one or more Container instance(s). In this way, stream processing is distributed among multiple containers. By default, deploying a stream to a distributed runtime configuration uses simple round robin logic. For example if there are three containers and three modules in a stream definition,  `s1= m1 | m2 | m3`, then Spring XD will attempt distribute the work load evenly among each container. This is a very simplistic strategy and does not take into account things like:
+A stream is composed of modules. Each module is deployed to one or more Container instance(s). In this way, stream processing is distributed among multiple containers. By default, deploying a stream to a distributed runtime configuration uses simple round robin logic. For example if there are three containers and three modules in a stream definition,  `s1= m1 | m2 | m3`, then Spring XD will attempt to distribute the work load evenly among each container. This is a very simplistic strategy and does not take into account things like:
 
 * server load - how many modules are already deployed to a container? What is the current memory and CPU utilization?
 * server affinity - some containers may have external software installed and specific modules will benefit from co-location. For example, an hdfs sink might be deployed only to hosts running Hadoop. Or perhaps a file sink should be deployed to hosts configured with extra disk space.
