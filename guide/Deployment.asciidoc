@@ -11,7 +11,7 @@ This section covers topics related to deployment, including:
 
 When you deploy a link:Streams[Stream] or link:Jobs[Job], the Spring XD Runtime performs the following steps:
 
- * parse the stream or job definition (link:DSL-Reference:DSL) to resolve each Module reference along with it's options 
+ * parse the stream or job definition (link:DSL-Reference#dsl-reference[DSL reference]) to resolve each Module reference along with it's options 
  * set option values assigned to each component link:Modules[Module]
  * parse and store the deployment request including the <<deployment-manifest,Deployment Manifest>>
  * allocate each Module to an available Container instance in accordance with the Deployment Manifest
