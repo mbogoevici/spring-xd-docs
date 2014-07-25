@@ -62,7 +62,7 @@ The MQTT source module also generates the binding from the amq.topic to the mess
 ===== Example 1: Using defaults
 To show this in detail let us create the following stream: `stream create mqtt-in --definition “mqtt|log” --deploy`.  In this example the stream will retrieve MQTT messages from RabbitMQ and write the content to Spring XD’s log.  So on RabbitMQ a message queue named `mqtt-subscription-xd.mqtt.client.id.srcqos1` and a binding for the topic (routing key) `xd.mqtt.test` will be created.  
 
-image::images/mqtt_samp_1.png[]
+image::images/mqtt_samp_1.png[MQTT Sample 1, width=500]
 
 Thus any message published with the topic, `xd.mqtt.test` will be sent to the `mqtt-subscription-xd.mqtt.client.id.srcqos1` message queue and thus picked up by the Spring XD MQTT module and then written to log.  
 So to exercise the stream created we can write the following:
@@ -82,7 +82,7 @@ In the log you should see:
 ===== Example 2: Monitoring different topics. 
 In this scenario we want to setup a MQTT Source Module to retrieve messages that may come in from different topics.  So lets pretend that we want to monitor all the infusion machines at a medical facility.  Our monitor wants to log all messages that notify us that a machine has completed its task or if a machine in need of  maintenance.  
 
-image::images/mqtt_samp_2.png[]
+image::images/mqtt_samp_2.png[MQTT Sample 2, width=500]
 
 In this case it would look like this:
 
@@ -123,7 +123,7 @@ stream create mqtt-in --definition”mqtt|log”
 
 This mqtt-out stream will receive http messages to port 9000 on localhost and then the mqtt will publish the information to a rabbit instance on the localhost.  The message will be routed to the queue (mqtt-subscription-xd.mqtt.client.id.srcqos1) that was created by MQTT source module and then, the message will be delivered to the MQTT source module.
 
-image::images/mqtt_samp_3.png[]
+image::images/mqtt_samp_3.png[MQTT Sample 3, width=500]
 
 So the output will look something like this, if you execute a `http post --data ‘hello world’`
 

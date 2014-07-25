@@ -17,7 +17,7 @@ In the previous section, we claimed that if a container goes down, Spring XD wil
 
 ZooKeeper is based on a simple hierarchical data structure, formally a tree, and conceptually and semantically similar to a file directory structure. As such, data is stored in _nodes_. A node is referenced via a _path_, for example, _/xd/streams/mystream_. Each node can store additional data, serialized as a byte array. In Spring XD, all data is a java.util.Map serialized as JSON. The following figure shows the Spring XD schema:
 
-image::images/zk_xd_schema.png[ZooKeeper XD Schema]
+image::images/zk_xd_schema.png[ZooKeeper XD Schema, width=500]
 
 A ZooKeeper node is either _ephemeral_ or _persistent_.  An ephemeral node exists only as long as the session that created it remains active. A persistent node is, well, persistent. Ephemeral nodes are appropriate for registering Container instances. When an Spring XD container starts up it creates an ephemeral node, _/xd/containers/<container-id>_,  using an internally generated container id. When the container's session is closed due to a connection loss, for example, the container process terminates, its node is removed. The ephemeral container node also holds metadata such as its hostname and IP address, runtime metrics, and user defined container attributes. Persistent nodes maintain state needed for normal operation and recovery. This includes data such as stream definitions, job definitions, deployment manifests, module deployments, and deployment state for streams and jobs.
 
@@ -64,7 +64,7 @@ Assuming the deployment is successful, This will result in the creation of sever
 
 If the Admin instance connected to the shell is not the Leader, it will perform no further action. The Leader's DeploymentSupervisor will attempt to deploy each module in the stream definition, in accordance with the deployment manifest, to an available container, and update the runtime state.
 
-image::images/xd-admin-internals.png[XD Admin Internals]
+image::images/xd-admin-internals.png[XD Admin Internals, width=500]
 
 [[example-1]]
 ==== Example
@@ -211,7 +211,7 @@ This section describes how the Spring XD runtime manages deployment internally. 
 
 To process a stream deployment request, the _StreamDeploymentListener_ invokes its _ContainerMatcher_ to select a container instance for each module and records the module's deployment properties under _/xd/deployments/modules/requested/_. If a match is found, the StreamDeploymentListener creates a node for the module under _/xd/deployments/modules/allocated/<container_id>_. The Container includes a _DeploymentListener_ that monitors the container node for new modules to deploy. If the deployment is successful, the Container writes the ephemeral nodes _status_ and _metadata_ under the new module node.
 
-image::images/module-deployment.png[Module Deployment]
+image::images/module-deployment.png[Module Deployment, width=500]
 
 When a container departs, the ephemeral nodes are deleted so its modules are now undeployed. The _ContainerListener_ responds to the deleted nodes and attempts to redeploy any affected modules to another instance.
 

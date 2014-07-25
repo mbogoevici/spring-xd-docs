@@ -21,7 +21,7 @@ The diagram below shows how Spring XD is organized into several Spring applicati
 Spring XD's primary extension mechanism targets the 'Plugin Context' highlighted in the diagram. Using a separate convention, it is also possible to register an alternate MessageBus implementation in the 'Shared Server Context'. 
 
 .The Spring XD Application Context Hierarchy
-image::images/xd-extensions-contexts.png[scaledwidth="100%"]
+image::images/xd-extensions-contexts.png[Extension contexts, width=500]
 
 While this arrangement of application contexts is more complex than the typical Spring application, XD is designed this way for the following reasons:
 
