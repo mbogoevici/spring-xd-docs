@@ -37,12 +37,12 @@ This purpose of this section is to show you how to create, schedule and monitor 
 
 Before we dive deeper into the details of creating batch jobs with Spring XD, we need to understand the typical lifecycle for batch jobs in the context of _Spring XD_:
 
- . Register a job module
- . Create a job definition
- . Deploy a job
- . Launch a job
+ . Register a Job Module
+ . Create a Job Definition
+ . Deploy a Job
+ . Launch a Job
  . Job Execution
- . Un-deploy a job 
+ . Un-deploy a Job 
  . Destroy a Job Definition
 
 ==== Register a Job Module
@@ -59,19 +59,19 @@ Deploy the *Job Definition* to one or more _Spring XD_ containers. This will ini
 
 ==== Launch a Job
 
-Launch a job by sending a message to the job queue with *http://docs.spring.io/spring-batch/trunk/reference/html/domain.html#domainJobParameters[Job Parameters]*. A *http://docs.spring.io/spring-batch/trunk/reference/html/domain.html#domainJobInstance[job instance]* is created, representing a specific run of the job. A *Job Instance* is the *Job Definition* plus the runtime *Job Parameters*. You can query for the *Job Instances* associated with a given job name.
+Launch a job by sending a message to the job queue with *http://docs.spring.io/spring-batch/trunk/reference/html/domain.html#domainJobParameters[Job Parameters]*. A *http://docs.spring.io/spring-batch/trunk/reference/html/domain.html#domainJobInstance[Job Instance]* is created, representing a specific run of the job. A *Job Instance* is the *Job Definition* plus the runtime *Job Parameters*. You can query for the *Job Instances* associated with a given job name.
 
 ==== Job Execution
 
 The job is executed creating a *http://docs.spring.io/spring-batch/trunk/reference/html/domain.html#domainJobExecution[Job Execution]* object that captures the success or failure of the job. You can query for *Job Executions* associated with a given job name.
 
-==== Un-deploy a job
+==== Un-deploy a Job
 
 This removes the job from the _Spring XD_ container(s) preventing the launching of any new _Job Instances_. For reporting purposes, you will still be able to view historic _Job Executions_ associated with the the job.
 
 ==== Destroy a Job Definition
 
-Destroying a _Job Definition_ will not only un-deploy any still deployed _Job Definitions_ but will also remove the _Job Definition_ itself.
+Destroying a *Job Definition* will not only un-deploy any still deployed _Job Definitions_ but will also remove the _Job Definition_ itself.
 
 === Developing your Job
 
