@@ -119,7 +119,7 @@ image::images/direct-binding.png[Direct Binding, width=500]
 
 In addition, direct binding requires that the producer is not configured for <<partition-properties,partitioning>> since partitioning is implemented by the Message Bus.
 
-Using _module.\*.count=0_ is the most straightforward way to enable direct binding. Direct binding may be disabled for the stream using _module.*.producer.directBinding=false_. Additional <<direct-binding-deployment-examples, direct binding deployment examples>> are shown below.
+Using _module.\*.count=0_ is the most straightforward way to enable direct binding. Direct binding may be disabled for the stream using _module.*.producer.directBindingAllowed=false_. Additional <<direct-binding-deployment-examples, direct binding deployment examples>> are shown below.
 
 [[deployment-states]]
 === Deployment States
