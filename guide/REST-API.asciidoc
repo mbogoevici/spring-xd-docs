@@ -210,6 +210,7 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |/jobs/executions
 |GET
 |list all job executions
+(Only 'application/json' mediatype supported)
 
 |/jobs/executions?stop=true
 |PUT
@@ -218,6 +219,7 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |/jobs/executions?jobname=\{jobName\}
 |GET
 |get information about all executions of a job
+(Only 'application/json' mediatype supported)
 
 |/jobs/executions?jobname=\{jobName\}
 |POST
@@ -238,6 +240,7 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |/jobs/executions/\{jobExecutionId\}/steps
 |GET
 |list the steps for a job execution
+(Only 'application/json' mediatype supported)
 
 |/jobs/executions/\{jobExecutionId\}/steps/\{stepExecutionId\}
 |GET
@@ -260,10 +263,12 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |/jobs/instances?jobname=\{jobName\}
 |GET
 |get information about all instances of a job
+(Only 'application/json' mediatype supported)
 
 |/jobs/instances/\{instanceId\}
 |GET
 |get information about a batch job instance
+(Only 'application/json' mediatype supported)
 |===
 
 [[module-definitions]]
