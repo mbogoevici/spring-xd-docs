@@ -106,9 +106,9 @@ include::Creating-a-Processor-Module.asciidoc[]
 == Creating a Sink Module
 include::Creating-a-Sink-Module.asciidoc[]
 
-[[creating-a-job-item-processor]]
+[[creating-a-job-module]]
 == Creating a Job Item Processor
-include::Creating-a-Job-Item-Processor.asciidoc[]
+include::Creating-a-Job-Module.asciidoc[]
 
 [[module-options-metadata]]
 == Providing Module Options Metadata
