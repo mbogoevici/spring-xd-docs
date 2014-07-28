@@ -20,32 +20,40 @@ include::Introduction.asciidoc[]
 include::Getting-Started.asciidoc[]
 
 [[running-distributed-mode]]
-== Running in Distributed Mode
+=== Running in Distributed Mode
 include::Running-Distributed-Mode.asciidoc[]
 
 [[running-on-YARN]]
-== Running on YARN
+=== Running on YARN
 include::Running-on-YARN.asciidoc[]
 
 [[application-configuration]]
 == Application Configuration
 include::Application-Configuration.asciidoc[]
 
+[[dsl-guide]]
+== DSL Guide
+include::DSL-Reference.asciidoc[]
+
+[[interactive-shell]]
+== Interactive Shell 
+include::Shell.asciidoc[Interactive Shell][]
+
+[[adminui]]
+== Admin UI 
+include::AdminUI.asciidoc[]
+
 [[architecture]]
 == Architecture
 include::Architecture.asciidoc[]
 
 [[distributed runtime]]
-== XD Distributed Runtime
+== Distributed Runtime
 include::XD-Distributed-Runtime.asciidoc[]
 
-[[extending-xd]]
-== Extending XD 
-include::Extending-XD.asciidoc[Extending Spring XD][]
-
-[[interactive-shell]]
-== Interactive Shell 
-include::Shell.asciidoc[Interactive Shell][]
+[[batch]]
+== Batch Jobs
+include::Batch-Jobs.asciidoc[]
 
 [[streams]]
 == Streams
@@ -71,37 +79,72 @@ include::Sinks.asciidoc[]
 == Taps
 include::Taps.asciidoc[]
 
-[[deployment]]
-== Deployment
-include::Deployment.asciidoc[]
-
-[[type-conversion]]
-== Type Conversion
-include::Type-conversion.asciidoc[]
-
-[[batch]]
-== Batch Jobs
-include::Batch-Jobs.asciidoc[]
-
 [[analytics]]
 == Analytics
 include::Analytics.asciidoc[]
-
-[[dsl-reference]]
-== DSL Reference
-include::DSL-Reference.asciidoc[]
 
 [[tuples]]
 == Tuples
 include::Tuples.asciidoc[]
 
+[[type-conversion]]
+== Type Conversion
+include::Type-conversion.asciidoc[]
+
+[[developing-modules-and-extensions]]
+= Developing Modules and Extensions
+
+[[creating-a-source-module]]
+== Creating a Source Module
+include::Creating-a-Source-Module.asciidoc[]
+
+[[creating-a-processor-module]]
+== Creating a Processor Module
+include::Creating-a-Processor-Module.asciidoc[]
+
+[[creating-a-sink-module]]
+== Creating a Sink Module
+include::Creating-a-Sink-Module.asciidoc[]
+
+[[module-options-metadata]]
+== Providing Module Options Metadata
+include::ModuleOptionsMetadata.asciidoc[]
+
+[[creating-a-job-item-processor]]
+== Creating a Job Item Processor
+include::Creating-a-Job-Item-Processor.asciidoc[]
+
+[[extending-xd]]
+== Extending Spring XD 
+include::Extending-XD.asciidoc[Extending Spring XD][]
+
 [[samples]]
 == Samples 
 include::Samples.asciidoc[]
 
-[[adminui]]
-== Admin UI 
-include::AdminUI.asciidoc[]
+[[best-practices]]
+= Best Practices
+
+== Introduction
+include::Introduction-Best-Practices.asciidoc[]
+
+[[deployment]]
+== Deployment
+include::Deployment.asciidoc[]
+
+[[messagebus]]
+== Message Bus Configuration
+include::MessageBus.asciidoc[]
+
+= Administration
+
+[[monitoring-management]]
+== Monitoring and Management
+include::Monitoring-and-Management.asciidoc[]
+
+[[REST-API]]
+== REST API
+include::REST-API.asciidoc[]
 
 = Appendices
 [[installing-hadoop]]
@@ -109,25 +152,11 @@ include::AdminUI.asciidoc[]
 == Installing Hadoop
 include::Hadoop-Installation.asciidoc[]
 
+// The following is generated at release-time
 [appendix]
-[[creating-a-source-module]]
-== Creating a Source Module
-include::Creating-a-Source-Module.asciidoc[]
-
-[appendix]
-[[creating-a-processor-module]]
-== Creating a Processor Module
-include::Creating-a-Processor-Module.asciidoc[]
-
-[appendix]
-[[creating-a-sink-module]]
-== Creating a Sink Module
-include::Creating-a-Sink-Module.asciidoc[]
-
-[appendix]
-[[module-options-metadata]]
-== Providing Module Options Metadata
-include::ModuleOptionsMetadata.asciidoc[]
+[[shell-command-reference]]
+== XD Shell Command Reference
+include::ShellReference.asciidoc[]
 
 [appendix]
 [[building-spring-xd]]
@@ -135,24 +164,9 @@ include::ModuleOptionsMetadata.asciidoc[]
 include::Building-Spring-XD.asciidoc[]
 
 [appendix]
-[[monitoring-management]]
-== Monitoring and Management
-include::Monitoring-and-Management.asciidoc[]
-
-[appendix]
-[[messagebus]]
-== Message Bus Configuration
-include::MessageBus.asciidoc[]
-
-[appendix]
 [[Module Usage]]
-== Using MQTT Modules on XD
+== Using MQTT Modules
 include::Using-MQTT-on-XD.asciidoc[]
 
 
-// The following is generated at release-time
-[appendix]
-[[shell-command-reference]]
-== XD Shell Command Reference
-include::ShellReference.asciidoc[]
 

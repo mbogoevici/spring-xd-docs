@@ -4,39 +4,57 @@
 ****
 *link:Introduction[Introduction]* +
 link:Getting-Started[*Getting Started*] +
-link:Running-Distributed-Mode[Running in Distributed Mode] + 
-link:Running-on-YARN[Running on YARN] +
-link:Application-Configuration[Application Configuration] + 
+
+* link:Running-Distributed-Mode[Running in Distributed Mode]
+* link:Running-on-YARN[Running on YARN]
+
+*link:Application-Configuration[Application Configuration]* + 
+*link:DSL-Reference[DSL Guide]* +
+*link:Shell[Interactive Shell]* +
+*link:AdminUI[Admin UI]* +
+
 *link:Technical-Documentation[Technical Documentation]* +
-link:Architecture[Architecture] +
-link:XD-Distributed-Runtime[XD Distributed Runtime] +
-link:Extending-XD[Extending Spring XD] +
-link:Shell[Interactive Shell] +
-link:Streams[Streams] +
-link:Modules[Modules] +
-link:Sources[Sources] +
-link:Processors[Processors] +
-link:Analytics[Analytics] +
-link:Sinks[Sinks] +
-link:Taps[Taps] +
-link:Batch-Jobs[Batch Jobs] +
-link:Deployment[Deployment] +
-link:MessageBus[Message Bus Configuration] +
-link:Type-Conversion[Type Conversion] +
-link:Monitoring-and-Management[Monitoring and Management] +
-link:DSL-Reference[DSL Reference] +
-link:AdminUI[Admin UI] +
-link:REST-API[REST API] +
-link:Tuples[Tuples] +
-link:Samples[Samples] +
---
-link:Hadoop-Installation[Appendix A: Installing Hadoop] +
-link:Creating-a-Source-Module[Appendix B: Creating a Source Module] +
-link:Creating-a-Processor-Module[Appendix C: Creating a Processor Module] +
-link:Creating-a-Sink-Module[Appendix D: Creating a Sink Module] +
-link:ModuleOptionsMetadata[Appendix E: Providing Module Options Metadata] +
-link:Building-Spring-XD[Appendix F: Building Spring XD] +
-link:Monitoring-and-Management[Appendix G: Monitoring and Management] +
-link:Using-MQTT-On-XD[Appendix H: Using MQTT on XD] +
-link:ShellReference[Appendix I: XD Shell Command Reference]
+
+* link:Architecture[Architecture]
+* link:XD-Distributed-Runtime[Distributed Runtime]
+* link:Batch-Jobs[Batch Jobs]
+* link:Streams[Streams]
+* link:Modules[Modules]
+* link:Sources[Sources]
+* link:Processors[Processors]
+* link:Sinks[Sinks]
+* link:Analytics[Analytics]
+* link:Taps[Taps]
+* link:Tuples[Tuples]
+* link:Type-Conversion[Type Conversion]
+
+*Developing Modules and Extensions*
+
+* link:Creating-a-Source-Module[Creating a Source Module]
+* link:Creating-a-Processor-Module[Creating a Processor Module]
+* link:Creating-a-Sink-Module[Creating a Sink Module]
+* link:ModuleOptionsMetadata[Providing Module Options Metadata]
+* link:Creating-a-Job-Item-Processor[Creating a Job Item Processor]
+* link:Extending-XD[Extending Spring XD]
+* link:Samples[Samples]
+
+*Best Practices*
+
+* link:Introduction-Best-Practices[Introduction]
+* link:Deployment[Deployment]
+* link:MessageBus[Message Bus Configuration]
+
+*Administration*
+
+* link:Monitoring-and-Management[Monitoring and Management]
+* link:REST-API[REST API]
+
+
+*Appendices*
+
+* link:Hadoop-Installation[Appendix A: Installing Hadoop]
+* link:ShellReference[Appendix B: Spring XD Shell Command Reference]
+* link:Building-Spring-XD[Appendix C: Building Spring XD]
+* link:Using-MQTT-On-XD[Appendix D: Using MQTT]
+
 ****
