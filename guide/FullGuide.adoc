@@ -152,12 +152,6 @@ include::REST-API.asciidoc[]
 == Installing Hadoop
 include::Hadoop-Installation.asciidoc[]
 
-// The following is generated at release-time
-[appendix]
-[[shell-command-reference]]
-== XD Shell Command Reference
-include::ShellReference.asciidoc[]
-
 [appendix]
 [[building-spring-xd]]
 == Building Spring XD 
@@ -167,6 +161,14 @@ include::Building-Spring-XD.asciidoc[]
 [[Module Usage]]
 == Using MQTT Modules
 include::Using-MQTT-on-XD.asciidoc[]
+
+// The following is generated at release-time
+[appendix]
+[[shell-command-reference]]
+== XD Shell Command Reference
+include::ShellReference.asciidoc[]
+
+
 
 
 

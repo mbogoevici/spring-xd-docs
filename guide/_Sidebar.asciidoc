@@ -53,8 +53,8 @@ link:Getting-Started[*Getting Started*] +
 *Appendices*
 
 * link:Hadoop-Installation[Appendix A: Installing Hadoop]
-* link:ShellReference[Appendix B: Spring XD Shell Command Reference]
 * link:Building-Spring-XD[Appendix C: Building Spring XD]
 * link:Using-MQTT-On-XD[Appendix D: Using MQTT]
+* link:ShellReference[Appendix B: Spring XD Shell Command Reference]
 
 ****
