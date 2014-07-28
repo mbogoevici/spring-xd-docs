@@ -33,8 +33,8 @@ link:Getting-Started[*Getting Started*] +
 * link:Creating-a-Source-Module[Creating a Source Module]
 * link:Creating-a-Processor-Module[Creating a Processor Module]
 * link:Creating-a-Sink-Module[Creating a Sink Module]
-* link:ModuleOptionsMetadata[Providing Module Options Metadata]
 * link:Creating-a-Job-Item-Processor[Creating a Job Item Processor]
+* link:ModuleOptionsMetadata[Providing Module Options Metadata]
 * link:Extending-XD[Extending Spring XD]
 * link:Samples[Samples]
 

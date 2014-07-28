@@ -106,13 +106,13 @@ include::Creating-a-Processor-Module.asciidoc[]
 == Creating a Sink Module
 include::Creating-a-Sink-Module.asciidoc[]
 
-[[module-options-metadata]]
-== Providing Module Options Metadata
-include::ModuleOptionsMetadata.asciidoc[]
-
 [[creating-a-job-item-processor]]
 == Creating a Job Item Processor
 include::Creating-a-Job-Item-Processor.asciidoc[]
+
+[[module-options-metadata]]
+== Providing Module Options Metadata
+include::ModuleOptionsMetadata.asciidoc[]
 
 [[extending-xd]]
 == Extending Spring XD 
