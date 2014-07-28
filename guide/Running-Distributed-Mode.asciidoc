@@ -241,6 +241,8 @@ xd/bin>$ ./xd-admin --httpPort <httpPort>
 
 The XDContainer nodes by default start up with server.port 0 (which means they will scan for an available HTTP port). You can disable the HTTP endpoints for the XDContainer by setting server.port=-1. Note that in this case HTTP source support will not work in a PaaS environment because typically it would require XD to bind to a specific port. Both the XDAdmin and XDContainer processes bind to server.port $PORT (i.e. an environment variable if one is available, as is typical in a PaaS).
 
+Also, note that it is recommended to use fixed port for XDAdmin(s). This makes it easy to know the admin server addresses the REST clients (shell, webUI) can point to. If a random port is chosen (with server.port or $PORT set to 0), then one needs to go through the log and find which port admin server's tomcat starts at.
+
 [[using-hadoop]]
 === Using Hadoop
 
