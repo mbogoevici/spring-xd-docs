@@ -106,7 +106,7 @@ spring:
 ==== Customizing module configurations
 
 The configurations for all modules can be customized by modifying the file 
-modules.yml in the `config` directory and then adding it to the modules-config.zip 
+`modules.yml` in the `config` directory and then adding it to the `modules-config.zip` 
 archive in the same directory.
 
 You can run the following command from the `config` directory to achieve this:
