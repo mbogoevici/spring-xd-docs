@@ -38,9 +38,9 @@ link:Getting-Started[*Getting Started*] +
 * link:Extending-XD[Extending Spring XD]
 * link:Samples[Samples]
 
-*Best Practices*
+*Configuration Guidelines*
 
-* link:Introduction-Best-Practices[Introduction]
+* link:Configuration-Guidelines-Overview[Overview]
 * link:Deployment[Deployment]
 * link:MessageBus[Message Bus Configuration]
 

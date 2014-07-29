@@ -122,11 +122,11 @@ include::Extending-XD.asciidoc[Extending Spring XD][]
 == Samples 
 include::Samples.asciidoc[]
 
-[[best-practices]]
-= Best Practices
+[[configuration-guidelines]]
+= Configuration Guidelines
 
-== Introduction
-include::Introduction-Best-Practices.asciidoc[]
+== Overview
+include::Configuration-Guidelines-Overview.asciidoc[]
 
 [[deployment]]
 == Deployment
