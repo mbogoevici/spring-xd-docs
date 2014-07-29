@@ -191,6 +191,6 @@ redis 127.0.0.1:6379> lrange javatweets 0 -1
 ----
 
 === Installing the module in a sub-directory
-Modules can also reside in a sub-directory named after the module itself, e.g. `modules/sink/redis`.  This sub-directory in turn contains a config and lib sub-directories.  If you install a module following this convention then the module will run in an isolated classpath, a child of the parent classpath created from the contents of `xd/lib`. See https://github.com/spring-projects/spring-xd/wiki/Modules#modules-with-isolated-classpath[Modules with isolated classpath] for more information.
+Modules can also reside in a sub-directory named after the module itself, e.g. `modules/sink/redis`.  This sub-directory in turn contains `config` and `lib` sub-directories.  If you install a module following this convention then the module will run in an isolated classpath, a child of the parent classpath created from the contents of `xd/lib`. See https://github.com/spring-projects/spring-xd/wiki/Modules#modules-with-isolated-classpath[Modules with isolated classpath] for more information.
 
 [NOTE] To help you better package up a module for installation in a sub-directory the https://github.com/spring-projects/spring-xd-modules/blob/master/analytics-ml-pmml/build.gradle[sample build file] form the JPMML module can be used as a starting point.

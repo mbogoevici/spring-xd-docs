@@ -1,0 +1,1234 @@
+* 45562d7d714c18a1c860498d2ce42986d162bffb Add docs on how to install/package a module in isolated sub-directories
+* 243249c1d67b0d3027bd16750dd5d181b2d14432 XD-2028 Add docs for creating a Job Module
+* b2691f1528b22cd2d61ee6edde91f497d6384b4b Updated Running on YARN (asciidoc)
+* c5fc5224f825fe5ba7ccba6291011304a1111224 Updated Running on YARN (asciidoc)
+* 0d8a7a4fe6e0de3be6e1aed59b06f938339e877f Specify copying the module config directory
+* 37bd844d85726e012f1f6188ce9a9268e2ff76bc Fixed section levels
+* 8b6ea38e09bcbbb490af23f894dafe17eb220334 Updated Using MQTT On XD (asciidoc)
+* 3f1f536b9eeb8e512b2bb45c6a2997fdf0d150d6 changed section title to Creating a Job Module
+* b9966f0984a18795ebbf60799fa2a476763aadc4 Show examples of usage for overriding module properties via system props or env vars
+* f415cf88a5cd0da5a9e988d9c7ee963747ccbd08 Make sure file path separator is necessary for XD_MODULE_CONFIG_LOCATION
+* 28af1c9286d0a3849dc176bf4e278dc7fc101475 Revert 1c5190b^ ... 1c5190b on REST API
+* 1c5190b257dab06fa3a27cbebc427a4e4b417bbe Revert 8e1bcbe^ ... 8e1bcbe on REST API
+* 8e1bcbe827706c03cb7546349c045e4d00d55f00 Updated REST API (asciidoc)
+* 16f6624cfaf516346443eade12cd6baf506b0e90 Update supported media type batch job GET endpoint
+* 6b62b36eac53c23be28d4d2a16d00b1ed918c10c Put shell command reference section as last appendix since it is so large
+* 602f35ff34d747332a6653c839a0ff71c014818c Updated Introduction Best Practices (asciidoc)
+* e9e9c137b1e087cb9c1f03055b4925ab9f7aec61 Updated Introduction Best Practices (asciidoc)
+* baa4dc8a1e0130eef2567b0df0406585df98cf80 Updated Introduction Best Practices (asciidoc)
+* 812eb5f561d0c86a800370eade0ace240bf82e70 Updated Introduction Best Practices (asciidoc)
+* 7060a2fc14eb885ab41ebd94144a127aaa0b987c Rename 'Creating a Job Item Processor' to 'Creating a Job module'
+* 30b2c41b3d54fe2bae05a9f4ce606a1ad83d8f61 Reorder Creating Job Item Procesor and Module Options Metadata
+* b55698fd57114260a10be5e4cefaf6eb8b651dc9 Updated Deployment (asciidoc)
+* c8e3e1d7d4c159c590797e4cf0f5766d0745ddc1 Move the admin server port recommendation message
+* a070d31975fd7875a4ce7656dd3e62f663bf15dc XD-2016 -Reorg TOC
+* 8021c0412cb6360cc4d6773416b976d1ef206e91 Update doc for admin port 0
+* 9b4c198486a20f352ecaa9d43e0f33d5ce8f2a8e Updated Deployment (asciidoc)
+* f4b74bdecbc5ea7125b3148262a503f6af7814fc Update fixed width for few images
+* 8ad54b84e2cb25636d81c0c25ec8a9c919aa1804 XD-2018 Resize zk_xd_schema image
+* fe058726c5fdb253a54e8d1de3f9b811a4ff1b19 Updated Batch Jobs (asciidoc)
+* 2918e8d6fa7dfcf8b6ac030b163150088e23da1a Updated Batch Jobs (asciidoc)
+* cfba1cc02096b0b55a74ac8f05a57128f89bdff4 Updated Batch Jobs (asciidoc)
+* f9e40812a8e51b5a1dd28364e9455fe946003c34 Updated Deployment (asciidoc)
+* 3b1879cc173bf4f3349af091e671fcdb713b7576 Updated Deployment (asciidoc)
+* ae246bfd75a5b5ca55e621d365afbaeef03b5bb7 Updated Deployment (asciidoc)
+* 321732f45b67db92260af17612a9b56337d12081 Fixed capitalization
+* 021ea1c8286a0f6ae3ed6eb4b8676de788f1c058 "Using MQTT Module" uses spaces instead of '-'
+* 4d69294d831409eb4d06e2c3e9b541a088373bd8 Removed the '+' from the Last Appendix Entry
+* 670a7ed01460973ffb871537d6e6db1ee37ca159 Automated doc generation in synch with XD 3047ecd06afc10937a52992beed98723b4221c3c
+* 99df8c5369b573dc3446daef6fbac6fad9aa533d Automated doc generation in synch with XD c0e809d1e074f70841b8c8593c40846a686291d0
+* 5792789f043eb8a513ce670dd0e9be44acada39d Updated Shell (asciidoc)
+* 55e8f5fbd4012cb4bacd918942c5ffecef03c321 Fixed formatting error
+* 3eb988b6d3172340fc412a28f1d758605aad3423 Document now a part of the side bar.
+* 4ecdd10934e6f7fb7ed4344812ecb8e2ae71706a MQTT Usage now available in appendix
+* 42901acfbef7614c6777a89d8da4e245ff976de1 Updated Using MQTT Modules on XD (markdown)
+* 8ee57b180e3700b85eb48a66fde85ccce7dabea3 Created Using MQTT Modules on XD (markdown)
+* e5166df3dd2f6fb33541def2adbdb61b1e5d13a0 XD-1918 Update Type-conversion
+* 7b15452eb11dd2b44b9336d1076805f81111e089 Automated doc generation in synch with XD fd33136e449a1caeabca4835fdf823bd78fcefbf
+* 4262e09f9b98b129c4a8f890f3c659f18a66f77a Automated doc generation in synch with XD 83e6092425c049efd3b242481547df65a04eadc8
+* 75e659c5cbd735a402764759fd53155ab94c68ff Use correct 'mongodb' sink name
+* 95ddb3045a46f11095480a27ee1a5d73d8ea0f49 Add mongodb sink docs
+* bddc9f2b79dc207e212f130689ffc6a5cedb2869 Updated Shell (asciidoc)
+* 7a4980a9b624ce0eef19f6e08eb20ef1f57d0504 Added Shell to FullGuide
+* 94083f65af2a50e57be296e3d0a3d2b9046c7ee0 restored download links
+* 66d1745d2ddad5964e723be4edc53f1cf524fef8 fixed tag problem
+* 1383b4aa4ad57a80456108f4cd69be4a9b284b37 fixed tag problem
+* 48259b857060f0869a92e2f34cc4ce5d667fa9dc fixed tag problem
+* 824a03656feec4f5c18cd6fdbb00ca9e3aec5259 Fixed headers in Modules
+* 58f52cd8c81a3f8b2fbb960614e1a04d220fd290 Fixed headers in Monitoring-and-Management
+* 0639bc7866398e6b63e32f9296d7fbb82f85afbb Updated Modules
+* 462fd364fc57bfa1f4b54633437e4187d297601e using {appversion} attribute where appropriate
+* 1129d0ca8f1577ac813117c614c04a5091a2b284 https polishing rename .p12 file
+* f222fc9d2488a1a0337909e5a6dd2e796e9f8a09 https polishing
+* 24a7107de53e96b920d26af7815576760aa6c8a4 Explain https
+* 78692c36dac342cf296df77afb672c35af263d5a Automated doc generation in synch with XD dd456afcc523d64284a869ada3709c09e4f525a4
+* 8188eef9fc3531f0d1ca0af59c9c426f7a1533ff Revert rabbitmq Anchor in Sources
+* f1d1ee629b2ea968fdcd1c7618b16562ecd152e9 Fixed Deployments header in FullGuide.adoc
+* 4023a4e47395f1f10983b05d0ca2151157f01284 More RabbitMQ SSL
+* c0321744c5f3217c65d7e66a8dc6ea742fa21e7d More RabbitMQ SSL
+* 1d4931a995d23b4a33c778e82c8d4cbb5fa149b8 More RabbitMQ SSL
+* c94398d027958cd4717c22bd2849db4bb32f862f More RabbitMQ SSL
+* 02585a4cf121b29f56ac8056049a35cb3e34c340 More RabbitMQ SSL
+* ee9f051ef491a952537214e072ffacc0fff33aa8 Add RabbitMQ SSL
+* 534ccd10e0a84e3c2e6d446bb10d87c7d313c00c check appversion attribute
+* 9660e8620d866daeaabb27370859c2ea43187624 Automated doc generation in synch with XD 19dda1e544cd15e9d48c3c48d0e18f81fb12ce18
+* 626af27863856522b913e570a2f8fc4c57bed17d Document http-client
+* 75d13eec5961ca626b4a0f24a641a7c5bdf003a9 Document object-to-json
+* 2c21fc3dede1924d0b0d3438d563bfc417bd7628 Fix closing note
+* f4ca8c8e067d8236036d05cf5e706b6dcc413dac Document json-to-tupe
+* 537207e31f401b9c40c63a371b6ab7e5a3f52487 Updated Using Hadoop VMs with Spring XD (markdown)
+* f6e4d62ceb7194d27972f53a825d38ea10a5fe0b Updated Using Hadoop VMs with Spring XD (markdown)
+* 91bf3f714177983ead9f4a6ce2c0091c9af507bb Updated Using Hadoop VMs with Spring XD (markdown)
+* 5c4c532a9adcba54675eb87bb60cd7808469b897 Updated Using Hadoop VMs with Spring XD (markdown)
+* 55c387cb45897d4f5616f046c768c2c3583f1e36 clean up on new docs
+* c3f41767565b91683f72eef5f1b356f967b5a301 clean up on new docs
+* d5f4fd19feb2d6c0d6bc977de7f0163753cd7940 Updated Using Hadoop VMs with Spring XD (markdown)
+* a43d3709a52ffd1a250c83a7579234c3f0ade34d Updating for current distro versions
+* a0e6260ff3f6e286890b3ee33c3a78fac2892ba4 clean up on new docs
+* a9ea5431da395a4fcffd5073d42a8190758febf1 clean up on new docs
+* 162ecdfb3a7100f6143e66961a11752db331829e clean up on new docs
+* 375cc69938e20ae453d1cf4c0e6064b0f147510c refactored XD-Distributed Runtime adding MessageBus, Deployment
+* dda35ac8f6bc69d08f2f6dcdabf10a4069409e7e Update which batch jobs support partitioning
+* 831dca5bcec33aa7f02994c8821c73994e6d67bd fixed image
+* a344970f4e9392434ccf8c178c81b0678de0e276 Updated XD-Distributed-Runtime for 1.0
+* 91d6f8c2532edf0ff9829941929a594c7423b341 Updated Application Configuration (asciidoc)
+* 0f4f52fc8df5da5f6ff08f70504847a970428cbf The test class needs to extend org.junit.TestCase
+* 3719243a069e6401bce0ef59d88f0408c68ff7a3 Updated REST API (asciidoc)
+* d5fdc276707d9d75cc1ab1629e5190e0b4917a2d Updated REST API (asciidoc)
+* 617551fb7cf20b31e478fa3bd715a17ab2babd5c Update job launch request to `POST`
+* aec90e2f03265035406745a1bfa3dc963565de8c Updated REST API (asciidoc)
+* efb21c1df63b27b3ff8ae0ec2e079974d2e6ea75 Updated REST API (asciidoc)
+* b4c23716cc2106d5f31819b6787165592585b204 HA Bus Part V
+* b72404379434620c904eb089d57c1e4809c6c19e HA Bus Part IV
+* 197536d7da52205fa481784dc78e3e5b8f8484fc HA Bus Part III
+* 15da64224ee83cd028b6986618ff963a7bc7f358 HA Bus Part II
+* 0efa45322d92f943646d4b7c3912f7d5926845c0 HA Bus Part I
+* 4f2d559b49e58f86d008b8079889d3fd4390157e Updated Running Distributed Mode (asciidoc)
+* baa5d61149f8fe10300aad4fb14030bc3eb6077c Updated REST API (asciidoc)
+* 2f1863294a37f8c4529dc0529b4a01dceebf46e6 Updated Batch Jobs (asciidoc)
+* eb97fdaeff4055d51276a1bc57de99119e46eb66 Automated doc generation in synch with XD d0a06751608191927710a92e370976e4ae293b15
+* 73cdf55ea3530e885908a342e9120d25fc232ac2 Update docs on using alternative JMS providers
+* 919f6f64f1880e3f676c5b40da4626caab199ee8 Updated Sinks for use of other JMS Providers
+* 3662bfb675d2374a2e6e8dc3465b814e5ac47b83 Updated Taps (asciidoc)
+* e7e6da51e1ac151c630f07e868c0b5ffc6eba7c0 Updated Sinks (asciidoc)
+* d708cc358007a796eee54b40cad729fc4593bd89 Updated Batch Jobs (asciidoc)
+* e1996571c447fa6befef12c402dc31485d6a5eca Updated Sinks (asciidoc)
+* a57ac479bf16922700ea2420c745b624a41ef276 Automated doc generation in synch with XD d8e89eb4fd2eff0f3cd9f448b55676d1d6d3da4a
+* 37c039d7c543a8c09c6b4b1d4d241186aa98b4dc Restore rabbit section that was accidently lost
+* 275daaeac30f50ebbd9264fa4b81d7f86cc7e6cd Automated doc generation in synch with XD d8e89eb4fd2eff0f3cd9f448b55676d1d6d3da4a
+* e0cc680fde504b86333f4af7ad9e8e7258bbffba Add doc markers for the jobs page
+* 55f696e1c5e432d931a0784512fc816f378bb484 Add doc generation markers for jobs
+* c809cb689396368ed29a0ef8acd51fc70afee41a Add doc generation markers to analytics
+* f2d972174d6af18b1a3ee85662f259337ca1529a Add doc generation markers to processors
+* a53c28b33d79df57ac8caf310b215270e08d9fcf Add doc markers to Sinks page
+* 203732ea83e140c29460820d8c170eecd065aad5 Automated doc generation in synch with XD 3c3132074e428682a51e06add7bdaaef93e8a1ac
+* 39fd8dd5b4c08696e08b8d34bf4131caac077f6c Remove generated snippets
+* d37eacbd95535818ede1a25eb92286f5dd8303bf Add markers for doc generation
+* 8c2cbf7dbeb1852fed1ce329af2639a14a5fa98c Automated doc generation in synch with XD 3c3132074e428682a51e06add7bdaaef93e8a1ac
+* eece09c1149adf9a4d1b98ac4cb5e8dd65aded68 WIP
+* 7190aeccb39cbebd0a9d3a5c79269b6155281c16 Edit quoting behavior following SHL support of single quotes
+* 4e3f30f13fb2aafdb50ed59a0f0a2e418cbe08cc XD-1871: Create documentation for Batch DB migration
+* 1e199a1a847304de22a2e68df66b4ed465b8cf63 Indicate Redis src code is only in .zip XD distro.
+* b8e8b78c52a8d451d48e5b3bd83fa33839eb1bd8 Updated Application Configuration (asciidoc)
+* b1faf2bc8711fc79ff6103c2c417cf60c500ee38 Updated Running on YARN (asciidoc)
+* 978fd4ee6f7b05ee469060493cec3e4355adae4c Updated Running on YARN (asciidoc)
+* 68050e672ded29962ae073af0306900dcfef31eb Update sidebar given ShellReference is now available on wiki
+* b2a346eb3c3ba8f46e73c24a394c087411cedf08 Automated doc generation in synch with XD 92a38020c9e140acd20619f6ee4a9af314ee2e8f
+* 3c9573f76e77421cb737e5933c6255f3d8f20831 Remove Hadoop v1 distros
+* 1cf1be073d3748803776dc7cdfae3541e51cf1f5 Remove "module display" reference
+* bb898bba940d87d78cef5d673c2474bb1e3b5573 Update Gemfire Doc link
+* 53d8d9ae2a0ca4fa41b805858994aeb61748b993 XD-1517 update deploy methods
+* 3c62767fb19edfdcb0f16bdf136ec3fc868049b6 Automated module options in synch with XD e3dae534249b5bdab2eb3519a743daa3a9df4f2d
+* 4c5245727718d98d075b0a44e5af7e9674c47e9c Updated Sinks (asciidoc)
+* 003e91dc3222ce30c238e45c9db18ffcec42f297 Updated Sinks (asciidoc)
+* 7b189902f8a5bc4075aef287a1413eb61a523d7e Automated module options in syncg with XD 1e71b90a9896efcdd6f4cda9fd09caa233c9a601
+* 1247842d2f8ccbe335c6d3c25cec5de7c8775a98 Updated Home (asciidoc)
+* 46cc59c176f8ae7c8d91a21df18514cde88441e7 Updated Home (asciidoc)
+* bee7533a1ea8a8d6d5ff57ccfd7d5838b0f1b3e8 Updated Home (asciidoc)
+* 8d67619c27ea0731fe71487f009e7bdd70f54efc Updated Home (asciidoc)
+* 5a15ebfc4e912fc9c71c72c265633eb293ee6548 Updated Home (asciidoc)
+* 80997fc9411094218fc5f8252d507b10234d32c1 test
+* d5afaa0d7dd194c5e6e51e29c441b864c5fa38ff Updated REST API
+* 0df898595ce79f550194b0900888928ed896efba Add RedisMessageBus Partitioning/Property Support
+* f2cc4761b303ab333deec283a18f7e49284c12ed Polishing REST API
+* d372beb2b98aacc7f6abbac8caee468d8f00ed3e XD-1673: update doc for filepollhdfs
+* 1f268b0650fa13b4601b39252bde02bb11dc85bd added REST API
+* a9e973720dcc205ebf1f39684a59a482993d00e0 Add generated module docs
+* 950695a929256e4932879794a2b0ebc39c77c604 Doc generation test
+* 50ba596da91ba7083f98640cd1e0114372fc7451 WIP
+* 4f447ab31a84dd0767676807c1804622155496f5 WIP
+* 761a36a92cdfa149b09646d9cb01df88cd93e9c3 Updated Sources (asciidoc)
+* 3c9008183e3e70763b7e5f98c5cae9837c0d948b Updated Sources (asciidoc)
+* 7a14b040dbefbbb935029fece8413256afc957e3 XD-1273: Remove --type references in docs
+* fb84716f22236d9faa33c37a25534f3fe341020c Update M6 references to M7
+* 5cfe278a20a398624807adf2bc6f2a675a0e3e51 Add missing double quote
+* 8c48208de5861e31b63fb48292e9c00e16ca567b Updated Sources (asciidoc)
+* dc488c4dcd95821920c161766f9a884339bf6b83 Updated Sources (asciidoc)
+* d19d684fcf0e1d181947077e9616b8dab5e43663 Move batch job section to be after Taps
+* bc68a2a7e020a8c1cd4a68550543fb7429e8a886 Update description of deployment manifest and partitioning for jobs
+* 3a2eee4cac2662fcab964c438e0bf041494c22e2 add link to Tweet json
+* a41a0327a5c44ea260c834f682a1a5ffcf876dda Mention that partition properties apply only to RabbitMessageBus
+* bd4b575d425428405685ea0b4e94475515ab5434 Update deployment manifest support for jobs
+* a1e1332ab4691d0c012c18a6277ece922d19522e Admin UI - add updated screenshots
+* d6cf7f185e95792ff2f98ba0a942981ba0e17eb5 Updating AdminUI screenshots
+* 1a805d72e8dd83707806fdd93d9c4e099c865dee Updated AdminUI (asciidoc)
+* 29ddf565a8f58bd0063c78ade8f9385e18447e64 AdminUI - Add Job Deployment Details Screenshot
+* 5959e7210b23cb2f0085ea45198082d34e354de9 Updated AdminUI (asciidoc)
+* c4362fb0e56a2a66aada367286c8306d209fdde1 Added mod to expression
+* bc13c26da1d0a91a168fe467c7e416cd8d657493 typo
+* dc5749c5f50c1186363148f8b4db702a730a4297 Remove advanced part. sample; clarified partitioning algo.
+* cf62766a3b99a2f2a7d47db25a4de45d4267b0d7 Destroyed AA Release Process (asciidoc)
+* b2ed32e1cc2d8a6b3ca2a000d5869f0a1c3911d7 Destroyed M6 BlogPost (markdown)
+* 28d4da311cd6c282d87997d4e75d852ec043a4e8 Partitioning Docs
+* 74ee646fa2e7f1b612a92f88c4bb4509d52d4929 Updated Sinks (asciidoc)
+* 48f40569a221fd1be21759f309ede5e73d640b55 Updated Sinks (asciidoc)
+* a0d9378dc6dd42eef938e54141112c53efe7d579 updated Sources for twittersearch, gemfire, gemfire-cq
+* 28701c0b49ea445634d3d585bc1a225489a4fe1c updated Sources for twittersearch, gemfire, gemfire-cq
+* 9570e6e3dc463ae1493524fc19053b6cc6bcbc2e updated Sources for twittersearch, gemfire, gemfire-cq
+* c0fa4c37ce2c45cd89feb1db35d9f07f54ef9a5e updated Sources for twittersearch, gemfire, gemfire-cq
+* 6c512854faf27fdbacde251a0019824c350b6cf7 Updated Sinks (asciidoc)
+* 184dd8503e5da7f37099a15062b63ccb038ef8c4 Updated Sinks (asciidoc)
+* b43244e0c9c87e07d83f8297101162e2d272d901 Updated Sinks (asciidoc)
+* dfa8d946070c3eebed96aea6758a3d0ba1eff2e5 Updated Sinks (asciidoc)
+* 66f6285460e2538c9d56f415219b3c683d66cb1e Updated Sinks (asciidoc)
+* e6b2ebaad719593b762998196c143244d42c0066 Updated Sinks (asciidoc)
+* 958afda2b3021d22d09d5354036c2b6d25314534 Updated Sources (asciidoc)
+* 975e16a49986127ec82021e7c5507d28be88e1a2 Updated Sources (asciidoc)
+* f57d696eabb05dfa71c688107e64ccd5c6e1adf0 Updated Sources (asciidoc)
+* 1a06b040a561cfc3b53e7c67a879dda4988ef252 Updated Sinks (asciidoc)
+* 31b3a16576fb46a3593ef07f6e4cda14fe6257d1 Updated Sinks (asciidoc)
+* 7e07f2e6c4cc5913c6bb169d5564eb02df55138d Updated Sinks (asciidoc)
+* 9722b4e5cc01e388705201060b83468a1c72b192 Updated Sinks (asciidoc)
+* 0c97eda89d3ca2281a5e457115d2116a4966fd6b Updated Running Distributed Mode (asciidoc)
+* 5b0b76990b525329150f708b19854c2070894e80 Updated Running Distributed Mode (asciidoc)
+* 2192afced7c82dc9d8a6c160ed18d3179949f229 Updated Running Distributed Mode (asciidoc)
+* 8bf333e4c160e8220d881991d450446359ddc9ce Updated Running on YARN (asciidoc)
+* dd26a36c0f8127ce943dbe4b7cb28e61a752381e Updated Running on YARN (asciidoc)
+* 652ec2a870fa714e1d69ff593725c739feee36d9 Updated Running on YARN (asciidoc)
+* b2dc71d2bc6a68721f936e78b99ac5ec1637eee2 XD-1715 - Docs on shell usage
+* be91b12f5c005441795da57dfcee537d818831b1 Updated Analytics (asciidoc)
+* 42bf6e42948a0dde01be558af29d79e95a3062af Add initial docs on usage of the XD shell
+* f126dc73854be1ded243b2ac44164cc4d686f72a Update URL for boot based management endpoint
+* 7189bda5df66f4872975273fb8e97804fb2b6de0 Updated Sources (asciidoc)
+* 3fae5c511686e724f96bd85fe07b2408b366d264 Updated Sources (asciidoc)
+* 96dba07e756de82155911297c30627bf7bab86de Updated Sinks (asciidoc)
+* e364b706fd6a0db85793658a45db2a4bd1ea87ee XD-1704: Document quotes
+* 6dfaf7bb131c26091f872be654b3837cb675f97a Fix /xd/admins znode path
+* 53db08d3d27f2cfee6b5d6dc217cec7bf8d89ba8 Fix instructions guide
+* e216de5b6c05be1743e986185b172b4702b70569 Updated Running Distributed Mode (asciidoc)
+* a5a4eb653eeb8ecffb805e4df55dc9821b50bd42 Expand Admin UI Documentation
+* 1544c5950a7a6c87bbeff2cf0ccfe9b239509660 Work Admin UI chapter
+* fb1a393cf527fc4f7f088a8b3418dc6b2ec264be Updated AdminUI (asciidoc)
+* 68c87db0c2f4a45a0b260bebf634dac4ce0d44a9 Updated AdminUI (asciidoc)
+* 7cf363ae9f7eb5dbb975dee437ac6c5f4c33153f Updated AdminUI (asciidoc)
+* e6510d1937d42a1dd98b6c2b17a07ad48c685e1f Updated AdminUI (asciidoc)
+* f1290b68bac095f64d680d38b6dbdf336f27ce3a XD-1720: Document ${xd.xxx} placeholders
+* dd2181ce8516f486e0b52c09521c01d1190e2fa7 Update Admin UI screenshots
+* 81bffeab4bf267ceae37fd90f7f7155f6fba9974 Document properties visibility for module options
+* af97bc04324c34172c9900e93d547c204492ccd7 Remove section about xd.stream.name
+* 0599647193089d33876c2e133dd87fa596666c84 Updated Sinks (asciidoc)
+* bfc0eb8c32044486ede70df92b79efa60e2145f2 Updated Sinks (asciidoc)
+* 65accf976e840d61352fc4e6205c6bd9c2dcadc6 Updated Sources (asciidoc)
+* 3df563c4cc0f446f8c73cdc0f1b9104faf967bea Admin UI add screenshot to Job History UI of Hadoop cluster
+* 35ec673d337c9de004c26b9c7356af86915735cd Updated AdminUI (asciidoc)
+* c2f2d2003ff4e0ea8df3d8629a5d2f3b97714115 Admin UI - Add Screenshot for Job Execution Details section
+* d19fbf35a99ea2dba93a66b480e8d818cd0a628e Updated AdminUI (asciidoc)
+* 0fbd33de266e9b260750132aca2751264de13636 Update/Add Admin UI screenshots
+* 3ede478b30425b329242a5e823f6423a72cf42ff Updated AdminUI (asciidoc)
+* 7cbbf7fd628291b27f58cba6c6443605792fa4e8 Updated AdminUI (asciidoc)
+* 0f69827978a323e884232fa1b43598a0cb39c488 Update Admin UI screenshots
+* 82631bad699afbd3e27d761b840bd6dcb5f199a7 Updating screenshots for Admin UI
+* dc248e4d81bce67f4d1b53175daa582e33a5c80a Updated AdminUI (asciidoc)
+* 739d019668f3fc5bd7d17da543644ff3c30b1d79 Polish images
+* 0d6c855ed32eedf08394301b7becc30c032cd8eb Updated AdminUI (asciidoc)
+* 9e4bec19603d131a210aac180739f8fc775102d6 Add Admin UI Screenshots for Modules Tab
+* 9be6618920210b1c29998fdbc2239cdfca9aa5cd Updated AdminUI (asciidoc)
+* 4adf256e7b35ebaf8638755daf875032cd32e812 Add `spring-xd-admin-ui-streams-list-definitions.png`
+* 6649fbb197624fbea973acfb964ad9fef9037178 Updated AdminUI (asciidoc)
+* 6328e03c3722bd265a619688fa594cbb316cf811 Update UI About Screenshot
+* 19ea96d9eccf46b050508c866314598bdeb7d84d XD-1635 Polishing
+* 2ce504d0e447c1567fb711fe4c2bec1ee668d025 XD-1635 Polishing
+* 14c12057fa688551765c64930a4fe293d46a71b8 XD-1635 Polishing
+* 241c214cd2d36422d498fe71feeef173cdb23838 XD-1635 Polishing
+* 202710078ff3ac34f31d0104a4ffa36ab19f780a XD-1635 Polishing
+* b51def0fb1adda89ef6e5a1c616181d31d52728b XD-1635 Polishing
+* 3f07a4f086131bb3c7aeb7a6209544dde4d63b74 XD-1635 Convert Markdown formatted source blocks to Asciidoc
+* 1d059dbbc49ff5c2cd9d347058186ffeec2ce924 XD-1635 Fix Source Highlighting
+* d861bddb421766b80c6efe333b18cdb4b1943d4a XD-1512 Updated Extending XD
+* 8c5984ec180cfc2eb6964eaa3ba7e9da39390b6b Update Hadoop distros
+* 0066f76591bd8942c2f3636067d02e1332c3b087 Log Sink Polishing
+* e94193c2f0da047f2247a7219ad49ce4028551e3 Log Sink Doc Updates
+* cfa4be1f642befc382ad78c4edea89858a8300e2 Updated Application Configuration (asciidoc)
+* 1c85d4c959df8ddaeb6dda2bf0748e01e9a693bb Updated Application Configuration (asciidoc)
+* a7f6a9be5a12c98df699975ab049f4fec6582dbc Updated Application Configuration (asciidoc)
+* 77b8b9d9ce6a2cf1b88ddcc1cde9fcb4d333ebe9 Updated Application Configuration (asciidoc)
+* be65dfbffe989868168e710ace128f72cf44d0b4 Rabbit Bus Default Settings
+* 6f7135020319d229f4e3378bd586f0a111fa705e Remove stepConcurrency property.
+* ba4987aa685e4cdc9434d1400374c47331f4fc6a Updated Hadoop Installation (asciidoc)
+* f4c6d38ebc5fed7530a4fda024fb957e23db2469 Updated Hadoop Installation (asciidoc)
+* a49e60ee515ba573a7c4ece50a824726845db59f Updated Hadoop Installation (asciidoc)
+* 3cb36382237302c1de94f469292aa15e2ffba621 Updated Hadoop Installation (asciidoc)
+* afcef6def2acbeedd144089702de1264ef02e18f Updated Hadoop Installation (asciidoc)
+* 3bdefcba558939a5952f2759bc1eeae2b28319b2 Updated Hadoop Installation (asciidoc)
+* 886ab57771d5b1220f9d4e2915c19a27136a97f6 Updated Hadoop Installation (asciidoc)
+* 1bb52de02a6c5436b62fc1c0555c1dd3b33643e0 Updating for Hadoop 2.2.0
+* 654e8e5507047ae68b107df1cdf91ce185121cf3 Update jolokia doc
+* ad9fc897ef922f8fa17bc652b2f083386be3d680 remove top level sidebar that was a test
+* 413a05073498386716a489f76892c3453a721a36 minor updates
+* 61855c119fe2f7831ae3f6ea2d2acf46dd37c49f Created _Sidebar (markdown)
+* 9314df5a9f8a80fbd78972b1b3b7ebc57abdfea5 Add references to project for deploying XD on EC2 and related system integration CI build
+* fac75f2428d349256386e6d320f1b2affade3c9a XD-1512 fixed type
+* d82c5c50acf1c5d8cd2cd8ded18ad292986cdb46 XD-1512 updated Extending-XD
+* d70177e55b1113604f93f1a6bbe49ccdbffca043 Update yum repo urls
+* bfb6bcc0751565ccc63246771b099784a4365bd0 XD-397 - Document Monitoring and Management Features
+* 482f85e38537fcb64951f852ea1d45af9fe1f76b Fix Doc Images + Polish formatting
+* ef1aa4bc488e68c3ea0cf7aac5cb1d61dc3b9a2e Updated Analytics (asciidoc)
+* 45f48afe6e668d0df0569a4115c14c6bc0c9450b Updated Type conversion (asciidoc)
+* 41f8780b76e9d55ae69120f3c8bbe82bbafd1109 XD-1512 WIP
+* c440a1ebe568c45cea7259ac19093f8d28e2725e XD-1512 WIP
+* 7e3ed1b511069b0368d6bfaac6173838bd567999 XD-1512 WIP
+* 4a53aea320acebcee10f04d991a9e1e38997e67d XD-1512 WIP
+* 105763b1198f55297e3e35b85e067a9644152407 XD-1512 WIP
+* 871f2ecc7431d71f9843e36de5bcda0b971f631f XD-1512 WIP
+* acc285e8401a09cd5403402f7dd8cf61e8c74595 Reference M6 specific download for YARN in addition to snapshot builds.
+* b98154454a9be50b7298191a65e75439da8de748 Updated Sinks (asciidoc)
+* 6517d0fc7f52e9fb3bd22caa2bcb7640fccbb9e5 Updated Architecture#support for other distributed runtimes
+* dcae0a395d99ea529e10e42305b63f9585545ae1 Added section about code completion
+* 070a99259975095bfdac0a4e502d58b252d84aa3 Fix images
+* e7d00502768f66459ffd31ff2bc8f4bfbd985a63 Changed heading from Machine Learning to "Predicitive analyticds"
+* bc0914ce8c5335be18689babc69c87cfa966ac06 Updated Analytics (asciidoc)
+* f4efcd1c500ae057554662bf145571a85c46fb41 Updated Analytics (asciidoc)
+* 49d2fc47f5c31dbbbe03e4e87917708edfe0ac4e Fixing image reference
+* 7fd8a1efc6895eca910fb15eb44a32630713a539 Updated Analytics (asciidoc)
+* 29884e26fee0e099b6cc0688aa83d29ccfb9a3c3 Updated Sinks (asciidoc)
+* 79f446c7bff630ca280a9e0919cebafe590a4a64 Updated Sinks (asciidoc)
+* f3f47ba26f9940d85e726155b8a88775c52b43c8 Misc fixes
+* 7f407245a984d5bd715b69af2f45086a5b626bd2 Updated Running Distributed Mode (asciidoc)
+* 6511fceb22558bf8642f5c87f6dadb25b4f14b72 Anchor links fix
+* d151ef38c609d009ebcddbba45ce7162f9f78341 Anchor links fix
+* 775476826b56cd9a4d1c2d511065450ff636c026 Anchor links fix
+* bdc104123ec5fe699cf211ca5356527c4c9c6e8d Move brew and yum section at the bottom
+* 076d98d6a368d835a7a62ab658398c9b68c56cf4 Anchor links fix 4
+* 25909eae0daeecaea4b09802e8eed386adbe8bd0 Anchor links fix 3
+* 82da12265b7c7e6a665201acc7077cdbb075839e Anchor Links Fix 2
+* 0caeaad83c05317d49a50ce6c3976d35751ec5e8 Fix anchor links for `Sinks`
+* 6e40c988cc1223ff036363d5bd942cdb01c79c66 Updated Modules (asciidoc)
+* 57591a6ccdfc774eeccbbd40dbeed80a9abbcca6 Updated Modules (asciidoc)
+* 3cd5f8f723cde97494fdf444a087a0ab35de7ac5 Update rabbit sink with routingKey being string literal
+* 08a48cba32ec593049be45640462c442e5137741 Fix spelling errors
+* a898e353c431a9d317b24ffa94e23c7bf44483fd Updated Creating a Processor Module (asciidoc)
+* 5ee5ac08440a527c314abc40ac18fd4a4a26edff Updated Creating a Source Module (asciidoc)
+* 858c419e219711ba3f911b63b9dbef703f22a992 Updated Creating a Processor Module (asciidoc)
+* 73b5615212573893486bae9ab5d629242d38a73b Updated Creating a Source Module (asciidoc)
+* 1799382193075a41bc42d9ab033b935de6ac31a7 Updated Creating a Source Module (asciidoc)
+* e436a3ae96b10babe5b2314e00396c248952eb93 Updated Creating a Source Module (asciidoc)
+* a23c29a31612635e8a5eab1d8566c234534def31 Updated Sources (asciidoc)
+* 2690d16504519b483a5d4b09480e0bf91abcf57a Updated Sources (asciidoc)
+* 0f8f232efbffde31684cda016f33793b77cc289e Add RPM install steps
+* 9b5b8021fed415465a616757e82a234cc3aa7ca7 Updated Creating a Sink Module (asciidoc)
+* 36150bf81cd85a87089100fe224cb875a83fb8f6 Updated Creating a Sink Module (asciidoc)
+* eb7bcc35a5088698fede1d151fa5c54b3337ce79 Updated Creating a Source Module (asciidoc)
+* 3dce0a3f37c64b9294f977b8332c42f0fff18e3a Updated Creating a Source Module (asciidoc)
+* 80435206e9e161af8ced2fd598468be91b829e9c Updated Creating a Sink Module (asciidoc)
+* 202f156ac51048e933b4fcc90bf71d16dfb64fb2 Updated Creating a Source Module (asciidoc)
+* 2b265cded2bf09128573362ca8623b947b715b46 Fix list style TOC
+* 463484fdc283f7f4e5ca3558c32383595937ad42 Fix margin
+* 57ed5afb9443820e071dd707e74af803d5b60424 CSS Polishing
+* 4b6005747d4d70892b396723903a8f1b2966a197 Update styles
+* 6510d49397fb9a9aa3e553236b57dc928c0488a4 Fix `include file not found` ... `Monitoring-and-Management.asciidoc`
+* 9cf2871a8ce308059868d13e79e39f4f40dd2756 Fix asciidoctor warning `section title out of sequence`
+* e7fd7ecb4d4bd99f93285dad34170b9d3272fb2d Updated M6 BlogPost (markdown)
+* e81a67da2ffa5847f236411606c610897e0790a0 Updated Sources (asciidoc)
+* 252e609594015a65dbee28d37926fb336ee3e72f Updated M6 BlogPost (markdown)
+* 222ab417443b95f787ea0969ed1e4f75ac9961c7 Updated instructions to run src/test/scripts
+* 17cf551db4dbf0cd7e1dc69de31702db576c2f24 Updated M6 BlogPost (markdown)
+* e34a4742cd94fcc2f0b8e6ebc18ec09935981ba7 Remove references to .properties files
+* 2bda790a8fe35ee5db1fb7607374b74a199518dd Updated Running on YARN (asciidoc)
+* b8dee80cca67fd0fbbb6ba64fd0ed49c4c48296b Updating config settings
+* 54f8ab047f0153bc98a0b4b252dfcc8856f67e8d Updating requirements
+* 52c32fd5e84f7926884bf964ec1f366ce0488761 Updated Application Configuration (asciidoc)
+* 39677f40f3bcbb66948e329578d4ebc5f3c5c21b Updated Sources (asciidoc)
+* 00b0ec279d365361ba3bdbada5438931f84f1551 Updated Sources (asciidoc)
+* a034facb345d2b5bd72a7b9da698f05191854330 Removed Control Bus from Architecture images
+* 12f3ea6c21c6160a9ba26b4c52cfd0009befb710 Updated Sources (asciidoc)
+* df1e9adb3bae8a3b947d376373f4e3f9a9235e49 Updated Samples (asciidoc)
+* 655082eee86fabf064d452687d2830bc47899f0c Updated Samples (asciidoc)
+* b85ae3928aa41965da587d5f4be23a2462a2a3e5 ReFix syslog default port.
+* 3455ac5914bca02ed7f8515ea6ffa194f0181503 Update syslog default port to 1514
+* f7ac57e3fccd9a811dc5ae360d61009f46c277bf Fix yml syntax
+* f2f4ebe224c5b81dd4abda986f5066dbac232a78 Fix properties file info for twitterstream
+* 61a4b887b354666ac20958c3a7d2b7bb7ede6cd8 Updated Analytics (asciidoc)
+* 938e3f82ad2a83237fb3fa06c6e024645559aab7 Updated Batch Jobs (asciidoc)
+* 9044acc0e10f04a5bf435a27d59c3b3f3830195b Updated XD Distributed Runtime (asciidoc)
+* 9f3371acbfe6f00d554d4459537c6effd1b6889e Updated XD Distributed Runtime (asciidoc)
+* a53cc671a9ffb52e2ec7174222b7f0a4069b7d2e Updated XD Distributed Runtime (asciidoc)
+* 068b74966008993218f5bcfde467bd1f767d8e07 Updated XD Distributed Runtime (asciidoc)
+* 91f387c7361cdde5af070e0bcfb1aab886153125 Updated XD Distributed Runtime (asciidoc)
+* e2ec604cf84cab0c1fcc9e2c185f8505ec0cf926 Updated XD Distributed Runtime (asciidoc)
+* 9c966ad20b4bd86e839b7e9337f8c716c31c6a3d Updated Architecture (asciidoc)
+* 643bd880d0824411efd99b713237297fafd93b20 Updated Architecture (asciidoc)
+* 468c01bbbba4c3b008f741c3f52e8fd9ed6b834b Updated Architecture (asciidoc)
+* f8c041213446f4564568c2d47736423ab77256e6 Updated Getting Started (asciidoc)
+* 9d41cdb93e162e7ba9757ac8768aa8fbea44b257 fixed typo in _Sidebar
+* 005b174e84bae6e7a3c857deb9168f8d43514ad5 added XD Distributed Runtime to contents sidebar
+* e342b44a983056bfb72d1d1f6f13f96475f50dd9 Some minor tweeks to Distributed Runtime docs
+* d7294146a15428fbd50d1a06bf325eb13793ad12 updated architecture docs for M6
+* 8a0b9030995023033f6d249b3c0271aa492ff8e1 Move Monitoring and Management to main page
+* 5e57c5e834b5e1c316833ef9853798775428739d Modify content
+* 53fa4101eb2479af265b003d91c7706d51505968 Minor updates to reactor
+* ff494b504349d0a897c15e4b2ec37decec01db26 Misc changes
+* f04c3630154bce6c3c4f76e126505ef17a08ad8b Updated Monitoring and Management (asciidoc)
+* 0b1d20b5d551bc8358421aa8068515c556c8d18f Fix Monitoring and Management page link
+* f4b329f341d82972c50a6822b67727af5bdbe239 Update FullGuide on Monitoring & Management
+* b8b091caf38cc06afab4683e28afa20dfb4824b7 Update Monitoring and Management page as appendix
+* 8ff9afb9c89f25dcb833ea644ed0a54dfa249042 Monitoring and Management page changes
+* 9f1a907ce8188e1123b036b7a9cd950b2c7654fc Updated Creating a Sink Module (asciidoc)
+* b4d75f74ddc709f0d36ab068b750faa1a5100a33 Updated Creating a Processor Module (asciidoc)
+* 5e442ad536f878a066ccfdb8d6bb66907187d38d Updated Creating a Source Module (asciidoc)
+* 432c5c8bc65e76f1bb9e06ed92b616eb484fb57d Updated DSL Reference (asciidoc)
+* 229d883a3380c3a4a0f4dd50a7d53174d819dc44 Updated DSL Reference (asciidoc)
+* a087d5f77dd6784e300c519a33ce075372be8ca0 Updated Analytics (asciidoc)
+* df57894106a290153b4e7ca6a5297602e2edc4c2 Updated Taps (asciidoc)
+* 650f022e35f3c2270b68bc6a0ed3ceacdd07d84e Updated Taps (asciidoc)
+* 270e7c7cc695b1b31966344f7341b054a2f77d3b Updated Taps (asciidoc)
+* aaddd9af15c651d47536a09a4a4c2ab88c4e7e82 Updated Taps (asciidoc)
+* 458973e8ab0b0c8118c4047695471eb6ba3d517c Updated Sinks (asciidoc)
+* 7960e72cc73bcf5641ab545133dd9de10e41f445 Updated Processors (asciidoc)
+* 4963ab90f7cf7945ea8295d9de5b0c24dcaaca4a Updated Sources (asciidoc)
+* 0f201fe13b167323a25df8c6ca947d289f523c0b Updated Sources (asciidoc)
+* 14628add8657b7843b2ac658f789dbda610d3e8d Updated Modules (asciidoc)
+* 8261cc5e3698943c519eb8648f212b74fc53e289 Updated Modules (asciidoc)
+* 59754ee729761de262a9e707409d3b3e7607ef17 Updated Streams (asciidoc)
+* 4a2c70d5b6c4fa2019876c68ec905a23e1eaca67 Updated Streams (asciidoc)
+* 352a8e99e01407db303f5027ece3d09ceb03d8d8 Updated Streams (asciidoc)
+* a43bb5f304298c7f2f5f00a0bceaca98c2f305f9 Updated Technical Documentation (asciidoc)
+* 7dbeab39ab58540eed7141cde345e2bfab88180d Updated Running Distributed Mode (asciidoc)
+* 2fa59e871ad178e6426e7e73ef5e43f958ff68ac Updated Running Distributed Mode (asciidoc)
+* ea366e12f96771ed7a65984e3be6a37f54557b07 Updated Running Distributed Mode (asciidoc)
+* 3b4a82b4819f8b2f63aa7288e48d7a3094b49bd9 Updated Getting Started (asciidoc)
+* 2988aa7f59c9af1862fb869655acbad1bbd2385a Update Batch Jobs page with listeners and deploy option changes
+* 939162eb350a81eaf0bb77d6c269a6fe171933d7 Updated Sources (asciidoc)
+* a9b7ea1880c3d813139b3cee93f4b40d1a0bc661 Update Admin UI with the latest changes
+* 9123fff6fbdbc6ce930cf46bf69e9e8b67196ec3 Update deployments page image
+* e9a5edcc663e42edb0e3c5f18b59fed03f2c8a15 Add Admin UI images
+* abd8a0771c7e9642c4c787c662aa7037beb1fb0b Updated Sinks (asciidoc)
+* 16372cd3c3f3ce2f66e622f83479fb17e1014d23 Updated M6 BlogPost (markdown)
+* 4403cdabcb843819550fe1d46b46885a5bb82558 Updated Sources (asciidoc)
+* fc0cfb155492db8279295059f9ff52fa50abf087 Updated M6 BlogPost (markdown)
+* 7c110b90522ad9d7ae8d4a63c37cef44051114b6 Updated M6 BlogPost (markdown)
+* 715c080c74de9bf599cdf2d7496ec1dcce6174a0 Update doc to reflect latest code changes
+* 658b8d93697806fe9ad9a1e9b1da687851364cbe Fix nesting
+* 235aab04659dfc789467966b96f3e06e795c1ace Updated XD-Distributed-Runtime
+* ca2102352c25294cf8b5620d226e0cb315dac9e0 Updated XD-Distributed-Runtime
+* 60562238e825f9cd9c19e409e604d38547270e06 Added XD Distributed Runtime
+* 6476b51572c16f890ba191e19348a6aec34e78e7 XD-1378: Update twitter properties file information
+* 3f55ec0a117b1bfa07605cd172185197971b35b3 update reactor-tcp bullet point
+* 037fd8586eaddde204666c059a0b47782edb21d3 move reactor-tcp section
+* ba30b1bad5608f31c7c6930bf14ea431541d8514 Add basic docs for reactor-tcp source
+* 6eaae96670764f58d8df307cb7bb7d8b14e720d3 Add initial draft of M6 release blog post
+* d33d0203d0557c4e8040c8068262f875717faa13 Minor corrections to config doc.
+* bf8bb53ef72f6c82f36bb23577d6bd284f59c1b5 change 'sink' to 'source' where appropriate
+* 68e72267c120c75b5d1891b8fc8568806184b649 Rewrote Application_Configuration section
+* 00086ba90db3cbf2d862b8c0c2ad54b94788a3b1 XD-1505 - Documentation typo in JSON SPEL filter
+* 5f801e2a24444d777455427f040ed971489e4bbe Some additional intro on ml-pmml usage in analytics
+* a3cd9b70dd8b4dd0b485e7701922aac2d3b42231 Updated Tuples (asciidoc)
+* 1bac7489a78652a8a41b3e7bf85f5166302a08be Updated Running Distributed Mode (asciidoc)
+* 599fb1104022060ba1640b46049562c4f5df6a70 Updated Running Distributed Mode (asciidoc)
+* eb2cbde1611094fdba92dca282a6ee6d4825450e Updated Running Distributed Mode (asciidoc)
+* 4c11166e2645747efec79d27a403455b9c6e5588 Updated Running Distributed Mode (asciidoc)
+* 78cca621d477395f7a0abb422d14b8157beb8d7e XD-1421 Create documentation for the core anaytical model abstractions and use of jpmml procesor
+* 5aec5bd0ab6307fe99accecba7cabff94d688986 Add 'stdout' source doc
+* c34da40a08734db0f176ff5a1f67b4c897813d1c Rename file anchor to file-sink
+* 09ce9212dd647ad04f06455812b654b24d07318c Revert "Updated Sinks (asciidoc)"
+* 8c108ab1e0dcfc2768936f35f30cfa600b9b653c Updated Sinks (asciidoc)
+* de350726b598a64bc5d88c43463c9a9c08b37c31 Updated Sinks (asciidoc)
+* e374fd1c2fc2f619ee3c31721b2a7bcad4444659 Updated Sinks (asciidoc)
+* bdf25bd506a326bdc54fe215e6aaba6ce7546b03 Updated Sinks (asciidoc)
+* d9d5bcd795b20d7f590586e00762e98bdb61b3e6 Updated Sinks (asciidoc)
+* d96b06a7d802c4369c538c6371fa14f0bf9441b9 Updated Sinks (asciidoc)
+* 9977a53868368305311ce6d08c398999694af8dd Updating avro sink to hdfs-dataset
+* f07e0aa4799cca0d581672ddcd260c6efafe5ac5 XD-1423: Document module defaults
+* 647a0b4fed1570811da17ae2cc1e10b14c8c0b4e Update aggregatecounter > aggregate-counter
+* 9a9fda4ff06d8d5c64e8c58586f94e528d9cbd10 Update richgauge > rich-gauge
+* fdc20e856d17447a009355b375ac83941d67dd0c Ignore .project
+* 3130e04e86c8ed15cb5a4618714d769e3f590b5c Update doc following removal of json modules
+* d0d12da63b49cd7ee5c1f0c62c7b85836d47a354 Update doc following mail and imap merge
+* d9c9adf3bd0d66fb4a6877180f6cd07a73fad014 Update doc following mail and imap merge
+* 7cbd155325ab0050270a2d79cda6ab3a4e378850 Updating Hadoop versions and defaults
+* 8976cf81dbf671957af31605346785dd3203bc87 Update jsonPath usage for json filter and field value extractor after removing json related modules
+* b674225d107b3ba79cbebd1d7e405e0e085356b1 Change 'counterName' to 'name'
+* 32df8ef640c3d0b23dab89c5b2a8907c942491d2 XD-1387 Adding "Running on YARN" section
+* 427ea5497efc9583e4125a8329ea5d796aa5c9dd Adding Running on YARN
+* 326db1e1f907226a4c067789d1e38ad0a88304ec Updated Running on YARN (asciidoc)
+* 058c09f4edc11d175e56a4d6f5414e29ad0c180f Updating based on latest script changes
+* 1c313a63ebd84612234820602dbd84520db64e35 Updated Sinks (asciidoc)
+* cfe7a0016df78450673bc2ee73e4c68bc3dd7250 Change gemfire options to host and port
+* 886c5b7081a6dfe72713ed51c503c828a3b45f82 Typo.
+* d525baeaab2c6de4f38b8968622cb16aa6e9d196 Tidy licensing description.
+* ac9bb375aaac069077787bf55f53d3a558c82b78 Updated Running on YARN (asciidoc)
+* 9c89b9b4ea95536645c07a8467ab248284eb967a Adding Spring on YARN docs
+* 6aadf85d5cbfecdcb16a231e3004fa57838b5a73 Updated Batch Jobs (asciidoc)
+* 44da1fe149c87f28224f013aa2b35a70c031efbe XD-1371: Add env variable for production config
+* c2ca0baf6d5d4fa5a25e64bfda279b4f977441cc XD-1371: Make use of env vars more explicit
+* a9a656886b073a3ef550da3cb1d7126b67b02e97 XD-874: Document support for deleteFiles job option
+* 3beedbf606e8ff0d1306309db05a73e7c3a85cbf XD-1371: Doc use of custom env variables.
+* c0e3ff49786e42d3435c922526014b28ccbaa62a XD-1371: Add info on configuring multiple envs
+* fa2bc601cfeab2659158faa1faeb7220d6898c73 Precise an active Redis local instance is needed for tests.
+* c06e99151ee586cfda2b8073244114bb2f4bee72 Updated Using Hadoop VMs with Spring XD (markdown)
+* efdc663a8de4a03c9a441378d0c54faec7d29c7a Updated Using Hadoop VMs with Spring XD (markdown)
+* 564b3ac7a14d0f99555cbe7703ad576dfc1db198 Adding Hortonworks instructions
+* 40ca8d84a28dbcdd398d0b5c0afb05e0ee17d983 Adding Pivotal HD instructions
+* 39a757a8822f4a349b5bc4e9299a65198a54858e Updated Using Hadoop VMs with Spring XD (markdown)
+* 03599d8c7467b7ced5b1c9a0c3b9e8afe474ff07 Updated Using Hadoop VMs with Spring XD (markdown)
+* 4768b2d698cc3920ea605cc2e1e69036f9cca094 Updated Using Hadoop VMs with Spring XD (markdown)
+* e69fb39b3843aff6f9137ce513fc8e7a9096ad68 Updated Using Hadoop VMs with Spring XD (markdown)
+* e810891ebb49b8f2079f17262bdb8ba5fef0aec7 Updated Using Hadoop VMs with Spring XD (markdown)
+* b72a8d92b5ccc84f1710cc44950b6bc618787c27 Updated Using Hadoop VMs with Spring XD (markdown)
+* ce2c524f8a3d3a5c8c711c93f17c6350ad72e368 Updated Using Hadoop VMs with Spring XD (markdown)
+* 37f492044e634fc8758676152acfe6253085db2e Updated Using Hadoop VMs with Spring XD (markdown)
+* 63369d74aa12de777db09927996e083ff07810f5 Updated Using Hadoop VMs with Spring XD (markdown)
+* 7278c2557321d93da11825faaa26db3c4e1a2727 Updated Using Hadoop VMs with Spring XD (markdown)
+* 35abb1a6a96f6035e5269c1cf62d6bcb1679e5fd Updated Using Hadoop VMs with Spring XD (markdown)
+* 1499058c2bd984306175be8cd4cee0ed9bc8a26d Updated Using Hadoop VMs with Spring XD (markdown)
+* 59c8c0c0cdcce3f367e6a2840717d606432e3c26 Updated Using Hadoop VMs with Spring XD (markdown)
+* 60c055c7f3405ce9ac32a57458effde4d63d9160 Updating CDH4 instructions
+* 166decbd00ae863d9bc6ae92de3f3eed724a19c4 updated Type-conversion
+* 76880cd1e2a5c312030296d4fecb8f50e6b3d963 updted Type-conversion
+* fa861494ced09c4d4046e317285473e5f2ab7bb7 updted Type-conversion
+* b60e05655cf6e16d493a0bde2a94fc9545968d59 Updated Using Hadoop VMs with Spring XD (markdown)
+* 5429522632cc9c0497a2221c92b48574a3a22f37 Creating Hadoop VM page
+* 8535a9da7ffa75e6434278e265f2e9fefef7c0cf Update post XD-1050
+* 09cd9bbfd0aaf1eef0415422419668e5b129f686 XD-1273 updated Taps page
+* 0d98ae617caccf51e0b82aae2e168c2e64cd428a Describle local transport configuration options
+* 34016e3270b6af49a306171aa0cdd7201b3b21c8 Add databasename to docs on how to configure HSQLDB
+* 2ddf868388e9e16dc2f243a6228d642b9683365f update doc following job shell changes
+* 060cf27461523692c22ac320ef2b05b8c3aa55a0 Updated Modules (asciidoc)
+* 5597bb91d0dca7805fb2a336815a8a7f74e8f62b Update application configuration section on how to configure HSQLDB
+* 8790a74cd30cb88859c766ca68515311177b7152 Change top of section name in Application Configuration to Introduction
+* 0dcd2d175845274be4e00fd4654177f88ebe641e Remove old section on appliation configuration
+* 4ed298871e850afbba3445d871ad7cedde318942 Updated Application Configuration (asciidoc)
+* f5a080833832563ebe944e99c8727446683aa0a0 Updated Application Configuration (asciidoc)
+* b045b884ccdac20e5546faf81e4e216f583898e5 Change reference of M4 to M5
+* 03c19c8f475e0658a2faaa705a4ce1bae3a96b51 Updated Application Configuration (asciidoc)
+* 044b660f914f87cab83d7401ccf43cf7c830b173 Updated Application Configuration (asciidoc)
+* c5efb1172b3b2b760b9a44673668d5039b103a42 Typo
+* 544941fb5a986a5e6634eb0b3c068e00ff1e7178 Adding a section for batch job JDBC connection
+* 4b79081e7fb15dbc4a2273dbda0080ed9d92942d Add information on job listeners
+* f261cb9d514e868ed2a74fbadf5b28791e1e5e8b Updated Application Configuration (asciidoc)
+* 9c20ebbb902a2876d5216bf257d2d7713dc31728 Fix sidebar
+* 70a741624e1b1e3dd98066d4f0840cd6caac2f26 Updated documentation for application configuration
+* ebd30852bcf83561db45cbf1f9e638b33f230e18 Initial move of application configuration section
+* aa29b047bf1396ba6af1b1ef841afcddbcd6cc07 Add additional authors to guide
+* 43f93e8a146b876e78398dc1f95a44f75f98513b Updating jdbchdfs properties
+* 187d7e9226e276324d672fcac2e7c4ff47a51f78 Adding launch command for jobs
+* dac27ace6ae21117eb9827fcb60ada9800ffb3b3 Added Notes about twitter source incompatibility
+* 30c18a908bca93b03ff07398c4bd3a3fcd24dbea Update jdbc sink to use names
+* 7f3e3c17813a2179ac932beb238b431e79565ab0 XD-1187 Support for --transport for admin
+* e6d0ea3fcbfca14147697804c459dcf0a99d2788 XD-1187 XD-ADMIN must support --transport as an option.
+* 3706bc124e14a731b1563f102a487abed7b77ae2 Update batch documentation images
+* c4ede31806a44286d7f9967f7ccab30f2a98f8ae Update batch documentation
+* aca11d44d75b1db95dbb1d6d99c1c2e4aeead1f0 Updating docs for provided jobs
+* 95cbe9319410f1222a43b78ad493542a9197309c Updated Analytics (asciidoc)
+* c96d31a1a15ba95e44d0810b1be3e2f19dc20c3e Updated Processors (asciidoc)
+* 46ce41c11fd3cdcbe92b53b69eff3fa696f45750 Updated Analytics (asciidoc)
+* f35c18f094db2a587aa84bcd1baf06ba35c725bc Added hadoopDistro command line option for xd-shell
+* 91110e75cef7764392f3052c7ffd7abf17b45dd4 Add section - Creating Jobs - Additional Options
+* 04e6644aa398084214b732c79f9400aa721f9f1e Updated Sinks (asciidoc)
+* 7c639f09cdcaf573d32ab9021ee879c4e510ac28 Updated JDBC sink docs
+* 0a4cd386fe7d16f1ab42db1ee512d5af124bf63f Updated Sinks (asciidoc)
+* 0050faa8066e0045ada8d815b6fa575d081b1a5f Updated Sources (asciidoc)
+* 5b9906e5219d84a4f68e961361b25a50b17839d4 Updated Sinks (asciidoc)
+* ed1defe844f0e4368f1fde291a1bb1f8ae05e7ea Updated Sinks (asciidoc)
+* d87932aff2177c0f8d496ec3aae11bdc2b020ce5 XD-1192: Add docs for jdbchdfs.
+* b9eff933e82dea1107625662db3716236564e421 Change 'tablename' to camel case
+* 0dc04ed6f85c5cbc0dcd19bc0787c43a32d97d9a Updated Sources (asciidoc)
+* 27d59334dac8a1ae05b91b4d3ad32e193b4af537 Updated Sources (asciidoc)
+* 732a25eb2f75a21fc906e60c5c78342414ebbd5d XD-1157 clean up
+* 6a8c5458b0332bbbc051d249be3f23bfe2eb360c XD-1157 Update Gemfire Sink to use locator
+* 823671985770f77f70861af59e3fe292a86ed713 Updated Running Distributed Mode (asciidoc)
+* 1b1ec6830e6c4180a7014ff730207e035a7ec6b2 Updated Running Distributed Mode (asciidoc)
+* 8f112e618a0c7005d554f3e76f011c2cbf2c5d4a Updated Running Distributed Mode (asciidoc)
+* 18c3d2bdd9a443a8618722068147cbd9b04590b8 Updated Sinks (asciidoc)
+* 8ddf4abc1d72ee1319469bcc78f0442e03901918 Updated Sources (asciidoc)
+* 652f528ef72a3f5da26f885034a1c3fdf84938b8 Update HDFS sink documentation
+* 0208d53077d788144970c4c935b107e204b144e7 Updated Sinks (asciidoc)
+* af0911a42b14e7c7831a11503044ee691a107ca8 Update twitterstream source
+* b496ee5699aec0343069e17be18fbd1b1fe033dd Updated Sinks (asciidoc)
+* 4ed2e1fb36f8d35aeb9602539b92d86d2e3e1067 Updated Sinks (asciidoc)
+* 54d809a5ece5b49e9432028ca23cf863b25e8a8c Updated Sinks (asciidoc)
+* f01c1bddc9f8f14294437591786beaed8db08cab Updated Sinks (asciidoc)
+* b5d0dfadfc60b994fd8e11464fe31d38e79d0fa4 Updated Sinks (asciidoc)
+* 954139dc3b5c7ca4ad72f9059d0f3aa07f547c7c Updated Sinks (asciidoc)
+* 23eaf004252a4477b813c55cc21ce62f972badeb Updated Sinks (asciidoc)
+* d49c235665f10af89f53f7f16ac23bff5e671e64 Updated Sinks (asciidoc)
+* 8349ebbb587e670fb0beb5a5a6b66b8718c440f7 Updated Sinks (asciidoc)
+* 04b3727c440b295c14861a68fbce032231dde5f9 Updated Sinks (asciidoc)
+* 34f7913d4c50ddb7884a84f1cf54d89fbc15787c Updated Sinks (asciidoc)
+* 7d2a9e703343e2aa5232ccc9f12fe34cfd107695 Adding avro sink docs
+* ca050926b14af6526dd56497ee95ba44bb237024 Updated Samples (asciidoc)
+* f7ada23ec8fc8a9b78932eae8bbc4ad4d4e11d1b Remove mention of memory for distributed analytics
+* a72cd1f601ac69b2c319bdc357e7234092b1921c Document module info
+* 54d7564bf657ac0a373d9a80a1ab67df5f85c89f Updated HDFS Sink doc section (asciidoc)
+* 5e7bb53ac105563bbf120f62dbac71b268de22dd Fixed the usage of trigger source in case of fixed-delay-trigger and cron-trigger.
+* 77503d4f54c178aeadc5bbd382bceaeb5b08e08f Updated Sources (asciidoc)
+* d964765392d19a982f87712ab2866366ba7bae2b Rename gemfireHost/Port to just host/port
+* 80b898adcc321ecbd262db5f038fa740e83abfb5 Updated ModuleOptionsMetadata (asciidoc)
+* cc35815a9994fc011a58d7dbbd6151f33b88137f Updated ModuleOptionsMetadata (asciidoc)
+* dad1a1901da1fb5d2846662726b98649b432a031 Updated ModuleOptionsMetadata (asciidoc)
+* f8b3d5d4c5356c36291cc058301f5070d6a0e3f8 Updated ModuleOptionsMetadata (asciidoc)
+* 7dd3dc21bc09e97f257d8b93574fa873ce1ffd2b Updated ModuleOptionsMetadata (asciidoc)
+* 1c0c119880754c1e2d679ea74b88d471476cc410 Updated ModuleOptionsMetadata (asciidoc)
+* 1ddecf5470b2dda4201df227188e1863bf3c210c Updated ModuleOptionsMetadata (asciidoc)
+* a41f5dd5e5c7553158e98057b83d684b432e8449 Updated ModuleOptionsMetadata (asciidoc)
+* 409904c2833671aa73383c4eb7e022fbfa0ca6fd Document ModuleOptionsMetadata
+* 6b43cc99912ed48c3735ff995fef9a2348c5850e Document ModuleOptionsMetadata
+* 19cc120163232f43b43787693e0ac52b88b47feb Document ModuleOptionsMetadata
+* 4a6676546c47831cf4d5dbb04af4f7f107d3aa06 Document ModuleOptionsMetadata
+* fb4e8ea04a7c363f4be3526369cab15517222c8e Document ModuleOptionsMetadata
+* 92b87c040ea3ec31a515b19abbb960873815d56a Correct 'fileDelay' option name for tail source
+* 80ed20ea222c2d257070b4bcab4594123392e61b Updated Running Distributed Mode (asciidoc)
+* 2d871e74bd9f1904fade68da634ea205e12f7f6a More Polish: JMS Changes
+* 06f5520b516b0f21d2eb789a35e4dd8b7992121c Polish JMS Changes
+* 9aaf2e0194589ca927f97a2df9c2343fa7281965 JMS Source - Add Topic Support
+* 31e4df2a2abb16c46b443b71102b2746a18e0725 Created OLD   Aggregate Field Value Counters (markdown)
+* 5d8af1248386bf4e7502fdd713d81b7378a33cfc Updated Sources (asciidoc)
+* ad610f0c7f1059b165a10688f435c0fefcb1ef85 Updated Processors (asciidoc)
+* aa41a91c962af00067c75256609794b0a9c9c08a Updating the Hadoop v2 version
+* b788a3d5306931f43edf00ec20800759cf84d0ef Add clarification on --server.port
+* e7540fac61025f10944def3332ad6adce7c83ae9 Updated Hadoop Installation (asciidoc)
+* b99fa9320ca71619d670e6f98dc6e7f105a613bb Updated Sinks (asciidoc)
+* dd4f2f53f0ac13463a8800aef21d2c606b44f02e Updated Streams (asciidoc)
+* e9b723f69e6dd4243d455713ab6471c38381ab6a Updated Architecture (asciidoc)
+* 19e9bd6ca104ced46b6c5583258c3b1c0fbbde44 Use explicit anchor
+* c17a8cff32987999b306f07db6f98717c3eb717a Updated DSL Reference (asciidoc)
+* fdfc20c2ed7dd0d9170dad1b77e777b917ac4582 Updated Getting Started (asciidoc)
+* a3036aa192246a809b8673d1cc4e1c8c145cda6a Fix Type conversion
+* 35c065634dc8a7759a9df5f7e47dc217f50e308b Updated Sources (asciidoc)
+* 802a962295014c2e18e0827c2a0d23dc11245c34 Updated Sources (asciidoc)
+* 7b77f155a85be662c4295e1845c0a690b07b613b Updated Running Distributed Mode (asciidoc)
+* 477b5dacd81c407abc3186aa6effecce905a80d3 Updated Running Distributed Mode (asciidoc)
+* 19f1aef28117a84685d03c81082618ec0d1000bc Updated Batch Jobs (asciidoc)
+* 09b36530ae3eec6d22234b96f7ec33e33b687721 Updated Running Distributed Mode (asciidoc)
+* 37192e6a08125f5446de1a1ec1ac5a93fc027b3c Updated Type conversion (asciidoc)
+* d2b50f44acb31c94eacf6dff76827fda2a546b17 Updated Type conversion (asciidoc)
+* 78e4afe38c60c9486a5534e8aa7cb34df7367485 Updated Sources (asciidoc)
+* 34fb3afe7725905a57f323d32fe9931e5ed929e8 Updated Type conversion (asciidoc)
+* c404ebcafb6c740b5dd3a8ac15f7069f9b740488 Fix image width
+* 975a8757dd245d900064f5b621813878c251859f add mention of #jsonPath
+* 409dfb9387852f7cf1f01736797d8f7dca099c84 add mention of payload variable available in a filter
+* cfb91461f73b59298815472a5ac5e0174ddda1d4 Updated AdminUI (asciidoc)
+* c8c1f89ba295ee4744da117cec8b04f9aba5a5bd Updated Admin UI (asciidoc)
+* 8d303628541f41c3dc68b20140ce8f3ada8d04cf Updated Architecture (asciidoc)
+* d54fdcd8c14e4470ec6001c0b10def58f41d3f84 Add small info about reactor-syslog
+* 3cbde75a04c7a1e7bd631abe17a63d516eaed9a9 Fixing images
+* c9a68581171676c161ac7b11b4d5f09e537757cf Add Admin UI documentation
+* 505f7d779f23a136d8e290e8ef6f7dc258b6c287 update to ref phd 1.1
+* 964e13d7c49f534d7d87c3a7f046e637034795fa Updated Modules (asciidoc)
+* b6fd20ef6dad26a154b3d44d97be3e35a518ea04 Updated Type conversion (asciidoc)
+* 86f1bd4ad87ddb74b7c3b38e56781294aaa2c789 Document Homebrew installation support
+* 1c527635ee64444c91c1f82e0f368e93f03bb62a Updated Modules (asciidoc)
+* f451a307c160655028da3225411beec4733f9c4e Intial
+* 8b1e917feb9c718eefd15d2b7d0d9f53b044c963 updated channel syntax for router doc
+* 12af7f7fd0e44dd4539d150548e110e011f92a05 polish
+* 5119007eb91db21cca6a065b5fec49ed66a4d46a named channel syntax changes reflecting latest parser updates
+* 87e7646181c3624146d3728641720467c7a80cea Updating download link
+* 474ff29980e56940d4920312d7b992d4a5c03fc1 Change M3 to M4
+* 8bcc19552dfbcd321ad05faa587f6a3cb9851a59 Formatting Java setup example
+* d700b2ef28a55f6a0906c311928779f083fa8171 Updating Hadoop version to 1.2.1 (current XD default)
+* a94830b3b489386afaf02f71d303b1eb9a28ae13 fixed invalid link
+* 22c77634394daac66a88e329701b62e210677277 XD-1049 cross-refs for Composing Modules section
+* 0dcd441be0ac51911f9afd560cff3e7e885cb33b clean up type conversion docs
+* 53ee8a8c7fdc737d3865bd5e6f2157f133ffd1e7 Add minimal docs for how to access analytics information using wget
+* fe0150daadf32f4fc1f9a48e9b5bb1486105ada5 change shell example for analytics provider
+* 36c60a1564d5e5d5eb0bd6447c6f4d5b8ba1c18e Update with option for analytics backend
+* b00eb10c3533302c825ce05c62799443a16453af minor: tabs to spaces
+* a6372a7c568bc2d2ac9c8e0a5fcdc2126b3ce130 XD-1049 Create documentation for composed modules
+* 61681d69a276228617759ce4553aaed109a22745 Added diagrams and a paragraph on stream deployment in the Architecture doc.
+* 9c629ef62926f108180d9e66176cc77aeba544d7 Fix tap syntax
+* ea0b0b5fc7a97a8da827f00e4e2205d347c85f67 fix typo in gemfire container listener
+* e2146b57ecf43cbb5a29551c1c735c91abc99662 Update download info in getting started.
+* a807fbb9b53623c4b20c45d1eb9727540c6dac8a Update stream/job syntax
+* 02b6cf8ae5346e2995662198cd2b8897d8948f7e Basic doc for OOTB batch jobs
+* 715f0f2e6517271fb01afc93446cced8d873de6c Updated Sources (asciidoc)
+* 7b1a427c24a577e2aa058859e2d762cdbaefd50e Updated Type conversion (asciidoc)
+* 558917df98d4811b6fea9a306c953cfeabb67abd Updated Type conversion (asciidoc)
+* 55811c63d53d7fec2efd2a0bd0f26c39811fc0fe Move TypeConversion page into guide/
+* 3bba716be82fcc80a4af5e3bf5e56d4938013139 Updated Type conversion (asciidoc)
+* edcae12f07aa6d7dbca0151ec8e505eef9b9b00c Updated Type conversion (asciidoc)
+* ef5add0f107d65d2a5699d052c9fa7f0d7ef256c Updated Type conversion (markdown => asciidoc)
+* 631fca6d46647ff5632e6c67faea385ec5a51f3b Updated Batch Jobs (asciidoc)
+* 6b6e1025bf9177724f818713ba915eb0f76ac771 Updated Sources (asciidoc)
+* 600338621f0d000c57f85b8ad906cadf1fdc2aac Updated Sources (asciidoc)
+* fb1f6cec6075155b4a9690a0cbea3b9864979760 Updated Sources (asciidoc)
+* 5d9dd42d07599bf285f30ea6c5fb9c078c14d58e Updated Sources (asciidoc)
+* 7211ed7e281e57c2ed4dd2523a2735a209216f06 Updated Batch Jobs (asciidoc)
+* 589fa8ce61e054f3cd419fd1a015f48261a8be8b Updated Batch Jobs (asciidoc)
+* 9ea29395a71b8b20919a27b950ac58202d6daca5 Updated Running Distributed Mode (asciidoc)
+* 327b172795d5e66233face747660bbc9355aafd3 Updated Type conversion (markdown)
+* fe6969050c663f67cae72a76b3b733b00752ddb3 Updated Type conversion (markdown)
+* 41454873b3961e899eb9c85da23ef1672e185d69 Updated Type conversion (markdown)
+* 47c2250530f4c9cebf0312b1095b0d26dd7a311b Updated Sources (asciidoc)
+* e5c078d6cbda952cc7a05e6f931df3fd74e64f5c Updated Sources (asciidoc)
+* 88280efd0f2fe0972c82f93f90f0b6627169aff2 Updating Splunk instructions
+* 54c63a89742515feb692a0e74929a425ebac961e Updating GemFire startup command with path for config file
+* f161a03bb7976b179a2862a3a11b35c39e8135cf Updated Type conversion (markdown)
+* 819e2bc60df55465b2c577e7eeb88a213a1b7e05 Updated Type conversion (markdown)
+* 137ec4940119509fdf77f77a788c4b3f312f88b5 Updated Type conversion (markdown)
+* dd5cb3ad4fee2d4dd0913f0891aedd63e5a6a10f Update jsTest step to remove explicit 'build' task invocation
+* b1a3f5ca9fd3ced23134986efb526e156c9b8a15 Updated Type conversion (markdown)
+* af2c53d31853d13cd3c5b212fef01fb0466e5aea Created Type conversion (markdown)
+* feaf728cf4ddec99e88df8a859870e9e1b6dcad4 Updated Technical Documentation (asciidoc)
+* 22e680edcaf1278c2de1c61ac016b4a296663310 Updated Technical Documentation (asciidoc)
+* 654d6e6d14e40d854fc396a4b3bba278fdac309c Updated Building Spring XD (asciidoc)
+* 26e6eb06dae78922009f1e95ed9ebc8156c294ca Updated Analytics (asciidoc)
+* 5097ff300b7b47962a00583c3c8b6b0867b21d73 Updated Modules (asciidoc)
+* 0731a43ee60b6fec7f73bd8184711818bb82f43a XD-847 Revise the available hadoopDistro options
+* a65c696352c9bd28c90895b2db7dc899e8f7aa63 XD-847 Revise the available hadoopDistro options
+* f6ed412a88ab56a7f556ad4c014eb03590c954ab Updated Modules (asciidoc)
+* 044917635b33cd7e09bd8e38e5534788eaa88422 Updated Running Distributed Mode (asciidoc)
+* da790ab3819a1b6d974c6cbeb5f47ab6b3782a25 Update the download-link
+* bec6607231f748ede8da92b213b85a1c3184fc6c Updated Architecture (asciidoc)
+* 978a8e88e219dcb8de81d81735707216f38bbde5 Updated Analytics (asciidoc)
+* cef5af5a8f2d7419ba100188ccdd4d84f90b03dd Updated Analytics (asciidoc)
+* 69ed7ad7b53f81640f330ac82a86fbe7f3f3a05f Update for M3
+* dc63caadaec7b1a5bd6b7af2de861234014d80c6 Document isolated classpath modules
+* c00866424920dee3bdc313b4a913aec98f7d3539 Document mail sources and sinks
+* ae687dc1df9fae1fd52a4ba93fde17e37b276091 Document mail sources and sinks
+*   00b830c718e971e7a2906fe30f3bbb00ff86bd7f Merge branch 'master' of github.com:SpringSource/spring-xd.wiki
+|\  
+| * aab3c729ddb053bc7b230d7b8841837fe9b0363d Updated Batch Jobs (asciidoc)
+| * f43dda2b463fde095179fd0cb8256fdbb725508f Updated Taps (asciidoc)
+| * d80707d3a1a3c08ff33e9e52ab84860e2aea61b3 Updated Taps (asciidoc)
+| * ceb66d2245b3e12a6b4b8e3a90dc18d7043276a0 Updated DSL Reference (asciidoc)
+| * 7f5c0c418450e1f90fc13984655bde09e07f3cd4 Updated Analytics (asciidoc)
+| * a2503350269ae4481637f2294dbd53fc2336b130 Updated DSL Reference (asciidoc)
+| * 220f8222a2e180719b66487fb3bbd8491c9a874a Updated Taps (asciidoc)
+| * 46cd8d414c4d7aa36562d3c48afd077e95d1366d update Batch-Jobs link from link:Batch-Jobs[Batch Jobs] to link:Batch-Jobs#batch[Batch Jobs].  the link is broken on the exported documentation on static.springsource.org
+| * 39f8d2ddbcf61486140434a399d3d7c78539b20c Make the batch job id requirement bold
+| * 9d9c05827e5077a8eeb32f185c1734af57b79e57 Fix "fixed-delay-trigger" stream definition
+| * 4044647f42ebdd9db0195b9b26f84fd228e0af64 Updated Batch Jobs (asciidoc)
+| * f45f773558893010d73286528a992d2c2b0c6f23 fix errors and inconsistencies on batch job page
+| * 3dc9a9d058d7041dbd8b7eaee90de07f5ef0b0de Updated Batch Jobs (asciidoc)
+* | 150a26da40679e57de2d2019ca26764000184c2e Document mail sources and sinks
+|/  
+*   0d975cecc2ae278ac35c3861c328c5fca47e493c Merge branch 'master' of github.com:SpringSource/spring-xd.wiki
+|\  
+| * 294ae7da198c65a7d67de4a964bb719afbd2a814 Updated Batch Jobs (asciidoc)
+| * bc8b74ca40501c6cebe8abfe079616e14b0d7816 Updated Batch Jobs (asciidoc)
+| * 0e4594033b7c56f6f22e88ecf8923d1d21639143 Initial draft of the Dynamic Router documentation
+| * c58ef0c979c6806fdf3b8552703b2793da301926 Updated Batch Jobs (asciidoc)
+| * a3a3674feb32ea05aff5610fd0bf78b0f7131f5c Updated Batch Jobs (asciidoc)
+| * 556a49c72cee9e5ba1b8c61dd0dc72ec88738567 Updated Batch Jobs (asciidoc)
+| * 83e59dbde3410c2e56a1542a0cb006e6958a903f Updated Batch Jobs (asciidoc)
+| * 419f9c4013c808bef955bba1fd49385516d7db82 Updated Sinks (asciidoc)
+| * 22493375639c8d9390077fb459e4e10c6f0007d1 Updated Sources (asciidoc)
+| * 23738dbb30155ce7b2d2635bed9d77f1f1b33b3c Updated Sources (asciidoc)
+| * 6673daa9f17fe1f08f7d824261162810a1375147 Updated Running Distributed Mode (asciidoc)
+| * f1b893b80a4360d5d3aa5c015b257d70ec6d1e81 Remove references to M1
+| * 2510d116a48dd3dec29b1c4f0561a5cc958d6d57 Updated Getting Started (asciidoc)
+| * 99e21e96f8ad6f187a2308eb5c43978a8f59efb0 Updated Getting Started (asciidoc)
+| * 889c115379578999efcf1cb168b32ff4ffeead50 Updated DSL Reference (asciidoc)
+* | a9c23e10370a19e35673587f8986a8e5c21d0619 Add splitter/aggregator doc
+|/  
+* 91e8704ff5695efdad864cc30490eff1f4580beb Remove usage of @ for taps
+* c442472dff44384cc125b2dccb7103cbac37b8c3 Update named channel documentation.
+* df51217dc04bda897ddf7c01e9769e0a97ebe2d5 Updated Tuples (asciidoc)
+* 4ec553a0eeeeadbc0982c358e33cad748fcaee91 Add reference to the spring xd samples repository.
+* 238aa5d93891e598c8c49e4c79cec10216d66dc1 rename batch docs to remove 'executing' prefix
+* 35ccd975bad43d5cc445f66493c13cb6e396ffb4 DSL reference tidyup: - removed reference to tapping on named channels (doesn't work yet) - removed reference to qualifying named channels with a stream name
+* a9346b703840770aa94adaa6d60106146d13f261 Updated Taps (asciidoc)
+* 36c693a651c53d17eb6842f7c98bad192bbca231 Updated Sources (asciidoc)
+* 47a5da06496fa7c23eb56582ccb2e6a8f270d00e Updated Getting Started (asciidoc)
+* bd243efb6894c2e6298517d48b754f151381263a Updated Executing Batch Jobs (asciidoc)
+* 2f4046f2b8ff0a4ff7684a2dd91f823d2d80f46d Updated Streams (asciidoc)
+* 568b6e6e2c6b6e95c66ef41902780587d8cec2cb Updated DSL Reference (asciidoc)
+* 240e28d83de2f13f8f142ff88d45d1c716e20f31 Updated Sources (asciidoc)
+* 3b9af44ffad2b4ff0c9655837f9baad36454a965 Updated Sources (asciidoc)
+* 8734ad2a1e95eb607070697af3a98fa8316edfd8 Updated Sources (asciidoc)
+* 66cf3e4d0da6d7031abfeb2da62bb271fa3e5398 Updated Sources (asciidoc)
+* 345ffce5ca12f8832f73eb35a18c99a918ec506e XD-606 - Document JSON quoting behavior in shell
+* ff2c78027135b8e0b00efdf58669ad7ce7030e68 XD-642 - Update architecture diagram to show rabbit in addition to redis to communicate between admin and containers
+* 3f336a3b0989c39158766ac8bf087f00d2a17345 Update jdbc sink docs with camel case matching behavior.
+* 9fb9276be48b2b1027a4067ae6b52333863553b4 XD-611 - Documentation for file source
+* d37b03c8a9921c5eb25eefeb3866975baacb2502 Updated Sinks (asciidoc)
+* 8dd1b2f3e24aee50f9134193dfc6e31bb6a29ae8 Updated Sources (asciidoc)
+* 2066bcb3137434c5310775737ff7de2a122904f6 XD-610 Document JMS Source
+* 6cdcd4990a4f4c155552e66fa1cdff4472bdbeeb Updated Sources (asciidoc)
+* d18564f1e0308547196598c1cbd42c67fb6ea67b Updated Sources (asciidoc)
+* d1aef9ffca8406e502348045799cc6dd96667fdc Updated Sources (asciidoc)
+* 336f4e2fd0f47c6c7928881aee7f1016af6c94b2 Updated Analytics (asciidoc)
+* 2134a21be4df571c68630ee1543c9c0fd3546b41 Updated Analytics (asciidoc)
+* c2aedc839c6128c3ecee0a85c390044dbf9696f8 RabbitMQ Source Polishing
+* 7cd5f35f3fa8e7d064dde096f6d8ddf08dc2b35b XD-609 Add Rabbit Source Doc
+* 51ba22d4a55325589538c5cb70d3c7b76e85c721 documented rabbit sink
+* c5f940d516e700240c6689dd9941df2ec4693b67 Updated Sinks (asciidoc)
+* 0cb3a477a5b660a4119e3aa975f8bc256c7d2543 Updated Sinks (asciidoc)
+* 11bbba9172bbb926bcd2f3af9041bac2f902a5d9 Updated Sinks (asciidoc)
+* 28fa6513cb0139e33724275ac5078c44489f730d Updated Sinks (asciidoc)
+* ef359e546b8197a548477f46aea9a1b3ce0852b5 Updated Sinks (asciidoc)
+* cdb190cb7838fad137666e5e4f61a50203be918b Updated Building Spring XD (asciidoc)
+* dfed7e85388ebee770f3508c598b5203912ef975 Updated Building Spring XD (asciidoc)
+* fd04dadc278b687c73e5e91ae738a6ee3791c4f5 Updated Sinks (asciidoc)
+* d56fc3eeb0af5d8ed04cd95dd5043153aa3a8146 Updated Hadoop Installation (asciidoc)
+* aca7d9f2d2ce952bdc2af1e21a132dd6686852fe Updated Hadoop Installation (asciidoc)
+* a5ac83f8924acd116446d5bba5c585c9798d1512 Updated Hadoop Installation (asciidoc)
+* 3317cf48202cc23c1752d29a3046ffb8a760c58d Add one more clarification regarding Hadoop installation.
+* e5342fecd19ac6b89caef2b4ec7c231297dad9a4 Updated Sources (asciidoc)
+* a560bdbbec3e37cc7d92b9260a000087670f6f6c Updated Sources (asciidoc)
+* a3487eabf87c772b8e94644416ea9f18be8b4acb gemfire cq doc updates     *  add single quotes around json     * show command to start up the cache server
+* 246d160e2cacd083d79441c1dca2bc71ca5eb52e Updated Hadoop Installation (asciidoc)
+* 43954d4f31c4e0da642bf3e659a1fe48491a0843 updated .gitignore for subdirs
+* ae321f79baf1af31599aea5891ec8b503e5432ef Polishing Hadoop Guide
+* c08ef50e0e0acbbd1d36adbedc8f01cbd434e69b Clarifying Hadoop Installation
+* 6ed4ef7ed32848eb482829f2d80e2a2e69f6625c fix formatting of sources list
+* 9fa2b3507b1cbb773c293849632e45406b536cf9 Updated DSL Reference (asciidoc)
+* 04b1c7928d1b4568ce2523f497e9c0fc24f1e8c1 Updated DSL Reference (asciidoc)
+* aae6f4c2c286148925b481fb58f9c60d48e8a2d8 Updated Analytics (asciidoc)
+* 328d0df5b57b79c20e0cb065e68b76d6a221232f Updated Analytics (asciidoc)
+* 3078fa94f3d22f1ad31e5a344f1011bf91b0a469 Updated Analytics (asciidoc)
+* e8977a446aedcb915dfb0dc4ce1518023b49042d Updated Analytics (asciidoc)
+* a38671e315a3c57719acba9f7d85d01f5b56e88c Updated Analytics (asciidoc)
+* 83a27111f008def1a76d84722d163ac50f63a10a Create section for Hadoop in running-distributed-mode Use syntax that doesn't show deprecation log warning for hadoop config fs
+* 4b6bff0e381aa46b30456fbf2d8ec0cbf01f9e9a Updated Sources (asciidoc)
+* ae40985ae9511700f3755bb917bb7d028c6059e0 Fix link http://www.apache.org/dyn/closer.cgi/hadoop/common/
+* 50aa3fb976793d2912a4dcb9f0e4fa8c123f023e Updated Sources (asciidoc)
+* c5941c83743e48438c6431e62d0fe7998cbce1fb Updated Sources (asciidoc)
+* 8fa87fd65ba4ebf273b05ee15a925f8eb537c4ec XD-595: Change doc to use xd:> prompt
+* 8ad054f96c1698b01871f21abefa720811bf640a Updated Sources (asciidoc)
+* 9ad3eda943477362d260f4564ec4f2f4f4b2ea2d terminology changed from abstract stream to stream template
+* 593f399ac720b11342a135f3c130add191d532ed Updated Building Spring XD (asciidoc)
+* c6438229e01d55e0a904ba2e5813a9edc5855dbc XD-591 changes
+* 7c0fe2c54915e1491c280768b1baf8dc14f0b1e0 Updated Building Spring XD (asciidoc)
+* 0fbbc42a3a5cc61cc827de53ec4458ca1b9286c4 Updated Sources (asciidoc)
+* 68e5febaa9bbafd51bab708b48ff6e2d157a0f45 Updated Sinks (asciidoc)
+* 2a10e5a237a9dca8685a15a5ac490123d9ec165f polish
+* 42c802ec10f8b698421e84fb2710383425635488 Doc updates for XD-369: DSL extensions for M2
+* bb661329ac354baa772e7d0d55936fa2ae2a3ccf Fix "http post" shell command
+* 9b883837ed74d666880813762e378e62ad1bcab8 Fix "http post" shell command
+* 068d6033e51e2044e25173461ebc00e3c03f9292 Fix "http post" shell command
+* b8d42d1a39a6e7e3d94613179016fef51312743f Fix "http post" shell command
+* 1c0ac86db166dec446d3fb8375319b121c79ce60 Fix "http post" shell command
+* 106df2ecbef8ad31d26de094093f8b41af88294c Replace curl post command with shell command to post httpsource
+* 7abcbfd6985621d90428755020843447ce282484 Replace curl post command with shell command to post httpsource
+* 1e3471e0add35a0363393b5ea3f5c2548b01aff2 Replace curl post command with shell command to post httpsource
+* 2e76624b02c4cc90c95bd577b3b774fccc42a9ee Replace curl post command with shell command to post httpsource
+* 4996ccdf9c0abd60b109cda7746fc8d0271f901a Replace curl post command with shell command to post httpsource
+* 58ceec4be2f2dd23203800c06d7023b078b7af3d Updated Executing Batch Jobs (asciidoc)
+* 1d2de6cc454aea6e518871e737c0831a62a124c6 Updated Analytics (asciidoc)
+* c3645d34ed2dba4c8f66a2644b3f406f98205f6f Updated Taps (asciidoc)
+* fab851cd44980a9ffa72a553f4b0ce32498c9893 Updated Analytics (asciidoc)
+* 79c868185a4a17c58506e8afa69350f554844469 Updated Analytics (asciidoc)
+* c5d6bc10bf80ce8e44124f846005c5425a848a3d XD-577 - In documentation, replace usage of 'raw' hadoop command with shell 'hadoop' commands
+* 64632eff52fb17e9242eab064541a49a5581d59c Updated Sinks (asciidoc)
+* cf32bbb7bfce4c0d201d1d8cef5574f5db0a7d12 Updated Running Distributed Mode (asciidoc)
+* 951b40d03af20b55fd7dc7cb1ef618d1c0e4facf Updated Sinks (asciidoc)
+* f35c3443b1da28a539a83d74e4f699592b31dad5 Updated Sinks (asciidoc)
+* 15973083a76a767b5f382c2a35669ad3dc86879e Updated Sinks (asciidoc)
+* 223324d0c15fb3282da0710b54be7132fe998af4 Updated Sinks (asciidoc)
+* a93c9290019fc1b95db12ce363b4c7b3a7b3065c Updated Sinks (asciidoc)
+* 20127e4549d5b9d011e7a5ac2dce89191f7f4b1e Updated Sinks (asciidoc)
+* e9989d64eea2f4246b5f239aad74d8769dd0dd50 Updated Sinks (asciidoc)
+* 805081f5c9bdbdcc4f3fcf310edfd2920fef79ae Updated Sinks (asciidoc)
+* 46c56c17870063d899d15342e09b792d69f31cd9 Updated Sinks (asciidoc)
+* 491deaa26fb6de239d6c62548f43773c8ac85ee3 Updated Sinks (asciidoc)
+* fe52f97bbb88a939389ca96b50b0bc1f7c6b21a2 Updated Sinks (asciidoc)
+* fc727cdaccbc8de187299ffe8a7e630bf791446c Updated Sinks (asciidoc)
+* 9849feacce252b1c29e98f510a165ea01c6d9de9 Updated Sinks (asciidoc)
+* 541e5aa7899d5d0904b39f229020b06c6b11802d Updated Sources (asciidoc)
+* 2e36906720b8c569535527d6457cf65b15fe8579 Updated Sources (asciidoc)
+* aa48ffcf4eb318c20767597a852cf52c879553f3 Fixing building link (again!?)
+* 0241e3777b3086aceeb06fb7d9254528cdb68624 XD-524
+* 13fef9124fc1d5929026f26143a8b87b608f2678 XD-419
+* c81bd235f8f290bc0aef12cd60420068029c2d7f fix typo
+* e0418b7ae024426803039295724ade74a5283f61 Add Building instructions to Sidebar doc
+* e95ef67dbc655033af830fd831915dafc7cdb59f Add Building Instructions
+* 599f90c1b80a8a305450f36fa229f28cd6865492 Building Spring XD instructions
+* bbe1a16b84062da521cf0a6c04b4f83fe324bde4 Use Unique Anchor for MQTT Sink
+* a575bcc742e8192ad10db5a3c2dc9f889d31077a Add MQTT Sink
+* 3cba4d4a752ca4b1398ac6df98ef7dc1e0ec1de9 Fix MQTT Source
+* 97189e3fe96e68c27bddad38e12c3d5e0e269e94 Add MQTT Source
+* f4a5752b5bb0dcf399e2fe0d0742e0e273f18803 XD-420 Basic doc for aggregate counter.
+* 37c752697575aa7c9d428a29df5085f8a1164431 Added rabbbit help
+* e29d45f7d841d02607bed877ccdc2449ce650d4d Updated Sources (asciidoc)
+* df3bda62c2fdbaa555a9d0d58d001db5d087a02e Fixing typo and add []
+* d0953099e1897ec09b01cd8d73b41deafd0acecd Added inclusion of Shell command reference file
+* 50932a01eb759e189415de8e64bda10a75a5e38b Use 'tap create' for taps
+* 1a9dfd7ac512c461dd310a19c66652a69c123173 Adding other shell commands
+* 58a3706376dd134eb2d3a350b48e86d2d223c1d5 Regex sub to convert stream commands to shell.
+* 8abe3d5b931dde30f50cb26a47603f92b4f83a6d Updated Sources (asciidoc)
+* ae03fb6ae95867de699c72054f89f5c1bb3313dd XD-403: Update Sources doc to use shell
+* d0eaf5752eb87142ed83b421c206f2761708d15b Updated Getting Started (asciidoc)
+* 565c63aadcc21fc0d0299d05b7d3aafbe247cd52 XD-400: Update Streams doc to use shell
+* b8682e96940fae3fd9a811293d9d53c571644b30 XD-398 Update Getting Started to use shell commands
+* 92cb489faca0dfae79e18a515138c122bdc3b160 Updated Sources (asciidoc)
+* af5fabd89cc5c19c0e1786718f564024b9376509 XD-345: Update twitterstream doc
+* 3ceefe86d08d8742280523343235178a03d4ea09 Updated Executing Batch Jobs (asciidoc)
+* 3ea79b8536aeec200ab6886d8671be49a3c25165 Updated Executing Batch Jobs (asciidoc)
+* b99b542a6abe818d7cd80ea0f21c3dcb126ac60a Updated Executing Batch Jobs (asciidoc)
+* d6e2e686329889f15953b2f73906d9163e93e840 Add Batch chapter to FullGuide.adoc
+* 1c276f2ccca097b9da5d2271083f968d71ccab20 Move Executing-Batch-Jobs.asciidoc to guide folder
+* f551df8853354721a8d718e81660501646aaeaa5 Updated Executing Batch Jobs (asciidoc)
+* 754c41208ae538574d48d2940054b1afebafdac5 Updated Executing Batch Jobs (asciidoc)
+* 360e33d24700cdb8a85cb98d73f5c550098e836d Updated Executing Batch Jobs (asciidoc)
+* ba81a06f9c593e2df13f451d556b61a105d8add1 Updated Executing Batch Jobs (asciidoc)
+* 14e1589b5425a026a0285fc6a4ab6dd73a12d2c4 Updated Executing Batch Jobs (asciidoc)
+* a6f68af8251d4d31ca309bf02deff26f5a3f4a3c Updated Executing Batch Jobs (asciidoc)
+* c37dec5513bb2054361436e384632eed166fbf83 Updated Executing Batch Jobs (asciidoc)
+* 056ac8b1cb15d565f41e78a401aae2d888855d79 Updated Executing Batch Jobs (asciidoc)
+* 30cbe56dc63366a13c50ee63931b3cc860156c4e Updated Executing Batch Jobs (asciidoc)
+* 0b7e4de454b76c1fffa5314e8d60f02cbf7eb46a Updated Executing Batch Jobs (asciidoc)
+* d474edc9c3d02b08ee13e00e52da220c6875925e Updated Technical Documentation (asciidoc)
+* 820ecbc605e549b3a12ff55f67b85a6d49ce61c1 Updated Technical Documentation (asciidoc)
+* 95a69638ed891882df323f7df2b9e2720b4e0213 Updated Technical Documentation (asciidoc)
+* edaecc6fe5c0fd7c57b11d35065cf22023d1b0f7 Created Executing Batch Jobs (asciidoc)
+* df3de9295c3b265b0a046509a96a91dce4ac5aa7 Updated Sinks (asciidoc)
+* 80d936bc6b5bb00e5ddf4449849729e8b0ff848b Updated Sinks (asciidoc)
+* 978e804f8a7025a571a3b9cb4b2a5f96aa34d609 Updated Sinks (asciidoc)
+* 5d9fb6d6152c1b90364ef20ead3fff0c06506a39 Updated Sinks (asciidoc)
+* 0b9529bdbf9ae899aad4a836cb7a3f291e2417f1 Updated Project and Community (asciidoc)
+* ddd8c593500d80d63d414c27db156527f2414245 Add gardenhose source
+* 4db81142642db7b8fa34fb0f80468d323a9b7c72 Changed examples to reflect the need of PUT verb and text/plain Content-Type
+* 13264feb5976ce5441ae6587e1a8c0b9ec26abd4 Fix Source, Processor, Sinks section levels
+* 30ebfa7cd665413c20778be19c0065a35617676a Updated Analytics (asciidoc)
+* 193bf60a649ed1795793239883821f4bb0258c2b Typo
+* f5e6d79104c31aba12e631365cf344dc9f48cf46 Updated About Spring XD (asciidoc)
+* 4bca99ceb087631452e3c5a6583925c2bf5598e0 Removed outdated sentence about May release.
+* f8a020e21f5cd2e2f6a10061288f9405540f34f9 XD-228
+* a0382378ba71c26cf7a7890d78b08bbc6474be74 Updated Processors (asciidoc)
+* 7956088287c7046506e2b5c5010ff55bfb56fd66 Updated Documentation Contribution Checklist (asciidoc)
+* f6f79681cdb06a0913363181857c02689605a5a3 Updated Project and Community (asciidoc)
+* 25ab053bb42539ef0b1e6814da7efd54255a7724 Updated Documentation Contribution Checklist (asciidoc)
+* f75afcf29023cf05189dc566b3f6e326ba98f7be Updated Documentation Contribution Checklist (asciidoc)
+* 1bc66a2f9aafd4e7423d8a1c126886a61be4c286 Created Documentation Contribution Checklist (asciidoc)
+* 2b343e409a0f73711434a1afc0f13b1d84622a18 Updated Project and Community (asciidoc)
+* 91df20b0e4f9443d9136bca9f81506668f4ca1e0 fix typo
+* 45aa620a3a905c986145746d334e45d99823880d Updated Getting Started (asciidoc)
+* 75aff19c60a21e0d7a0aa0b6fe5cb60372d8f7eb Updated Getting Started (asciidoc)
+* 24c4bfe09115996eed609a6333d4ffbf837603ce Add credentials to twittersearch
+* 87f9b694bf276b1b784a08f94ffa54776651b021 Update FullGuide.adoc for Samples
+* 676232279de7d42dcdf945063d23fc6e803a814c Updated Samples (asciidoc)
+* 833eaded1af080a64e4b2c98535c290a5292dbbe Updated Technical Documentation (asciidoc)
+* 58e5ee8ef2c9955477c2b1589438843e9dbec0ec mention backend implementation options and what is coming in future releases.
+* 07a9b0a238ec8586396e8ba928008de07a8b4db2 Update title of the page to Samples and moved the syslog contents as section
+* f3f80b3df20cdb7d6eb89b3d44343b52638b8d04 Add Syslog example configuration
+* 21e0751256cc404b846782c585e0da8eb12292d0 minor update to file sink docs
+* 75806eb30c848e71d79adda8144421b3f064efbd Add mention of setting XD_HOME directory.  Add a few more lines of output for time | log, show how to delete the stream in the intro as well.
+* be9de62d8c80616f8277b860b1916c74fc4d4b9b Add comment about role of Tuple class in XD.
+* 581bbecf55e3d383a242dd1d8f779a8aae324174 Reorganize Appendices
+* 152c6057a23e51e3246ed63d35dd027c33e07a5f Reorganize Appendices
+* 6629d8c6751748cb561786433b3d233c68685e01 Fix nesting of module creation
+* afcdc2851a5c5fc59f09fb23cb5e75e58a5b75eb Reverted h6 titles to some other form
+* d3471b062df1c436ff40ca78034c2a612f4694c6 Fix ducplicate id
+* 9074acfec1eb47f173b9190b4b5025f524c08b29 Fix ducplicate id
+* f53aa71c3b90e41edf7afe9a6afab502e580eeda added anchors to links
+*   bd8615866cd54928a9038519b1e7733359258306 Merge branch 'master' of github.com:SpringSource/spring-xd.wiki
+|\  
+| * db4d53ef62665f8250e7f7cb06f1057916418e03 Updated Architecture (asciidoc)
+* | bb49fd7603ac6570511457b9ee2d2ba4e173151d testing anchors
+|/  
+* cf0bb2ff5968f892cb88f22e21d8c72f63bcd455 Header files not supported anymore on gh?
+* 2b1ae8c28bbafbb9eaaeaf19cda7908c7687d5ff test
+* 618ba6bf1d2055941ab94b52b02fa07045584f63 test
+* 0505dc6e7879c71fde86038a602bd8b971e7481c Created _Header (asciidoc)
+* a47d784f7ef9185939c9878b4e83920be56783eb Updated Sinks (asciidoc)
+* 0e939383748779d6b8a30fea6092096103e13f8b Updated Introduction (asciidoc)
+* ec9ef23919923b13ec997de593ef3645948d5d7b Updated Creating Custom Modules (asciidoc)
+* 594760e7032acf3e95b978e97b15a95bd185315f Updated Creating Custom Modules (asciidoc)
+* 539ea4ff7947d78268d81d4691e7635319c39c8a Updated Introduction (asciidoc)
+* 1c97c05475c45b719efa186306a63e4a20b4ab99 Updated Sinks (asciidoc)
+* 8d121c3f43e863737554f157f1268c06aaa1318e Updated Creating Custom Modules (asciidoc)
+* 5635bd3c9144a25a521758f09ed5e56cb40a5525 Updated Creating Custom Modules (asciidoc)
+* 7f21cccde0e02fca9efbc658927ae7e47191014c Updated Creating Custom Modules (asciidoc)
+* ba7828e608356b0e7ece8ef00fa687ca17c75ee8 Fixing links
+* f6203fc41f2c57b1f54948565e6ee472d5d0eb17 Updated Getting Started (asciidoc)
+* 175272bdefc0b102619fc348d1d322e8541d486b Updated Getting Started (asciidoc)
+* df77660a4669a8d17c86066ecaa0ceec85835ac5 Updated Creating a Source Module (asciidoc)
+* 0d5194feb3b62109bbab9bb9236d55ab58f203d6 Incorporate DSL into section of ref guide for sidebar full doc
+* 0ff3d7837049e7f6c27813aa65ecb048ea675345 Updated Creating a Source Module (asciidoc)
+* 255e58bfa8d6bb052a6662c9c28843052b6cc2ac Updated Creating a Source Module (asciidoc)
+* d20f5c9973d288514e478af973a1ef6bc792678c Updated Home (asciidoc)
+* 4bae3dcbafda5c66e2eadbfa560bcd17c4aab4da Updated About Spring XD (asciidoc)
+* aaee8af5e99b0c1ca885f190ba5431a3e43ec20d moved to correct location
+* 0f513a746a9a73bb2b8951f6bd13a6e968ec06ab Updated DSL Reference (asciidoc)
+* 671cb673907788bea1922478654846890b35f47b Created DSL Reference (asciidoc)
+* d58f6f842691577933d7d65db97229d89ee57a56 Updated Creating a Source Module (asciidoc)
+* c9632761fde826fd6aaa92d53b9d0c23529905d6 Updated Creating a Source Module (asciidoc)
+* 4c14f19296b238b3965885b2774569740726ee5a Updated Introduction (asciidoc)
+* 6baddd11303fdd8b759f7a4dce9086d51587ef89 Updated Home (asciidoc)
+* 86d11e7aaa74d6c804557bc04a0acdf8875b7128 Updated Home (asciidoc)
+* 0abb52a844678839becbc35fea7236866a40c999 update short description of SpringXD project
+* 649b593c789bfba8d78c2c6ba7ae16b0bf635fd1 update short description of SpringXD project
+* ffda23b6d132e2828016a718667c849958387c3b Strip -X POST from curl commands
+* f3a7e3cc4b84c00d90219ee00265d1889d618a8c XD222: How to delete a Stream
+* cd11f2c7b630c1d6dd700bd21c68b1f8505dda27 Updated Processors (asciidoc)
+* 48de076b516d4c041e2774cdbc8a75895d3ce800 Updated Creating a Processor Module (asciidoc)
+* f0cb3cbe1e4f28b6ed2515ec4254a23207fd721c Updated Creating a Sink Module (asciidoc)
+* a8dda6a577d900ba7217449dad98af7a8943c969 Updated Sources (asciidoc)
+* 342553a9da2d874ae31a39ad1b0c6ad1d797ea8f Updated Processors (asciidoc)
+* b58b54cfb26ce7ffe4e4c6f55b05fd552883be61 XD-174: Custom processor doc
+* 4132b0d789129861dd84e8869a2d9504985b5728 update copyright
+* 496658ac6a5220f70040c72a5bbcb554b4f51ac2 resize images
+* 6bf2ccfc2444803dbc2d91e3d09f454da21b6601 Remove level-6/h6 headers which don't work in wiki
+* 16d252696458d172dd832f84fbb608e630610597 Add credentials information to twittersearch
+* f14df48d4edf468950493e3f31abe74d436a95d2 Add detail on --httpPort config option for xd-admin script
+* c8bb683242ac5fa83ba4a5e25cdbe2fc0a94c7dc Updated Running Distributed Mode (asciidoc)
+* 8b93eb8fc6e6cf23d6c5fb1922bc6189cb8d75fb Updated Tuples (asciidoc)
+* a088d75dd0ee6a7e69efabc243e449b7bb6d1da1 Updated Analytics (asciidoc)
+* cd8dd4930201b1ed4d0ee1a3daed1f58bae35f79 Updated Analytics (asciidoc)
+* 4227fdbcdd7f9211b385819f5d02b3aa79d8a278 Updated Sinks (asciidoc)
+* dff48d56ffe3a9edf196fcd8de1fe766ed4e28f6 Updated Sources (asciidoc)
+* 75d2c0a4600a72f9f4a8e1edaf818d0fefc77688 Updated Sources (asciidoc)
+* 792a74e717679ffa850004d20a6437e5158044ce Add Parts to Guide
+* 2fe4be30d43942f42e1b243145780156bba9debf Updated Project and Community (asciidoc)
+* 6ffc89ebbcbbc5a5335a6fec15acb0eeefb21b59 Updated Project and Community (asciidoc)
+* 8d9a135f2b4faf64d73453d3498673eefed2f74b Updated Project and Community (asciidoc)
+* cef26d070b6ca70880094e2418c45fa2df902955 Fix broken Footer links on home page
+* 5996273f4215176ac6ddf9e1ed548c04534af11f Updated Project and Community (asciidoc)
+* 9e117e4ae54357a2f511ed516a7390e718adb40e Updated About Spring XD (asciidoc)
+* 7a8cef336afb6820b92e178029fc836a797f7701 Organize non-guide wiki pages
+* 333cfb5ae76a78b15bb5eb1e4cab252287dd999b Remove duplicate page
+* cd05c12c3531efeba32d77bfe3c17716baafcc48 Add Running in Distributed Mode to guide
+* a39a602fc186d502079fd9ec8dd96817073f3014 Updated _Sidebar (asciidoc)
+* fcf675bab005f2e407c495797c6cc99388e18edc Created Running Distributed Mode (asciidoc)
+* 66f71455e07d6e7183efd45302226f704dfe9d19 Updated Getting Started (asciidoc)
+* 83b46124c360f289a4947ec2a42497e930339fd8 Updated Contribute (asciidoc)
+* e97fb089e8ec71896d2fe028a2c8977b18d3b779 Updated _Footer (asciidoc)
+* cda4b0dd0ebc8de321c66bbe59f493f43d5802aa Updated _Footer (asciidoc)
+* e7dadef497a05aafdae1b810afe6609f5b1890dd Updated About Spring XD (asciidoc)
+* 00fd164a122477509f56c00590f931291fac9ae7 Updated About Spring XD (asciidoc)
+* 43a9931a30213abea2335f7bb3b5da1fc019ef66 Updated Home (asciidoc)
+* 7c2104acf6f6f5c0323d19b7e67ac70cbd0f5536 Updated Project and Community (asciidoc)
+* 3df1f482446d45fcdb72a14188f7270009729e81 Updated _Footer (asciidoc)
+* 6f0ed98dc6e1142fd75843c416633f80032f8400 Updated _Footer (asciidoc)
+* d0fbb918644ba0183b8b663e7621eb6d7c802a0c Updated _Footer (asciidoc)
+* 6a31e351260b438f6cc4d1f02385ea99e1dadd27 Updated _Footer (asciidoc)
+* 5c98a1bbe2d5e04886dfc943cadd1629231e3065 Updated _Footer (asciidoc)
+* 5770b90aa202395307f7d5fa508c7b9ee0e06464 Created _Footer (asciidoc)
+* 353461abbdbc347d33e6cdad6210dab31812f14e Updated Introduction (asciidoc)
+* 7962130ef42ed368c2e0a76a8425c69ff11aeb1c Updated Technical Documentation (asciidoc)
+* 044369e20d868cfd4baffee9514338457dd62db1 Move Technical Documentation to guide section
+* b2b2c4ba2b41d7a1d24b510ca41b5e2fffea334f Updated _Sidebar (asciidoc)
+* 7c9cbabd7efb69571c91b49296bbc6f52a6bd156 Updated _Sidebar (asciidoc)
+* e046c8ffdc4c38160482d66ca35e2523951c91ba Updated About Spring XD (asciidoc)
+* 2cf68252a35e611d0e427ca4beff21381f53afee Updated Home (asciidoc)
+* df459ae76fdbf1e1cf11db80cef9931d7b8183f4 Updated Home (asciidoc)
+* 23ae779562aeab9e1bdc77d91cabf3899d74d39d Created Technical Documentation (asciidoc)
+* 2934987494885fcd6b33f6b69c829b558a425645 Updated Project and Community (asciidoc)
+* 920543fe5601737cdaa79210d7bc20e21adb106c Updated Project and Community (asciidoc)
+* d4dcb980fa3c9748ecc77d548517af36d680ff4b Created Project and Community (asciidoc)
+* 434524354a1cd16d733b92cbf39157a096da89b5 Updated About Spring XD (markdown => asciidoc)
+* 2a650a65a053436ad8d3bad4f3dc23f6feb6beb1 Created About Spring XD (markdown)
+* 4e52347ed69121671d7922aaba826b6c10dfd321 Remove the mention of embeddedContainer option from the doc
+* b34267f6a27081a8e1f51b1efac2a1d356372604 Add Processors to Full Guide
+* 7eeecdeed9837de194146e1f04a08ef4cddc2b10 XD-211 Doc for log sink
+* 56a68d9be87275769012f8e60d7283b9952abf1a XD-208: File sink information
+* 03a2a6a86ca5873efeb79cb262c6110f2c5bc7b5 XD-192 Add single-node option to Getting-Started
+* ccc723ba7bae8a4d0229c7f982e09ea2b882184b Updated Processors (asciidoc)
+* 0809d8e4c795cbc26d6d92704ffbceba68f5d869 Updated Sinks (asciidoc)
+* 82b69e86576e76458dae29aa26619f1fa04c6f42 Reformatting xml so that it fits in pdf rendering
+* 144bfb163ff5225e0833db0e81595c9823f79924 Add Creating Custom Modules to TOC
+* 0f18e64dbea30c57a5972244e1b0ba56499c3513 Updated Creating Custom Modules (markdown => asciidoc)
+* fdc981a08b6a34b8e6ab193d1a0fcf333ab7ad1d Created Creating Custom Modules (markdown)
+* 460d6816553f8a35c454fad509589dc5f9f37938 Updated _Sidebar (asciidoc)
+* f919baf7e1d68c3b5216867e4f7044a18d86b9dc Rename Hadoop Installation doc.
+* 37942203f4d92530f95c3af48187c9a3fff32d2d Arch doc polishing
+* 42a789984ed0bacefad1c9f38c38bc14aafa409c Change SpringXD to "Spring XD"
+*   a00f641d2396629cc7231adb25e5a927c40e3e31 Merge branch 'master' of github.com:SpringSource/spring-xd.wiki
+|\  
+| * 6ffef4c0a1737111b0bf16f189455fed76e5d3b5 Note on deleting taps.
+* | b13157fcee72fcc36b4d73ce0e6888b13f4144df Pushed content down one level, added Hadoop install guide as Appendix
+|/  
+* 4c37f8690bdfccaaa64b997eae0b0f90b5b8c14a Move some stuff from arch to taps doc.
+* 30d513ea77899542e2cd6fca4a1ee62bc69cf426 Updated Home (asciidoc)
+* 700b7859119f9a8a2f5bfefc9aebfcbc9a1bc857 Updated Home (asciidoc)
+* d7d1c5600aa3ef25e08950705dcbb244c06ceeac Polishing architecture doc.
+* 17f545a0e11b662466e7e834fa92ef8a91e96e18 Fixing duplicate id problem
+* ed8533871ac839ab6a0333570a0d9e1b45c6f116 Fixing duplicate id problem
+* c51fd65f3dccf2cd48514126a321ac5994381210 misc cleanup
+* dd18a71056b69897e1c014baefa5b33c697564a8 update to use ohloh stats for man hours
+* 8a446ce476f3f1b012af7486581fd21876453492 Add Architecture section.  Add placeholder for Processor section.
+* b1249185f5bb8a8cf9f06be8013ef15632caa67e Add themes and docinfo file
+* 5fee97559c831cddd465b79cff2d8798e1c74688 Add images and a test to see how to render an image in a document
+* c099766b86f0f3c707665a79845df73072ffe204 Updated Creating a Sink Module (asciidoc)
+* cfed93ce60c5f122e2034489490bf63360df81b0 Updated Creating a Source Module (asciidoc)
+* ad318eb2c4d56f8f58e0a75c5651b2ac8b268837 Updated Creating a Source Module (asciidoc)
+* 0e667566697486e9b3e87780a9b06239adf3ba2b Updated Creating a Source Module (asciidoc)
+* ce3c453132e29990327cfe366437f4e8a24b4878 Updated Creating a Source Module (asciidoc)
+* 0157e14083f253dee98fc6257ad61b7e6066c363 Fix TCP options and copy/paste :( to Sinks part
+* 34b2f3034b68faced606497ce5d874dc1e8229f2 Minor tweaking of Analytics doc.
+* 8515f7b3dc4f55bfe6593d5b5ec922f76a3236ec Rename files from .md to .asciidoc
+* 246ccb9224d8adfaf9030e4a73c267b4fa97315b XD-126: Document options values and whether optional. Also tidy overall guide generation and section levels.
+* 2115c4c1b9f0892301d2a6638eb2378e3fbcc321 Updated Creating a Source Module (markdown => asciidoc)
+* da255ab38b636bd4a11360373e17aca0d2c07c73 Updated Getting Started (asciidoc)
+* bfb9d28a4206e2f45e3e8af04dcbbcd919d0ecb9 Updated Getting Started (asciidoc)
+* fc4b4d7b316cd2e1093655150867fb15bbbda2b4 Updated Streams (asciidoc)
+* a33525fce03633399f05dcd288a343700bcf53a8 Rename Getting Started page to remove spaces
+* 29058193f407051fa41a705f44e7587197a61f9a Move new pages to the guide section
+* 48dc2175be7c3b44d1b1aeafea5d6cb3bf7fbf93 Updated Modules (asciidoc)
+* e6e15e5d84ad348e4f7900356abb33ab01a93432 Created Creating a Sink Module (markdown)
+* a4790e1011ddbeedcd519d4869dc0f7b1263e1c6 Created Creating a Processor Module (markdown)
+* 14ad0ef235156ab8950277b86e0258c61eb02f2c Created Creating a Source Module (markdown)
+* 638164903acc15f0369712faac4bce997c06cdc7 Destroyed Creating A Processor Module (markdown)
+* fb84097824517ad8b5c48b80710ebb08cf4615fe Destroyed Creating A Sink Module (markdown)
+* edf3eae1f63eb95d63d855cd9946cd9d39f2daf7 Destroyed Creating A Source Module (markdown)
+* c911924e402c0f2f3aaceb8c421de616ac85752c Updated Creating A Source Module (markdown)
+* 47ebbda38f2c385b12e6e30a5106ff3970dc9168 Updated Modules (asciidoc)
+* 800db471bcc322ec1ec5228c2773f53dd3471a27 Created Creating A Sink Module (markdown)
+* 9502ab7fc548dd73468acee560ed0eb7a541a20d Created Creating A Processor Module (markdown)
+* d60235d6248a0d155b52d9bd43c2e0bf2eec9977 Created Creating A Source Module (markdown)
+* 5b1ec5af9f2389a1528027b58b5c58348027b7c9 Updated Modules (asciidoc)
+* 8f18731d4a858441ecc99d8de2475b7ade62d56c Destroyed Creating a Sink Module (markdown)
+* 425d3db31a4ad55287bbd496b226b6efdba88400 Created Creating a Sink Module (markdown)
+* 238825254c2e37577a634e720a3c00b0e8e8b645 Updated Sinks (asciidoc)
+* 36428a76be903f625fa7beded7fa74e24135b789 Updated Getting Started (asciidoc)
+* 4141e4ace5ec5e694edbfeb3a72149548f9cca4c Updated Getting Started (asciidoc)
+* 9ecd6115d709b8c04462a5ac63fca9c10e94a500 XD-87,XD-89 Move metric docs from Taps to Analytics
+*   e7eaa1e30f16e7ec56bcac7db12db992dc7b2491 Merge branch 'master' of github.com:SpringSource/spring-xd.wiki
+|\  
+| * cd887723f7d0164341e71b3d3bff222759d07ac4 Tidy command lines in Taps doc.
+* | c93c21178972b9df983cefd2c28e9b5ddffa5eb4 Moved Gemfire Server doc to section in Sinks
+|/  
+* c216d8b27dc6de2eaffd9eb6cdb459499021abf6 Updated Getting Started (asciidoc)
+*   47e97462b5ddeeacb58f053f7306d1e203c34de5 Merge branch 'master' of github.com:SpringSource/spring-xd.wiki
+|\  
+| * cad6adf74ab4f10d95389bcb4be7493327a05a8b Updated Getting Started (asciidoc)
+| * 1d72eb9bc7278ccf50e9fca5325c8cb9090c9916 Updated Home (asciidoc)
+| * 5d3175a33db124d24beb0ea475f117e25c5a4061 XD-149 Use toc2 style when generating Guide HTML
+| * 2251c6a68c1fc2fc0c78581a10c9871581f0c7be Fix (other) demo link in DemoGemfire doc.
+| * 8aca0e37ffdbdc138e9dbcc5c422e265e6c551c5 XD-134: Link checking script for guide.
+| * 81e2eedc5291c4b688ddb4fbe598561384bdf0b0 XD-136: Hadoop installation guide
+| * 4c83d071121441fa5d9235bc06981dd9a2cca6bd Updated Sinks (asciidoc)
+| * db08e6d1c7ed626685a6b64299d1af42c833e09b Updated Getting Started (asciidoc)
+| * e8d12e4388652b46bf2bd7c8c10d82d46cd04fc4 TCP Sink Docs
+| * d636c5328de918859b3c21c08fc510ab2a494b82 Updated Getting Started (asciidoc)
+| * 10aa3e1680d1f11fd4b98449885a7edbbdb712ea Fixed Demo link in DemoGemfire
+| * 95965640d94fba4f0158b51816fa7a3321ed448e XD-125 - Stream documentation review
+| * aaba4d4709804158b891cb2236fc1b2d02ee2a4c Updated Getting Started (asciidoc)
+| * c107a34a0e0aca1164a9daeff74fb839236b7538 Updated Getting Started (asciidoc)
+| * d8271f6243046850d8c0a264adbb29f9eeda07c8 Updated Getting Started (asciidoc)
+| * fe1f035e842170d7cfd4ccd1960817520c3dd8bf Updated Getting Started (asciidoc)
+| * 4093af4e5a3ab4c143b6aa1581d967c8078e24be Updated Sources (asciidoc)
+| * 4914a86a870838206d062c4dff772f36ee4272db Updated Sources (asciidoc)
+| * d8826ecc9991245fe74d35dd73cd1454663e24e1 Updated Sources (asciidoc)
+| * 726ce5e5e77f98687c480bec1e4b6b25fa1375ff TCP Source Examples
+| * c1a2b42e2eccb2168555d2d598f559d072eaa9ae Updated Sources (asciidoc)
+| * 3f1985fd2dcb5d4db102d4b26278291252420d67 Updated Sources (asciidoc)
+* | 21e938f7cb7415f362988927d1b0a42c9eac1920 XD-89,XD-90
+|/  
+* 054e06d0d9aa579f78da73cfba447028450af99b Fix JIRA link in Home page
+* 8d05a2a523807c2484a764680b38232d363325ee Fix link to Guide in home page.
+* d06d98e7bc58b461d907a143fe1ed8dc56faf482 Updated Sources (asciidoc)
+* 4fa22c9986f8985ad3d0e020708ca125f944cfed Updated Sources (asciidoc)
+* 3703fe0f07a58697ebb290b3fecfd93aa411f491 Updated Sources (asciidoc)
+* b95510556f93bf8a7a94c5cf9730728d9fd168ae Destroyed Sprint2 (asciidoc)
+* fb4dd4fc31610c3a20b2f5dd894de47b970c6d95 Updated DemoTail (asciidoc)
+* 0a704e65ecf61cd0753c648957b4eb5d3bed6eba Updated DemoTail (asciidoc)
+* 08af7bcf55f7d3487a5dce8fd4b61f3815dc982b Destroyed Guide (asciidoc)
+* 2fcac621f85b7f2fe2d460201d7c311f438ad7be Destroyed GuideGettingStarted (asciidoc)
+* f0c7b98de34372dc0724c6319a1a7c2453006d8e Use 'gradle spring-xd-dirt:run' to start.
+* 063f74debe65fce6d2f9da78bb0c04804bbbc9d3 Updated Taps (asciidoc)
+* 7405181f0da59b0a43f21f89f544ab1f8100e185 Updated Sources (asciidoc)
+* 311aac4eb524956c5aa2b484d1ca831a04cefeeb Updated GemfireServer (asciidoc)
+* 8c56819dbb83155328da11a5fe0d8231d6a6cd33 Updated Sources (asciidoc)
+* f183f9e47d33a345d2c6c6e10a32d16cf2e0e600 XD-80: Add basic HDFS sink guide
+* 1cf9223d6bfa67e51a591649d13eefa5e04f22af Updated Sources (asciidoc)
+* ac0711e9d850e95662755cb54ceb19bab475e9e1 Updated Modules (asciidoc)
+* 3896a03732466ea1908716639b2ef848fb8d20ce Updated Modules (asciidoc)
+* 63f561e2f7f278ce4168246af8e7383256626062 Updated Modules (asciidoc)
+* 1e6b98be55e2edbd51ebb5c5b06a1afcbcfdded4 Updated Modules (asciidoc)
+* 412058c2fcf8a02c45a1e0a7022dc2fcb187f931 Updated Modules (asciidoc)
+* 5817680693243f101e4ab999e93c86840e87d6c9 Fix typo.
+* 1cd77ab4d1cffcc6afffa3c57075e4c0b8497193 Added some links to Streams doc.
+* 499cbf3bc4a2da72dec6d3472f4e28bb23bf7641 Updated Sinks (asciidoc)
+* 7d023c2e350b68f56eca0d4473b39ef3627f5d44 Updated Sources (asciidoc)
+* 8d4d043f90f35ea5b6829626ab91faf9ff0afffc Updated Taps (asciidoc)
+* f5b5980bc52d7ac8562e788f7b59eee843713d65 Updated Taps (asciidoc)
+* 9a98003cfb476cd9f4392fa9c78fc353f4da0370 Updated Taps (asciidoc)
+* 32567631430e1dc9de9fdc969d9d16b393967a69 Updated Sources (asciidoc)
+* 35c6e0becd1b48bbc59edd6f7d3c2908999aadd1 Updated Getting Started (asciidoc)
+* 243f561531ae28267b2665db0b049e7165ce5cac Updated Sources (asciidoc)
+* 470b350d4eebd182114ef5102d5c2425ee40eacc Updated Taps (asciidoc)
+* 53ed02f6d4a7e53ff6b1affe46536d8802badf6c Updated Taps (asciidoc)
+* 9f5aeaffd851a7d43a438b8ea62b6faf4f5e1e93 Updated Taps (asciidoc)
+* c091ba9c5c5236303dc7b9bafcde8ede3163fd47 Updated Taps (asciidoc)
+* b51aef954856ced88a2093beaa5b4d1f6b71047c Remove references to StreamServer in Streams doc.
+* 321506b159f0da41adbdb2fb13fe0d1b7709c55f Switch to using "gradle run" to launch server.
+* b2834ab690153fd632ad499033f062399addc479 Updated Demo (markdown)
+* 01d3d532d400151358258adfd63b4e585e7e1c6a Updated Streams (asciidoc)
+* e9f712991fae8329911b0c9597507bf75a70bd14 Updated Streams (asciidoc)
+* ede27ada3373aa7d102d662e1fc874b7cfe91f62 removing test
+* 922efdd22de45e1f5e730269750cce74dbf2baa9 small tweaks
+* f9e90c55150a73e3f82cb5acbf08b32fa26213fb Update how to start servers based on changes to codebase
+* 90461cd93c48739544c1e161f944117735865837 Updated Modules (asciidoc)
+* 58d2492fd611cd9101d3f7a70a862b90485043f5 Mention that redis must be running in Streams doc.
+* ddc59232f6452db49ff479ec6107ecb682341352 Updated Sources (asciidoc)
+* 1385426b1c5d72014596965edb504f01ebab0210 Updated Sources (asciidoc)
+* fdcbdd1d4bced2b23e7bd9c8d2ae27cefbdbe53e Updated Sources (asciidoc)
+* cfbf13c5e88f93fd6e0ab59087e672cda2bad525 Updated Sources (asciidoc)
+* e4705f6787aa87d10d4e7651fe76cbe405948509 Updated Sources (asciidoc)
+* d1387f6edcf18e8853bad065b3d166e9e53ad216 Updated GemfireServer (asciidoc)
+* bcccf47cc0777db6bd0c9b1d1fb7d9af5ab7fc44 Updated Sources (asciidoc)
+* dd3ff3335655e016a076d3aeb2a553a6a13f4577 Updated Sinks (asciidoc)
+* 36c6926a0c3d590617466f4eeaa7b67c7369b3db Updated Sinks (asciidoc)
+* f421a6fe94a1e0a234188c675f5a1f21692acd65 Updated Sinks (asciidoc)
+* f16f53fa6430e26c8749a29303a84c5585e034f3 Created GemfireServer (asciidoc)
+* 3873d96dc7be442af2525890711ef570c196b239 Updates to Streams doc.
+* 6a35c0753f957131396b317615b357af4b0c8b9f provide names for anchor refs
+* a1d045e3bc92207c5cabe96429d6200835fe88d5 Fix typo in sidebar
+* ead161adbd9f20a4aba81c0b50225155d56b8884 Replace guide/Streams with existing Streams doc.
+* ce31b1411d00a7dbe55112077fdb1e9d32aea17a provide anchors to link to from the top of the page for each source
+* bea0a8537e8d168a7aeea0c5889877d55de2ded9 XD-78 - Documentation for "http | file" processing
+* 7adccd3a20b05b08aea49334521b8ec08798dcd0 XD-109 - Documentation for starting redis and the Spring XD servers
+* 0d16423627e8f7017087399cff1839247d787484 Clean up of doc generation, typos and wrong level sections for TOC
+* f94900b04426384098c27e3f001c85a562815327 Updated DemoTail (asciidoc)
+* 615ffb04e30e73a26ef1b6997768b0cd48ad535f Stub out shell of Taps section and fix boilerplate content in Architecture
+* 435bb502365ee1f0f708931aecb351ed5d77b4b2 Stub out shell of other sections. Remove 'Guide' prefix from  GuideTuple and GuideTuple
+* 818dc8b8d56c2b48fcb157debad12dc86dcea258 .adoc extension is not supported by github wiki pages, changing to .asciidoc
+* 28cae6173a6d839c596d70a910e69a9af7c6bdf1 testing support for .adoc rendering on github wiki
+* 3205b8ccbeed14367c97aa6184f359e5bc436679 try to see if spaces are supported in refs to wiki pages
+* e52b31e7d27f10db5098151d60e665908914dc5e rename GuideGettingStarted
+* be7eed03d0b5be4606385a15ca264b75437f7ff9 rename GuideGettingStarted
+* 482422362029edf1abe416593a7daf668e1f01f0 Rename GuideIntroduction to Introduction to make rendering on github look better, filename matches section name
+* 1aa2e931ba7ac0094a435a292043f2625aae3e74 rename back from adoc to asciidoc as it doesn't render on github wiki site. fix sidebar
+* 6d11b8fb8ae16e7e4fb7f597ad87678f47416056 rename back from adoc to asciidoc as it doesn't render on github wiki site.
+* 93442ec972dfd7f6541e70072236d2dded4903f1 Change name of doc that generates the full guide to 'FullGuide.adoc'  build.gradle and gen-docs.sh to reflect this change. Guardfile regex matches more common asciidoc extension and can decent down directories.
+* 2a18c1fc459b4c39c4487afa4dc3839a7e24ba77 Add build script.  Provide one more level of nesting in sections to make table of contents come out right.
+* e0dd513b0d689b3e03e334e30449dbf171b9b788 Move guide docs into guide directory
+* 356660a8cea46337c1e0276bd14116ddb362d9ff Move guide docs into guide directory
+* 372d63583df66d84b0cb8f1c201484a6c8b06ac9 Created GuideHttp2Gemfire (asciidoc)
+* 6479d24486b0662d698bad43510849c94385d644 Remove extraneous intro to guide
+* ccb63b270471865e6a7143c981a5a5023ea51ddf Updated DemoTail (asciidoc)
+* d9d7cc9bba10b7de8996c8cb282cf0c89da7342c Updated DemoTail (asciidoc)
+* 7cb8c093c858c0f516bf9ea94cb711158b52d242 Created DemoTail (asciidoc)
+* 6628b33439bff491c33b1e6795e4ddba8b7c6e80 Updated Streams (asciidoc)
+* a5b9bb4447509954283b34ab48fb9b5a71530e47 Updated GuideModule (asciidoc)
+* 2507742813481b524d1e5697f9436cb8e6774267 Updated GuideModule (asciidoc)
+* 394cc5b0b3b8d9ad0d402647f1acbc9ff5595ffe test
+* 42a1641729cc0cc8c165fcfe352c795393100563 test
+* 60500721fb3ef20111903fa9c220dd107fd9433d testing .ad extension
+* 7e96d7d7dd5644d8704718b287e5e654e561a6ff Updated GuideModule (asciidoc)
+* 5447261bff7548ba247913a1c1b1e2247732b450 Updated GuideModule (asciidoc)
+* 5fac5e45fddefdb5b59d1a68537954a4fa2c77df Created GuideModule (asciidoc)
+* 24647560bc052cd08019b125d942a6d11c371601 Created Streams (asciidoc)
+* 021af622e3db702096b049b3bc35d3dab7356220 Fix typos
+* 8c0b69541aaff0079fc796a5398c8fce3851297b Updated DemoGemfire (asciidoc)
+* 4dcdba89ddfc8b5b8d8d48cbe4152c24ef034f54 Updated DemoGemfire (asciidoc)
+* e156b61db317f3fdf30fa7a88ab651002d4a0822 Updated DemoGemfire (asciidoc)
+* 04e6a2f764dded8fc1e77c6728bb86a95e8dc426 Updated DemoGemfire (asciidoc)
+* d57a9f77aef6ffb856a92b391508b0ee9bc489b8 Updated DemoGemfire (asciidoc)
+* 1f7df2b74bdf445df06382bcf1024c62f958f4d2 Created DemoGemfire (asciidoc)
+* 3b99ac0a17e586c219f00dec62ba47e5a39c6c7c XD-63 Document tuple data structure on XD wiki clean up typos
+* 5c4f374fd815be1e6183349eb24175a7e8ef53a5 XD-63 Document tuple data structure on XD wiki
+* 31f2ec27922f20c48cb0162f21211f263ba4aa4b XD-70 Create general structure for AsciiDoc based wiki and Spring XD guide. fix links to wiki
+* 3ef09023f2379887bd1e102b8eed555add0b9b62 XD-70 Create general structure for AsciiDoc based wiki and Spring XD guide.
+* 2f2b044b31bd8371a41ab6273eb80f4443fc0535 Updated Demo (markdown)
+* 446cf9fb64d319c59a5a4e76d61d541c7bfb7ccd Updated Demo (markdown)
+* 2840780dd5e0751eab11b4fdec29532d889f0ad7 Updated Demo (markdown)
+* 4c7005646d460ffef540ab9e2d01e20f893cf73c Updated Demo (markdown)
+* 2306c3a790f51d38d233a362409bb765c372e4a6 Updated Demo (markdown)
+* 3d944c81798c241649c9810fd39743cd2e55f596 Updated Demo (markdown)
+* 6f96015018b4ceb5dbb8c61226ab1226699760b1 Updated Demo (markdown)
+* b297fa1c42e412c8f1edb1c9ebabf7fcf2e7030f Created Demo (markdown)
+* 7400dcde0ff1ee55f007a857f91de61f0df69fdd Updated Home (asciidoc)
+* fdd446132de026a9ae7db9bb487e6936b425b14c Updated Home (markdown => asciidoc)
+* 654e5fa4cd8986de15aca272a1e0026593ca03de Initial Commit
