@@ -219,7 +219,7 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |/jobs/executions?jobname=\{jobName\}
 |GET
 |get information about all executions of a job
-(Only 'application/json' mediatype supported)
+(Only 'application/json' accept header is supported)
 
 |/jobs/executions?jobname=\{jobName\}
 |POST
@@ -240,7 +240,7 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |/jobs/executions/\{jobExecutionId\}/steps
 |GET
 |list the steps for a job execution
-(Only 'application/json' mediatype supported)
+(Only 'application/json' accept header is supported)
 
 |/jobs/executions/\{jobExecutionId\}/steps/\{stepExecutionId\}
 |GET
@@ -263,13 +263,13 @@ Spring Batch configured jobs stored in the Spring Batch Repository
 |/jobs/instances?jobname=\{jobName\}
 |GET
 |get information about all instances of a job
-(Only 'application/json' mediatype supported)
 
 |/jobs/instances/\{instanceId\}
 |GET
 |get information about a batch job instance
-(Only 'application/json' mediatype supported)
 |===
+
+For both the GET endpoints **only** 'application/json' accept header is supported.
 
 [[module-definitions]]
 === Module Definitions
