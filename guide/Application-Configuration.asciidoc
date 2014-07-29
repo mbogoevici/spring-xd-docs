@@ -244,8 +244,8 @@ NOTE: You *do not* need to prefix these property names with a `source.twittersea
 You can override the values in the module property file in various ways.  The following sources of properties are considered in the following order.
 
 . Properties specified in the stream or job `DSL` definition
-. Java System Properties
-. OS environment variables.
+. Java System Properties (e.g. source.http.port=9454)
+. OS environment variables. (e.g. source_http_port=9454)
 . `XD_MODULE_CONFIG_LOCATION\<type>\<name>\<name>.properties` (including profile variants)
 . Default values specified in module metadata (if available).
 
