@@ -117,7 +117,7 @@ jar -uf modules-config.zip modules.yml
 
 ==== Adding custom modules
 
-There is an empty archive file named `custom-modules.zip`. You can replace this with your own ZIP archive with the same name and it will be uploaded as part of the deployment to YARN. Place custom module definitions in a 'modules' directory inside this new ZIP archive. Module definitions must follow the Spring XD module semantics.
+There is an empty archive file named `custom-modules.zip`. You can replace this with your own ZIP archive with the same name and it will be uploaded as part of the deployment to YARN. Place custom module definitions in a `modules` directory inside this new ZIP archive. Module definitions must follow the Spring XD module semantics.
 
 ==== Push and start the jobs
 
