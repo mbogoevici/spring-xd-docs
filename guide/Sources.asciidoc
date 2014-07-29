@@ -8,8 +8,8 @@ The Sources covered are
 * <<tail, Tail>>
 * <<file, File>>
 * <<mail_source, Mail>>
-* <<twittersearch, Twitter Search>>
-* <<twitterstream, Twitter Stream>>
+* <<twitter-search, Twitter Search>>
+* <<twitter-stream, Twitter Stream>>
 * <<gemfire-source, Gemfire>>
 * <<gemfire-cq,Gemfire CQ>>
 * <<syslog, Syslog>>
@@ -227,7 +227,7 @@ username:: the username to use to connect to the mail server *(String, no defaul
 Of special attention are the `markAsRead` and `delete` options, which by default will *delete* the emails once they are consumed. It is hard to come up with a sensible default option for this (please refer to the Spring Integration documentation section on mail handling for a discussion about this), so just be aware that the default for XD is to delete incoming messages.
 
 
-[[twittersearch]]
+[[twitter-search]]
 === Twitter Search
 
 The twittersearch source runs a continuous query against Twitter.
@@ -267,7 +267,7 @@ $ cat /tmp/xd/output/springone2gx
 
 NOTE: Both `twittersearch` and `twitterstream` emit JSON in the https://dev.twitter.com/docs/platform-objects/tweets[native Twitter format]. 
 
-[[twitterstream]]
+[[twitter-stream]]
 === Twitter Stream
 
 This source ingests data from Twitter's https://dev.twitter.com/docs/streaming-apis/streams/public[streaming API v1.1]. It uses the https://dev.twitter.com/docs/streaming-apis/streams/public[sample and filter] stream endpoints rather than the full "firehose" which needs special access. The endpoint used will depend on the parameters you supply in the stream definition (some are specific to the filter endpoint).
