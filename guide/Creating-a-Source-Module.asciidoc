@@ -159,8 +159,8 @@ The test will load an Application Context using our feed and test context files.
 
 You now have a way to build and test your new module independently. Time to deploy to Spring XD!
 
-[[deploy-module-source]]
-=== Deploy the module
+[[install-module-source]]
+=== Installing the module
 Spring XD looks for modules in the ${xd.home}/modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
 
       modules/processor
@@ -173,9 +173,6 @@ Simply drop _feed.xml_ into the _modules/source_ directory and add the dependenc
     jdom-1.0.jar
     rome-1.0.0.jar
     rome-fetcher-1.0.0.jar
-
-[NOTE]
-For a more sophisticated handling of module dependencies, please see https://github.com/spring-projects/spring-xd/wiki/Modules#modules-with-isolated-classpath[Modules with isolated classpath].
 
 Now fire up the server. See link:Getting-Started#getting-started[Getting Started] to learn how to start the Spring XD server. 
 
@@ -194,3 +191,10 @@ SyndEntryImpl.titleEx.value=VIDEO: Queen visits Prince Philip in hospital
 ...
 
 As you can see, the _SyndEntryImpl_ toString is fairly verbose. To make the output more concise, create a link:Creating-a-Processor-Module#creating-a-processor-module[processor] module to further transform the SyndEntry or consider converting the entry to JSON and using the link:Processors#json-field-extractor[JSON Field Extractor] to send a single attribute value to the output channel.
+
+[[install-module-source-subdir]]
+=== Installing the module in a sub-directory
+Modules can also reside in a sub-directory named after the module itself, e.g. `modules/sink/redis`.  This sub-directory in turn contains a config and lib sub-directories.  If you install a module following this convention then the module will run in an isolated classpath, a child of the parent classpath created from the contents of `xd/lib`. See https://github.com/spring-projects/spring-xd/wiki/Modules#modules-with-isolated-classpath[Modules with isolated classpath] for more information.
+
+[NOTE] To help you better package up a module for installation in a sub-directory the https://github.com/spring-projects/spring-xd-modules/blob/master/analytics-ml-pmml/build.gradle[sample build file] form the JPMML module can be used as a starting point.
+
