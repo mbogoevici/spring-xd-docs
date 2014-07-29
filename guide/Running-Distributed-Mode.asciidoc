@@ -1,4 +1,4 @@
-=== Introduction
+==== Introduction
 The Spring XD distributed runtime (DIRT) supports distribution of processing tasks across multiple nodes. See link:Getting-Started#getting-started[Getting Started] for information on running Spring XD as a single node.
 
 The XD distributed runtime architecture consists of the following distributed components:
@@ -16,7 +16,7 @@ In addition, XD  provides a Command Line Interface (CLI), XD Shell as well as a 
 
 image::images/distributed-runtime-overview.png[Spring XD Distributed Runtime, width=500]
 
-==== XD CommandLine Options
+===== XD CommandLine Options
 
 The XD distribution provides shell scripts to start its runtime components under the _xd_ directory of the XD installation:
 
@@ -46,7 +46,7 @@ Usage:
  --mgmtPort <mgmtPort> : The port for the management server
 ----
 
-===== xd-admin command line args:
+====== xd-admin command line args:
 
 * *analytics* - The data store that will be used to store the analytics data. The default is *redis*
 * *help* - Displays help for the command args.  Help information may be accessed with a -? or -h.  
@@ -55,14 +55,14 @@ Usage:
 
 Also, note that it is recommended to use fixed http port for XDAdmin(s). This makes it easy to know the admin server addresses the REST clients (shell, webUI) can point to. If a random port is chosen (with server.port or $PORT set to 0), then one needs to go through the log and find which port admin server's tomcat starts at.
 
-===== xd-container command line args:
+====== xd-container command line args:
 * *analytics* - How to persist analytics such as counters and gauges. The default is *redis* 
 * *groups* - The assigned group membership for this container as a comma delimited list
 * *hadoopDistro* - The Hadoop distribution to be used for HDFS access.  HDFS is not available if not set.
 * *help* - Displays help for the command args.  Help information may be accessed with a -? or -h.  
 * *mgmtPort* - The port for the management server.  Defaults to the container server port.
 
-=== Setting up a RDBMS
+==== Setting up a RDBMS
 
 The distributed runtime requires an RDBMS. The XD distrubution comes with an HSQLDB in memory database for testing purposes, but an alternate is expected. To start HSQLDB:
 [source,bash]
@@ -73,15 +73,15 @@ $ ./hsqldb-server
 
 To configure XD to connect to a different RDBMS, have a look at `xd/config/servers.yml` in the `spring:datasource` section for details. Note that `spring.batch.initializer.enabled` is set to true by default which will initialize the Spring Batch schema if it is not already set up. However, if those tables have already been created, they will be unaffected. 
 
-=== Setting up ZooKeeper
+==== Setting up ZooKeeper
 
 Currently XD does not ship with ZooKeeper. At the time of this writing, the compliant  version is 3.4.6 and you can download it from http://zookeeper.apache.org/releases.html[here]. Please refer to the http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html[ZooKeeper Getting Started Guide] for more information. A ZooKeeper ensemble consisting of at least three members is recommended for production installations, but a single server is all that is needed to have XD up and running.
 
-=== Setting up Redis
+==== Setting up Redis
 
 *Redis* is the default transport when running in distributed mode.
 
-==== Installing Redis
+===== Installing Redis
 
 If you already have a running instance of *Redis* it can be used for Spring XD. By default Spring XD will try to use a _Redis_ instance running on *localhost* using *port 6379*. You can change that in the `servers.yml` file residing in the `config/` directory.
 
@@ -109,14 +109,14 @@ $ ./redis-server
 
 TIP: For further information on installing _Redis_ in general, please checkout the http://redis.io/topics/quickstart[Redis Quick Start] guide. If you are using _Mac OS_, you can also install _Redis_ via http://mxcl.github.io/homebrew/[Homebrew]
 
-==== Troubleshooting
-===== Redis on Windows
+===== Troubleshooting
+====== Redis on Windows
 
 Presently, _Spring XD_ does not ship _Windows_ binaries for _Redis_ (See https://jira.springsource.org/browse/XD-151[XD-151]). However, _Microsoft_ http://blogs.msdn.com/b/interoperability/archive/2013/04/22/redis-on-windows-stable-and-reliable.aspx[is actively working] on supporting _Redis_ on _Windows_. You can download _Windows_ _Redis_ binaries from:
 
 https://github.com/MSOpenTech/redis/tree/2.6/bin/release
 
-===== Redis is not running
+====== Redis is not running
 
 If you try to run _Spring XD_ and Redis is NOT running, you will see the following exception:
 
@@ -125,7 +125,7 @@ If you try to run _Spring XD_ and Redis is NOT running, you will see the followi
 Redis does not seem to be running. Did you install and start Redis? Please see the Getting Started section of the guide for instructions.
 ----
 
-==== Starting Redis
+===== Starting Redis
 
 [source,bash]
 ----
@@ -159,14 +159,14 @@ You should see something like this:
 [35142] 01 May 14:36:28.941 * The server is now ready to accept connections on port 6379
 ----
 
-=== Using RabbitMQ
-==== Installing RabbitMQ
+==== Using RabbitMQ
+===== Installing RabbitMQ
 
 If you already have a running instance of _RabbitMQ_ it can be used for Spring XD. By default Spring XD will try to use a _Rabbit_ instance running on *localhost* using *port 5672*. The default account credentials of *guest/guest* are assumed. You can change that in the `servers.yml` file residing in the `config/` directory.
 
 If you don't have a _RabbitMQ_ installation already, head over to http://www.rabbitmq.com and follow the instructions. Packages are provided for Windows, Mac and various flavor of unix/linux. 
 
-==== Launching RabbitMQ
+===== Launching RabbitMQ
 
 Start the *RabbitMQ* broker by running the rabbitmq-server script:
 [source,bash]
@@ -186,7 +186,7 @@ You should see something similar to this:
               Starting broker... completed with 10 plugins.
 ----
 
-=== Starting Spring XD in Distributed Mode
+==== Starting Spring XD in Distributed Mode
 
 Spring XD consists of two servers
 
@@ -201,7 +201,7 @@ xd/bin>$ ./xd-admin
 xd/bin>$ ./xd-container
 ----
 
-==== Choosing a Transport
+===== Choosing a Transport
 Spring XD uses data transport for sending data from the output of one module to the input of the next module. In general, this requires remote transport between container nodes.  The Admin server also uses the data bus to launch batch jobs by sending a message to the job's launch channel. Since the same transport must be shared by the Admin and all Containers, the transport configuration is centrally configured in xd/config/servers.yml.
 The default transport is redis. Open servers.yml with a text editor and you will see the transport configuration near the top. To change the transport, you can uncomment this section and change the transport to `rabbit` or any other supported transport. Any changes to the transport configuration must be replicated to every XD node in the cluster. 
 
@@ -217,14 +217,14 @@ NOTE: XD singlenode also supports a --transport command line argument, useful fo
 If you have multiple XD instances running share a single RabbitMQ server for transport, you may encounter issues if each system contains streams of the same name.  We recommend using a different RabbitMQ virtual host for each system. Update the `spring.rabbitmq.virtual_host` property in `$XD_HOME/config/servers.yml` to point XD at the correct virtual host.
 =====================================================================
 
-==== Choosing an Analytics provider
+===== Choosing an Analytics provider
 By default, the xd-container will store Analytics data in redis. At the time of writing, this is the only supported option (when running in distributed mode). Use the --analytics option to specify another backing store for Analytics data.
 [source,bash]
 ----
 xd/bin>$ ./xd-container --analytics redis
 ----
 
-==== Other Options
+===== Other Options
 There are additional configuration options available for these scripts:
  
 To specify the location of the Spring XD install other than the default configured in the script
@@ -244,7 +244,7 @@ xd/bin>$ ./xd-admin --httpPort <httpPort>
 The XDContainer nodes by default start up with server.port 0 (which means they will scan for an available HTTP port). You can disable the HTTP endpoints for the XDContainer by setting server.port=-1. Note that in this case HTTP source support will not work in a PaaS environment because typically it would require XD to bind to a specific port. Both the XDAdmin and XDContainer processes bind to server.port $PORT (i.e. an environment variable if one is available, as is typical in a PaaS).
 
 [[using-hadoop]]
-=== Using Hadoop
+==== Using Hadoop
 
 Spring XD supports the following Hadoop distributions:
 
@@ -267,7 +267,7 @@ xd/bin>$ ./xd-container --hadoopDistro <distribution>
 
 Pass in the +--help+ option to see other configuration properties.
 
-=== XD-Shell in Distributed Mode
+==== XD-Shell in Distributed Mode
 
 If you wish to use a XD-Shell that is on a different machine than where you deployed your admin server.  
 
