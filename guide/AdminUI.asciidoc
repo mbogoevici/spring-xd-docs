@@ -7,7 +7,9 @@ Spring XD provides a browser-based GUI which currently has 2 sections allowing y
 
 Upon starting Spring XD, the Admin UI is available at:
 
-http://localhost:9393/admin-ui
+"http://<adminHost>:<adminPort>/admin-ui" (for example: http://localhost:9393/admin-ui)
+
+**Note**: Default admin server port is 9393
 
 .The Spring XD Admin UI
 image::images/spring-xd-admin-ui-about.png[The Spring XD Admin UI, width=500]
