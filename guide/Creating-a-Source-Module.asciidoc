@@ -1,6 +1,6 @@
 === Introduction
 
-As outlined in the link:Modules#modules[modules] document, XD currently supports 3 types of modules: source, sink, and processor. This document walks through creation of a custom source module.
+As outlined in the link:Modules#modules[modules] document, XD currently supports 4 types of modules: source, sink, and processor for stream processing and job for batch processing.  This document walks through creation of a custom source module.
 
 The first module in a link:Streams#streams[stream] is always a source. Source modules are built with Spring Integration and are typically very fine-grained. A module of type _source_ is responsible for placing a message on a channel named _output_. This message can then be consumed by the other processor and sink modules in the stream. A source module is typically fed data by an inbound channel adapter, configured with a poller.
 

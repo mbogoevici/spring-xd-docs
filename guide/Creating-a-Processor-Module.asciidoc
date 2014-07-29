@@ -1,6 +1,6 @@
 === Introduction
 
-As outlined in the link:Modules#modules[modules] document, XD currently supports 3 types of modules: source, sink, and processor. This document walks through creation of a custom processor module.
+As outlined in the link:Modules#modules[modules] document, XD currently supports 4 types of modules: source, sink, and processor for stream processing and job for batch processing.  This document walks through creation of a custom processor module.
 
 One or more processors can be included in a link:Streams#streams[stream] definition to modify the data as it passes between the initial source and the destination sink. The link:Architecture#architecture[architecture] section covers the basics of processors modules provided out of the box are covered in the link:Processors#processors[processors] section.
 

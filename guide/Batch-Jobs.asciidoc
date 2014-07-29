@@ -73,45 +73,6 @@ This removes the job from the _Spring XD_ container(s) preventing the launching 
 
 Destroying a *Job Definition* will not only un-deploy any still deployed _Job Definitions_ but will also remove the _Job Definition_ itself.
 
-=== Developing your Job
-
-The Job definitions provided as part of the Spring XD distribution as well as those included in the https://github.com/spring-projects/spring-xd-samples[Spring XD Samples] repository can be used a basis for building your own custom Jobs.  The development of a Job largely follows the development of a Spring Batch job, for which there are several references.
-
-* http://projects.spring.io/spring-batch/[Spring Batch home page]
-* http://www.manning.com/templier/[Spring Batch In Action - Manning]
-* http://www.apress.com/9781430234524[Pro Spring Batch - APress]
-
-For help developing Job steps specific to Hadoop, e.g. HDFS, Pig, Hive, the https://github.com/spring-projects/spring-xd-samples[Spring XD Samples] is useful as well as the following resources
-
-* http://projects.spring.io/spring-hadoop/[Spring for Apache Hadoop home page]
-* http://shop.oreilly.com/product/0636920024767.do[Spring Data - O'Reilly - Chapter 13]
-
-Once your Jobs have been developed and unit tested, they are integrated into Spring XD by copying the resulting .jar file and Job XML definition to $XD_HOME/lib and $XD_HOME/modules/jobs.
-
-=== Creating a Job
-
-To describe the creation of a job we will use the job definition that is part of the https://github.com/spring-projects/spring-xd-samples/tree/master/batch-simple[batch-simple example].
-
-To create a job in the XD shell, execute the job create command composed of:
-
-* name - the "name" that will be associated with the Job
-* definition - the name of the context file that describes the tasklet.
-
-So using our example above where we have a myjob.xml job definition file in the $XD_HOME/modules/jobs directory, this will look like:
-----
-xd:> job create --name helloSpringXD --definition "myjob" --deploy
-
-----
-**Note:** by default, deploy is set to _false_. "--deploy" or "--deploy true" will deploy the job along with job creation.
-
-In the logging output of the XDContainer you should see the following:
-----
-14:17:46,793  INFO http-bio-8080-exec-5 job.JobPlugin:87 - Configuring module with the following properties: {numberFormat=, dateFormat=, makeUnique=true, xd.job.name=helloSpringXD}
-14:17:46,837  INFO http-bio-8080-exec-5 module.SimpleModule:140 - initialized module: SimpleModule [name=myjob, type=job, group=helloSpringXD, index=0]
-14:17:46,840  INFO http-bio-8080-exec-5 module.SimpleModule:154 - started module: SimpleModule [name=job, type=job, group=helloSpringXD, index=0]
-14:17:46,840  INFO http-bio-8080-exec-5 module.ModuleDeployer:152 - launched job module: helloSpringXD:myjob:0
-----
-
 [[job_options]]
 ==== Creating Jobs - Additional Options
 

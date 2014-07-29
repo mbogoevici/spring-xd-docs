@@ -1,1 +1,91 @@
-TBD
+=== Introduction
+As outlined in the link:Modules#modules[modules] document, XD currently supports 4 types of modules: source, sink, and processor for stream processing and job for batch procesing.  This document walks through creation of a custom job module.
+
+=== Developing your Job
+
+The Job definitions provided as part of the Spring XD distribution as well as those included in the https://github.com/spring-projects/spring-xd-samples[Spring XD Samples] repository can be used a basis for building your own custom Jobs.  The development of a Job largely follows the development of a Spring Batch job, for which there are several references.
+
+* http://projects.spring.io/spring-batch/[Spring Batch home page]
+* http://www.manning.com/templier/[Spring Batch In Action - Manning]
+* http://www.apress.com/9781430234524[Pro Spring Batch - APress]
+
+For help developing Job steps specific to Hadoop, e.g. HDFS, Pig, Hive, the https://github.com/spring-projects/spring-xd-samples[Spring XD Samples] is useful as well as the following resources
+
+* http://projects.spring.io/spring-hadoop/[Spring for Apache Hadoop home page]
+* http://shop.oreilly.com/product/0636920024767.do[Spring Data - O'Reilly - Chapter 13]
+
+Once your Jobs have been developed and unit tested, they are integrated into Spring XD by copying the resulting .jar file and Job XML definition to $XD_HOME/lib and $XD_HOME/modules/jobs.
+
+=== Creating a Simple Job
+
+To describe the creation of a job we will use the job definition that is part of the https://github.com/spring-projects/spring-xd-samples/tree/master/batch-simple[batch-simple example].
+
+To create a job in the XD shell, execute the job create command composed of:
+
+* name - the "name" that will be associated with the Job
+* definition - the name of the context file that describes the tasklet.
+
+The job defintion file _myjob.xml_ is directory $XD_HOME/modules/jobs/myjob/myjob.xml and looks like:
+[source,xml]
+----
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			   http://www.springframework.org/schema/beans/spring-beans.xsd
+			   http://www.springframework.org/schema/batch
+			   http://www.springframework.org/schema/batch/spring-batch.xsd">
+
+	<batch:job id="job">
+		<batch:step id="helloSpringXDStep">
+			<batch:tasklet ref="helloSpringXDTasklet" />
+		</batch:step>
+	</batch:job>
+
+	<bean id="helloSpringXDTasklet"
+		class="org.springframework.springxd.samples.batch.HelloSpringXDTasklet" />
+
+</beans>
+----
+A _Tasklet_ is the extension point to handle processing in a batch processing step.  In this example there is only one step and it simply prints out the job parameters.
+
+----
+xd:> job create --name helloSpringXD --definition "myjob" --deploy
+xd:> job launch helloSpringXD --params {"myStringParameter":"foobar","-secondParam(long)":"123456"}
+
+----
+**Note:** by default, deploy is set to _false_. "--deploy" or "--deploy true" will deploy the job along with job creation.
+
+In the logging output of the XDContainer you should see the following:
+----
+Hello Spring XD!
+The following 3 Job Parameter(s) is/are present:
+Parameter name: secondParam; isIdentifying: false; type: LONG; value: 123456
+Parameter name: myStringParameter; isIdentifying: true; type: STRING; value: foobar
+Parameter name: random; isIdentifying: true; type: STRING; value: 0.06893349621991496
+----
+
+=== Creating a read-write processing Job
+
+Often a batch job will involve reading batches of data from a source, tranforming or processing that data and then wrting the batch of data to a destination.  This flow is encapsulated in the _ChunkOrientedTasklet_ that is represented in the job configuration using the `<chunk/>` element that has `reader`, `writer` and optional `processor` elements.  Other attributes define the size of the chunck and various policies for handling failure cases.  
+
+You will usually be able to reuse existing http://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/item/ItemReader.html[reader] and http://docs.spring.io/spring-batch/trunk/apidocs/org/springframework/batch/item/ItemWriter.html[writer] implementations.  The https://github.com/spring-projects/spring-xd/blob/master/modules/job/filejdbc/config/filejdbc.xml[filejdbc job] provided in the distribution shows an example of this using the standard File reader and JDBC writer.
+
+The processor is based on the ItemProcessor interface.  It has a generic signature that lets you operate on a record at at time. The batch of records is handled as a collection in reader and writer implementations.  In the `filejdbc` job, the reader converts input records into a link:Tuples[Spring XD Tuple].  The tuple serves as a generic data structure but you can also use or write another converter to convert the input record to your own custom POJO object.
+
+=== Orchestrating Hadoop Jobs
+
+There are several tasklet implementation that will run various types of Hadoop Jobs
+
+* http://docs.spring.io/spring-hadoop/docs/2.0.2.RELEASE/reference/html/hadoop.html#hadoop:tasklet[MapReduce Job]
+* http://docs.spring.io/spring-hadoop/docs/2.0.2.RELEASE/reference/html/fs.html#scripting-tasklet[HDFS Scripts]
+* http://docs.spring.io/spring-hadoop/docs/2.0.2.RELEASE/reference/html/hive.html#hive:tasklet[Hive Scripts]
+* http://docs.spring.io/spring-hadoop/docs/2.0.2.RELEASE/reference/html/pig.html#pig:tasklet[Pig Scripts]
+
+The https://github.com/spring-projects/spring-hadoop-samples[Spring Hadoop Samples] project provides examples of how to create batch jobs that orchestate various hadoop jobs at each step.  You can also mix and match steps related to work that is executed on the Hadoop cluster and work that is executed on the Spring XD cluster.
+
+
+
+
+

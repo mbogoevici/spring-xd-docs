@@ -1,6 +1,6 @@
 === Introduction
 
-As outlined in the link:Modules#modules[modules] document, XD currently supports 3 types of modules: source, sink, and processor. This document walks through creation of a custom sink module.
+As outlined in the link:Modules#modules[modules] document, XD currently supports 4 types of modules: source, sink, and processor for stream processing and job for batch procesing.  This document walks through creation of a custom sink module.
 
 The last module in a link:Streams#streams[stream] is always a sink. Sink modules are built with Spring Integration and are typically very fine-grained.  A module of type _sink_ listens on a channel named _input_ and is responsible for outputting received messages to an external resource to terminate the stream.
 
