@@ -47,7 +47,7 @@ The settings for the MQTT plugin that Spring XD are concerned about are as follo
 2. default_user  If allow_anonymous is set to true then this will set the user for anonymous clients.  Default: guest
 3. default_password If allow_anonymous is set to true then this will set the password for anonymous clients.  Default: guest 
 4. exchange - The name of the exchange that will route all MQTT messages to a the  queues. Default: amq.topic
-6. tcp_listeners - host and port that rabbit will monitor for MQTT messages. Default: 1883
+5. tcp_listeners - host and port that rabbit will monitor for MQTT messages. Default: 1883
 
 Out of the box the Spring XD MQTT source and sink currently works with the MQTT plugin defaults without any configuration.     
    
