@@ -431,14 +431,14 @@ To try this out, create a stream to ingest twitter feeds containing the word _sp
 
 Now create a tap for a field value counter:
 
-   xd:> stream create --name fromUserCount --definition "tap:stream:springtweets > field-value-counter --fieldName=fromUser" --deploy
+   xd:> stream create --name fromUserCount --definition "tap:stream:springtweets > field-value-counter --fieldName=user.screen_name" --deploy
 
 The _twittersearch_ source produces JSON strings which contain the user id of the tweeter in the _fromUser_ field. The _field_value_counter_ sink parses the tweet and updates a field value counter named _fromUserCount_ in Redis. To view the counts:
 
 [source,bash]
 ----
-$ redis-cli
-redis 127.0.0.1:6379>zrange fieldvaluecounters.fromUserCount 0 -1 withscores 
+From xd-shell,
+  xd:> field-value-counter display fromUserCount
 ----
 
 [[aggregate-counter]]
