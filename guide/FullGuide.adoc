@@ -4,7 +4,7 @@
 // as h1 title, which asciidoctor does not, hence the '== Title' here (which render as sect1 in docbook)
 
 = Spring XD Guide
-Mark Fisher; Mark Pollack; David Turanski; Gunnar Hillert; Eric Bottard; Gary Russell; Ilayaperumal Gopinathan; Jennifer Hickey; Michael Minella;  Luke Taylor; Thomas Risberg; Winston Koh; Andy Clement; Jon Brisbin; Dave Syer; Glenn Renfro
+Mark Fisher; Mark Pollack; David Turanski; Gunnar Hillert; Eric Bottard; Patrick Peralta, Gary Russell; Ilayaperumal Gopinathan; Jennifer Hickey; Michael Minella; Luke Taylor; Thomas Risberg; Glenn Renfro; Janne Valkealahti; Thomas Darimont; Dave Syer; Jon Brisbin; Andy Clement; 
 :appversion: 1.0 (wiki)
 ifndef::host-github[:ext-relative: {outfilesuffix}]
 {appversion}
