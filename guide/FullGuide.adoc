@@ -160,7 +160,7 @@ include::Building-Spring-XD.asciidoc[]
 [appendix]
 [[Module Usage]]
 == Using MQTT Modules
-include::Using-MQTT-on-XD.asciidoc[]
+include::Using-MQTT-On-XD.asciidoc[]
 
 // The following is generated at release-time
 [appendix]
