@@ -11,7 +11,7 @@ The Sources covered are
 * <<twitter-search, Twitter Search>>
 * <<twitter-stream, Twitter Stream>>
 * <<gemfire-source, Gemfire>>
-* <<gemfire-cq,Gemfire CQ>>
+* <<gemfire-continuous-query,Gemfire CQ>>
 * <<syslog, Syslog>>
 * <<tcp, TCP>> 
 * <<tcp-client, TCP Client>> 
