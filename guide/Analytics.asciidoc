@@ -454,24 +454,12 @@ you'd simply create a tap which pipes the input to `aggregate-counter`:
 
    xd:> stream create --name tweettap --definition "tap:stream:springtweets > aggregate-counter --name=tweetcount" --deploy
 
-The Redis back-end stores the aggregate counts in buckets prefixed with `aggregatecounters.${name}`. The rest of the string contains the date information. So for our `tweetcount` counter you might see something like the following keys appearing in Redis:
+From the XD shell:
+   
+   xd:> aggregate-counter display tweettap
 
-    redis 127.0.0.1:6379> keys aggregatecounters.tweetcount*
-    1) "aggregatecounters.tweetcount"
-    2) "aggregatecounters.tweetcount.years"
-    3) "aggregatecounters.tweetcount.2013"
-    4) "aggregatecounters.tweetcount.201307"
-    5) "aggregatecounters.tweetcount.20130719"
-    6) "aggregatecounters.tweetcount.2013071914"
-
-The general format is
-    
-    . One total value
-    . One years hash with a field per year eg. { 2010: value, 2011: value }
-    . One hash per year with a field per month { 01: value, ...}
-    . One hash per month with a field per day
-    . One hash per day with a field per hour
-    . One hash per hour with a field per minute
+Note: you can also use some criteria to filter out aggregate counter display values. Please refer to Shell documentation for aggregate counter for more details.
+ 
 
 //^sink.aggregate-counter
 // DO NOT MODIFY THE LINES BELOW UNTIL THE CLOSING '//$sink.aggregate-counter' TAG
