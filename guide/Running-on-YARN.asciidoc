@@ -49,37 +49,12 @@ You need to specify the host where the YARN Resource Manager is running as well 
 
 [source,yaml]
 ----
-# Hadoop configuration
+# Hadoop properties
 spring:
-    hadoop:
-        fsUri: hdfs://localhost:8020
-        resourceManagerHost: localhost
+  hadoop:
+    fsUri: hdfs://localhost:8020
+    resourceManagerHost: localhost
 ---- 
-===== Transport options
-You should choose either redis (default) or rabbit as the transport and include the host and port for the choice you made.
-
-[source,yaml]
-----
-# Transport used
-transport: rabbit
-
----
-# Redis properties
-#spring:
-#  redis:
-#   port: 6379
-#   host: localhost
-
----
-# RabbitMQ properties
-spring:
-  rabbitmq:
-   host: localhost
-   port: 5672
-   username: guest
-   password: guest
-   virtual_host: /
-----
 
 ===== Zookeeper settings
 You should specify the Zookeeper connection settings 
@@ -92,6 +67,25 @@ You should specify the Zookeeper connection settings
 zk:
   client:
      connect: localhost:2181
+----
+
+===== Transport options
+You should choose either redis (default) or rabbit as the transport and include the host and port in the properties for the choice you made.
+
+[source,yaml]
+----
+# Transport used
+transport: redis
+----
+
+[source,yaml]
+----
+---
+# Redis properties
+spring:
+  redis:
+   port: 6379
+   host: localhost
 ----
 
 ===== JDBC datasource properties
@@ -107,7 +101,18 @@ spring:
     username: yourUsername
     password: yourPassword
     driverClassName: com.mysql.jdbc.Driver
+----
 
+==== Customizing module configurations
+
+The configurations for all modules can be customized by modifying the file 
+modules.yml in the `config` directory and then adding it to the modules-config.zip 
+archive in the same directory.
+
+You can run the following command from the `config` directory to achieve this:
+
+----
+jar -uf modules-config.zip modules.yml
 ----
 
 ==== Push and start the jobs
