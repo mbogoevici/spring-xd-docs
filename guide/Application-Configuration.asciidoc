@@ -25,6 +25,7 @@ It is common to keep your server configuration separate form the installation di
 export XD_CONFIG_LOCATION=file:/xd/config/
 export XD_CONFIG_NAME=region1-servers
 ----
+**Note**: the file path separator ("/") at the end of XD_CONFIG_LOCATION is **necessary**.
 
 ==== Profile support
 
@@ -227,7 +228,7 @@ Local transport uses a http://docs.spring.io/spring-integration/docs/latest-ga/a
 
 === Module Configuration
 
-Modules are configured by placing property files in a nested directory structure based on their type and name.  The root of the nested directory structure is by default `XD_HOME/config/modules`.  This location can be customized by setting the OS environment variable `XD_MODULE_CONFIG_LOCATION`, similar to how the environment variable `XD_CONFIG_LOCATION` is used for configuring the server.
+Modules are configured by placing property files in a nested directory structure based on their type and name.  The root of the nested directory structure is by default `XD_HOME/config/modules`.  This location can be customized by setting the OS environment variable `XD_MODULE_CONFIG_LOCATION`, similar to how the environment variable `XD_CONFIG_LOCATION` is used for configuring the server. If `XD_MODULE_CONFIG_LOCATION` is set explicitly, then it is **necessary** to add the file path separator ("/") at the end of the path.
 
 NOTE: The `XD_MODULE_CONFIG_LOCATION` can reference any http://docs.spring.io/spring/docs/4.0.3.RELEASE/spring-framework-reference/htmlsingle/#resources[Spring Resource] implementation, most commonly denoted using the prefixes `classpath:`, `file:` and `http:`.
 
