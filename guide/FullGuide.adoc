@@ -147,8 +147,8 @@ include::Monitoring-and-Management.asciidoc[]
 include::REST-API.asciidoc[]
 
 = Appendices
-[[installing-hadoop]]
 [appendix]
+[[installing-hadoop]]
 == Installing Hadoop
 include::Hadoop-Installation.asciidoc[]
 
