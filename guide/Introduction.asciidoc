@@ -1,4 +1,4 @@
-<<Sources#foobar,Foo>>
+<<foobar,Foo>>
 
 === Overview
 
