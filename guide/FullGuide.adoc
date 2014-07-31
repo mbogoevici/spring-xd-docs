@@ -158,7 +158,7 @@ include::Hadoop-Installation.asciidoc[]
 include::Building-Spring-XD.asciidoc[]
 
 [appendix]
-[[Module Usage]]
+[[using-mqtt-modules]]
 == Using MQTT Modules
 include::Using-MQTT-On-XD.asciidoc[]
 
