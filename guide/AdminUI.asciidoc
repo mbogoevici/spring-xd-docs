@@ -30,6 +30,7 @@ The _Jobs_ section of the admin UI currently has four tabs specific for *Batch J
 * Deployments
 * Executions
 
+[[admin-ui-modules]]
 ==== Modules
 
 _Modules_ encapsulate a unit of work into a reusable component. Within the XD runtime environment Modules allow users to create definitions for _Streams_ as well as _Batch Jobs_. Consequently, the _Modules_ tab within the _Jobs_ section allows users to create _Batch Job_ definitions. In order to learn more about _Modules_, please see the chapter on link:Modules#modules[Modules].
