@@ -14,6 +14,7 @@ Upon starting Spring XD, the Admin UI is available at:
 .The Spring XD Admin UI
 image::images/spring-xd-admin-ui-about.png[The Spring XD Admin UI, width=500]
 
+[[admin-ui-streams]]
 === Streams
 
 The _Streams_ section of the admin UI provides the _Definitions_ tab that provides a listing of Stream definitions. There you have the option to *deploy* or *undeploy* those streams. Additionally you can remove the definition by clicking on *destroy*.
