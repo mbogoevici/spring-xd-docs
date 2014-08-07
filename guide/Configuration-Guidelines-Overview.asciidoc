@@ -1,3 +1,5 @@
+== Overview
+
 When running a distributed Spring XD runtime, there are a number of considerations related to performance and reliability. In most cases, these involve settings that have tradeoffs, but in this section we provide some background so you know what the options are and how to configure them.
 
 In the link:Deployment#introduction[Deployment] section that follows, we provide detailed information about various properties that can be passed along with the `stream deploy` command. That section also describes a scenario that is common for minimizing network hops, where direct binding can occur between modules rather than having each pipe within a stream correspond to a send and receive over the Message Bus. For more detail see the link:Deployment#direct-binding[Direct Binding] subsection.

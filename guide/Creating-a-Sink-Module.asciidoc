@@ -1,3 +1,8 @@
+[[creating-a-sink-module]]
+ifndef::env-github[]
+== Creating a Sink Module
+endif::[]
+
 === Introduction
 
 As outlined in the link:Modules#modules[modules] document, XD currently supports 4 types of modules: source, sink, and processor for stream processing and job for batch procesing.  This document walks through creation of a custom sink module.

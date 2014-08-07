@@ -1,3 +1,8 @@
+[[batch]]
+ifndef::env-github[]
+== Batch Jobs
+endif::[]
+
 === Introduction
 
 One of the features that XD offers is the ability to launch and monitor batch jobs based on http://www.springsource.org/spring-batch[Spring Batch].  The Spring Batch project was started in 2007 as a collaboration between SpringSource and Accenture to provide a comprehensive framework to support the development of robust batch applications.  Batch jobs have their own set of best practices and domain concepts which have been incorporated into Spring Batch building upon Accenture's consulting business.  Since then Spring Batch has been used in thousands of enterprise applications and is the basis for the recent JSR standardization of batch processing, https://jcp.org/en/jsr/detail?id=352[JSR-352].

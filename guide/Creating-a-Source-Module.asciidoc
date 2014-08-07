@@ -1,3 +1,8 @@
+[[creating-a-source-module]]
+ifndef::env-github[]
+== Creating a Source Module
+endif::[]
+
 === Introduction
 
 As outlined in the link:Modules#modules[modules] document, XD currently supports 4 types of modules: source, sink, and processor for stream processing and job for batch processing.  This document walks through creation of a custom source module.

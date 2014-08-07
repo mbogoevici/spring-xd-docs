@@ -1,3 +1,8 @@
+[[architecture]]
+ifndef::env-github[]
+== Architecture
+endif::[]
+
 === Introduction
 
 Spring XD is a unified, distributed, and extensible service for data ingestion, real time analytics, batch processing, and data export.  The foundations of XD’s architecture are based on the over 100+ man years of work that have gone into the Spring Batch, Integration and Data projects. Building upon these projects, Spring XD provides servers and a configuration DSL that you can immediately use to start processing data.  You do not need to build an application yourself from a collection of jars to start using Spring XD.

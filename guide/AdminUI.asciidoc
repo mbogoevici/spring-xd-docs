@@ -1,3 +1,8 @@
+[[adminui]]
+ifndef::env-github[]
+== Admin UI 
+endif::[]
+
 === Introduction
 
 Spring XD provides a browser-based GUI which currently has 2 sections allowing you to

@@ -1,3 +1,8 @@
+[[type-conversion]]
+ifndef::env-github[]
+== Type Conversion
+endif::[]
+
 === Introduction
 
 Spring XD allows you to declaratively configure type conversion in stream definitions using the _inputType_ and _outputType_ module options. Note that general type conversion may also be accomplished easily within a transformer or a custom module. Currently, Spring XD natively supports the following type conversions commonly used in streams: 

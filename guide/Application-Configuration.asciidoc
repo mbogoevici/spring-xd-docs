@@ -1,3 +1,8 @@
+[[application-configuration]]
+ifndef::env-github[]
+== Application Configuration
+endif::[]
+
 === Introduction
 
 There are two main parts of Spring XD that can be configured, servers and modules.  

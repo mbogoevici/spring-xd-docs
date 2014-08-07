@@ -1,3 +1,8 @@
+[[running-distributed-mode]]
+ifndef::env-github[]
+=== Running in Distributed Mode
+endif::[]
+
 ==== Introduction
 The Spring XD distributed runtime (DIRT) supports distribution of processing tasks across multiple nodes. See link:Getting-Started#getting-started[Getting Started] for information on running Spring XD as a single node.
 

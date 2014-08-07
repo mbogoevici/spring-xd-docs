@@ -1,3 +1,8 @@
+[[running-on-YARN]]
+ifndef::env-github[]
+=== Running on YARN
+endif::[]
+
 ==== Introduction
 The Spring XD distributed runtime (DIRT) supports distribution of processing tasks across multiple nodes. See link:Running-Distributed-Mode[Running Distributed Mode] for information on running Spring XD in distributed mode. One option is to run these nodes on a Hadoop YARN cluster rather than on VMs or physical servers managed by you.
 

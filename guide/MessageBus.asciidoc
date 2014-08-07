@@ -1,3 +1,8 @@
+[[messagebus]]
+ifndef::env-github[]
+== Message Bus Configuration
+endif::[]
+
 === Introduction
 
 This section contains additional information about configuring the Message Bus, including High Availability, SSL, and Error handling.

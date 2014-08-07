@@ -1,3 +1,8 @@
+[[modules]]
+ifndef::env-github[]
+== Modules
+endif::[]
+
 === Introduction
 
 Spring XD supports data ingestion by allowing users to define link:Streams#streams[streams]. Streams are composed of _modules_ which encapsulate a unit of work into a reusable component.

@@ -1,7 +1,6 @@
 // Main entry point for docbook generation.
 // This should mirror the _Sidebar file, used for
-// viewing online on github. Note that GH adds filename
-// as h1 title, which asciidoctor does not, hence the '== Title' here (which render as sect1 in docbook)
+// viewing online on github. 
 
 = Spring XD Guide
 Mark Fisher; Mark Pollack; David Turanski; Gunnar Hillert; Eric Bottard; Patrick Peralta, Gary Russell; Ilayaperumal Gopinathan; Jennifer Hickey; Michael Minella; Luke Taylor; Thomas Risberg; Glenn Renfro; Janne Valkealahti; Thomas Darimont; Dave Syer; Jon Brisbin; Andy Clement; 
@@ -11,155 +10,55 @@ ifndef::host-github[:ext-relative: {outfilesuffix}]
 :doctype: book
 
 = Reference Guide
-[[introduction]]
-== Introduction
 include::Introduction.asciidoc[]
-
-[[getting-started]]
-== Getting Started
 include::Getting-Started.asciidoc[]
-
-[[running-distributed-mode]]
-=== Running in Distributed Mode
 include::Running-Distributed-Mode.asciidoc[]
-
-[[running-on-YARN]]
-=== Running on YARN
 include::Running-on-YARN.asciidoc[]
-
-[[application-configuration]]
-== Application Configuration
 include::Application-Configuration.asciidoc[]
-
-[[dsl-guide]]
-== DSL Guide
 include::DSL-Reference.asciidoc[]
-
-[[interactive-shell]]
-== Interactive Shell 
 include::Shell.asciidoc[Interactive Shell][]
-
-[[adminui]]
-== Admin UI 
 include::AdminUI.asciidoc[]
-
-[[architecture]]
-== Architecture
 include::Architecture.asciidoc[]
-
-[[distributed runtime]]
-== Distributed Runtime
 include::XD-Distributed-Runtime.asciidoc[]
-
-[[batch]]
-== Batch Jobs
 include::Batch-Jobs.asciidoc[]
-
-[[streams]]
-== Streams
 include::Streams.asciidoc[]
-
-[[modules]]
-== Modules
 include::Modules.asciidoc[]
-
-[[sources]]
-== Sources
 include::Sources.asciidoc[]
-
-[[processors]]
-== Processors
 include::Processors.asciidoc[]
-
-[[sinks]]
-== Sinks
 include::Sinks.asciidoc[]
-
-[[taps]]
-== Taps
 include::Taps.asciidoc[]
-
-[[analytics]]
-== Analytics
 include::Analytics.asciidoc[]
-
-[[tuples]]
-== Tuples
 include::Tuples.asciidoc[]
-
-[[type-conversion]]
-== Type Conversion
 include::Type-conversion.asciidoc[]
 
 [[developing-modules-and-extensions]]
 = Developing Modules and Extensions
-
-[[creating-a-source-module]]
-== Creating a Source Module
 include::Creating-a-Source-Module.asciidoc[]
-
-[[creating-a-processor-module]]
-== Creating a Processor Module
 include::Creating-a-Processor-Module.asciidoc[]
-
-[[creating-a-sink-module]]
-== Creating a Sink Module
 include::Creating-a-Sink-Module.asciidoc[]
-
-[[creating-a-job-module]]
-== Creating a Job Module
 include::Creating-a-Job-Module.asciidoc[]
-
-[[module-options-metadata]]
-== Providing Module Options Metadata
 include::ModuleOptionsMetadata.asciidoc[]
-
-[[extending-xd]]
-== Extending Spring XD 
 include::Extending-XD.asciidoc[Extending Spring XD][]
-
-[[samples]]
-== Samples 
 include::Samples.asciidoc[]
 
 [[configuration-guidelines]]
 = Configuration Guidelines
-
-== Overview
 include::Configuration-Guidelines-Overview.asciidoc[]
-
-[[deployment]]
-== Deployment
 include::Deployment.asciidoc[]
-
-[[messagebus]]
-== Message Bus Configuration
 include::MessageBus.asciidoc[]
 
 = Administration
-
-[[monitoring-management]]
-== Monitoring and Management
 include::Monitoring-and-Management.asciidoc[]
-
-[[REST-API]]
-== REST API
 include::REST-API.asciidoc[]
 
 = Appendices
 [appendix]
-[[installing-hadoop]]
-== Installing Hadoop
 include::Hadoop-Installation.asciidoc[]
 
 [appendix]
-[[building-spring-xd]]
-== Building Spring XD 
 include::Building-Spring-XD.asciidoc[]
 
 [appendix]
-[[using-mqtt-modules]]
-== Using MQTT Modules
 include::Using-MQTT-On-XD.asciidoc[]
 
 // The following is generated at release-time

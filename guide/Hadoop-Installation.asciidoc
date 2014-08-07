@@ -1,3 +1,8 @@
+[[installing-hadoop]]
+ifndef::env-github[]
+== Installing Hadoop
+endif::[]
+
 === Installing Hadoop
 
 If you don't have a local _Hadoop_ cluster available already, you can do a local http://hadoop.apache.org/docs/r2.2.0/hadoop-project-dist/hadoop-common/SingleCluster.html[single node installation (v2.2.0)] and use that to try out _Hadoop_ with _Spring XD_. 
