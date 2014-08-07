@@ -99,7 +99,7 @@ Remember that you can always find out about available options for a job by using
 
 === Deployment manifest support for job
 
-When deploying batch job you can provide a link:XD-Distributed-Runtime#deployment-manifest[deployment manifest].  Deployment manifest properties for jobs are the same as for streams, you can declare
+When deploying batch job you can provide a link:Deployment#deployment-manifest[deployment manifest]. Deployment manifest properties for jobs are the same as for streams, you can declare
 
 * The number of job modules to deploy
 * The criteria expression to use for matching the job to available containers

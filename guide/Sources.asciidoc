@@ -53,6 +53,7 @@ To send binary data, set the `Content-Type` header to `application/octet-string`
 
     $ curl --data-binary @foo.zip -H'Content-Type: application-octet-string' http://localhost:9000
 
+[[http-with-options]]
 ==== HTTP with options
 
 //^source.http

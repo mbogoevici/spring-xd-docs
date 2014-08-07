@@ -119,6 +119,7 @@ Don't see what you're looking for? Create a custom module: link:Creating-a-Sourc
 
 Want to add some analytics to your stream? Check out the link:Taps#taps[Taps] and link:Analytics#analytics[Analytics] sections.
 
+[[osx-homebrew-installation]]
 === OSX Homebrew installation
 
 If you are on a Mac and using http://brew.sh/[homebrew], all you need to do to install _Spring XD_ is:
@@ -138,6 +139,7 @@ $ xd-singlenode
 
 Brew install also allows you to run _Spring XD_ in distributed mode on you OSx. See link:Running-Distributed-Mode#running-distributed-mode[Running Distributed Mode] for details on setting up a distributed runtime. 
 
+[[redhatcentos-installation]]
 === RedHat/CentOS Installation
 
 If you are using RHEL or CentOS you can install _Spring XD_ using our yum repository. 

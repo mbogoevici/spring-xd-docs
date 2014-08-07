@@ -1,4 +1,4 @@
-[[distributed runtime]]
+[[xd-distributed-runtime]]
 ifndef::env-github[]
 == Distributed Runtime
 endif::[]

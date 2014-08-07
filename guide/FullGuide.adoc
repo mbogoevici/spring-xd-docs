@@ -63,8 +63,6 @@ include::Using-MQTT-On-XD.asciidoc[]
 
 // The following is generated at release-time
 [appendix]
-[[shell-command-reference]]
-== XD Shell Command Reference
 include::ShellReference.asciidoc[]
 
 

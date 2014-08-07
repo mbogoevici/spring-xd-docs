@@ -78,6 +78,7 @@ $ ./hsqldb-server
 
 To configure XD to connect to a different RDBMS, have a look at `xd/config/servers.yml` in the `spring:datasource` section for details. Note that `spring.batch.initializer.enabled` is set to true by default which will initialize the Spring Batch schema if it is not already set up. However, if those tables have already been created, they will be unaffected. 
 
+[[setting-up-zookeeper]]
 ==== Setting up ZooKeeper
 
 Currently XD does not ship with ZooKeeper. At the time of this writing, the compliant  version is 3.4.6 and you can download it from http://zookeeper.apache.org/releases.html[here]. Please refer to the http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html[ZooKeeper Getting Started Guide] for more information. A ZooKeeper ensemble consisting of at least three members is recommended for production installations, but a single server is all that is needed to have XD up and running.

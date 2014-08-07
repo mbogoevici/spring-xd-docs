@@ -195,7 +195,7 @@ SyndEntryImpl.link=http://www.bbc.co.uk/news/uk-22850006#sa-ns_mchannel=rss&ns_s
 SyndEntryImpl.titleEx.value=VIDEO: Queen visits Prince Philip in hospital
 ...
 
-As you can see, the _SyndEntryImpl_ toString is fairly verbose. To make the output more concise, create a link:Creating-a-Processor-Module#creating-a-processor-module[processor] module to further transform the SyndEntry or consider converting the entry to JSON and using the link:Processors#json-field-extractor[JSON Field Extractor] to send a single attribute value to the output channel.
+As you can see, the _SyndEntryImpl_ toString is fairly verbose. To make the output more concise, create a link:Creating-a-Processor-Module#creating-a-processor-module[processor] module to further transform the SyndEntry or consider converting the entry to JSON and send a single attribute value to the output channel.
 
 [[install-module-source-subdir]]
 === Installing the module in a sub-directory

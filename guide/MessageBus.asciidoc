@@ -7,6 +7,7 @@ endif::[]
 
 This section contains additional information about configuring the Message Bus, including High Availability, SSL, and Error handling.
 
+[[rabbit-message-bus-high-availability-ha-configuration]]
 === Rabbit Message Bus High Availability (HA) Configuration
 
 The +RabbitMessageBus+ allows for HA configuration using normal https://www.rabbitmq.com/ha.html[RabbitMQ HA Configuration]. 
@@ -19,7 +20,7 @@ To configure the entire bus for HA, create a policy:
 
 +rabbitmqctl set_policy ha-xdbus "^xdbus\." \'{"ha-mode":"all"}'+
 
-
+[[error-handling-message-delivery-failures]]
 === Error Handling (Message Delivery Failures)
 
 ==== RabbitMQ Message Bus

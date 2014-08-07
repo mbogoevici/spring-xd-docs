@@ -311,13 +311,13 @@ Information about source module 'file':
 === How module options are resolved
 As we've seen so far, a module is a re-usable piece of Spring Integration (or Spring Batch) software that can be dynamically configured thru the use of *module options*.
 
-A module option is any value that the module author has deemed worthy of configuration at deployment time. Preferably, the module author will have provided link:ModuleOptionsMetadata#introduction[metadata] to describe the available options. This section explains how default values are computed for each module option.
+A module option is any value that the module author has deemed worthy of configuration at deployment time. Preferably, the module author will have provided link:ModuleOptionsMetadata#module-options-metadata[metadata] to describe the available options. This section explains how default values are computed for each module option.
 
 In a nutshell, actual values are drawn from the following 3 sources, from most precedent to least precedent:
 
 1. actual values in the stream definition (_e.g._ `--foo=bar`)
 2. platform-wide defaults (appearing _e.g._ in .yml and .properties files, see below)
-3. defaults the module author chose (see link:ModuleOptionsMetadata#introduction[metadata])
+3. defaults the module author chose (see link:ModuleOptionsMetadata#module-options-metadata[metadata])
 
 Going into more detail, the mid layer above (platform-wide defaults) will resolve like so, assuming option `<optionname>` of module `<modulename>` (which is of type `<moduletype>`):
 

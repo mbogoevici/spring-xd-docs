@@ -124,6 +124,7 @@ spring:
 
 To override these settings set an OS environment variable such as `spring_redis_port` to the value you require.
 
+[[rabbitmq-configuration]]
 ==== RabbitMQ
 [[rabbitConfig]]
 If you want to use RabbitMQ as a data transport use the following configuration setting

@@ -16,7 +16,7 @@ This section covers topics related to deployment, including:
 
 When you deploy a link:Streams[Stream] or link:Jobs[Job], the Spring XD Runtime performs the following steps:
 
- * parse the stream or job definition (link:DSL-Reference#dsl-reference[DSL Guide]) to resolve each Module reference along with its options 
+ * parse the stream or job definition (link:DSL-Reference#dsl-guide[DSL Guide]) to resolve each Module reference along with its options 
  * set option values assigned to each component link:Modules[Module]
  * parse and store the deployment request including the <<deployment-manifest,Deployment Manifest>>
  * allocate each Module to an available Container instance in accordance with the Deployment Manifest
@@ -38,6 +38,7 @@ Generally, more complex deployment strategies are needed to tune and operate XD.
 
 To address such deployment concerns, Spring XD provides a _Deployment Manifest_ which is submitted with the deployment request, in the form of in-line deployment properties (or potentially a reference to a separate document containing deployment properties). 
 
+[[deployment-properties]]
 ==== Deployment Properties
 
 When you execute the `stream deploy` shell command, you can optionally provide a `properties` parameter which is a comma delimited list of key=value pairs. Examples for the key include *module.[modulename].count* and *module.[modulename].criteria* (for a full list of properties, see below). The value for the count is a positive integer, and the value for criteria is a valid SpEL expression. The Spring XD runtime matches an  available container for each module according to the deployment manifest. 

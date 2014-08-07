@@ -33,7 +33,7 @@ The Sinks covered are
 
 * <<mqtt-sink, MQTT>>
 
-* <<dynamic-router, Dynamic Router>>
+* <<router_sink, Dynamic Router>>
 
 See the section link:Creating-a-Sink-Module#creating-a-sink-module[Creating a Sink Module] for information on how to create sink modules using other Spring Integration Adapters.
 
@@ -913,7 +913,7 @@ username:: the username to use when connecting to the broker *(String, default: 
 
 NOTE: The defaults are set up to connect to the RabbitMQ MQTT adapter on localhost.
 
-[[dynamic-router]]
+[[router_sink]]
 === Dynamic Router
 
 The Dynamic Router support allows for routing Spring XD messages to *named channels* based on the evaluation of SpEL expressions or Groovy Scripts.

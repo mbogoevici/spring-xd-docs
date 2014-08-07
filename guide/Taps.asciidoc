@@ -41,7 +41,7 @@ Create a tap after the filter is applied using
 tap:stream:mystream.filter > ....
 ----
 
-
+[[tap-example-using-a-label]]
 ==== Example - using a label ====
 
 You may also use labels to create an alias for a module and reference the label in the tap

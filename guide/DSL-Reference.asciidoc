@@ -78,7 +78,7 @@ Labels are especially useful for disambiguating when multiple modules of the sam
 
   mystream = http | uppercaser: transform --expression=payload.toUpperCase() | exclaimer: transform --expression=payload+'!' | file
 
-Refer to link:Taps#example---using-a-label[this section] of the Taps chapter to see how labels facilitate the creation of taps in these cases where a stream contains ambiguous modules.
+Refer to link:Taps#tap-example-using-a-label[this section] of the Taps chapter to see how labels facilitate the creation of taps in these cases where a stream contains ambiguous modules.
 
 [[dsl-quotes-escaping]]
 === Single quotes, Double quotes, Escaping
