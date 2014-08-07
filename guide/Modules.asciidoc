@@ -1,4 +1,4 @@
-[[modules]]
+[[modulesTest]]
 ifndef::env-github[]
 == Modules
 endif::[]
