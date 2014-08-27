@@ -252,7 +252,7 @@ The `object-to-json` processor can be used to convert any java Objec to a JSON S
 In the following example, notice how the collection of three elements is transformed to JSON (in particular, the three Strings are surrounded by quotes):
 
 ----
-xd:>stream create json --deploy --definition "http | aggregator --count | abject-to-json | log"
+xd:>stream create json --deploy --definition "http | aggregator --count | object-to-json | log"
 
 xd:>http post --data hello
 xd:>http post --data world
