@@ -216,7 +216,7 @@ Deployed stream 'test1'
 Verify the deployment:
 
 ----
-xd:>runtime modules
+xd:>cluster modules
   Module                       Container Id                          Options                                         Deployment Properties
   ---------------------------  ------------------------------------  ----------------------------------------------  ---------------------------------------------------------
   test1.processor.transform.1  bc624816-f8a8-4f35-83f6-a125ed147b7c  {valid=true, expression=payload.toUpperCase()}  {count=3, sequence=1}
@@ -231,7 +231,7 @@ We can see that three instances of the _transform_ processor have been deployed,
 ----
 xd:>stream undeploy test1
 Un-deployed stream 'test1'
-xd:>runtime modules
+xd:>cluster modules
   Module  Container Id  Properties
   ------  ------------  ----------
 
@@ -243,7 +243,7 @@ xd:>stream list
   -----------  ---------------------------------------------------------  ----------
   test1        http | transform --expression=payload.toUpperCase() | log  incomplete
 
-xd:>runtime modules
+xd:>cluster modules
   Module                       Container Id                          Options                                         Deployment Properties
   ---------------------------  ------------------------------------  ----------------------------------------------  ----------------------------------------------------------
   test1.processor.transform.1  018b7c8d-6fa9-4759-8471-76899766f892  {valid=true, expression=payload.toUpperCase()}  {count=1, sequence=1}
@@ -301,7 +301,7 @@ xd:>stream create direct --definition "time | log"
 Created new stream 'direct'
 xd:>stream deploy direct --properties module.*.count=0
 Deployed stream 'direct'
-xd:>runtime modules
+xd:>cluster modules
   Module                Container Id                          Options                                        Deployment Properties
   --------------------  ------------------------------------  ---------------------------------------------  ---------------------------------------------------------
   direct.sink.log.0     a2b89274-2d40-46e4-afc5-4988bea28a16  {name=direct, expression=payload, level=INFO}  {count=0, sequence=0}
@@ -319,7 +319,7 @@ xd:>stream undeploy direct
 Un-deployed stream 'direct'
 xd:>stream deploy direct --properties "module.*.count=0, module.*.criteria=groups.contains('group1')"
 Deployed stream 'direct'
-xd:>runtime modules
+xd:>cluster modules
   Module                Container Id                          Options                                        Deployment Properties
   --------------------  ------------------------------------  ---------------------------------------------  ---------------------------------------------------------------------------------------------
   direct.sink.log.0     a2b89274-2d40-46e4-afc5-4988bea28a16  {name=direct, expression=payload, level=INFO}  {count=0, sequence=0, criteria=groups.contains('group1')}
@@ -333,7 +333,7 @@ xd:>stream undeploy direct
 Un-deployed stream 'direct'
 xd:>stream deploy direct --properties "module.*.count=0, module.*.producer.directBindingAllowed=false"
 Deployed stream 'direct'
-xd:>runtime modules
+xd:>cluster modules
   Module                Container Id                          Options                                        Deployment Properties
   --------------------  ------------------------------------  ---------------------------------------------  ----------------------------------------------------------
   direct.sink.log.0     a2b89274-2d40-46e4-afc5-4988bea28a16  {name=direct, expression=payload, level=INFO}  {producer.directBindingAllowed=false, count=0, sequence=0}
