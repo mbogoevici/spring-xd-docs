@@ -46,10 +46,10 @@ NOTE: There is also a `mgmtPort` command line argument which assigns a separate 
 |<<module-definitions,/modules>>                      
 
 |deployed modules
-|<<runtime-modules,/runtime/modules>>              
+|<<deployed-modules,/runtime/modules>>              
 
 |containers               
-|<<runtime-containers,/runtime/containers>>
+|<<containers,/runtime/containers>>
 
 |counters
 |<<counters,/metrics/counters>>
@@ -305,28 +305,28 @@ For both the GET endpoints **only** 'application/json' accept header is supporte
 |display the module bean definition file (NOTE: currently only XML response supported)
 |===
 
-[[runtime-modules]]
-=== Runtime Modules
+[[deployed-modules]]
+=== Deployed Modules
 
-.Table Runtime Modules
+.Table Deployed Modules
 [cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
 
-|/runtime/modules
+|/cluster/modules
 |GET
 |display runtime module option values and deployment information for deployed modules, optional parameters are `moduleId` (<stream>.<type>.<moduleName>,`containerId`,`jobname` 
 |===
 
-[[runtime-containers]]
-=== Runtime Containers
+[[cluster-containers]]
+=== Containers
 
-.Table Runtime Containers
+.Table Containers
 [cols="3*", options="header"]
 |===
 |Resource URL | Request Method | Description
 
-|/runtime/containers
+|/cluster/containers
 |GET
 |display all available containers along with runtime and user-defined container attributes
 |===
