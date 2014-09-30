@@ -264,10 +264,7 @@ server:
 NOTE: If HTTPS is enabled, it will completely replace HTTP as the protocol over which the REST endpoints and the Admin UI interact. Plain HTTP requests
 will fail - therefore, make sure that you configure your Shell accordingly.
 
-[[enabling-authentication]]
-ifndef::env-github[]
 ===== Enabling authentication
-endif::[]
 
 By default, the REST endpoints (administration, management and health), as well as the Admin UI do not require authenticated access. By turning on authentication on the admin server:
 
