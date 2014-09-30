@@ -135,6 +135,10 @@ Spring XD provides a strategy interface https://github.com/SpringSource/spring-x
 
 To register a module simply drop your module files (XML configuration, options metadata, and any dependent jars that are not already on the Spring XD classpath) into the xd/modules directory.
 
+==== Custom Module Registry
+
+In cases where you may prefer to use a custom location for ModuleRegistry and you can copy your custom modules there. In that case, you would set the externalized property `xd.customModule.home` in servers.yml.
+
 ==== Modules with isolated classpath
 
 In addition to the simple format described above, where you would have a `foo` source module implemented as a `modules/source/foo.xml` file, there is also support for modules that have specific library dependencies.
