@@ -35,6 +35,8 @@ The Sinks covered are
 
 * <<router_sink, Dynamic Router>>
 
+* <<null-sink, Null Sink>>
+
 See the section link:Creating-a-Sink-Module#creating-a-sink-module[Creating a Sink Module] for information on how to create sink modules using other Spring Integration Adapters.
 
 [[log]]
@@ -1025,3 +1027,19 @@ script:: reference to a script used to transform messages *(String, no default)*
 //$sink.router
 
 TIP: If the `script` option is set, then the `expression` option will be ignored. As with other modules, the groovy script is checked for updates every 60 seconds. The script can be loaded from the classpath or from the file system _e.g._ `--script='org/springframework/springxd/samples/batch/router.groovy'` or `--script='file:/my/path/router.groovy'`
+
+[[null-sink]]
+=== Null Sink
+
+Null sink can be useful when the main stream isn't focused on stream destination but the tap streams are used for analytics etc.,
+It is also useful to iteratively add in steps to a stream without worrying about having to land data anywhere.
+
+For example, 
+
+----
+xd:>stream create nullStream --definition "http | null" --deploy
+Created and deployed new stream 'nullStream'
+xd:>stream create tap1 --definition "tap:stream:nullStream > counter" --deploy
+Created and deployed new stream 'tap1'
+----
+In the above, the null sink can be useful as we can create as many number of tap streams off the main stream while we set the main stream sink as null.
