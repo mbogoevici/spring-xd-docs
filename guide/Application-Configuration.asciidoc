@@ -297,7 +297,7 @@ security:
 
 <4> The username for authentication (must be used by REST clients and in the Admin UI). Will default to `user` if not explicitly set.
 
-<5> The password for authentication (must be used by REST clients and in the Admin UI). If not explicitly set, it will be auto-generated, as described in the http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-security[Spring Boot] documentation.
+<5> The password for authentication (must be used by REST clients and in the Admin UI). If not explicitly set, it will be auto-generated, as described in the http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/htmlsingle/#boot-features-security[Spring Boot] documentation.
 
 NOTE: When authentication is set up, it is strongly recommended to enable HTTPS as well, especially in production environments.
 
