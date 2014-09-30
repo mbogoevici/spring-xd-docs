@@ -225,6 +225,82 @@ By default JMX MBeans are exported.  You can disable JMX by setting `spring.jmx.
 
 The section on http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready-monitoring[Monitoring and management over HTTP] provides details on how to configure these endpoint.
 
+==== Admin Server Security
+
+By default, the `xd-admin` server is unsecured and runs on an unencrypted HTTP connection. You can secure your administration REST endpoints, as well as the Admin UI by enabling HTTPS and requiring clients to authenticate.
+
+===== Enabling HTTPS
+
+By default, the administration, management, and health endpoints, as well as the Admin UI use HTTP as a transport. You can switch to HTTPS easily, by adding a certificate to your configuration.
+
+[source,yaml]
+----
+spring:
+  profiles: admin                                    # <1>
+server:
+  ssl:
+    key-alias: yourKeyAlias                          # <2>
+    key-store: path/to/keystore                      # <3>
+    key-store-password: yourKeyStorePassword         # <4>
+    key-password: yourKeyPassword                    # <5>
+    trust-store: path/to/trust-store                 # <6>
+    trust-store-password: yourTrustStorePassword     # <7>
+----
+
+<1> The settings are applicable only to the admin server (regardless whether it's started in single-node mode or as a separate instance).
+
+<2> The alias (or name) under which the key is stored in the keystore.
+
+<3> The path to the keystore file. Classpath resources may also be specified, by using the classpath prefix: `classpath:path/to/keystore`
+
+<4> The password of the keystore.
+
+<5> The password of the key.
+
+<6> The path to the truststore file. Classpath resources may also be specified, by using the classpath prefix: `classpath:path/to/trust-store`
+
+<7> The password of the trust store.
+
+NOTE: If HTTPS is enabled, it will completely replace HTTP as the protocol over which the REST endpoints and the Admin UI interact. Plain HTTP requests
+will fail (so, for instance, make sure that you configure your Shell accordingly)
+
+[[enabling-authentication]]
+ifndef::env-github[]
+===== Enabling authentication
+endif::[]
+
+By default, the REST endpoints (administration, management and health), as well as the Admin UI do not require authenticated access. By turning on authentication on the admin server:
+
+* the REST endpoints will require Basic authentication for access;
+* the Admin UI will be accessible after signing in through a web form.
+
+You can turn on authentication by adding the following to the configuration:
+
+[source,yaml]
+----
+spring:
+  profiles: admin                                                     # <1>
+security:
+  basic:
+    enabled: true # false to disable security settings (default)      # <2>
+    realm: SpringXD                                                   # <3>
+  user: # valid only if security.basic.enabled=true
+    name: yourAdminUsername                                           # <4>
+    password: yourAdminPassword                                       # <5>
+----
+
+<1> The settings are applicable only to the admin server (regardless whether it's started in single-node mode or as a separate instance).
+
+<2> Must be set to `true` for security to be enabled.
+
+<3> (Optional) The realm for Basic authentication. Will default to `SpringXD` if not explicitly set.
+
+<4> The username for authentication (must be used by REST clients and in the Admin UI)
+
+<5> The password for authentication (must be used by REST clients and in the Admin UI)
+
+NOTE: When authentication is set up, it is strongly recommended to enable HTTPS as well, especially in production environments.
+
 ==== Local transport
 
 Local transport uses a http://docs.spring.io/spring-integration/docs/latest-ga/api/org/springframework/integration/channel/QueueChannel.html[QueueChannel] to pass data between modules.  There are a few properties you can configure on the QueueChannel

@@ -8,9 +8,11 @@ Below is a reference list of all Spring XD specific commands you can use in the 
 ==== admin config server
 Configure the XD admin server to use.
 
-    admin config server [[--uri] <uri>]
+    admin config server [[--uri] <uri>] [--username <username>] [--password <password>]
 
 *uri*:: the location of the XD Admin REST endpoint. *(default: `http://localhost:9393/`)*
+*username*:: the username for the XD admin server, if authentication is enabled *(default: none)*
+*password*:: the password for the XD admin server, if authentication is enabled *(default: none)*
 
 ==== admin config info
 Show the XD admin server being used.
