@@ -7,7 +7,7 @@ endif::[]
 
 There are two main parts of Spring XD that can be configured, servers and modules.  
 
-The servers (`xd-singlenode`, `xd-admin`, `xd-container`) are http://projects.spring.io/spring-boot/[Spring Boot] applications and are configured as described in the http://docs.spring.io/spring-boot/docs/1.0.1.RELEASE/reference/htmlsingle/[Spring Boot Reference documentation].  In the most simple case this means editing values in the YAML based configuration file `servers.yml`.  The values in this configuration file will overwrite the values in the default https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/resources/application.yml[application.yml] file that is embedded in the XD jar.
+The servers (`xd-singlenode`, `xd-admin`, `xd-container`) are http://projects.spring.io/spring-boot/[Spring Boot] applications and are configured as described in the http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/htmlsingle/[Spring Boot Reference documentation].  In the most simple case this means editing values in the YAML based configuration file `servers.yml`.  The values in this configuration file will overwrite the values in the default https://github.com/spring-projects/spring-xd/blob/master/spring-xd-dirt/src/main/resources/application.yml[application.yml] file that is embedded in the XD jar.
 
 NOTE: The use of YAML is an alternative to using property files. YAML is a superset of JSON, and as such is a very convenient format for specifying hierarchical configuration data.
 
@@ -41,7 +41,7 @@ To activate a profile, set the OS environment variable `SPRING_PROFILES_ACTIVE` 
 . `XD_CONFIG_LOCATION/servers-prod.yml`
 . `XD_CONFIG_LOCATION/servers.yml`
 
-You may also put multiple profile specific configuration in a single `servers.yml` file by using the key `spring.profiles` in different sections of the configuration file.  See http://docs.spring.io/spring-boot/docs/1.0.1.RELEASE/reference/htmlsingle/#boot-features-external-config-multi-profile-yaml[Multi-profile YAML documents] for more information.
+You may also put multiple profile specific configuration in a single `servers.yml` file by using the key `spring.profiles` in different sections of the configuration file.  See http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/htmlsingle/#boot-features-external-config-multi-profile-yaml[Multi-profile YAML documents] for more information.
 
 ==== Database Configuration
 
@@ -209,9 +209,9 @@ server:
 
 ==== Management Port
 
-The XD servers provide general http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready-endpoints[health] and JMX exported http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready-jolokia[management] endpoints via Jolokia.  
+The XD servers provide general http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/htmlsingle/#production-ready-endpoints[health] and JMX exported http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/htmlsingle/#production-ready-jolokia[management] endpoints via Jolokia.
 
-By default the management and health endpoints are available on port 9393.  To change the value of the port use the following configuration setting.
+By default the management and health endpoints are available on port 9393.  To change the value of the port use the following configuration setting to `servers.yml`.
 
 [source,yaml]
 ----
@@ -223,15 +223,15 @@ You can also disable http management endpoints by setting the port value to -1.
 
 By default JMX MBeans are exported.  You can disable JMX by setting `spring.jmx.enabled=false`.
 
-The section on http://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#production-ready-monitoring[Monitoring and management over HTTP] provides details on how to configure these endpoint.
+The section on http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/htmlsingle/#production-ready-monitoring[Monitoring and management over HTTP] provides details on how to configure these endpoint.
 
 ==== Admin Server Security
 
-By default, the `xd-admin` server is unsecured and runs on an unencrypted HTTP connection. You can secure your administration REST endpoints, as well as the Admin UI by enabling HTTPS and requiring clients to authenticate.
+By default, the Spring XD admin server is unsecured and runs on an unencrypted HTTP connection. You can secure your administration REST endpoints, as well as the Admin UI by enabling HTTPS and requiring clients to authenticate.
 
 ===== Enabling HTTPS
 
-By default, the administration, management, and health endpoints, as well as the Admin UI use HTTP as a transport. You can switch to HTTPS easily, by adding a certificate to your configuration.
+By default, the administration, management, and health endpoints, as well as the Admin UI use HTTP as a transport. You can switch to HTTPS easily, by adding a certificate to your configuration in `servers.yml`
 
 [source,yaml]
 ----
@@ -262,7 +262,7 @@ server:
 <7> The password of the trust store.
 
 NOTE: If HTTPS is enabled, it will completely replace HTTP as the protocol over which the REST endpoints and the Admin UI interact. Plain HTTP requests
-will fail (so, for instance, make sure that you configure your Shell accordingly)
+will fail - therefore, make sure that you configure your Shell accordingly.
 
 [[enabling-authentication]]
 ifndef::env-github[]
@@ -274,7 +274,7 @@ By default, the REST endpoints (administration, management and health), as well 
 * the REST endpoints will require Basic authentication for access;
 * the Admin UI will be accessible after signing in through a web form.
 
-You can turn on authentication by adding the following to the configuration:
+You can turn on authentication by adding the following to the configuration in `servers.yml`:
 
 [source,yaml]
 ----
@@ -282,9 +282,9 @@ spring:
   profiles: admin                                                     # <1>
 security:
   basic:
-    enabled: true # false to disable security settings (default)      # <2>
+    enabled: true                                                     # <2>
     realm: SpringXD                                                   # <3>
-  user: # valid only if security.basic.enabled=true
+  user:
     name: yourAdminUsername                                           # <4>
     password: yourAdminPassword                                       # <5>
 ----
@@ -295,9 +295,9 @@ security:
 
 <3> (Optional) The realm for Basic authentication. Will default to `SpringXD` if not explicitly set.
 
-<4> The username for authentication (must be used by REST clients and in the Admin UI)
+<4> The username for authentication (must be used by REST clients and in the Admin UI). Will default to `user` if not explicitly set.
 
-<5> The password for authentication (must be used by REST clients and in the Admin UI)
+<5> The password for authentication (must be used by REST clients and in the Admin UI). If not explicitly set, it will be auto-generated, as described in the http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#boot-features-security[Spring Boot] documentation.
 
 NOTE: When authentication is set up, it is strongly recommended to enable HTTPS as well, especially in production environments.
 

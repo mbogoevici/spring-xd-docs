@@ -3,7 +3,7 @@ ifndef::env-github[]
 == Monitoring and Management
 endif::[]
 
-Spring XD uses Spring Boot's monitoring and management support over http://docs.spring.io/spring-boot/docs/1.0.1.RELEASE/reference/htmlsingle/#production-ready-monitoring[HTTP] and http://docs.spring.io/spring-boot/docs/1.0.1.RELEASE/reference/htmlsingle/#production-ready-jmx[JMX] along with Spring Integration's http://docs.spring.io/spring-integration/docs/4.0.0.M4/reference/htmlsingle/#jmx-mbean-exporter[MBean Exporters]
+Spring XD uses Spring Boot's monitoring and management support over http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/htmlsingle/#production-ready-monitoring[HTTP] and http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/htmlsingle/#production-ready-jmx[JMX] along with Spring Integration's http://docs.spring.io/spring-integration/docs/4.0.0.M4/reference/htmlsingle/#jmx-mbean-exporter[MBean Exporters]
 
 === Monitoring XD Admin, Container and Single-node servers
 
@@ -21,7 +21,7 @@ All the availble MBeans can be accessed over `HTTP` using `Jolokia`
 
 By **default** `management.port` is set to use admin/container server port and all the exposed endpoints can be accessed from the root context of admin and container servers.
 
-When starting admin, container or singlenode server, the command-line option `--mgmtPort` can be specified to use an explicit port for management server. With the given valid management port, the management endpoints can be accessed from that port. Please refer Spring Boot document http://docs.spring.io/spring-boot/docs/1.0.1.RELEASE/reference/htmlsingle/#production-ready-endpoints[here] for more details on the endpoints.
+When starting admin, container or singlenode server, the command-line option `--mgmtPort` can be specified to use an explicit port for management server. With the given valid management port, the management endpoints can be accessed from that port. Please refer Spring Boot document http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/htmlsingle/#production-ready-endpoints[here] for more details on the endpoints.
 
 
 For instance, once XD admin is started on localhost and the management port set to use the admin port (9393)

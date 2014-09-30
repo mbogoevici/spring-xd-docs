@@ -3,7 +3,7 @@
 // viewing online on github. 
 
 = Spring XD Guide
-Mark Fisher; Mark Pollack; David Turanski; Gunnar Hillert; Eric Bottard; Patrick Peralta, Gary Russell; Ilayaperumal Gopinathan; Jennifer Hickey; Michael Minella; Luke Taylor; Thomas Risberg; Glenn Renfro; Janne Valkealahti; Thomas Darimont; Dave Syer; Jon Brisbin; Andy Clement; 
+Mark Fisher; Mark Pollack; David Turanski; Gunnar Hillert; Eric Bottard; Patrick Peralta, Gary Russell; Ilayaperumal Gopinathan; Jennifer Hickey; Michael Minella; Luke Taylor; Thomas Risberg; Glenn Renfro; Janne Valkealahti; Thomas Darimont; Dave Syer; Jon Brisbin; Andy Clement; Marius Bogoevici;
 :appversion: 1.0 (wiki)
 ifndef::host-github[:ext-relative: {outfilesuffix}]
 {appversion}
