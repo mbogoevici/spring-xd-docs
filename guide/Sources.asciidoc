@@ -929,6 +929,8 @@ $ cat mylog.txt | netcat localhost 1234
 [[kafka]]
 === Kafka
 This source module ingests data from Kafka topic configuration.
+//^source.kafka
+//$source.kafka
 
 Configure a stream:
 ----
