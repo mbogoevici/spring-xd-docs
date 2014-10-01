@@ -19,6 +19,15 @@ Upon starting Spring XD, the Admin UI is available at:
 .The Spring XD Admin UI
 image::images/spring-xd-admin-ui-about.png[The Spring XD Admin UI, width=500]
 
+
+[[admin-ui-containers]]
+=== Containers
+The _Containers_ section of the admin UI shows the containers that are in the XD cluster.  For each container the group properties and deployed modules are shown.  More information on the container (hostname, pid, ip address) and for the module (module options and deployment properties) is available by clicking on the respective links.  You can also shutdown a container (in distributed mode) by clicking on the shutdown button.  You will be asked for confirmation if you select to shutdown.
+
+.List of Containers
+image::images/spring-xd-admin-ui-containers.png[List of Containers, width=500]
+
+
 [[admin-ui-streams]]
 === Streams
 
