@@ -410,6 +410,12 @@ $$Returns the value of the given Hadoop property$$.
 
 *$$key$$*:: $$property name$$. *(required)*
 
+==== $$hadoop config info$$
+$$Returns basic info about the Hadoop configuration$$.
+
+    hadoop config info
+
+
 ==== $$hadoop config load$$
 $$Loads the Hadoop configuration from the given resource$$.
 
@@ -429,12 +435,6 @@ $$Sets the Hadoop namenode$$.
     hadoop config fs [--namenode] <namenode>
 
 *$$namenode$$*:: $$namenode URL - can be file:///|hdfs://<namenode>:<port>|webhdfs://<namenode>:<port>$$. *(required)*
-
-==== $$hadoop config info$$
-$$Returns basic info about the Hadoop configuration$$.
-
-    hadoop config info
-
 
 
 === Hadoop FileSystem Commands
