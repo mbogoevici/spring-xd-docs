@@ -26,7 +26,6 @@ The Sources covered are
 * <<time, Time>>
 * <<mqtt, MQTT>>
 * <<stdout, Stdout Capture>>
-* <<kafka, Kafka>>
 
 Future releases will provide support for other currently available Spring Integration Adapters.  For information on how to adapt an existing Spring Integration Adapter for use in Spring XD see the section link:Creating-a-Source-Module#creating-a-source-module[Creating a Source Module].
 
