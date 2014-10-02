@@ -229,6 +229,7 @@ The section on http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/ht
 
 By default, the Spring XD admin server is unsecured and runs on an unencrypted HTTP connection. You can secure your administration REST endpoints, as well as the Admin UI by enabling HTTPS and requiring clients to authenticate.
 
+[[enabling-https]]
 ===== Enabling HTTPS
 
 By default, the administration, management, and health endpoints, as well as the Admin UI use HTTP as a transport. You can switch to HTTPS easily, by adding a certificate to your configuration in `servers.yml`
@@ -264,6 +265,7 @@ server:
 NOTE: If HTTPS is enabled, it will completely replace HTTP as the protocol over which the REST endpoints and the Admin UI interact. Plain HTTP requests
 will fail - therefore, make sure that you configure your Shell accordingly.
 
+[[enabling-authentication]]
 ===== Enabling authentication
 
 By default, the REST endpoints (administration, management and health), as well as the Admin UI do not require authenticated access. By turning on authentication on the admin server:
