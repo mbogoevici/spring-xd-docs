@@ -10,7 +10,7 @@ Spring XD is a unified, distributed, and extensible service for data ingestion, 
 
 * High throughput distributed data ingestion from a variety of input sources into big data store such as HDFS or Splunk
 * Real-time analytics at ingestion time, e.g. gathering metrics and counting values.
-* Workflow management via batch jobs.  The jobs combine interactions with standard enterprise systems (e.g. RDBMS) as well as Hadoop operations (e.g. MapReduce, HDFS, Pig, Hive or Cascading).
+* Workflow management via batch jobs.  The jobs combine interactions with standard enterprise systems (e.g. RDBMS) as well as Hadoop operations (e.g. MapReduce, HDFS, Pig, Hive or HBase).
 * High throughput data export, e.g. from HDFS to a RDBMS or NoSQL database.
 
 The Spring XD project aims to provide a one stop shop solution for these use-cases.
