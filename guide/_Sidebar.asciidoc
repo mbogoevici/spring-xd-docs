@@ -48,7 +48,7 @@ link:Getting-Started[*Getting Started*] +
 
 * link:Monitoring-and-Management[Monitoring and Management]
 * link:REST-API[REST API]
-
+* link:Java-API[Java API]
 
 *Appendices*
 

@@ -50,6 +50,7 @@ include::MessageBus.asciidoc[]
 = Administration
 include::Monitoring-and-Management.asciidoc[]
 include::REST-API.asciidoc[]
+include::Java-API.asciidoc[]
 
 = Appendices
 [appendix]
