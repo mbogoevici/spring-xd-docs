@@ -14,15 +14,15 @@ Spring XD comes with a number of modules useful for assembling streams which per
 However, if you are interested in extending Spring XD with your own modules, some knowledge of Spring, Spring Integration, and Spring Batch is essential. The remainder of this document assumes the reader has some familiarity with these topics.
 
 === Creating a Module
-This section provides details on how to write and register custom modules. For a quick start, dive into the examples of creating link:Creating-a-Source-Module#creating-a-source-module[source], link:Creating-a-Processor-Module#creating-a-processor-module[processor], and link:Creating-a-Sink-Module#creating-a-sink-module[sink] modules.
+This section provides details on how to write and register custom modules. For a quick start, dive into the examples of creating link:Creating-a-Source-Module#creating-a-source-module[source], link:Creating-a-Processor-Module#creating-a-processor-module[processor], link:Creating-a-Sink-Module#creating-a-sink-module[sink], and link:Creating-a-Job-Module#creating-a-job-module[job] modules.
 
 A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/ModuleDefinition.java[ModuleDefinition] has the following required attributes:
 
 * name - the name of the component, normally a single word representing the purpose of the module. Examples are _file_, _http_, _syslog_.
-* type - the module type, current XD module types include _source_, _sink_, and _processor_
+* type - the module type, current XD module types include _source_, _sink_, _processor_, and _job_
 
 ==== Modules and Spring
-At the core, a module is any component that may be implemented using a Spring application context. In this respect, the concept may be extended for purposes other than data ingestion. The types mentioned above (source, processor,sink) are specific to Spring XD and constructing streams. But other module types are envisioned.
+At the core, a module is any component that may be implemented using a Spring application context. In this respect, the concept may be extended for purposes other than data ingestion. The types mentioned above (source, processor, sink, and job) are specific to Spring XD but other module types are envisioned.
 
 A module is typically configured using property placeholders which are bound to the module's options. Options may be required or optional where optional properties define a default value in link:ModuleOptionsMetadata[Module Options Metadata]. Module options metadata may be provided in a properties file or a Java class.
 
