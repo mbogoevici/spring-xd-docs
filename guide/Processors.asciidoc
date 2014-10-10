@@ -15,6 +15,7 @@ The Processors covered are
 * <<splitter, Splitter>>
 * <<aggregator, Aggregator>>
 * <<http-clent, HTTP Client>>
+* <<shell, Shell Command>>
 * <<json-to-tuple, JSON to Tuple>>
 * <<object-to-json, Object to JSON>>
 
@@ -221,6 +222,92 @@ $$mappedResponseHeaders$$:: $$response message header names to be propagated fro
 $$replyTimeout$$:: $$the amount of time to wait (ms) for a response from the remote server$$ *($$int$$, default: `0`)*
 $$url$$:: $$the url to perform an http request on$$ *($$String$$, no default)*
 //$processor.http-client
+
+[[shell]]
+== Shell Command
+The `shell` processor forks an external process by running a shell command to launch a process written in any language. The process should implement a continual loop that waits for input from `stdin` and writes a result to `stdout` in a request-response manner. The process will be destroyed when the stream is undeployed. For example, it is possible to invoke a Python script within a stream in this manner. Since the shell processor relies on low-level stream processing there are some additional requirements:
+
+* Input and output data are expected to be Strings, the `charset` is configurable.
+* The shell process must not write out of band data to `stdout`, such as a start up message or prompt.
+* Anything written to `stderr` will be logged as an ERROR in Spring XD but will not terminate the stream.
+* Responses written to `stdout` must be terminated using the configured encoder (CRLF or "\r\n" is the default) for the module and must not exceed the configured `bufferSize`
+* Any external software required to run the script must be installed on the container node to which the module is deployed.
+
+Here is a simple Python example that echos the input:
+
+[source,python]
+----
+#echo.py
+import sys
+
+#=====================
+# Write data to stdout
+#=====================
+def send(data):
+  sys.stdout.write(data)
+  sys.stdout.flush()
+
+#===========================================
+# Terminate a message using the default CRLF 
+#===========================================
+def eod():
+  send("\r\n")
+
+#===========================
+# Main - Echo the input
+#===========================
+
+while True:
+  try:
+    data = raw_input()
+    if data:
+      send(data)
+      eod()
+  except EOFError:
+      eod()
+      break
+----
+
+[NOTE]
+====
+Spring XD will provide additional Python programming support for handling basic stream processing, as shown above, and the like. 
+====
+
+To try this example, copy the above script and save it to `echo.py`.  Start Spring XD and create a stream:
+
+----
+xd:>stream create pytest --definition "time | shell --command='python <absolute-path-to>/echo.py' | log" --deploy
+Created and deployed new stream 'pytest'
+----
+
+you should see the time echoed in the log:
+
+----
+09:49:14,856  INFO task-scheduler-5 sink.pytest - 2014-10-10 09:49:14
+09:49:15,860  INFO task-scheduler-1 sink.pytest - 2014-10-10 09:49:15
+09:49:16,862  INFO task-scheduler-1 sink.pytest - 2014-10-10 09:49:16
+09:49:17,864  INFO task-scheduler-1 sink.pytest - 2014-10-10 09:49:17
+----
+
+This script can be easily modified to do some actual work by providing a function that takes the input as an argument and returns a string. Then insert the function call:
+
+[source,python]
+----
+while True:
+  try:
+    data = raw_input()
+    if data:
+      result = myfunc(data)
+      send(result)
+      eod()
+  except EOFError:
+      eod()
+      break
+----
+
+//^processor.shell
+//$$processor.shell
+
 
 [[json-to-tuple]]
 === JSON to Tuple
