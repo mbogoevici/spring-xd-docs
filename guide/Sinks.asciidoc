@@ -717,7 +717,7 @@ while True:
       break
 ----
 //^sink.shell
-//$$sink.shell
+//$sink.shell
 
 [[mongo]]
 === Mongo

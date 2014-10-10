@@ -306,7 +306,7 @@ while True:
 ----
 
 //^processor.shell
-//$$processor.shell
+//$processor.shell
 
 
 [[json-to-tuple]]
