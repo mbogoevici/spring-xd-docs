@@ -533,6 +533,8 @@ $$maxIdle$$:: $$maximum number of connections that should be kept in the pool at
 $$maxWait$$:: $$maximum number of milliseconds that the pool will wait for a connection$$ *($$int$$, default: `30000`)*
 $$minEvictableIdleTimeMillis$$:: $$minimum amount of time an object may sit idle in the pool before it is eligible for eviction$$ *($$int$$, default: `60000`)*
 $$minIdle$$:: $$minimum number of established connections that should be kept in the pool at all times$$ *($$int$$, default: `10`)*
+$$partitionColumn$$:: $$the column to use for partitioning, should be numeric and uniformly distributed$$ *($$String$$, default: ``)*
+$$partitions$$:: $$the number of partitions$$ *($$int$$, default: `1`)*
 $$password$$:: $$the JDBC password$$ *($$Password$$, no default)*
 $$removeAbandoned$$:: $$flag to remove abandoned connections if they exceed the removeAbandonedTimout$$ *($$boolean$$, default: `false`)*
 $$removeAbandonedTimeout$$:: $$timeout in seconds before an abandoned connection can be removed$$ *($$int$$, default: `60`)*
