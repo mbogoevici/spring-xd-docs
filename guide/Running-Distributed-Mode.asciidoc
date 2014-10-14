@@ -78,6 +78,36 @@ $ ./hsqldb-server
 
 To configure XD to connect to a different RDBMS, have a look at `xd/config/servers.yml` in the `spring:datasource` section for details. Note that `spring.batch.initializer.enabled` is set to true by default which will initialize the Spring Batch schema if it is not already set up. However, if those tables have already been created, they will be unaffected. 
 
+If the provided schemas are customized, other values may need to be customized.  In the `xd/config/servers.yml` the following block exposes database specific values for the batch job repository.
+
+[source,yaml]
+----
+  spring:
+    batch:
+      isolationLevel:             ISOLATION_SERIALIZABLE  # <1>
+      clobType:                                           # <2>
+      dbType:                                             # <3>
+      maxVarcharLength:           2500                    # <4>
+      tablePrefix:                BATCH_                  # <5>
+      validateTransactionState:   true                    # <6>
+      initializer:
+        enabled:                  false                   # <7>
+----
+
+<1> Transaction isolation level for the job repository.
+
+<2> A special handler for large objects. The default is usually fine, except for some (usually older) versions of Oracle. The default is determined from the data base type.
+
+<3> Used to determine what id incremented to use.  The default is usually fine, except when the type returned by the datasource should be overridden (GemfireXD for example).
+
+<4> Configures how large the maximum message can be stored in a VARCHAR type field.
+
+<5> Prefix for repository tables.
+
+<6> Flag to determine whether to check for an existing transaction when a JobExecution is created. Defaults to true because it is usually a mistake, and leads to problems with restartability and also to deadlocks in multi-threaded steps.
+
+<7> Flag that indicates if the database tables should be created on startup.
+
 [[setting-up-zookeeper]]
 ==== Setting up ZooKeeper
 
