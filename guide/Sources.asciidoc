@@ -357,7 +357,7 @@ $ cat /tmp/xd/output/gftest.out
 {"symbol":"FAKE","price":80}
 ----
 
-NOTE: If you are deploying on Java 7 or earlier and need to deploy more than 4 Gemfire modules be sure to increase the permsize of the singlenode or container.  i.e. JAVA_OPTS="-XX:PermSize=256m"  
+TIP: If you are deploying on Java 7 or earlier and need to deploy more than 4 Gemfire modules be sure to increase the permsize of the singlenode or container.  i.e. JAVA_OPTS="-XX:PermSize=256m"  
 
 ==== Launching the XD GemFire Server
 This source requires a cache server to be running in a separate process and its host and port, or a locator host and port must be configured. The XD distribution includes a GemFire server executable suitable for development and test purposes. This is a Java main class that runs with a Spring configured cache server. The configuration is passed as a command line argument to the server's main method. The configuration includes a cache server port and one or more configured region. XD includes a sample cache configuration called  https://github.com/SpringSource/spring-xd/blob/master/spring-xd-gemfire-server/config/cq-demo.xml[cq-demo]. This starts a server on port 40404 and creates a region named _Stocks_. A Logging cache listener is configured  for the region to log region events.  
