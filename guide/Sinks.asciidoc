@@ -898,7 +898,9 @@ You should see a message on STDOUT for the process running the GemFire server li
 
     INFO [LoggingCacheListener] - updated entry FAKE
 
-NOTE: In order to use locators you must add the `use-locator` to the active profile via server.yml or the spring.profiles_active environment variable.   
+NOTE: In order to use locators you must add the `use-locator` to the active profile via server.yml or the spring.profiles_active environment variable. 
+
+TIP: If you are deploying on Java 7 or earlier and need to deploy more than 4 Gemfire modules be sure to increase the permsize of the singlenode or container. i.e. JAVA_OPTS="-XX:PermSize=256m".  
 
 [[splunk-server]]
 === Splunk Server
