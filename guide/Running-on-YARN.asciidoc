@@ -17,7 +17,7 @@ Lastly, you need an RDBMs to support batch jobs and JDBC operations.
 
 
 ==== Download Spring XD on YARN binaries
-In addition to the regular `spring-xd-<version>-dist.zip` files we also distribute a zip file that includes all you need to deploy on YARN. The name of this zip file is `spring-xd-<version>-yarn.zip`. You can link:http://repo.spring.io/release/org/springframework/xd/spring-xd/1.0.0.RELEASE/spring-xd-1.0.0.RELEASE-yarn.zip[download zip for the current release] or link:http://repo.spring.io/libs-snapshot/org/springframework/xd/spring-xd/1.0.1.BUILD-SNAPSHOT/spring-xd-1.0.1.BUILD-SNAPSHOT-yarn.zip[download snapshot build]. Unzip the downloaded file and you should see a `spring-xd-<version>-yarn` directory.
+In addition to the regular `spring-xd-<version>-dist.zip` files we also distribute a zip file that includes all you need to deploy on YARN. The name of this zip file is `spring-xd-<version>-yarn.zip`. You can link:http://repo.spring.io/release/org/springframework/xd/spring-xd/1.0.1.RELEASE/spring-xd-1.0.1.RELEASE-yarn.zip[download zip for the current release] or link:http://repo.spring.io/libs-snapshot/org/springframework/xd/spring-xd/1.0.2.BUILD-SNAPSHOT/spring-xd-1.0.2.BUILD-SNAPSHOT-yarn.zip[download snapshot build]. Unzip the downloaded file and you should see a `spring-xd-<version>-yarn` directory.
 
 ==== Configure your deployment
 Configuration options are contained in a `config/servers.yml` file in the Spring XD YARN install directory. You need to configure the hadoop settings, the transport choice plus redis/rabbit settings, the zookeeper settings and the JDBC datasource properties.
