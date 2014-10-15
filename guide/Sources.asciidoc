@@ -15,7 +15,7 @@ The Sources covered are
 * <<mail_source, Mail>>
 * <<twitter-search, Twitter Search>>
 * <<twitter-stream, Twitter Stream>>
-* <<gemfire-source, Gemfire>>
+* <<gemfire-source, Gemfire Source>>
 * <<gemfire-continuous-query,Gemfire CQ>>
 * <<syslog, Syslog>>
 * <<tcp, TCP>> 
@@ -335,7 +335,7 @@ Use of the gemfire source requires an external process (or a separate stream) th
 
 The following example creates two streams: One to write http messages to a Gemfire region named _Stocks_, and another to listen for cache events and record the updates to a file. This works with the Cache Server and sample configuration included with the Spring XD distribution:
 
-     xd:> stream create --name gftest --definition "gemfire --regionName='Stocks' | file" --deploy
+     xd:> stream create --name gftest --definition "gemfire --regionName=Stocks | file" --deploy
      xd:> stream create --name stocks --definition "http --port=9090 | gemfire-json-server --regionName=Stocks --keyExpression=payload.getField('symbol')" --deploy
 
 Now send some messages to the stocks stream.
@@ -373,7 +373,7 @@ $ ./gemfire-server ../config/cq-demo.xml
 
 [[gemfire-continuous-query]]
 === GemFire Continuous Query
-Continuous query allows client applications to create a GemFire query using Object Query Language(OQL) and register a CQ listener which subscribes to the query and is notified every time the query 's result set changes. The _gemfire_cq_ source registers a CQ which will post CQEvent messages to the stream. 
+Continuous query allows client applications to create a GemFire query using Object Query Language(OQL) and register a CQ listener which subscribes to the query and is notified every time the query's result set changes. The _gemfire_cq_ source registers a CQ which will post CQEvent messages to the stream. 
 
 ==== Options
 
