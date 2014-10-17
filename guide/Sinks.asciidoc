@@ -1089,16 +1089,15 @@ Created and deployed new stream 'tap1'
 In the above, the null sink can be useful as we can create as many number of tap streams off the main stream while we set the main stream sink as null.
 
 [[redis-sink]]
-== Redis
+=== Redis
 
 Redis sink can be used to ingest data into redis store. You can choose `queue`, `topic` or `key` with selcted collection type to point to a specific data store.
 
 For example,
-
----
+----
 xd:>stream create store-into-redis --definition "http | redis --queue=myList" --deploy
 xd:>Created and deployed new stream 'store-into-redis'
-
+----
 Valid collection types when using `key` option are: LIST, SET, ZSET, MAP, PROPERTIES.
 
 ==== Options
