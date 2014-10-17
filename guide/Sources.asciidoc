@@ -10,6 +10,7 @@ as instructed in the link:Getting-Started#getting-started[Getting Started] page.
 The Sources covered are
 
 * <<http, HTTP>>
+* <<sftp, SFTP>>
 * <<tail, Tail>>
 * <<file, File>>
 * <<mail_source, Mail>>
@@ -94,6 +95,17 @@ keyStore.passPhrase=secret
 ----
 
 Since this properties file contains sensitive information, it will typically be secured by the operating system with the XD container process having read access.
+
+[[sftp]]
+=== SFTP
+
+This source module supports transfer of files through SFTP protocol.
+While the transfer of files happens from `remote` directory to `local` directory, this module creates message from local directory file system.
+
+==== Options
+
+//^source.sftp
+//$source.sftp
 
 [[tail]]
 === Tail
