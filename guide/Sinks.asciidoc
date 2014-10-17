@@ -1098,7 +1098,6 @@ For example,
 xd:>stream create store-into-redis --definition "http | redis --queue=myList" --deploy
 xd:>Created and deployed new stream 'store-into-redis'
 ----
-Valid collection types when using `key` option are: LIST, SET, ZSET, MAP, PROPERTIES.
 
 ==== Options
 
