@@ -55,3 +55,4 @@ These will update the cache entry, et voila! you should see something like
     CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[1,__GEMFIRE_JSON]{price=79, symbol=VMW}]
     CqEvent [CqName=GfCq1; base operation=UPDATE; cq operation=UPDATE; key=VMW; value=PDX[2,__GEMFIRE_JSON]{price=80, symbol=VMW}]
     
+NOTE: The Gemfire default evaluation license included with XD allows you to run up to three peer or cache server members and up to three clients for each cache server member. 
