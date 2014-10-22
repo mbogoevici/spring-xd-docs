@@ -196,6 +196,8 @@ From a native os shell we can use hadoop's fs commands and pipe data into gunzip
 
 Often a stream of data may not have a high enough rate to roll over files frequently, leaving the file in an opened state.  This prevents users from reading a consistent set of data when running mapreduce jobs.  While one can alleviate this problem by using a small rollover value, a better way is to use the `idleTimeout`  option that will automatically close the file if there was no writes during the specified period of time.   This feature is also useful in cases where burst of data is written into a stream and you'd like that data to become visible in HDFS.
 
+NOTE: The `idleTimeout` value should not exceed the timeout values set on the Hadoop cluster. These are typically configured using the `dfs.socket.timeout` and/or `dfs.datanode.socket.write.timeout` properties in the `hdfs-site.xml` configuration file.
+
   xd:> stream create --name myhdfsstream5 --definition "http --port=8000 | hdfs --rollover=20 --idleTimeout=10000" --deploy
 
 In the above example we changed a source to `http` order to control what we write into a `hdfs` sink. We defined a small rollover size and a timeout of 10 seconds. Now we can simply post data into this stream via source end point using a below command.
