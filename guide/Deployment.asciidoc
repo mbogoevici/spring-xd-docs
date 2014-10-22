@@ -165,7 +165,7 @@ If there are only two container instances available, only two instances of _tran
 [[container-attributes]]
 === Container Attributes
 
-The SpEL context (root object) for module.[modulename].criteria is ContainerAtrtributes, basically a map derivative that contains some standard attributes:
+The SpEL context (root object) for module.[modulename].criteria is ContainerAttributes, basically a map derivative that contains some standard attributes:
 
  * *id* - the generated container ID
  * *pid* - the process ID of the container instance
@@ -182,7 +182,23 @@ xd:
       color: red
 ----
 
-NOTE: Groups may also be assigned to a container via the optional command line argument _--groups_ or by setting the environment variable _XD_CONTAINER_GROUPS_. As the property name suggests, a container may belong to more than one group, represented as comma-delimited string. The concept of server groups is considered an especially useful convention for targeting groups of servers for deployment to support many common scenarios, so it enjoys special status. Internally, _groups_ is simply a user defined attribute.
+==== Groups
+
+Groups may be assigned to a container via the optional command line argument _--groups_ or by setting the environment variable _XD_CONTAINER_GROUPS_. As the property name suggests, a container may belong to more than one group, represented as comma-delimited string. The concept of server groups is considered an especially useful convention for targeting groups of servers for deployment to support many common scenarios, so it enjoys special status. Internally, _groups_ is simply a user defined attribute.
+
+==== IP Address
+
+The IP address of the container can also be optionally set via the command argument _--containerIp_ or by setting the environment variable _XD_CONTAINER_IP_. If not specified, the IP address will be automatically set. Please be aware of the limitations, though, particularly in cases where the physically machine has multiple IP addresses assigned.
+
+For the automatic assignment of the IP address, XD internally loops through the available network interfaces and assigned IP addresses and will pick the first available IPv4 address that is not a loopback address.
+
+Depending on your underlying server or network infrastructure, you may prefer specifying the IP address explicitly.
+
+==== Hostname
+
+The hostname of the container can be optionally set as well via the command argument _--containerHostname_ or by setting the environment variable _XD_CONTAINER_HOSTNAME_. If not specified, the hostname will be automatically set. Please be aware of the http://stackoverflow.com/questions/7348711/recommended-way-to-get-hostname-in-java/7800008#7800008[limitations], though. You may prefer specifying the hostname address explicitly.
+
+TIP: While there is no command line option to set the container hostname and IP address when running in Single Node mode, you can still specify the values via environment variables or by customizing the respective settings in _application.yml_ 
 
 === Stream Deployment Examples 
 
