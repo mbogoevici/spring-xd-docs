@@ -80,8 +80,6 @@ NOTE: These features are common to all modules backed by Groovy scripts.
 [source,groovy]
 ----
 //custom-filter.groovy
-
-----
 return payload.size()> 4 || shortstrings=='true'
 ----
 
@@ -92,8 +90,8 @@ shortstrings=false
 
 By default, Spring XD will search the classpath for _custom-filter.groovy_ and _custom-filter.properties_. You can place the script in _${xd.home}/modules/processor/scripts_ and the properties file in _${xd.home}/config_ to make them available on the classpath.  Alternatively, you can prefix the _script_ and _properties-location_ values with _file:_ to load from the file system. 
 
-
 In the following stream definitions, the filter will pass only the first message:
+
 ----
 xd>: stream create --name groovyfiltertest1 --definition "http --port=9001 | filter --script=file:<absolute-path-to>/custom-filter.groovy --variables='shortstrings=false' | log" --deploy
 Created and deployed new stream 'groovyfiltertest1'
