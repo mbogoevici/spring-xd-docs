@@ -1071,7 +1071,9 @@ http://static.springsource.org/spring-integration/reference/html/messaging-endpo
 The **$$router$$** $$sink$$ has the following options:
 
 $$expression$$:: $$a SpEL expression used to transform messages$$ *($$String$$, default: `payload.toString()`)*
-$$script$$:: $$reference to a script used to transform messages$$ *($$String$$, no default)*
+$$propertiesLocation$$:: $$the path of a properties file containing custom script variable bindings$$ *($$String$$, no default)*
+$$script$$:: $$reference to a script used to process messages$$ *($$String$$, no default)*
+$$variables$$:: $$variable bindings as a comma delimited string of name-value pairs, e.g., 'foo=bar,baz=car'$$ *($$String$$, no default)*
 //$sink.router
 
 TIP: If the `script` option is set, the script is checked for updates every 60 seconds. 

@@ -104,6 +104,12 @@ $$List created streams$$.
 
 
 === Job Commands
+==== $$job list$$
+$$List all jobs$$.
+
+    job list
+
+
 ==== $$job create$$
 $$Create a job$$.
 
@@ -112,12 +118,6 @@ $$Create a job$$.
 *$$name$$*:: $$the name to give to the job$$. *(required)*
 *$$definition$$*:: $$job definition using xd dsl $$. *(required)*
 *$$deploy$$*:: $$whether to deploy the job immediately$$. *(default: `false`, or `true` if +--deploy+ is specified without a value)*
-
-==== $$job list$$
-$$List all jobs$$.
-
-    job list
-
 
 ==== $$job execution list$$
 $$List all job executions$$.
@@ -260,18 +260,18 @@ $$List all modules$$.
 
 
 === Metrics Commands
-==== $$counter list$$
-$$List all available counter names$$.
-
-    counter list
-
-
 ==== $$counter delete$$
 $$Delete the counter with the given name$$.
 
     counter delete [--name] <name>
 
 *$$name$$*:: $$the name of the counter to delete$$. *(required)*
+
+==== $$counter list$$
+$$List all available counter names$$.
+
+    counter list
+
 
 ==== $$counter display$$
 $$Display the value of a counter$$.
@@ -282,18 +282,18 @@ $$Display the value of a counter$$.
 *$$pattern$$*:: $$the pattern used to format the value (see DecimalFormat)$$. *(default: `<use platform locale>`)*
 
 
-==== $$field-value-counter list$$
-$$List all available field-value-counter names$$.
-
-    field-value-counter list
-
-
 ==== $$field-value-counter delete$$
 $$Delete the field-value-counter with the given name$$.
 
     field-value-counter delete [--name] <name>
 
 *$$name$$*:: $$the name of the field-value-counter to delete$$. *(required)*
+
+==== $$field-value-counter list$$
+$$List all available field-value-counter names$$.
+
+    field-value-counter list
+
 
 ==== $$field-value-counter display$$
 $$Display the value of a field-value-counter$$.
@@ -305,18 +305,18 @@ $$Display the value of a field-value-counter$$.
 *$$size$$*:: $$the number of values to display$$. *(default: `25`)*
 
 
-==== $$aggregate-counter list$$
-$$List all available aggregate counter names$$.
-
-    aggregate-counter list
-
-
 ==== $$aggregate-counter delete$$
 $$Delete an aggregate counter$$.
 
     aggregate-counter delete [--name] <name>
 
 *$$name$$*:: $$the name of the aggregate counter to delete$$. *(required)*
+
+==== $$aggregate-counter list$$
+$$List all available aggregate counter names$$.
+
+    aggregate-counter list
+
 
 ==== $$aggregate-counter display$$
 $$Display aggregate counter values by chosen interval and resolution(minute, hour)$$.
@@ -332,18 +332,18 @@ $$Display aggregate counter values by chosen interval and resolution(minute, hou
 *$$pattern$$*:: $$the pattern used to format the count values (see DecimalFormat)$$. *(default: `<use platform locale>`)*
 
 
-==== $$gauge list$$
-$$List all available gauge names$$.
-
-    gauge list
-
-
 ==== $$gauge delete$$
 $$Delete a gauge$$.
 
     gauge delete [--name] <name>
 
 *$$name$$*:: $$the name of the gauge to delete$$. *(required)*
+
+==== $$gauge list$$
+$$List all available gauge names$$.
+
+    gauge list
+
 
 ==== $$gauge display$$
 $$Display the value of a gauge$$.
@@ -354,18 +354,18 @@ $$Display the value of a gauge$$.
 *$$pattern$$*:: $$the pattern used to format the value (see DecimalFormat)$$. *(default: `<use platform locale>`)*
 
 
-==== $$rich-gauge list$$
-$$List all available richgauge names$$.
-
-    rich-gauge list
-
-
 ==== $$rich-gauge delete$$
 $$Delete the richgauge$$.
 
     rich-gauge delete [--name] <name>
 
 *$$name$$*:: $$the name of the richgauge to delete$$. *(required)*
+
+==== $$rich-gauge list$$
+$$List all available richgauge names$$.
+
+    rich-gauge list
+
 
 ==== $$rich-gauge display$$
 $$Display Rich Gauge value$$.
@@ -464,6 +464,13 @@ $$Count the number of directories, files, bytes, quota, and remaining quota$$.
 *$$quota$$*:: $$whether with quta information$$. *(default: `false`, or `true` if +--quota+ is specified without a value)*
 *$$path$$*:: $$path name$$. *(required)*
 
+==== $$hadoop fs mkdir$$
+$$Create a new directory$$.
+
+    hadoop fs mkdir [--dir] <dir>
+
+*$$dir$$*:: $$directory name$$. *(required)*
+
 ==== $$hadoop fs tail$$
 $$Display last kilobyte of the file to stdout$$.
 
@@ -471,13 +478,6 @@ $$Display last kilobyte of the file to stdout$$.
 
 *$$file$$*:: $$file to be tailed$$. *(required)*
 *$$follow$$*:: $$whether show content while file grow$$. *(default: `false`, or `true` if +--follow+ is specified without a value)*
-
-==== $$hadoop fs mkdir$$
-$$Create a new directory$$.
-
-    hadoop fs mkdir [--dir] <dir>
-
-*$$dir$$*:: $$directory name$$. *(required)*
 
 ==== $$hadoop fs ls$$
 $$List files in the directory$$.

@@ -738,10 +738,12 @@ $$fixedDelay$$:: $$the rate at which stimulus messages will be emitted (seconds)
 $$host$$:: $$the remote host to connect to$$ *($$String$$, default: `localhost`)*
 $$nio$$:: $$whether or not to use NIO$$ *($$boolean$$, default: `false`)*
 $$port$$:: $$the port on the remote host to connect to$$ *($$int$$, default: `1234`)*
+$$propertiesLocation$$:: $$the path of a properties file containing custom script variable bindings$$ *($$String$$, no default)*
 $$reverseLookup$$:: $$perform a reverse DNS lookup on the remote IP Address$$ *($$boolean$$, default: `false`)*
-$$script$$:: $$reference to a script used to transform messages$$ *($$String$$, no default)*
+$$script$$:: $$reference to a script used to process messages$$ *($$String$$, no default)*
 $$socketTimeout$$:: $$the timeout (ms) before closing the socket when no data is received$$ *($$int$$, default: `120000`)*
 $$useDirectBuffers$$:: $$whether or not to use direct buffers$$ *($$boolean$$, default: `false`)*
+$$variables$$:: $$variable bindings as a comma delimited string of name-value pairs, e.g., 'foo=bar,baz=car'$$ *($$String$$, no default)*
 //$source.tcp-client
 
 ==== Implementing a simple conversation
