@@ -68,13 +68,60 @@ Here is another example usage of filter
 This is an example that is operating on a JSON payload of tweets as consumed from the twitter search module.
 
 ==== Filter with Groovy Script
-For more complex filtering, you can pass the location of a Groovy script using the _script_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
+For more complex filtering, you can pass the location of a Groovy script using the _script_ option. If you want to pass variable values to your script, you can statically bind values using the _variables_ option or optionally pass the path to a properties file containing the bindings using the _propertiesLocation_ option.All properties in the file will be made available to the script as variables. Note that _payload_ and _headers_ are implicitly bound to give you access to the data contained in a message. 
 
-Note that an implicit variable named _payload_ is available to give you access to the data contained in a message.
 
-    xd:> stream create --name groovyfiltertest --definition "http --port=9001 | filter --script=custom-filter.groovy --properties-location=custom-filter.properties | log" --deploy
+Example:
 
-By default, Spring XD will search the classpath for _custom-filter.groovy_ and _custom-filter.properties_. You can place the script in _${xd.home}/modules/processor/scripts_ and the properties file in _${xd.home}/config_ to make them available on the classpath.  Alternatively, you can prefix the _script_ and _properties-location_ values with _file:_ to load from the file system.
+NOTE: These features are common to all modules backed by Groovy scripts.
+
+[source,groovy]
+----
+//custom-filter.groovy
+
+----
+return payload.size()> 4 || shortstrings=='true'
+----
+
+----
+#custom-filter.properties
+shortstrings=false
+----
+
+By default, Spring XD will search the classpath for _custom-filter.groovy_ and _custom-filter.properties_. You can place the script in _${xd.home}/modules/processor/scripts_ and the properties file in _${xd.home}/config_ to make them available on the classpath.  Alternatively, you can prefix the _script_ and _properties-location_ values with _file:_ to load from the file system. 
+
+
+In the following stream definitions, the filter will pass only the first message:
+----
+xd>: stream create --name groovyfiltertest1 --definition "http --port=9001 | filter --script=file:<absolute-path-to>/custom-filter.groovy --variables='shortstrings=false' | log" --deploy
+Created and deployed new stream 'groovyfiltertest1'
+xd:>http post --target http://localhost:9001 --data hello
+xd:http post --target http://localhost:9001 --data hi
+----
+
+----
+xd>: stream create --name groovyfiltertest2 --definition "http --port=9002 | filter --script=file:<absolute-path-to>/custom-filter.groovy --propertiesLocation=file:<absolute-path-to>/custom-filter.properties | log" --deploy
+Created and deployed new stream 'groovyfiltertest2'
+xd:>http post --target http://localhost:9002 --data hello
+xd:http post --target http://localhost:9002 --data hi
+----
+
+In the following stream definitions, the filter will pass all messages (provided the payload type supports a size() method):
+
+----
+xd>: stream create --name groovyfiltertest1 --definition "http --port=9001 | filter --script=file:<absolute-path-to>/custom-filter.groovy --variables='shortstrings=false' | log" --deploy
+Created and deployed new stream 'groovyfiltertest1'
+----
+
+----
+xd>: stream create --name groovyfiltertest2 --definition "http --port=9002 | filter --script=file:<absolute-path-to>/custom-filter.groovy --variables='shortstring=false' --propertiesLocation=file:<absolute-path-to>/custom-filter.properties | log" --deploy
+Created and deployed new stream 'groovyfiltertest2'
+----
+
+Note the last example demonstrates that values specified in _variables_ override values from _propertiesLocation_
+
+TIP: The script is checked for updates every 60 seconds, so it may be replaced in a running system.
+
 
 [[transform]]
 === Transform
@@ -101,21 +148,23 @@ This transform will convert all message payloads to the word "FOO". Try sending 
 As part of the SpEL expression you can make use of the pre-registered JSON Path function.  The syntax is #jsonPath(payload,'<json path expression>')
 
 ==== Transform with Groovy Script
-For more complex transformations, you can pass the location of a Groovy script using the _script_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
+For more complex transformations, you can pass the location of a Groovy script using the _script_ option. If you want to pass variable values to your script, you can statically bind values using the _variables_ option or optionally pass the path to a properties file containing the bindings using the _propertiesLocation_ option. All properties in the file will be made available to the script as variables. Note that _payload_ and _headers_ are implicitly bound to give you access to the data contained in a message. See the <<filter, Filter>> example for a more detailed discussion of script variables.
 
-    xd:> stream create --name groovytransformtest --definition "http --port=9004 | transform --script=custom-transform.groovy --properties-location=custom-transform.properties | log" --deploy
+----
+xd:> stream create --name groovytransformtest1 --definition "http --port=9004 | transform --script=custom-transform.groovy --variables="x=foo" | log" --deploy
+----
+
+----
+xd:> stream create --name groovytransformtest2 --definition "http --port=9004 | transform --script=custom-transform.groovy --propertiesLocation=custom-transform.properties | log" --deploy
+----
 
 By default, Spring XD will search the classpath for _custom-transform.groovy_ and _custom-transform.properties_. You can place the script in _${xd.home}/modules/processor/scripts_ and the properties file in _${xd.home}/config_ to make them available on the classpath.  Alternatively, you can prefix the _script_ and _properties-location_ values with _file:_ to load from the file system.
+
+TIP: The script is checked for updates every 60 seconds, so it may be replaced in a running system.
 
 [[script]]
 === Script
 The script processor contains a _Service Activator_ that invokes a specified Groovy script. This is a slightly more generic way to accomplish processing logic, as the provided script may simply terminate the stream as well as transform or filter Messages.
-
-To use the module, pass the location of a Groovy script using the _location_ attribute. If you want to pass variable values to your script, you can optionally pass the path to a properties file using the _properties-location_ attribute. All properties in the file will be made available to the script as variables.
-
-    xd:> stream create --name groovyprocessortest --definition "http --port=9006 | script --location=custom-processor.groovy --properties-location=custom-processor.properties | log" --deploy
-
-By default, Spring XD will search the classpath for _custom-processor.groovy_ and _custom-processor.properties_. You can place the script in _${xd.home}/modules/processor/scripts_ and the properties file in _${xd.home}/config_ to make them available on the classpath.  Alternatively, you can prefix the _location_ and _properties-location_ values with _file:_ to load from the file system.
 
 //^processor.script
 // DO NOT MODIFY THE LINES BELOW UNTIL THE CLOSING '//$processor.script' TAG
@@ -124,6 +173,20 @@ The **$$script$$** $$processor$$ has the following options:
 
 $$location$$:: $$the script to use (Spring resource, uses classpath: when no scheme given)$$ *($$String$$, no default)*
 //$processor.script
+
+To use the module, pass the location of a Groovy script using the _script_ attribute. If you want to pass variable values to your script, you can statically bind values using the _variables_ option or optionally pass the path to a properties file containing the bindings using the _propertiesLocation_ option. All properties in the file will be made available to the script as variables. Note that _payload_ and _headers_ are implicitly bound to give you access to the data contained in a message. See the <<filter, Filter>> example for a more detailed discussion of script variables.
+
+----
+xd:> stream create --name groovyprocessortest --definition "http --port=9006 | script --script=custom-processor.groovy --variables='x=foo' | log" --deploy
+----
+
+----
+xd:> stream create --name groovyprocessortest --definition "http --port=9006 | script --script=custom-processor.groovy --propertiesLocation=custom-processor.properties | log" --deploy
+----
+
+By default, Spring XD will search the classpath for _custom-processor.groovy_ and _custom-processor.properties_. You can place the script in _${xd.home}/modules/processor/scripts_ and the properties file in _${xd.home}/config_ to make them available on the classpath.  Alternatively, you can prefix the _location_ and _properties-location_ values with _file:_ to load from the file system.
+
+TIP: The script is checked for updates every 60 seconds, so it may be replaced in a running system.
 
 [[splitter]]
 === Splitter

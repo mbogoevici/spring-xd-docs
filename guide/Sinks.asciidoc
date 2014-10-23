@@ -35,7 +35,7 @@ The Sinks covered are
 
 * <<mqtt-sink, MQTT>>
 
-* <<router_sink, Dynamic Router>>
+* <<dynamic_router, Dynamic Router>>
 
 * <<null-sink, Null Sink>>
 
@@ -961,7 +961,7 @@ $$username$$:: $$the username to use when connecting to the broker$$ *($$String$
 
 NOTE: The defaults are set up to connect to the RabbitMQ MQTT adapter on localhost.
 
-[[router_sink]]
+[[dynamic_router]]
 === Dynamic Router
 
 The Dynamic Router support allows for routing Spring XD messages to *named channels* based on the evaluation of SpEL expressions or Groovy Scripts.
@@ -1058,7 +1058,9 @@ You can also use Groovy scripts located on your classpath by specifying:
 ----
 ===============================
 
-For more information, please also consult the Spring Integration Reference manual: "Groovy support"
+If you want to pass variable values to your script, you can statically bind values using the _variables_ option or optionally pass the path to a properties file containing the bindings using the _propertiesLocation_ option. All properties in the file will be made available to the script as variables. You may specify both _variables_ and _propertiesLocation_, in which case any duplicate values provided as _variables_ override values provided in _propertiesLocation_. Note that _payload_ and _headers_ are implicitly bound to give you access to the data contained in a message. 
+
+For more information, see the Spring Integration Reference manual: "Groovy support"
 http://static.springsource.org/spring-integration/reference/html/messaging-endpoints-chapter.html#groovy
 
 ==== Options
@@ -1072,7 +1074,7 @@ $$expression$$:: $$a SpEL expression used to transform messages$$ *($$String$$, 
 $$script$$:: $$reference to a script used to transform messages$$ *($$String$$, no default)*
 //$sink.router
 
-TIP: If the `script` option is set, then the `expression` option will be ignored. As with other modules, the groovy script is checked for updates every 60 seconds. The script can be loaded from the classpath or from the file system _e.g._ `--script='org/springframework/springxd/samples/batch/router.groovy'` or `--script='file:/my/path/router.groovy'`
+TIP: If the `script` option is set, as with other modules, the groovy script is checked for updates every 60 seconds. 
 
 [[null-sink]]
 === Null Sink
