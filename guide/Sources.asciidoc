@@ -28,6 +28,7 @@ The Sources covered are
 * <<mqtt, MQTT>>
 * <<stdout, Stdout Capture>>
 * <<kafka, Kafka>>
+* <<jdbc, JDBC>>
 
 
 Future releases will provide support for other currently available Spring Integration Adapters.  For information on how to adapt an existing Spring Integration Adapter for use in Spring XD see the section link:Creating-a-Source-Module#creating-a-source-module[Creating a Source Module].
@@ -981,3 +982,25 @@ Configure a stream:
 ----
 xd:> stream create myKafkaSource --definition "kafka --zkconnect=localhost:2181 --topic=mytopic | log" --deploy
 ----
+
+[[jdbc]]
+=== JDBC
+
+This source module supports the ability to ingest data directly from various databases.  
+It does this by querying the database and sending the results as messages to the stream.
+
+Configure a stream with a jdbc source using a query:
+----
+xd:> stream create foo --definition "jdbc --fixedDelay=1 --split=1 --url=jdbc:hsqldb:hsql://localhost:9101/mydb --query='select * from testfoo' |log" --deploy
+----  
+In the example above the user will be polling the testfoo table to retrieve all the rows in the table once a second until the stream is undeployed or destroyed.
+
+Configure a stream with a jdbc source using a query and update:
+----
+xd:> stream create foo --definition "jdbc --fixedDelay=1 --split=1 --url=jdbc:hsqldb:hsql://localhost:9101/mydb --query='select * from testfoo where tag = 0' --update='update testfoo set tag=1 where fooid in (:fooid)'|log" --deploy
+----  
+In the example above the user will be polling the testfoo table to retrieve rows in the table that have a "tag" of zero.  The update will set the value of tag to 1 for the rows that were retrieved, thus rows that have already been retrieved will not included in future queries.
+
+
+//^source.jdbc
+//$source.jdbc
