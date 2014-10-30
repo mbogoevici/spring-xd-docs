@@ -273,6 +273,8 @@ By default, the REST endpoints (administration, management and health), as well 
 * the REST endpoints will require Basic authentication for access;
 * the Admin UI will be accessible after signing in through a web form.
 
+NOTE: When authentication is set up, it is strongly recommended to enable HTTPS as well, especially in production environments.
+
 You can turn on authentication by adding the following to the configuration in `servers.yml`:
 
 [source,yaml]
@@ -283,22 +285,103 @@ security:
   basic:
     enabled: true                                                     # <2>
     realm: SpringXD                                                   # <3>
-  user:
-    name: yourAdminUsername                                           # <4>
-    password: yourAdminPassword                                       # <5>
 ----
 
-<1> The settings are applicable only to the admin server (regardless whether it's started in single-node mode or as a separate instance).
+<1> The settings are applicable only to the admin server (regardless whether it's started in single node mode or as a separate instance).
 
 <2> Must be set to `true` for security to be enabled.
 
 <3> (Optional) The realm for Basic authentication. Will default to `SpringXD` if not explicitly set.
 
-<4> The username for authentication (must be used by REST clients and in the Admin UI). Will default to `user` if not explicitly set.
+Additionally, you must specify an authentication method, out of the following that Spring XD supports:
+* single user mode (the default made available by Spring Boot);
+* integration with an existing LDAP server.
 
-<5> The password for authentication (must be used by REST clients and in the Admin UI). If not explicitly set, it will be auto-generated, as described in the http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/htmlsingle/#boot-features-security[Spring Boot] documentation.
+The two options above are mutually exclusive, and they are described below.
 
-NOTE: When authentication is set up, it is strongly recommended to enable HTTPS as well, especially in production environments.
+[[enabling-default-boot-authentication]]
+====== Single user authentication
+
+This option uses a single username/password pair is created for the server. This option is turned on by default, if security is enabled and LDAP is not configured.
+
+You can configure this option by adding the following to the configuration in `servers.yml`, once security is enabled.
+
+[source,yaml]
+----
+spring:
+  profiles: admin
+security:
+  basic:
+    enabled: true
+    realm: SpringXD
+  user:
+    name: yourAdminUsername                                           # <1>
+    password: yourAdminPassword                                       # <2>
+----
+
+<1> The username for authentication (must be used by REST clients and in the Admin UI). Will default to `user` if not explicitly set.
+
+<2> The password for authentication (must be used by REST clients and in the Admin UI). If not explicitly set, it will be auto-generated, as described in the http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/htmlsingle/#boot-features-security[Spring Boot] documentation.
+
+[[enabling-ldap-authentication]]
+====== LDAP authentication
+
+Spring XD also supports authentication against an LDAP server, in both direct bind and "search and bind" modes. When the LDAP authentication option is activated, the default single user mode is turned off.
+
+In direct bind mode, a pattern is defined for the user's distinguished name (DN), using a placeholder for the username.
+The authentication process derive the distinguished name of the user by replacing the placeholder and use it to authenticate a user against the LDAP server, along with the supplied password.
+You can set up LDAP direct bind as follows:
+
+[source,yaml]
+----
+spring:
+  profiles: admin
+security:
+  basic:
+    enabled: true
+    realm: SpringXD
+xd:
+  security:
+    authentication:
+      ldap:
+        enabled: true                                        <1>
+        url: ldap://ldap.example.com:3309                    <2>
+        userDnPattern: uid={0},ou=people,dc=example,dc=com   <3>
+----
+
+<1> Enables LDAP integration
+<2> The URL for the LDAP server
+<3> The distinguished name (DN) pattern for authenticating against the server.
+
+The "search and bind" mode involves connecting to an LDAP server, either anonymously or with a fixed account, and searching
+for the distinguished name of the authenticating user based on its username, and then using the resulting value and the supplied password for binding to the LDAP server.
+This option is configured as follows:
+
+[source,yaml]
+----
+spring:
+  profiles: admin
+security:
+  basic:
+    enabled: true
+    realm: SpringXD
+xd:
+  security:
+    authentication:
+      ldap:
+        enabled: true                                         <1>
+        url: ldap://ldap.example.com:3309                     <2>
+        managerDn: uid=bob,ou=managers,dc=example,dc=com      <3>
+        managerPassword: managerPassword                      <4>
+        userSearchBase: ou=otherpeople,dc=example,dc=com      <5>
+        userSearchFilter: uid={0}                             <6>
+----
+<1> Enables LDAP integration
+<2> The URL of the LDAP server
+<3> A DN for to authenticate to the LDAP server, if anonymous searches are not supported (optional, required together with next option)
+<4> A password to authenticate to the LDAP server, if anonymous searches are not supported (optional, required together with previous option)
+<5> The base for searching the DN of the authenticating user (serves to restrict the scope of the search)
+<6> The search filter for the DN of the authenticating user
 
 ==== Local transport
 
