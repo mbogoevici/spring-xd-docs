@@ -25,12 +25,13 @@ To configure the entire bus for HA, create a policy:
 
 ==== RabbitMQ Message Bus
 
-Note: the following applies to normally deployed streams. When direct binding between modules is being used, exceptions thrown by the consumer are thrown back to the producer.
+NOTE: The following applies to normally deployed streams. When direct binding between modules is being used, exceptions thrown by the consumer are thrown back to the producer.
 
-
-When a consuming module (processor, sink) fails to handle a message, the bus will retry delivery based on the module (or default bus) retry configuration. The default configuration will make 3 attempts to deliver the message. The retry configuration can be modified at the bus level (in servers.yml), or for an individual stream/module using the deployment manifest.
+When a consuming module (processor, sink) fails to handle a message, the bus will retry delivery based on the module (or default bus) retry configuration. The default configuration will make 3 attempts to deliver the message. The retry configuration can be modified at the bus level (in +servers.yml+), or for an individual stream/module using the deployment manifest.
 
 When retries are exhausted, by default, messages are discarded. However, using RabbitMQ, you can configure such messages to be routed to a dead-letter exchange/dead letter queue. See the https://www.rabbitmq.com/dlx.html[RabbitMQ Documentation] for more information.
+
+NOTE: The following configuration examples assume you are using the default bus +prefix+ used for naming rabbit elements: +"xdbus."+
 
 Consider a stream: +stream create foo --definition "source | processor | sink"+
 
@@ -51,6 +52,17 @@ For example, for the second "pipe" in the stream above we might bind a queue +fo
 Now, when the sink fails to handle a message, after the configured retries are exhausted, the failed message will be routed to +foo.sink.dlq+.
 
 There is no automated mechanism provided to move dead lettered messages back to the bus queue.
+
+
+*Automatic Dead Lettering Queue Binding*
+
+Starting with _version 1.1_, the dead letter queue and binding can be automatically configured by the system. A new property +autoBindDLQ+ has been added; it can be set at the bus level (in +servers.yml+) or using deployment properties, e.g. +--properties module.*.consumer.autoBindDLQ=true+ for all modules in the stream. When +true+, the dead letter queue will be declared (if necessary) and bound to a dead letter exchange named +xdbus.DLX+ (again, assuming the default +prefix+).
+
+In the above example, where we have queues +xdbus.foo.0+ and +xdbus.foo.1+, the system will also create +xdbus.foo.0.dlq+, bound to +xdbus.DLX+ with routing key +xdbus.foo.0+ and +xdbus.foo.1.dlq+, bound to +xdbus.DLX+ with routing key +xdbus.foo.1+.
+
+NOTE: This just sets up the DLQ and binding, you still need to set a policy to enable dead lettering on the queues, routing failed messages to +xdbus.DLX+:
+
++rabbitmqctl set_policy DLX "^xdbus\..*" \'{"dead-letter-exchange":"xdbus.DLX"}' --apply-to queues+
 
 ==== Redis Message Bus
 
