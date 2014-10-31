@@ -1001,3 +1001,6 @@ xd:> stream create foo --definition "jdbc --fixedDelay=1 --split=1 --url=jdbc:hs
 ----  
 In the example above the user will be polling the testfoo table to retrieve rows in the table that have a "tag" of zero.  The update will set the value of tag to 1 for the rows that were retrieved, thus rows that have already been retrieved will not included in future queries.
 
+//^source.jdbc
+//$source.jdbc
+
