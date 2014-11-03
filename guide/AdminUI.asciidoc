@@ -68,7 +68,7 @@ On this screen you can perform the following actions:
 [cols=".^1,.^4"]
 |===
 |image:images/spring-xd-admin-ui-jobs-view-module-details-button.png[View Details, 42, 36, title="View Details"]
-|View details such as the job module options and the module XML configuration file.
+|View details such as the job module options.
 
 |image:images/spring-xd-admin-ui-jobs-create-definition-button.png[Create Definition, 42, 36, title="Create Definition"]
 |Create a Job Definition from the respective Module.
@@ -86,7 +86,7 @@ image::images/spring-xd-admin-ui-jobs-create-job-definition.png[Create a Job Def
 .View Job Module Details
 image::images/spring-xd-admin-ui-jobs-view-module-details.png[View Job Module Details, width=500]
 
-On this page you can view the details of a selected job module. The pages lists the available options (properties) of the modules as well as the actual XML application context file associated with the module.
+On this page you can view the details of a selected job module. The pages lists the available options (properties) of the modules.
 
 ==== List job definitions
 
