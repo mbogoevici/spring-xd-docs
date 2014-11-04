@@ -24,7 +24,7 @@ A JobLauncher is responsible for starting a job and is often triggered via a sch
 
 === Features
 
-Spring XD allows you to create and launch jobs.  The launching of a job can be triggered using a cron expression or in reaction to data on a stream. When jobs are executing, they are also a souce of event data that can be subscribed to by a stream.  There are several type of events sent during a job's execution, the most common being the status of the job and the steps taken within the job.  This bi-direction communication between stream processing and batch processing allows for more complex chains of processing to be developed.
+Spring XD allows you to create and launch jobs.  The launching of a job can be triggered using a cron expression or in reaction to data on a stream. When jobs are executing, they are also a source of event data that can be subscribed to by a stream.  There are several type of events sent during a job's execution, the most common being the status of the job and the steps taken within the job.  This bi-direction communication between stream processing and batch processing allows for more complex chains of processing to be developed.
 
 As a starting point, jobs for the following cases are provided to use out of the box
 
