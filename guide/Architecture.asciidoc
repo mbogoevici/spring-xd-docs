@@ -141,7 +141,7 @@ Using the DIRT runtime, the http | file example would map onto the following run
 .Distributed HTTP to File Stream 
 image::images/http2file.png[width=500]
 
-Data produced by the HTTP module is sent over a Redis Queue and is consumed by the File module. If there was a filter processing module in the steam definition, e.g `http | filter | file` that would map onto the following DIRT runtime architecture.
+Data produced by the HTTP module is sent over a Redis Queue and is consumed by the File module. If there was a filter processing module in the stream definition, e.g `http | filter | file` that would map onto the following DIRT runtime architecture.
 
 [[http-to-filter-to-file]]
 .Distributed HTTP to Filter to File Stream 
