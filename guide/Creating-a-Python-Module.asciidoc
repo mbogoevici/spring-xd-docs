@@ -1,0 +1,92 @@
+[[creating-a-python-module]]
+ifndef::env-github[]
+== Creating a Python Module
+endif::[]
+
+=== Introduction
+
+Spring XD provides support for processor and sink modules that invoke an external shell command which you can used to integrate a Python script with a Spring XD stream, as a link:Processors#shell[processor] or a link:Sinks#shell-sink[sink]. The following `echo.py` script is a simple example which simply echoes the input.
+
+
+[source,python]
+----
+#echo.py
+import sys
+
+#=====================
+# Write data to stdout
+#=====================
+def send(data):
+  sys.stdout.write(data)
+  sys.stdout.flush()
+
+#===========================================
+# Terminate a message using the default CRLF 
+#===========================================
+def eod():
+  send("\r\n")
+
+#===========================
+# Main - Echo the input
+#===========================
+
+while True:
+  try:
+    data = raw_input()
+    if data:
+      send(data)
+      eod()
+----
+
+To use this in a stream, create a stream definition like this:
+----
+xd:>stream create pytest --definition "time | shell --command='python <absolute-path-to>/echo.py' | log" --deploy
+Created and deployed new stream 'pytest'
+----
+
+You should see the time messages echoed in the Spring XD container log. The shell modules work by binding the message channels to the external process' `stdin` and `stdout`. Behind the scenes, these modules use http://docs.oracle.com/javase/7/docs/api/java/lang/ProcessBuilder.html[java.lang.ProcessBuilder] to connect to the shell process. As you can see, most of `echo.py` is boilerplate code. To make things easier, Spring XD provides a https://github.com/spring-projects/spring-xd/blob/master/spring-xd-python/src/springxd/stream.py[python module] to handle all of the low level I/O. Now you can accomplish the same thing much more easily:
+
+[source, python]
+----
+from springxd.stream import Processor
+
+def echo(data):
+    return data
+
+process = Processor()
+process.start(echo)
+----
+
+As you can see, this creates a Processor() object to which you may pass any function that accepts a single argument and returns a value as an argument to the `start` method. Currently, the input and output data must be strings. Processor uses Encoders.LF ("\n") by default. This is how the Spring XD module delimits individual messages in the stream. Encoders.CRLF is also supported. The shell command processor uses CRLF by default, since it reuses some code from Spring XD's tcp modules. So to use the script as shown above, you need to set the `encoder` option:
+
+----
+xd:>stream create pytest --definition "time | shell --command='python <absolute-path-to>/echo.py' --encoder=LF | log" --deploy
+Created and deployed new stream 'pytest'
+----
+
+Alternately, you can specify the CRLF encoder in the Python script:
+
+[source, python]
+----
+from springxd.stream import Processor, Encoders
+
+def echo(data):
+    return data
+
+process = Processor(Encoders.CRLF)
+process.start(echo)
+----
+
+Additionally, the stream module provides a similar `Sink` object which accepts a function that need not return a value (the Sink will ignore the returned value).
+
+
+[NOTE]
+====
+In order to import the `springxd.stream` module into your script, you must include it in your Python module search path. Python provides several ways to do this as described https://docs.python.org/2/tutorial/modules.html#the-module-search-path[here]. Spring XD python modules are included in the distribution in the 'python' directory.
+
+Currently Python 3 is not supported.
+====
+
+
+
+

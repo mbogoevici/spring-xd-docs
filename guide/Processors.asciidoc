@@ -337,7 +337,7 @@ while True:
 
 [NOTE]
 ====
-Spring XD will provide additional Python programming support for handling basic stream processing, as shown above, and the like. 
+Spring XD provides additional Python programming support for handling basic stream processing, as shown above, see link:link:Creating-a-Python-Module[creating a Python module]. 
 ====
 
 To try this example, copy the above script and save it to `echo.py`.  Start Spring XD and create a stream:
