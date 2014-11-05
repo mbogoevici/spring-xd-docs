@@ -62,7 +62,7 @@ process = Processor()
 process.start(echo)
 ----
 
-As you can see, this creates a `Processor` object which has a `start method to which you may pass any function that accepts a single argument and returns a value. Currently, both the input and output data must be strings. Processor uses Encoders.LF ("\n") by default. This is how the Spring XD module delimits individual messages in the stream. Encoders.CRLF is also supported. The shell command processor uses CRLF by default, since it reuses options in common from Spring XD's tcp modules. So to use the script as shown above, you need to set the `encoder` option:
+As you can see, this creates a `Processor` object which has a `start` method to which you may pass any function that accepts a single argument and returns a value. Currently, both the input and output data must be strings. Processor uses Encoders.LF ('\n') by default. This is how the Spring XD module delimits individual messages in the stream. Encoders.CRLF is also supported. The shell command processor uses CRLF by default, since it reuses options in common from Spring XD's tcp modules. So to use the script as shown above, you need to set the `encoder` option:
 
 ----
 xd:>stream create pytest --definition "time | shell --command='python <absolute-path-to>/echo.py' --encoder=LF | log" --deploy
