@@ -5,7 +5,7 @@ endif::[]
 
 === Introduction
 
-Spring XD provides support for processor and sink modules that invoke an external shell command which you can use to integrate a Python script with a Spring XD stream, as a link:Processors#shell[processor] or a link:Sinks#shell-sink[sink]. The following `echo.py` script is a simple example which simply echoes the input.
+Spring XD provides support for link:Processors#shell[processor] and link:Sinks#shell-sink[sink] modules that invoke an external shell command. You can use these to integrate a Python script with a Spring XD stream. The following `echo.py` script is a simple example which can implement a processor to simply echo the input.
 
 
 [source,python]
@@ -44,7 +44,9 @@ xd:>stream create pytest --definition "time | shell --command='python <absolute-
 Created and deployed new stream 'pytest'
 ----
 
-You should see the time messages echoed in the Spring XD container log. The shell modules work by binding the message channels to the external process' `stdin` and `stdout`. Behind the scenes, these modules use http://docs.oracle.com/javase/7/docs/api/java/lang/ProcessBuilder.html[java.lang.ProcessBuilder] to connect to the shell process. As you can see, most of `echo.py` is boilerplate code. To make things easier, Spring XD provides a https://github.com/spring-projects/spring-xd/blob/master/spring-xd-python/src/springxd/stream.py[python module] to handle all of the low level I/O. With this module you can accomplish the same thing much more easily:
+[NOTE]Python 2 must be installed on the host of any container to which the processor module is deployed. Currently Python 3 is not supported.
+
+You should see the time messages echoed in the Spring XD container log. The shell processor works by binding its message channels to the external process' `stdin` and `stdout`. Behind the scenes, the shell modules use http://docs.oracle.com/javase/7/docs/api/java/lang/ProcessBuilder.html[java.lang.ProcessBuilder] to connect to the shell process. As you can see, most of `echo.py` is boilerplate code. To make things easier, Spring XD provides a https://github.com/spring-projects/spring-xd/blob/master/spring-xd-python/src/springxd/stream.py[python module] to handle all of the low level I/O.
 
 [source, python]
 ----
@@ -83,8 +85,6 @@ Additionally, the stream module provides a similar `Sink` object which accepts a
 [NOTE]
 ====
 In order to import the `springxd.stream` module into your script, you must include it in your Python module search path. Python provides several ways to do this as described https://docs.python.org/2/tutorial/modules.html#the-module-search-path[here]. Spring XD python modules are included in the distribution in the 'python' directory.
-
-Currently Python 3 is not supported.
 ====
 
 
