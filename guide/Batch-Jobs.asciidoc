@@ -339,7 +339,7 @@ This module is designed to be driven by a stream polling a directory. It imports
 xd:> job create myjob --definition "filepollhdfs --names=forename,surname,address" --deploy
 ----
 
-You would then use a stream with a file source to scan a directory for files and drive the job. A separate file will be started for each job found:
+You would then use a stream with a file source to scan a directory for files and drive the job. A separate job will be started for each file found:
 
 ----
 xd:> stream create csvStream --definition "file --ref=true --dir=/mycsvdir --pattern=*.csv > queue:job:myjob" --deploy
