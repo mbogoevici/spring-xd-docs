@@ -46,7 +46,7 @@ Created and deployed new stream 'pytest'
 
 [NOTE]
 ====
-Python 2 must be installed on the host of any container to which the processor module is deployed. Currently Python 3 is not supported.
+Python must be installed on the host of any container to which the processor module is deployed.
 ====
 
 You should see the time messages echoed in the Spring XD container log. The shell processor works by binding its message channels to the external process' `stdin` and `stdout`. Behind the scenes, the shell modules use http://docs.oracle.com/javase/7/docs/api/java/lang/ProcessBuilder.html[java.lang.ProcessBuilder] to connect to the shell process. As you can see, most of `echo.py` is boilerplate code. To make things easier, Spring XD provides a https://github.com/spring-projects/spring-xd/blob/master/spring-xd-python/src/springxd/stream.py[python module] to handle all of the low level I/O.
@@ -90,7 +90,7 @@ The `stream` module also provides a similar `Sink` object which accepts a functi
 
 [NOTE]
 ====
-In order to import the `springxd.stream` module into your script, you must include it in your Python module search path. Python provides several ways to do this as described https://docs.python.org/2/tutorial/modules.html#the-module-search-path[here]. Spring XD python modules are included in the distribution in the 'python' directory.
+In order to import the `springxd.stream` module into your script, you must include it in your Python module search path. Python provides several ways to do this as described https://docs.python.org/2/tutorial/modules.html#the-module-search-path[here]. Spring XD python modules are included in the distribution in the 'python' directory. The stream module is designed to be version agnostic and has been tested against Python 2.7.6 and Python 3.4.2
 ====
 
 
