@@ -151,7 +151,7 @@ import ...
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:redis-store.xml", "test-context.xml"})
-public class RedisStoreSinkModuleTest {
+public class RedisStoreSinkModuleTest extends TestCase{
 	
 	@Autowired
 	RedisTemplate<String,String> redisTemplate;
