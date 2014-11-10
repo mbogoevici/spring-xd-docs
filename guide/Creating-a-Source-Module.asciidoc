@@ -77,7 +77,7 @@ apply plugin: 'idea'
 ext {
     junitVersion = '4.11'
     springVersion = '4.0.3.RELEASE'
-    springIntegrationVersion = '4.0.0.M4'
+    springIntegrationVersion = '4.0.2.RELEASE'
 }
 
 dependencies {
@@ -174,7 +174,7 @@ Spring XD looks for modules in the ${xd.home}/modules directory. The modules dir
 
 Simply drop _feed.xml_ into the _modules/source_ directory and add the dependencies to the lib directory by copying the following jars from your gradle cache to `${xd.home}/lib`:
 
-    spring-integration-feed-4.0.2.jar
+    spring-integration-feed-4.0.2.RELEASE.jar
     jdom-1.0.jar
     rome-1.0.0.jar
     rome-fetcher-1.0.0.jar
