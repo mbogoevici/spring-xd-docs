@@ -8,11 +8,11 @@ Below is a reference list of all Spring XD specific commands you can use in the 
 ==== $$admin config server$$
 $$Configure the XD admin server to use$$.
 
-    admin config server [[--uri] <uri>] [--username <username>] [--password <password>]
+    admin config server [[--uri] <uri>] [--username <username>] [--password [<password>]]
 
 *$$uri$$*:: $$the location of the XD Admin REST endpoint$$. *(default: `http://localhost:9393/`)*
 *$$username$$*:: $$the username for authenticated access to the Admin REST endpoint$$. *(default: ``)*
-*$$password$$*:: $$the password for authenticated access to the Admin REST endpoint (valid only with a username)$$. *(default: ``)*
+*$$password$$*:: $$the password for authenticated access to the Admin REST endpoint (valid only with a username)$$.
 
 ==== $$admin config info$$
 $$Show the XD admin server being used$$.
@@ -416,6 +416,13 @@ $$Returns basic info about the Hadoop configuration$$.
     hadoop config info
 
 
+==== $$hadoop config fs$$
+$$Sets the Hadoop namenode$$.
+
+    hadoop config fs [--namenode] <namenode>
+
+*$$namenode$$*:: $$namenode URL - can be file:///|hdfs://<namenode>:<port>|webhdfs://<namenode>:<port>$$. *(required)*
+
 ==== $$hadoop config load$$
 $$Loads the Hadoop configuration from the given resource$$.
 
@@ -428,13 +435,6 @@ $$Returns (all) the Hadoop properties$$.
 
     hadoop config props list
 
-
-==== $$hadoop config fs$$
-$$Sets the Hadoop namenode$$.
-
-    hadoop config fs [--namenode] <namenode>
-
-*$$namenode$$*:: $$namenode URL - can be file:///|hdfs://<namenode>:<port>|webhdfs://<namenode>:<port>$$. *(required)*
 
 
 === Hadoop FileSystem Commands
