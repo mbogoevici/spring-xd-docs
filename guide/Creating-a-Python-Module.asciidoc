@@ -36,6 +36,8 @@ while True:
     if data:
       send(data)
       eod()
+  except:
+    break
 ----
 
 To use this in a stream, create a stream definition like this:

@@ -34,6 +34,7 @@ link:Getting-Started[*Getting Started*] +
 * link:Creating-a-Processor-Module[Creating a Processor Module]
 * link:Creating-a-Sink-Module[Creating a Sink Module]
 * link:Creating-a-Job-Module[Creating a Job Module]
+* link:Creating-a-Python-Module[Creating a Python Module]
 * link:ModuleOptionsMetadata[Providing Module Options Metadata]
 * link:Extending-XD[Extending Spring XD]
 * link:Samples[Samples]
