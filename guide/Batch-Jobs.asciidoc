@@ -636,3 +636,6 @@ xd>job launch JavaWordCountExample
 
 Once the job is launched, go to Spring XD admin-ui to verify the job results. 
 Jobs → Executions → Select the job to verify that execution context holds the log for Spark application results. If you launch the Spark application through Spark Master, then the results and application status can be verified from SparkUI as well.
+
+//^job.sparkapp
+//$job.sparkapp
