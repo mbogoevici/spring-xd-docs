@@ -622,7 +622,7 @@ $$username$$:: $$the username for the FTP connection$$ *($$String$$, no default)
 //$job.ftphdfs
 
 ==== Running Spark Application as a batch job
-A Spark Application can be deployed and launched from Spring XD as a batch job. SparkTasklet submits the Spark application into Spark cluster manager using org.apache.spark.deploy.SparkSubmit. Through this approach, you can also launch a Spark application with specific criteria via Spring XD stream (for instance: A real time scoring algorithm through MLlib spark job can be triggered based on the streaming data events). To get started, please refer to Spark examples here: https://spark.apache.org/examples.html.
+A Spark Application can be deployed and launched from Spring XD as a batch job. SparkTasklet submits the Spark application into Spark cluster manager using **org.apache.spark.deploy.SparkSubmit**. Through this approach, you can also launch a Spark application with specific criteria via Spring XD stream (for instance: A real time scoring algorithm through MLlib spark job can be triggered based on the streaming data events). To get started, please refer to Spark examples here: https://spark.apache.org/examples.html.
 
 Lets run some Spark examples as Spring XD batch jobs:
 ----
