@@ -5,15 +5,15 @@ endif::[]
 
 === Introduction
 
-As outlined in the link:Modules#modules[modules] document, Spring XD currently supports 4 types of modules: source, sink, and processor for stream processing and job for batch processing.  This document walks through creation of a custom processor module.
+As outlined in the link:Modules#modules[modules] document, Spring XD currently supports four types of modules: source, sink, and processor for stream processing and job for batch processing.  This document walks through implementing a custom processor module.
 
-One or more processors can be included in a link:Streams#streams[stream] definition to modify the data as it passes between the initial source and the destination sink. The link:Architecture#architecture[architecture] section covers the basics of processors modules provided out of the box are covered in the link:Processors#processors[processors] section.
+One or more processors can be included in a link:Streams#streams[stream] definition to modify the data as it passes between the initial source and the destination sink. The link:Architecture#architecture[architecture] section covers the basics of stream processing.  Processor modules provided out of the box are covered in the link:Processors#processors[processors] section.
 
-Here we'll look at how to create and deploy a custom processor module to transform the input from a `twittersearch` source. The steps are essentially the same for any source though. Rather than using built-in functionality, we'll write a custom processor implementation class and wire it up using Spring Integration.
+Here we'll look at how to create and deploy a custom processor module to transform the input from a `twittersearch` source. The steps are essentially the same, regardless of the source. Rather than using built-in functionality, we'll write a custom processor implementation class and wire it up using Spring Integration.
 
 === Write the Transformer Code
 
-The tweet messages from `twittersearch` contain quite a lot of data (id, author, time and so on). The transformer we'll write will discard everything but the text content and output this as a string. The output messages from the `twittersearch` source are also strings, containing the tweet data as JSON. We first parse this into a map using Jackson library code, then extract the "text" field from the map.
+The tweet messages from `twittersearch` contain quite a lot of data (id, author, time, hash tags, and so on). The transformer we'll write extracts the text of each tweet and outputs this as a string. The output messages from the `twittersearch` source are also strings, rendering the tweet data as JSON. We first load this into a map using Jackson library code, then extract the "text" field from the map.
 
 [source,java]
 ----
@@ -67,7 +67,7 @@ Create the following file as _tweettransformer.xml_:
 </beans:beans>
 ----
 
-Alternately, you can use an @Configuration class:
+Alternately, you can create the application context using an @Configuration class. In the example below, we've combined the configuration and the transformer into a single Java file for simplicity. Note that TweetTransformer now includes Spring Integration annotations: 
 
 [source, java]
 ----
@@ -126,12 +126,12 @@ class TweetTransformer {
 
 ----
 
-=== Install the Module
+=== Registering the Module
 
 
-To install the module, create a simple jar file including the custom code and copy it to the `${xd.home}/modules/processors` directory. 
+To register the module, create a simple jar file including the configuration and custom code and copy it to the `${xd.home}/modules/processors` directory. 
 
-The jar must include a top level _config_ directory. If using XML configuration, _tweettransformer.xml_ should go in _config_.  If using annotated configuration, create _/config/tweettransformer.properties_  to declare the base packages to scan:
+The jar must contain a top level _config_ directory. If using XML configuration, _tweettransformer.xml_ should go in _config_.  If using annotated configuration, create _/config/tweettransformer.properties_  to declare the base packages to scan:
 
 ----
 base_packages = my.custom.transformer
@@ -144,26 +144,12 @@ The installed jar should be renamed to _tweettransformer.jar_ (or whatever you w
 
 [NOTE] 
 ====
-A simple jar file works in this case because the module requires no additional library dependencies since the Spring XD class path already includes Jackson and Spring Integration. Spring XD currently supports installing a module as an uberjar which includes library dependencies. However, the appropriate tooling and best practices for building an uberjar are a work in progress and will be offered in a future release. In the mean time, if your module requires additional dependencies, module can be used as a starting point.it is recommended to install the module as an expanded directory tree, like so:
-
-----
-<module_name>.jar
-      ├── config
-      │   ├── <module_name>.properties
-      │   └── <module_name>.xml (optional)
-      ├── lib
-      │   ├── <dependent libraries not already in Spring XD classpath (xd/lib)>
-      │  
-----
+A simple jar file works in this case because the module requires no additional library dependencies since the Spring XD class path already includes Jackson and Spring Integration. See link:Modules#module-packaging[Module Packaging] for more details. 
 ====
 
-To build a module with dependencies for installation the https://github.com/spring-projects/spring-xd-modules/blob/master/analytics-ml-pmml/build.gradle[PMML sample build file] is a good place to start.
+=== Test the custom module
 
-
-
-=== Test the installed module
-
-Start the XD server and try creating a stream to test your processor:
+Start the Spring XD runtime and try creating a stream to test your processor:
 
   xd:> stream create --name javatweets --definition "twittersearch --query=java --consumerKey=<your_key> --consumerSecret=<your_secret> | tweettransformer | file" --deploy
 
