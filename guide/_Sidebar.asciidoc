@@ -57,5 +57,6 @@ link:Getting-Started[*Getting Started*] +
 * link:Building-Spring-XD[Appendix B: Building Spring XD]
 * link:Using-MQTT-On-XD[Appendix C: Using MQTT]
 * link:ShellReference[Appendix D: Spring XD Shell Command Reference]
+* link:Hadoop-Kerberos[Appendix E: Using Kerberized Hadoop]
 
 ****
