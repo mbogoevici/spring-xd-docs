@@ -1132,6 +1132,7 @@ $$topic$$:: $$name for the topic$$ *($$String$$, no default)*
 $$topicExpression$$:: $$a SpEL expression to use for topic$$ *($$String$$, no default)*
 //$sink.redis
 
+
 [[kafka-sink]]
 === Kafka
 
