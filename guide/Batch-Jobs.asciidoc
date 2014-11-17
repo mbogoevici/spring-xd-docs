@@ -620,3 +620,24 @@ $$port$$:: $$the port for the FTP server$$ *($$int$$, default: `21`)*
 $$restartable$$:: $$whether the job should be restartable or not in case of failure$$ *($$boolean$$, default: `false`)*
 $$username$$:: $$the username for the FTP connection$$ *($$String$$, no default)*
 //$job.ftphdfs
+
+==== Running Spark Application as a batch job
+A Spark Application (MLlib or any spark application) can be deployed and launched from XD as a batch job. We have a SparkTasklet that submits your spark application into spark cluster manager using org.apache.spark.deploy.SparkSubmit. This way, you get the benefit of launching your spark application based on a specific criteria on a XD stream (for instance: A real time scoring algorithm as MLlib spark job which can be triggered based on the streaming data events).
+To get you started, please check some spark examples here: https://spark.apache.org/examples.html.
+
+Lets run some expamples from that link as XD batch jobs here:
+----
+xd:>job create SparkPiExample --definition "sparkapp --appJar=<the location of spark-examples_2.10-1.1.0.jar> --name=MyApp --master=<spark master url or local> --mainClass=org.apache.spark.examples.SparkPi" --deploy
+xd:>job launch SparkPiExample
+----
+----
+xd:>job create JavaWordCountExample --definition "sparkapp --appJar=<the location of spark-examples_2.10-1.1.0.jar> --name=MyApp --master=<spark master url or local> --mainClass=org.apache.spark.examples.JavaWordCount --programArgs=<location of the file to count the words>" --deploy
+xd>job launch JavaWordCountExample
+----
+
+Once the job is launched, go to admin UI: Jobs->Executions->Select specific job execution
+You would see the execution context holds the log for the spark application results.
+If you are launching the spark application through Spark Master, then you can see the application status on the SparkUI as well.
+
+//^job.sparkapp
+//$job.sparkapp
