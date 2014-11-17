@@ -5,33 +5,33 @@ endif::[]
 
 === Installing Hadoop
 
-If you don't have a local _Hadoop_ cluster available already, you can do a local http://hadoop.apache.org/docs/r2.2.0/hadoop-project-dist/hadoop-common/SingleCluster.html[single node installation (v2.2.0)] and use that to try out _Hadoop_ with _Spring XD_. 
+If you don't have a local _Hadoop_ cluster available already, you can do a local http://hadoop.apache.org/docs/r2.5.1/hadoop-project-dist/hadoop-common/SingleCluster.html[single node installation (v2.5.1)] and use that to try out _Hadoop_ with _Spring XD_. 
 
 TIP: This guide is intended to serve as a quick guide to get you started in the context of _Spring XD_. For more complete documentation please refer back to the documentation provided by your respective _Hadoop_ distribution.
 
 ==== Download
 
-First, http://archive.apache.org/dist/hadoop/common/hadoop-2.2.0/[download an installation archive] (hadoop-2.2.0.tar.gz) and unpack it locally. Linux users can also install _Hadoop_ through the system package manager and on Mac OS X, you can use http://brew.sh/[Homebrew]. However, the manual installation is self-contained and it's easier to see what's going on if you just unpack it to a known location.
+First, http://archive.apache.org/dist/hadoop/common/hadoop-2.5.1/[download an installation archive] (hadoop-2.5.1.tar.gz) and unpack it locally. Linux users can also install _Hadoop_ through the system package manager and on Mac OS X, you can use http://brew.sh/[Homebrew]. However, the manual installation is self-contained and it's easier to see what's going on if you just unpack it to a known location.
 
 If you have `wget` available on your system, you can also execute:
 
 [source,bash]
 ----
-$ wget http://archive.apache.org/dist/hadoop/common/hadoop-2.2.0/hadoop-2.2.0.tar.gz
+$ wget http://archive.apache.org/dist/hadoop/common/hadoop-2.5.1/hadoop-2.5.1.tar.gz
 ----
 
 Unpack the distribution with:
 
 [source,bash]
 ----
-$ tar xzf hadoop-2.2.0.tar.gz
+$ tar xzf hadoop-2.5.1.tar.gz
 ----
 
 Change into the directory and have a look around
 
 [source,bash]
 ----
-$ cd hadoop-2.2.0
+$ cd hadoop-2.5.1
 $ ls
 $ bin/hadoop
 Usage: hadoop [--config confdir] COMMAND
@@ -52,14 +52,14 @@ Make sure that you set `JAVA_HOME` in the `etc/hadoop/hadoop-env.sh` script, or 
 ----
 # The java implementation to use.  Required.
 # export JAVA_HOME=/usr/lib/j2sdk1.5-sun
-export JAVA_HOME=/usr/lib/jdk1.6.0_45
+export JAVA_HOME=/usr/lib/jdk1.7.0_65
 ----
 
 TIP: When using _Mac OS X_ you can determine the _Java_ home directory by executing `$ /usr/libexec/java_home -v 1.6`
 
 TIP: When using _Ubuntu_ you can determine the _Java_ home directory by executing `$ sudo update-java-alternatives -l`
 
-IMPORTANT: When using _MAC OS X_ (Other systems possible also) you may still encounter `Unable to load realm info from SCDynamicStore` (For details see https://issues.apache.org/jira/browse/HADOOP-7489[Hadoop Jira HADOOP-7489]). In that case, please also add to `conf/hadoop-env.sh` the following line: `export HADOOP_OPTS="-Djava.security.krb5.realm= -Djava.security.krb5.kdc="`.
+NOTE: When using _MAC OS X_ (Other systems possible also) you may still encounter `Unable to load realm info from SCDynamicStore` (For details see https://issues.apache.org/jira/browse/HADOOP-7489[Hadoop Jira HADOOP-7489]). In that case, please also add to `conf/hadoop-env.sh` the following line: `export HADOOP_OPTS="-Djava.security.krb5.realm= -Djava.security.krb5.kdc="`.
 
 ==== Setup SSH
 
@@ -174,10 +174,10 @@ First we need to set up the environment settings. It's convenient to add these t
 [source,bash]
 ----
 # The directory of the unpacked distribution
-export HADOOP_INSTALL="$HOME/Downloads/hadoop-2.2.0"
+export HADOOP_INSTALL="$HOME/Downloads/hadoop-2.5.1"
 
 # The JAVE_HOME (see above how to determine this)
-export JAVA_HOME=/usr/lib/jdk1.6.0_45
+export JAVA_HOME=/usr/lib/jdk1.7.0_65
 
 # Some HOME settings
 export HADOOP_MAPRED_HOME=$HADOOP_INSTALL
@@ -223,13 +223,13 @@ Try a few commands with `hdfs dfs` to make sure the basic system works
 ----
 $ hdfs dfs -ls /
 Found 1 items
-drwxrwx---   - trisberg supergroup          0 2014-05-01 15:31 /tmp
+drwxrwx---   - trisberg supergroup          0 2014-11-01 15:31 /tmp
 
 $ hdfs dfs -mkdir /xd
 $ bin/hadoop dfs -ls /
 Found 2 items
-drwxrwx---   - trisberg supergroup          0 2014-05-01 15:31 /tmp
-drwxr-xr-x   - trisberg supergroup          0 2014-05-01 15:34 /xd
+drwxrwx---   - trisberg supergroup          0 2014-11-01 15:31 /tmp
+drwxr-xr-x   - trisberg supergroup          0 2014-11-01 15:34 /xd
 ----
   
 Lastly, you can also browse the web interface for _NameNode_ and _ResourceManager_ at:
