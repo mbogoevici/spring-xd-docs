@@ -638,6 +638,3 @@ xd>job launch JavaWordCountExample
 Once the job is launched, go to admin UI: Jobs->Executions->Select specific job execution
 You would see the execution context holds the log for the spark application results.
 If you are launching the spark application through Spark Master, then you can see the application status on the SparkUI as well.
-
-//^job.sparkapp
-//$job.sparkapp
