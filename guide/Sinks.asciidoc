@@ -41,6 +41,8 @@ The Sinks covered are
 
 * <<redis, Redis>>
 
+* <<kafka, Kafka>>
+
 See the section link:Creating-a-Sink-Module#creating-a-sink-module[Creating a Sink Module] for information on how to create sink modules using other Spring Integration Adapters.
 
 [[log]]
@@ -1129,3 +1131,23 @@ $$queueExpression$$:: $$a SpEL expression to use for queue$$ *($$String$$, no de
 $$topic$$:: $$name for the topic$$ *($$String$$, no default)*
 $$topicExpression$$:: $$a SpEL expression to use for topic$$ *($$String$$, no default)*
 //$sink.redis
+
+[[kafka]]
+=== Kafka
+
+Kafka sink can be used to ingest data into a specific Kafka topic configuration.
+
+For example,
+----
+xd:>stream create push-to-kafka --definition "http | kafka --topic=myTopic" --deploy
+xd:>Created and deployed new stream 'push-to-kafka'
+xd:>http post --data "push-messages"
+> POST (text/plain;Charset=UTF-8) http://localhost:9000 push-messages
+> 200 OK
+Now, the posted messages will be available on kafka topic `myTopic`.
+----
+
+==== Options
+
+//^sink.kafka
+//$sink.kafka
