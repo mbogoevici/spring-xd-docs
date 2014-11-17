@@ -2,7 +2,7 @@
 
 If you have enabled Kerberos security in your Hadoop cluster it is possible to connect XD Shell, hdfs and hdfs-dataset sinks to it.
 
-.hadoop.properties
+`hadoop.properties`
 [source,text]
 ----
 hadoop.security.authorization=true
