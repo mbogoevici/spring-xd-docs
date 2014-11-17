@@ -1,5 +1,7 @@
 Welcome to *Spring XD* - a unified, distributed, and extensible system for data ingestion, real time analytics, batch processing, and data export.
 
+The documentation on the wiki reflects the state of the master branch and the latest released version it applies to is 1.1.M1
+
 [width="80%",cols="3,^2,^2,10",options="header"]
 |=========================================================
 |link:wiki/About-Spring-XD[About Spring XD] |link:wiki/Project-and-Community[Project & Community] |link:wiki/Getting-Started[Getting Started] |link:wiki/Technical-Documentation[Technical Documentation]
