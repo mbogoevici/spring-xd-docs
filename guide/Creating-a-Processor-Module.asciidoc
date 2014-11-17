@@ -5,11 +5,11 @@ endif::[]
 
 === Introduction
 
-As outlined in the link:Modules#modules[modules] document, XD currently supports 4 types of modules: source, sink, and processor for stream processing and job for batch processing.  This document walks through creation of a custom processor module.
+As outlined in the link:Modules#modules[modules] document, Spring XD currently supports 4 types of modules: source, sink, and processor for stream processing and job for batch processing.  This document walks through creation of a custom processor module.
 
 One or more processors can be included in a link:Streams#streams[stream] definition to modify the data as it passes between the initial source and the destination sink. The link:Architecture#architecture[architecture] section covers the basics of processors modules provided out of the box are covered in the link:Processors#processors[processors] section.
 
-Here we'll look at how to create and deploy a custom processor module to transform the input from an incoming `twittersearch`. The steps are essentially the same for any source though. Rather than using built-in functionality, we'll write a custom processor implementation class and wire it up using Spring Integration.
+Here we'll look at how to create and deploy a custom processor module to transform the input from a `twittersearch` source. The steps are essentially the same for any source though. Rather than using built-in functionality, we'll write a custom processor implementation class and wire it up using Spring Integration.
 
 === Write the Transformer Code
 
@@ -18,7 +18,7 @@ The tweet messages from `twittersearch` contain quite a lot of data (id, author,
 [source,java]
 ----
 
-package custom;
+package my.custom.transformer;
 
 import java.io.IOException;
 import java.util.Map;
@@ -67,11 +67,101 @@ Create the following file as _tweettransformer.xml_:
 </beans:beans>
 ----
 
+Alternately, you can use an @Configuration class:
+
+[source, java]
+----
+package my.custom.transformer;
+
+import java.io.IOException;
+import java.util.Map;
+
+import my.custom.transformer.TweetTransformer;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.integration.annotation.MessageEndpoint;
+import org.springframework.integration.annotation.Transformer;
+import org.springframework.integration.channel.DirectChannel;
+import org.springframework.integration.config.EnableIntegration;
+import org.springframework.integration.transformer.MessageTransformationException;
+import org.springframework.messaging.MessageChannel;
+
+@Configuration
+@EnableIntegration
+public class ModuleConfiguration {
+  @Autowired
+  TweetTransformer transformer;
+
+  @Bean
+  public MessageChannel input() {
+    return new DirectChannel();
+  }
+
+  @Bean
+  MessageChannel output() {
+    return new DirectChannel();
+  }
+}
+
+@MessageEndpoint
+class TweetTransformer {
+  private ObjectMapper mapper = new ObjectMapper();
+
+  @Transformer(inputChannel = "input", outputChannel = "output")
+  public String transform(String payload) {
+    try {
+      Map<String, Object> tweet = mapper.readValue(payload, new TypeReference<Map<String, Object>>() {
+      });
+      return tweet.get("text").toString();
+    }
+    catch (IOException e) {
+      throw new MessageTransformationException("Unable to transform tweet: " + e.getMessage(), e);
+    }
+  }
+}
+
+----
+
 === Install the Module
 
-To deploy the module, you need to copy the _tweettransformer.xml_ file to the `${xd.home}/modules/processors` directory. We also need to make the custom module code available. Spring XD looks for code in the jars it finds in the `${xd.home}/lib` directory. So create a jar with the `TweetTransformer` class in it (and the correct package structure) and drop it into `lib`.
 
-=== Test the deployed module
+To install the module, create a simple jar file including the custom code and copy it to the `${xd.home}/modules/processors` directory. 
+
+The jar must include a top level _config_ directory. If using XML configuration, _tweettransformer.xml_ should go in _config_.  If using annotated configuration, create _/config/tweettransformer.properties_  to declare the base packages to scan:
+
+----
+base_packages = my.custom.transformer
+----
+
+[NOTE]
+====
+The installed jar should be renamed to _tweettransformer.jar_ (or whatever you would like to name the module), embedded versions will be interpreted as part of the module name.
+====
+
+[NOTE] 
+====
+A simple jar file works in this case because the module requires no additional library dependencies since the Spring XD class path already includes Jackson and Spring Integration. Spring XD currently supports installing a module as an uberjar which includes library dependencies. However, the appropriate tooling and best practices for building an uberjar are a work in progress and will be offered in a future release. In the mean time, if your module requires additional dependencies, module can be used as a starting point.it is recommended to install the module as an expanded directory tree, like so:
+
+----
+<module_name>.jar
+      ├── config
+      │   ├── <module_name>.properties
+      │   └── <module_name>.xml (optional)
+      ├── lib
+      │   ├── <dependent libraries not already in Spring XD classpath (xd/lib)>
+      │  
+----
+====
+
+To build a module with dependencies for installation the https://github.com/spring-projects/spring-xd-modules/blob/master/analytics-ml-pmml/build.gradle[PMML sample build file] is a good place to start.
+
+
+
+=== Test the installed module
 
 Start the XD server and try creating a stream to test your processor:
 
@@ -79,7 +169,3 @@ Start the XD server and try creating a stream to test your processor:
 
 If you haven't already used `twittersearch`, read the link:Sources#sources[sources] section for more details. This command should stream tweets to the file `/tmp/xd/output/javatweets` but, unlike the normal `twittersearch` output, you should just see the plain tweet text there, rather than the full JSON data.
 
-=== Installing the module in a sub-directory
-Modules can also reside in a sub-directory named after the module itself, e.g. `modules/sink/tweettransform`.  This sub-directory in turn contains `config` and `lib` sub-directories.  If you install a module following this convention then the module will run in an isolated classpath, a child of the parent classpath created from the contents of `xd/lib`. See https://github.com/spring-projects/spring-xd/wiki/Modules#modules-with-isolated-classpath[Modules with isolated classpath] for more information.
-
-[NOTE] To help you better package up a module for installation in a sub-directory the https://github.com/spring-projects/spring-xd-modules/blob/master/analytics-ml-pmml/build.gradle[sample build file] form the JPMML module can be used as a starting point.

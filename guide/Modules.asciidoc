@@ -5,26 +5,33 @@ endif::[]
 
 === Introduction
 
-Spring XD supports data ingestion by allowing users to define link:Streams#streams[streams]. Streams are composed of _modules_ which encapsulate a unit of work into a reusable component.
+Spring XD supports data ingestion by allowing users to define link:Streams#streams[streams]. Streams are composed of _modules_ which encapsulate a unit of work into a reusable component. A job in Spring XD must also be implemented as a module.
 
-Modules are categorized by type, typically representing the role or function of the module. Current Spring XD module types include `source`, `sink`, `processor`, and `job`. The type indicates how the modules may be composed in a stream, or used to deploy a batch job. Specifically, a source polls an external resource, or is triggered by an event and only provides an output. The first module in a stream must be a source. A processor performs some type of transformation or business logic on the message and requires both an input and output. A sink provides only an input and outputs data to an external resource to terminate the stream. A job module implements a Spring Batch job.
+Modules are categorized by `type`, typically representing the role or function of the module. Current Spring XD module types include `source`, `sink`, `processor`, and `job`. The type determines how the modules may be composed in a stream, or used to deploy a batch job. More precisely:
 
-Spring XD comes with a number of modules useful for assembling streams which perform common input and/or output operations using files, HDFS, http, twitter, syslog, GemFire, and more. Users can easily assemble these modules into streams to build complex big data applications declaratively, without having to know the underlying Spring products on which Spring XD is built.
+* A source polls an external resource, or is triggered by an event and only provides output. The first module in a stream must be a source. 
+* A processor performs some type of task, using a message as input and produces a new message, so it requires both input and output. 
 
-However, if you are interested in extending Spring XD with your own modules, some knowledge of Spring, Spring Integration, and Spring Batch is essential. The remainder of this document assumes the reader has some familiarity with these topics.
+* A sink consumes input messages and outputs data to an external resource to terminate the stream. 
+
+* A job module implements a Spring Batch job enabled for Spring XD.
+
+Spring XD ships with a number of pre-built modules useful for assembling streams to perform common stream processing tasks using files, HDFS, Spark, Kafka, http, twitter, syslog, GemFire, and more. Users can easily assemble these modules into streams to build complex big data applications declaratively, without having to write Java code or know the underlying Spring products on which Spring XD is built.
+
+However, if you are interested in extending Spring XD with your own modules, some knowledge of Spring, Spring Integration or Spring Batch is essential. The remainder of this document assumes the reader has some familiarity with these topics.
 
 === Creating a Module
-This section provides details on how to write and register custom modules. For a quick start, dive into the examples of creating link:Creating-a-Source-Module#creating-a-source-module[source], link:Creating-a-Processor-Module#creating-a-processor-module[processor], link:Creating-a-Sink-Module#creating-a-sink-module[sink], and link:Creating-a-Job-Module#creating-a-job-module[job] modules.
+This section provides details on how to implement and register custom modules. For a quick start, dive into the examples of creating link:Creating-a-Source-Module#creating-a-source-module[source], link:Creating-a-Processor-Module#creating-a-processor-module[processor], link:Creating-a-Sink-Module#creating-a-sink-module[sink], and link:Creating-a-Job-Module#creating-a-job-module[job] modules.
 
-A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/ModuleDefinition.java[ModuleDefinition] has the following required attributes:
+A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/ModuleDefinition.java[ModuleDefinition] requires the following attributes to uniquely define the module:
 
 * name - the name of the component, normally a single word representing the purpose of the module. Examples are _file_, _http_, _syslog_.
-* type - the module type, current XD module types include _source_, _sink_, _processor_, and _job_
+* type - the module type, current Spring XD module types include _source_, _sink_, _processor_, and _job_
 
 ==== Modules and Spring
-At the core, a module is any component that may be implemented using a Spring application context. In this respect, the concept may be extended for purposes other than data ingestion. The types mentioned above (source, processor, sink, and job) are specific to Spring XD but other module types are envisioned.
+At the core, a module is any component that may be used to create a Spring application context. In this respect, the concept may be extended for purposes other than stream processing. The module types mentioned above (source, processor, sink, and job) are specific to Spring XD but other module types are envisioned.
 
-A module is typically configured using property placeholders which are bound to the module's options. Options may be required or optional where optional properties define a default value in link:ModuleOptionsMetadata[Module Options Metadata]. Module options metadata may be provided in a properties file or a Java class.
+Each module intance is configured using property placeholders which are bound to the module's options defined via link:ModuleOptionsMetadata[Module Options Metadata]. Options may be required or optional, where optional properties provide a default value.  Module Options Metadata may be provided within the module's properties file or in a Java class provided by the module or one of its dependencies. In addition to binding module options to properties in the module's application context, options may also be used to activate Spring environment profiles.
 
 For example, here is part of the Spring configuration for the _twittersearch_ source that runs a query against Twitter:
 
@@ -55,9 +62,9 @@ For example, here is part of the Spring configuration for the _twittersearch_ so
 </beans>
 ----
 
-Note the property placeholders such as _query_, _language_, _consumerKey_ and _consumerSecret_. Spring XD will substitute values for all of these properties as configured for each module instance. The options for this module are defined in https://github.com/spring-projects/spring-xd/blob/master/extensions/spring-xd-extension-twitter/src/main/java/org/springframework/integration/x/twitter/TwitterSearchOptionsMetadata.java[TwitterSearchOptionsMetadata.java] 
+Note the Spring properties such as _query_, _language_, _consumerKey_ and _consumerSecret_. Spring XD will bind values for all of these properties as provided as options for each module instance. The options exposed for this module are defined in https://github.com/spring-projects/spring-xd/blob/master/extensions/spring-xd-extension-twitter/src/main/java/org/springframework/integration/x/twitter/TwitterSearchOptionsMetadata.java[TwitterSearchOptionsMetadata.java] 
 
-For example, we can create two different streams, each using the _twittersearch_ source with a different configuration.
+For example, we can create two different streams, each using the _twittersearch_ source providing different option values.
 
     xd:> stream create --name tweettest --definition "twittersearch --query='java' | file"
 
@@ -65,23 +72,23 @@ and
 
     xd:> stream create --name tweettest2 --definition "twittersearch --query='spring' --language=en --consumerKey='mykey' --consumerSecret='mysecret' | file"
 
-In addition to options, modules may reference Spring beans such that each module instance may inject a different implementation of a bean. The ability to deploy the same module definition with different configurations is only possible because each module is created in its own application context. This results in some very useful features, such as the ability to use standard bean ids such as _input_ and _output_ and simple property names without having to worry about naming collisions. Overall, this allows modules to adhere to the KISS principle.
+In addition to options, modules may reference Spring beans such that each module instance may inject a different implementation of a bean. The ability to deploy the same module definition with different configurations is only possible because each module is created in its own application context. This results in some very useful features, such as the ability to use standard bean ids such as _input_ and _output_ and simple property names without having to worry about naming collisions.
 
 ==== Stream Modules
 
-Sources, Processors, and Sinks are built using http://spring.io/spring-integration[Spring Integration] and are typically perform one small task so that they may be easily reused. In Spring Integration terms,
+Sources, processors, and sinks are built using http://spring.io/spring-integration[Spring Integration] and are typically perform a single task that they may be easily reused in streams. Alternately, a custom module may be required to perform a specific function, such as integration with a legacy service. In Spring Integration terms:
 
 * A _source_ is a valid message flow that contains a direct channel named _output_ which is fed by an inbound adapter, either configured with a poller, or triggered by an event.
 
-* A _processor_ is a valid message flow that contains a direct channel named _input_ and a subscribable channel named _output_ (direct or publish subscribe). It typically performs some type of transformation on the message, using the message contents to create a new message.
+* A _processor_ is a valid message flow that contains a direct channel named _input_ and a subscribable channel named _output_ (direct or publish subscribe). It typically performs some type of transformation on the message, using its input channel's message to create a new message on its output channel.
 
 * A _sink_ is a valid message flow that contains a direct channel named _input_ and an outbound adapter, or service activator used to provide the message to an external resource, HDFS for example.
 
 For example, take a look at the https://github.com/spring-projects/spring-xd/blob/master/modules/source/file/config/file.xml[file source] which simply polls a directory using a file inbound adapter and https://github.com/spring-projects/spring-xd/blob/master/modules/sink/file/config/file.xml[file sink] which appends an incoming message payload to a file using a file outbound adapter. On the surface, there is nothing special about these components. They are plain old Spring XML bean definition files.
 
-Upon closer inspection, you will notice that modules adhere to some important conventions. For one thing, the file name is the module name. Also note the input and output channels are always named  _input_ and _output_, in keeping with the KISS principle (let us know if you come up with some simpler names). These names are required to bind these channels to the messaging transport.
+Upon closer inspection, you will notice that modules adhere to some important conventions. For one thing, the file name is the module name. Also note the input and output channels are always named  _input_ and _output_, in keeping with the KISS principle (let us know if you come up with some simpler names). These bean definitions are required to bind the module's channels to the Spring XD message transport.
 
-Also observe the use of property placeholders with sensible defaults where possible.  For example, the file source requires a directory. An appropriate strategy is to define a common root path for XD input files (At the time of this writing it is /tmp/xd/input/. This is subject to change, but illustrates the point). A stream definition using the file source may specify the the directory name by providing a value for the _dir_ option. If not provided, it will default to the stream name, which is contained in the `xd.stream.name` property provided to the module by the Spring XD runtime, see https://github.com/spring-projects/spring-xd/blob/master/modules/source/file/config/file.properties[file source metadata]. By convention, XD defined properties are prefixed with _xd_. This can be seen when using the `module info` command:
+Also observe the use of property placeholders with sensible defaults where possible.  For example, the file source requires a directory. An appropriate strategy is to define a common root path for XD input files (At the time of this writing it is `/tmp/xd/input/`. This is subject to change, but illustrates the point). A stream definition using the file source may specify the the directory name by providing a value for the _dir_ option. If not provided, it will default to the stream name, which is contained in the `xd.stream.name` property bound to the module by the Spring XD runtime, see https://github.com/spring-projects/spring-xd/blob/master/modules/source/file/config/file.properties[file source metadata]. By convention, Spring XD defined properties are prefixed with _xd_. The `module info` command illustrates this point:
 
 ----
 xd:>module info --name source:file
@@ -127,53 +134,70 @@ will only let messages that read "foo" pass through.
 
 === Registering a Module
 
-Spring XD provides a strategy interface https://github.com/SpringSource/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/module/ModuleRegistry.java[ModuleRegistry] which it uses to find a module of a given name and type. Currently XD provides RedisModuleRegistry and FileModuleRegistry, The ModuleRegistry is a required component for the Spring XD runtime. By default the Spring XD is configured with the FileModuleRegistry which looks for modules in `${xd.home:..}/modules`. Where `xd.home` is set by the environment variable `XD_HOME` or passed as a Java System property to the container launcher, . So out of the box, the modules are contained in the xd/modules directory where Spring XD is installed. The modules directory organizes module types in sub-directories. So you will see something like:
+Out of the box all modules are located in the  `xd/modules` directory where Spring XD is installed. The Module Registry organizes modules by  type in corresponding sub-directories, so you will see something like:
 
+      modules/job
       modules/processor
       modules/sink
       modules/source
 
-To register a module simply drop your module files (XML configuration, options metadata, and any dependent jars that are not already on the Spring XD classpath) into the xd/modules directory.
+Spring XD provides a strategy interface https://github.com/SpringSource/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/module/ModuleRegistry.java[ModuleRegistry] used to locate a module of a given name and type. Currently Spring XD provides a ResourceModuleRegistry which is configured to locate modules in the following locations in this order:
+
+* The file path given by `xd.module.home` (`${xd.home}/modules` by default)      
+* `classpath:/modules/`  (Spring XD does not provide any module definitions here)
+* The file path given by `xd.customModule.home` (not defined by default)
+
+You can register a custom module by dropping your module files into the registry.  This can either be intalled as an expanded directory tree or an http://stackoverflow.com/questions/11947037/what-is-an-uber-jar[uberjar] compatible with the Spring Boot class loader, conforming to the following structure, and placed under the appropriate location for the module's type:
+
+      <module_name>
+      ├── config
+      │   ├── <module_name>.properties
+      │   └── <module_name>.xml (optional)
+      ├── lib (optional)
+      │   ├── <dependent libraries not already in Spring XD classpath (xd/lib)>
+      │  
+
+If installing a Spring Boot uberjar, the jar name is the module name:
+
+    <module_type>
+          ├── <module_name>.jar 
+
+
+Where the module uberjar has an identical structure and may also contain local class files in the root, per the normal jar format:
+
+      <module_name>.jar
+      ├── config
+      │   ├── <module_name>.properties
+      │   └── <module_name>.xml (optional)
+      ├── lib
+      │   ├── <dependent libraries not already in Spring XD classpath (xd/lib)>
+      │  
+
+[NOTE]Currently, detecting an embedded version in the jar name, a la Maven, is not supported. `myModule-v1.jar` resolves the module name as `myModule-v1` 
+
+[NOTE]If your custom module requires no additional dependencies, a normal jar with the `config` directory at the top level will work. If you require dependent jars they must be packaged without compression in order to work with the Spring Boot class loader. In this case, we recommended you use one of the available http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/build-tool-plugins.html[Spring Boot build plugins], the Maven http://maven.apache.org/plugins/maven-assembly-plugin/[assembly] plugin, or `jar -0` to build the uberjar. 
 
 ==== Custom Module Registry
 
-In cases where you may prefer to use a custom location for ModuleRegistry and you can copy your custom modules there. In that case, you would set the externalized property `xd.customModule.home` in servers.yml.
+If you prefer to use a separate location to install custom modules, you can set the externalized property `xd.customModule.home` in servers.yml.
 
-==== Modules with isolated classpath
+==== Module Class Loading
 
-In addition to the simple format described above, where you would have a `foo` source module implemented as a `modules/source/foo.xml` file, there is also support for modules that have specific library dependencies.
+Modules use a separate class loader that will first load classes from jars in the module's /lib (and any class files located in the module's root path). If not found, the class will be loaded from the parent ClassLoader that Spring XD normally uses (which includes everything under `$XD_HOME/lib`). Still, there are a couple of caveats to be aware of:
 
-This is accomplished by creating a __folder__ named after your module name and moving the xml file to a `config` subdirectory. As an example, the `foo.xml` file would then reside in 
+* Avoid putting into the `lib/` directory any jar files that are already in Spring XD's class path or you may end up with ClassCastExceptions or other class loading issues.
 
-  modules/source/foo/config/foo.xml
-
-Additional jar files can then be added to a sibling `lib` directory, like so:
-
-  modules/source/foo/
-                     config/
-                            foo.xml
-                     lib/
-                         commons-foo.jar
-                         foo-ext.jar
-
-Classes will first be loaded from any of the aforementioned jar files and, only if they're not found will they be loaded from the parent, global ClassLoader that Spring XD normally uses. Still, there are a couple of caveats that one should be aware of:
-
-1. Refrain from putting into the `lib/` folder jar files that are also part of Spring XD, or you'll likely end up with ClassCastExceptions
-2. Any class that is directly or indirectly referenced from the payload type of your messages (__i.e.__ the types that transit from module to module) must not belong to a particular module `lib/` folder but should rather be loaded by the global Spring XD classloader (installed into xd/lib).
+* Any class that is directly or indirectly referenced from the payload type of your messages (__i.e.__ any type in transit from module to module) must be referenced by both the producing and consuming modules and thus should be installed into xd/lib.
 
 [[composing-modules]]
 === Composing Modules
 
-As described above, a stream is defined as a sequence of modules, minimally a source module followed by a sink module. One or more processor modules may be added in between the source and sink, but they are not mandatory. Sometimes streams share a common processing chain. For example, consider the following two streams:
+As described above, a stream is defined as a sequence of modules, minimally a source module followed by a sink module. Sometimes streams may want share a common processing chain. For example, consider the following two streams:
 
     stream1 = http | filter --expression=payload.contains('foo') | file
     stream2 = file | filter --expression=payload.contains('foo') | file
 
-Other than the source module, the definitions of these two streams are the same. Composite Modules are a good way to avoid this type of duplication. In addition, Composite modules are co-located in a single container and may communicate directly in memory.
-
-Each module within a stream represents a unit of deployment. Therefore, in each of the streams defined above, there would be 3 such units (the source, the processor, and the sink). In a singlenode runtime, it doesn't make much of a difference since the communication between modules uses a bridge between in-memory channels. When deploying a stream to a distributed runtime environment, however, the communication between each module typically occurs over messaging middleware, as modules are distributed evenly among the available containers. At times a stream will perform better if adjacent modules are co-located and can avoid middleware "hops". In such cases, you may wrap multiple modules together so that they act as a single "black box." In other words, if "foo | bar" are composed together as a new module named "baz", the input and/or output to "baz" will still go over the middleware, but foo and bar will be co-located and communicate via a local memory.
-
-Let's look at an example. Returning to the two similar streams above, the filter processor and file sink may be combined into a single module using the `module compose` shell command:
+Aside from the source, the two stream definitions are the same. Composite Modules are designed to avoid this type of duplication. The filter processor and file sink may be combined into a single composite module using the `module compose` shell command:
 
     xd:> module compose foo --definition "filter --expression=payload.contains('foo') | file"
 
@@ -260,6 +284,8 @@ Finally, it's worth mentioning that in some cases duplication may be avoided by 
     xd:> stream create filefoo --definition "file > queue:foo"
 
 This approach is more appropriate for use-cases where individual streams on either side of the named channel may need to be deployed or undeployed independently. Whereas the queue typed channel will load-balance across multiple downstream consumers, the "topic:" prefix may be used if broadcast behavior is needed instead. For more information about named channels, refer to the link:DSL-Reference#named-channels[Named Channels] section.
+
+In addition, composite modules may increase performance. Each module within a stream represents a unit of deployment. Therefore, `stream1` ans `sream2`, defined above are comprised of three such units (the source, the processor, and the sink). In a singlenode runtime, creating a composite module won't make much of a difference since the communication between modules in this case already uses a bridge between in-memory channels. When deploying a stream to a distributed runtime environment, however, the communication between each module typically occurs via messaging middleware, as modules are, by default, distributed evenly among the available containers. At times a stream will perform better if adjacent modules are co-located and can avoid middleware "hops". In such cases, composing modules allows the composite module to behave as a single "black box." In other words, if "foo | bar" are composed to create a new module named "baz", the input and/or output to "baz" will still go over the middleware, but foo and bar will be co-located in a single container instance and wired to communicate via local memory.
 
 [[module_info]]
 === Getting Information about Modules
