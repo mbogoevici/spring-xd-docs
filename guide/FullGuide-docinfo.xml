@@ -1,6 +1,6 @@
 <titleabbrev>Spring XD 1.0.0</titleabbrev>
 <productname>Spring XD</productname>
-<releaseinfo>1.0.0</releaseinfo>
+<releaseinfo>{appversion}</releaseinfo>
 <copyright>
 	<year>2013-2014</year>
 	<holder></holder>
