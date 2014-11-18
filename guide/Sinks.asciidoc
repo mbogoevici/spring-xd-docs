@@ -1134,7 +1134,7 @@ $$topicExpression$$:: $$a SpEL expression to use for topic$$ *($$String$$, no de
 
 
 [[kafka-sink]]
-=== Kafka
+=== Kafka Sink
 
 Kafka sink can be used to ingest data into a specific Kafka topic configuration.
 
