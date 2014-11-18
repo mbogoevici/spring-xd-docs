@@ -5,16 +5,16 @@ endif::[]
 
 === Introduction
 
-As outlined in the link:Modules#modules[modules] document, XD currently supports 4 types of modules: source, sink, and processor for stream processing and job for batch procesing.  This document walks through creation of a custom sink module.
+As outlined in the link:Modules#modules[modules] document, Spring XD currently supports four types of modules: source, sink, and processor for stream processing and job for batch procesing.  This document walks through implementing a custom sink module.
 
-The last module in a link:Streams#streams[stream] is always a sink. Sink modules are built with Spring Integration and are typically very fine-grained.  A module of type _sink_ listens on a channel named _input_ and is responsible for outputting received messages to an external resource to terminate the stream.
+The last module in a link:Streams#streams[stream] is always a sink. Sink modules are built with Spring Integration.  A _sink_ consumes messages on its _input_ channel and sends them to an external resource to terminate the stream.
 
-Spring Integration provides a number of adapters out of the box to support various transports, such as JMS, File, HTTP, Web Services, Mail, and more. You can typically create a sink module that uses these outbound channel adapters by writing just a single Spring application context file.
+Spring Integration provides a number of outbound channel adapters to integrate with various transports such as TCP, AMQP, JMS, Kafka, HTTP, web services, mail, or data stores such as file, Redis, MongoDB, JDBC, Splunk, Gemfire, and more. It is straightforward to create a sink module using an existing outbound channel adapters by writing just a single XML bean definition file. Such outbound channel adapters are typically used to integrate streams with legacy systems. Alternately, you may prefer to use a Java API to provide data to an external system. In this case, the sink can invoke a Java method using a http://docs.spring.io/spring-integration/docs/latest-ga/reference/html/messaging-endpoints-chapter.html#service-activator[Service Activator].  
 
-These steps will demonstrate how to create and deploy a sink module using the http://docs.spring.io/spring-integration/reference/html/redis.html#redis-store-outbound-channel-adapter[Spring Integration RedisStore Outbound Channel Adapter].
+Here, we will demonstrate step-by-step how to create and install a sink module using the Spring Integration http://docs.spring.io/spring-integration/reference/html/redis.html#redis-store-outbound-channel-adapter[Redis Store Outbound Channel Adapter].
 
-=== Create the module Application Context file
-Create the Outbound Channel Adapter in a file called _redis-store.xml_:
+=== Create the module Application Context
+Configure the outbound channel adapter in a file called _redis-store.xml_:
 
 [source,xml]
 ----
@@ -32,82 +32,104 @@ Create the Outbound Channel Adapter in a file called _redis-store.xml_:
 	<int:channel id="input" />
 
 	<int-redis:store-outbound-channel-adapter
-		id="redisListAdapter" collection-type="LIST" channel="input" key="myCollection" />
+		id="redisListAdapter" collection-type="LIST" channel="input" key="${collection}" />
 
-	<bean id="redisConnectionFactory"
-		class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory">
-		<constructor-arg index="0" value="${localhost}" />
-		<constructor-arg index="1" value="${6379}" />
-	</bean>
+	<beans:bean id="redisConnectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<beans:property name="hostName" value="${host}" />
+		<beans:property name="port" value="${port}" />
+	</beans:bean>
 
 </beans>
 ----
 
-The adapter is configured to listen on a channel named _input_. The name _input_ should be used by convention so that your sink module will receive all messages sent in the stream. Once a message is received, it will write the payload to a Redis list with key _myCollection_.  By default, the RedisStore Outbound Channel Adapter uses a bean named _redisConnectionFactory_ to connect to the Redis server.
+The adapter, as required by Spring XD, is configured as an endpoint on a channel named _input_.  When a message is consumed, the Redis Store Outbound Channel Adapter will write the payload to a Redis list with a key given by the _${collection}_ property.  By default, the Redis Store Outbound Channel Adapter uses a bean named _redisConnectionFactory_ to connect to the Redis server. Here the connection factory is configured with property placeholders _${host}_, _${port}_ which will be provided as module options in stream definitions that use this sink.
 
-NOTE: By default, the adapter uses a _StringRedisTemplate_. Therefore, this module will store all payloads directly as Strings. Create a custom _RedisTemplate_ with different value Serializers to serialize other forms of data like Java objects to the Redis collection.
+[NOTE] 
+====
+By default, the adapter uses a _StringRedisTemplate_. Therefore, this module will store all payloads directly as Strings. You may configure a _RedisTemplate_ with a different value Serializer to serialize other data types, such as Java objects, to the Redis collection.
+====
 
-=== Make the module configurable
-Users may want to specify a different Redis server or key to use for storing data. Spring XD will automatically make a PropertyPlaceholderConfigurer available to your application context. You can simply reference property names and users can then pass in values when creating a link:Streams#streams[stream] using the DSL
+Spring XD will automatically provide a PropertyPlaceholderConfigurer to your application context, so there is no need to declare one here. You can simply reference property names and users can then pass in values when creating a link:Streams#streams[stream] using the DSL. If you want to provide default values for these properties, you may provide them directly using the common syntax:
 
 [source,xml]
 ----
-<int-redis:store-outbound-channel-adapter id="redisListAdapter"
-  collection-type="LIST" channel="input" key="${key:myCollection}" />
+<int-redis:store-outbound-channel-adapter
+		id="redisListAdapter" collection-type="LIST" channel="input" key="${collection:myCollection}" />
 
-<bean id="redisConnectionFactory"
-  class="org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory">
-  <constructor-arg index="0" value="${hostname:localhost}" />
-  <constructor-arg index="1" value="${port:6379}" />
-</bean>
+<beans:bean id="redisConnectionFactory"
+	class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+	<beans:property name="hostName" value="${host:localhost}" />
+	<beans:property name="port" value="${port:6379}" />
+</beans:bean>
 ----
 
-Now users can optionally pass _key_, _hostname_, and _port_ property values on stream creation. If not present, the specified defaults will be used.
+However, we recommend that you provide Module Option Metadata including a description, type, and optional default value, corresponding to thes property names. Module option metadata supports features like auto-completion in the Spring XD shell and option validation. You can provide these as properties in _redis-store.properties_, like so:
 
-=== Test the module locally
-This section covers setup of a local project containing some code for testing outside of an XD container. This step can be skipped if you prefer to test the module by <<deploy-module-sink,deploying to Spring XD>>.
+----
+options.collection.description = the name of the list
+options.collection.default= ${xd.stream.name}
+options.collection.type = java.lang.String
+#
+options.host.description = the host name for the Redis store
+options.host.default= localhost
+options.host.type = java.lang.String
+#
+options.port.description = the port for the Redis store
+options.port.default= 6379
+options.port.type = java.lang.Integer
+---- 
 
-==== Create a project
-The module can be tested by writing a Spring integration test to load the context file and validate that messages are stored in Redis. In order to write the test, you will need to create a project in an IDE such as STS, Eclipse, or IDEA. Eclipse will be used for this example.
+Note that the _collection_ defaults to the stream name, referencing a common property provided by Spring XD.
 
-Create a _redis-store_ directory and add _redis-store.xml_ to _src/main/resources_. Add the following _build.gradle_ (or an equivalent _pom.xml_) to the root directory:
+Alternately, you can write a POJO to define the metadata. Using a Java class provides better validation along with additional features but also requires that the class be packaged as part of the module.  See link:ModuleOptionsMetadata#module-options-metadata[Module Options Metadata] for more details.
+
+=== Create a module project
+This section covers creating the module as a standalone project containing some code to test the module. Since the module requires no Java code (unless you are providing a module options metadata class), this step can be skipped. Instead you can <<install-the-sink-module, install>> _redis-store_.xml and _redis-store_.properties directly. 
+
+The module can be tested in isolation by writing test using Spring Integration to load the context file and validate that messages are stored in Redis. In order to write the test, you will need to create a Java project in an IDE such as STS, Eclipse, or IDEA. Eclipse will be used for this example.
+
+Create a _redis-store_ directory and add _redis-store.xml_ to _src/main/resources/config_. Add the following _build.gradle_ (or an equivalent _pom.xml_) to the root directory:
 
 [source,groovy]
 ----
 description = 'Redis Store Sink Module'
 group = 'org.springframework.xd.samples'
+version = '1.0.0.BUILD-SNAPSHOT'
 
-repositories {
-  maven { url "http://repo.spring.io/libs-snapshot" }
-  maven { url "http://repo.spring.io/plugins-release" }
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/snapshot" }
+        mavenLocal()
+        maven { url "http://jcenter.bintray.com/" }
+    }
 }
 
 apply plugin: 'java'
+apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-ext {
-    junitVersion = '4.11'
-    lettuceVersion = '2.3.3'
-    springVersion = '4.0.3.RELEASE'
-    springIntegrationVersion = '4.0.0.M4'
-    springDataRedisVersion = '1.1.1.RELEASE'
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.12'
+}
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+repositories {
+     mavenLocal()
+     maven { url "http://jcenter.bintray.com/" }
+     maven { url "http://repo.spring.io/snapshot" }
+     maven { url "http://repo.spring.io/milestone" }
+     
 }
 
 dependencies {
-    compile("org.springframework:spring-core:$springVersion")
-    compile "org.springframework:spring-context-support:$springVersion"
-    compile "org.springframework.integration:spring-integration-core:$springIntegrationVersion"
-    compile "org.springframework.integration:spring-integration-redis:$springIntegrationVersion"
-    compile "org.springframework.data:spring-data-redis:$springDataRedisVersion"
-
-    // Testing
-    testCompile "junit:junit:$junitVersion"
-    testCompile "org.springframework:spring-test:$springVersion"
-    testCompile "com.lambdaworks:lettuce:$lettuceVersion"
+    testCompile('org.springframework.xd:spring-xd-module:1.1.0.BUILD-SNAPSHOT') 
+    testCompile('org.springframework.xd:spring-xd-module-spi:1.1.0.BUILD-SNAPSHOT') 
+    testCompile('org.springframework.xd:spring-xd-test:1.1.0.BUILD-SNAPSHOT') 
 }
-
-defaultTasks 'build'
 ----
 
 Run _gradle eclipse_ to generate the Eclipse project. Import the project into Eclipse.
@@ -120,69 +142,157 @@ Add the following _src/test/resources/org/springframework/xd/samples/test-contex
 ----
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:int="http://www.springframework.org/schema/integration"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/integration
-		http://www.springframework.org/schema/integration/spring-integration.xsd">
+		http://www.springframework.org/schema/integration/spring-integration.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-	<context:property-placeholder />
+	<context:property-placeholder properties-ref="props"/>
 
-	<int:inbound-channel-adapter channel="input" expression="'TESTING'">
-		<int:poller fixed-rate="1000" />
-	</int:inbound-channel-adapter>
+	<util:properties id="props">
+		<prop key="collection">mycollection</prop>
+		<prop key="host">localhost</prop>
+		<prop key="port">6379</prop>
+	</util:properties>
+
+	<import resource="classpath:config/redis-store.xml"/>
 
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
-		<property name="connectionFactory" ref="redisConnectionFactory" />
+		<property name="connectionFactory" ref="redisConnectionFactory"/>
 	</bean>
-
 </beans>
 ----
-This context creates an Inbound Channel Adapter that will generate messages with the payload "TESTING". The context also creates the PropertyPlaceholderConfigurer that is ordinarily provided by the XD container. The _redisTemplate_ is configured for use by the test to verify that data is placed in Redis.
 
-Lastly, create and run the _src/test/java/org/springframework/xd/samples/RedisStoreSinkModuleTest_:
+This context imports the module configuration and adds PropertyPlaceholderConfigurer along with property values ordinarily provided by the XD container. The _redisTemplate_ is provided to verify that input data is stored in Redis.
+
+Next, create and run the _src/test/java/org/springframework/xd/samples/RedisStoreSinkModuleTest_:
 [source,java]
 ----
 package org.springframework.xd.samples;
-import ...
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.concurrent.TimeUnit;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.support.GenericMessage;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:redis-store.xml", "test-context.xml"})
-public class RedisStoreSinkModuleTest extends TestCase{
-	
+@ContextConfiguration("classpath:test-context.xml")
+public class RedisStoreSinkModuleTest {
+
 	@Autowired
 	RedisTemplate<String,String> redisTemplate;
-	
+
+	@Autowired
+	MessageChannel input;
+
 	@Test
-	public void testTweetSearch() throws Exception {
-	     assertNotNull(redisTemplate.boundListOps("myCollection").leftPop(5, TimeUnit.SECONDS));
+	public void test() {
+		input.send(new GenericMessage<String>("hello"));
+		assertEquals("hello", redisTemplate.boundListOps("mycollection").leftPop(5, TimeUnit.SECONDS));
 	}
 }
 ----
-The test will load an Application Context using our redis-store and test context files. It will fail if an item is not placed in the Redis list within 5 seconds.
+The test will load the module application context using our test context and send a message to the module's _input_ channel. It will fail if the input payload "hello" is not added to the Redis list within 5 seconds.
 
 ==== Run the test
 The test requires a running Redis server. See link:Getting-Started#getting-started[Getting Started] for information on installing and starting Redis.
 
-You now have a way to build and test your new module independently. Time to deploy to Spring XD!
+==== Test the Module Options
+Another test you may want to include is one to verify the module options metadata, as defined in _redis-store.properties_ Here is an example _ModuleOptionsTest_ that uses Spring XD's _DefaultModuleOptionsMetadataResolver_
 
-[[install-module-sink]]
-=== Install the module
-Spring XD looks for modules in the ${xd.home}/modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
+[source, java]
+-----
+package org.springframework.xd.samples;
 
-      modules/processor
-      modules/sink
-      modules/source
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
+import static org.springframework.xd.module.ModuleType.*;
 
-Simply drop _redis-store.xml_ into the _modules/sink_ directory and fire up the server. See link:Getting-Started#getting-started[Getting Started] to learn how to start the Spring XD server. 
+import org.hamcrest.Matcher;
+import org.junit.Test;
 
-=== Test the deployed module
-Once the XD server is running, create a stream to test it out. This stream will write tweets containing the word "java" to Redis as a JSON string:
+import org.springframework.xd.module.ModuleDefinition;
+import org.springframework.xd.module.ModuleDefinitions;
+import org.springframework.xd.module.options.DefaultModuleOptionsMetadataResolver;
+import org.springframework.xd.module.options.ModuleOption;
+import org.springframework.xd.module.options.ModuleOptionsMetadata;
+import org.springframework.xd.module.options.ModuleOptionsMetadataResolver;
 
-    xd:> stream create --name javasearch --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=java | redis-store --key=javatweets" --deploy
+
+/**
+ * Tests expected module properties are present.
+ */
+public class ModuleOptionsTest {
+
+	private String moduleName = "redis-store";
+
+	@Test
+	public void testModuleOptions() {
+		ModuleOptionsMetadataResolver moduleOptionsMetadataResolver = new DefaultModuleOptionsMetadataResolver();
+		String resource = "classpath:/";
+		ModuleDefinition definition = ModuleDefinitions.simple(moduleName, processor, resource);
+		ModuleOptionsMetadata metadata = moduleOptionsMetadataResolver.resolve(definition);
+
+		assertThat(
+				metadata,
+				containsInAnyOrder(moduleOptionNamed("collection"), moduleOptionNamed("host"),
+						moduleOptionNamed("port")));
+
+		for (ModuleOption moduleOption : metadata) {
+			if (moduleOption.getName().equals("collection")) {
+				assertEquals("${xd.stream.name}", moduleOption.getDefaultValue());
+			}
+			if (moduleOption.getName().equals("port")) {
+				assertEquals("6379", moduleOption.getDefaultValue());
+			}
+			if (moduleOption.getName().equals("host")) {
+				assertEquals("localhost", moduleOption.getDefaultValue());
+			}
+		}
+	}
+
+	public static Matcher<ModuleOption> moduleOptionNamed(String name) {
+		return hasProperty("name", equalTo(name));
+	}
+}
+-----
+
+You now have a way to build and test your new module independently. Time to install the module to Spring XD!
+
+[[install-the-sink-module]]
+=== Install the sink module
+
+To install this module, if you created the module project as described above, you can simply build the jar using gradle and copy it to Spring XD's _modules/sink_ directory.  
+
+[source, bash]
+----
+$./gradlew jar
+$cp build/libs/redis-store-1.0.0.BUILD-SNAPSHOT.jar <xd-install-home>/xd/modules/sink/redis-store.jar
+----
+
+Alternately, you can create a directory _modules/sink/redis-store/config_ and copy _redis-store.properties_ and _redis-store.xml_ there.
+
+See link:Modules#registering-a-module[registering a module] for more details. 
+
+=== Test the module
+Once the XD server is running, create a stream to test your new module. This stream will write tweets containing the word "java" to Redis as a JSON string:
+
+    xd:> stream create --name javasearch --definition "twittersearch --consumerKey=<your_key> --consumerSecret=<your_secret> --query=java | redis-store --collection=javatweets" --deploy
 
 Note that you need to have a consumer key and secret to use the `twittersearch` module. See the description in the link:Streams#streams[streams] section for more information.
 
@@ -194,8 +304,3 @@ $ redis-cli
 redis 127.0.0.1:6379> lrange javatweets 0 -1
 1) {\"id\":342386150738120704,\"text\":\"Now Hiring: Senior Java Developer\",\"createdAt\":1370466194000,\"fromUser\":\"jencompgeek\",...\"}"
 ----
-
-=== Installing the module in a sub-directory
-Modules can also reside in a sub-directory named after the module itself, e.g. `modules/sink/redis`.  This sub-directory in turn contains `config` and `lib` sub-directories.  If you install a module following this convention then the module will run in an isolated classpath, a child of the parent classpath created from the contents of `xd/lib`. See https://github.com/spring-projects/spring-xd/wiki/Modules#modules-with-isolated-classpath[Modules with isolated classpath] for more information.
-
-[NOTE] To help you better package up a module for installation in a sub-directory the https://github.com/spring-projects/spring-xd-modules/blob/master/analytics-ml-pmml/build.gradle[sample build file] form the JPMML module can be used as a starting point.

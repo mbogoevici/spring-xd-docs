@@ -228,7 +228,7 @@ source:
 
 Note that options in the `.properties` files can reference values that appear in the `modules.yml` file (this makes sharing common configuration easy). Also, the values that are used to configure the server runtimes (in `servers.yml`) are visible to `modules.yml` and `.properties` file (but the inverse is _not_ true).
 
-
+[[registering-a-module]]
 === Registering a Module
 
 A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/ModuleDefinition.java[ModuleDefinition] requires the following attributes to uniquely define the module:
