@@ -67,6 +67,10 @@ include::Using-MQTT-On-XD.asciidoc[]
 [appendix]
 include::ShellReference.asciidoc[]
 
+[appendix]
+include::Hadoop-Kerberos.asciidoc[]
+
+
 
 
 
