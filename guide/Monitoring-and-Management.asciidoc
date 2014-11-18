@@ -19,8 +19,6 @@ All the availble MBeans can be accessed over `HTTP` using `Jolokia`
 
 ==== To enable boot provided management endpoints over HTTP
 
-By **default** `management.port` is set to use admin/container server port and all the exposed endpoints can be accessed from the root context of admin and container servers.
-
 When starting admin, container or singlenode server, the command-line option `--mgmtPort` can be specified to use an explicit port for management server. With the given valid management port, the management endpoints can be accessed from that port. Please refer Spring Boot document http://docs.spring.io/spring-boot/docs/1.1.7.RELEASE/reference/htmlsingle/#production-ready-endpoints[here] for more details on the endpoints.
 
 
@@ -33,7 +31,19 @@ http://localhost:9393/management/beans
 etc..
 ----
 
-=== To disable boot endpoints over HTTP
+==== To enable the container shutdown operation in the UI 
+Add the following configuration to config/servers.yml. This configuration is available as a commented section in config/servers.yml.
+----
+---
+spring:
+  profiles: container
+management:
+  port: 0
+----
+
+
+
+==== To disable boot endpoints over HTTP
 
 Set `management.port=-1` for both default and container profiles in config/servers.yml
 
@@ -43,12 +53,12 @@ All the boot endpoints are exposed over JMX with the domain name `org.springfram
 The MBeans that are exposed within XD admin, container server level are available with the domain names `xd.admin` (for XD admin), `xd.container` (for XD container),  `xd.shared.server` and `xd.parent` representing the application contexts common to both XD admin and container. Singlenode server will have all these domain names exposed.
 When the stream/job gets deployed into the XD container, the stream/job MBeans are exposed with specific domain/object naming strategy.
 
-=== To disable management over JMX
+==== To disable management over JMX
 
 Set `XD_JMX_ENABLED=false` in config/servers.yml or set it as an environment variable to disable the management over JMX
 
 
-=== Monitoring deployed modules in XD container
+==== Monitoring deployed modules in XD container
 
 When a module is deployed (with JMX is enabled on the XD container), the **IntegrationMBeanExporter** is injected into module's context via MBeanExportingPlugin and this exposes all the spring integration components inside the module. For the given module, the IntegrationMBeanExporter uses a specific object naming strategy that assigns domain name as `xd.<stream/job name>` and, object name as `<module name>.<module index>`. 
 
