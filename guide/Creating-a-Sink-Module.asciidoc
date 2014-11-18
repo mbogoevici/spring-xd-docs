@@ -64,7 +64,7 @@ Spring XD will automatically provide a PropertyPlaceholderConfigurer to your app
 </beans:bean>
 ----
 
-However, we recommend that you provide Module Option Metadata including a description, type, and optional default value, corresponding to thes property names. Module option metadata supports features like auto-completion in the Spring XD shell and option validation. You can provide these as properties in _redis-store.properties_, like so:
+However, we recommend that you provide Module Option Metadata including a description, type, and optional default value, corresponding to these property names. Module option metadata supports features like auto-completion in the Spring XD shell and option validation. You can provide these as properties in _redis-store.properties_, like so:
 
 ----
 options.collection.description = the name of the list

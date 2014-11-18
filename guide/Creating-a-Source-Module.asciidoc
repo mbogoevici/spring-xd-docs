@@ -5,11 +5,11 @@ endif::[]
 
 === Introduction
 
-As outlined in the link:Modules#modules[modules] document, XD currently supports 4 types of modules: source, sink, and processor for stream processing and job for batch processing.  This document walks through creation of a custom source module.
+As outlined in the link:Modules#modules[modules] document, XD currently supports four types of modules: source, sink, and processor for stream processing and job for batch processing.  This document walks through the creation of a custom source module.
 
-The first module in a link:Streams#streams[stream] is always a source. Source modules are built with Spring Integration and are typically very fine-grained. A module of type _source_ is responsible for placing a message on a channel named _output_. This message can then be consumed by the other processor and sink modules in the stream. A source module is typically fed data by an inbound channel adapter, configured with a poller.
+The first module in a link:Streams#streams[stream] is always a source. Source modules are built with Spring Integration. A module of type _source_ is responsible for producing messages on a channel named _output_. This message can then be consumed by the downstream modules in the stream. A source module is often fed data by an inbound channel adapter, configured with a poller.
 
-Spring Integration provides a number of adapters out of the box to support various transports, such as JMS, File, HTTP, Web Services, Mail, and more. You can typically create a source module that uses these inbound channel adapters by writing just a single Spring application context file.
+Spring Integration provides a number of adapters out of the box to integration with various transports and data stores, such as JMS, File, HTTP, Web Services, Mail, and more. You can typically create a source module that uses these inbound channel adapters by writing just a single Spring application context file.
 
 These steps will demonstrate how to create and deploy a source module using the http://docs.spring.io/spring-integration/reference/html/feed.html#feed-inbound-channel-adapter[Spring Integration Feed Inbound Channel Adapter].
 
@@ -45,18 +45,23 @@ Users may want to pull data from feeds other than BBC News. Spring XD will autom
 
 [source,xml]
 ----
-<int-feed:inbound-channel-adapter  id="xdFeed" channel="output" url="${url:http://feeds.bbci.co.uk/news/rss.xml}">
+<int-feed:inbound-channel-adapter  id="xdFeed" channel="output" url="${url}">
   <int:poller fixed-rate="5000" max-messages-per-poll="100" />
 </int-feed:inbound-channel-adapter>
 ----
 
-Now users can optionally pass a _url_ property value on stream creation. If not present, the specified default will be used.
+Now users can pass a _url_ property value on stream creation. In this case, _url_ has no default value. If the module requires configuration options, we recommend that you provide Module Option Metadata including a description, type, and optional default value, corresponding to these property names. Module option metadata supports features like auto-completion in the Spring XD shell and option validation. You can provide these as properties in _feed.properties_, like so:
 
-=== Test the module locally
-This section covers setup of a local project containing some code for testing outside of an XD container. This step can be skipped if you prefer to test the module by <<deploy-module-source,deploying to Spring XD>>.
+----
+options.url.description = the URL of the RSS feed
+options.url.type = java.lang.String
+---- 
 
-==== Create a project
-The module can be tested by writing a Spring integration test to load the context file and validate that news items are received. In order to write the test, you will need to create a project in an IDE such as STS, Eclipse, or IDEA. Eclipse will be used for this example.
+
+=== Create a Module Project
+
+This section covers setup of a standalone project containing the module configuration and some code for testing outside of an XD container. This step can be skipped if you prefer to test the module by <<install-the-source-module, installing>> it to Spring XD directly.
+This module can be tested by writing a Spring integration test to load the context file and validate that RSS items are received. In order to write the test, you will need to create a project in an IDE such as STS, Eclipse, or IDEA. Eclipse will be used for this example.
 
 Create a _feed_ directory and add _feed.xml_ to _src/main/resources_. Add the following _build.gradle_ (or an equivalent _pom.xml_) to the root directory:
 
@@ -113,7 +118,11 @@ Add the following _src/test/resources/org/springframework/xd/samples/test-contex
 		http://www.springframework.org/schema/integration
 		http://www.springframework.org/schema/integration/spring-integration.xsd">
 
-	<context:property-placeholder/>
+	<context:property-placeholder properties-ref="props"/>
+
+	<util:properties id="props">
+		<prop key="url">http://feeds.bbci.co.uk/news/rss.xml</prop>
+	</util:properties>
 	
 	<int:outbound-channel-adapter channel="output" ref="target" method="add" />
 
@@ -162,29 +171,37 @@ public class FeedSourceModuleTest extends TestCase {
 ----
 The test will load an Application Context using our feed and test context files. It will fail if a item is not placed into the FeedCache within 5 seconds.
 
-You now have a way to build and test your new module independently. Time to deploy to Spring XD!
+You now have a way to build and test your new module independently. Time to install the module to Spring XD!
 
-[[install-module-source]]
-=== Installing the module
-Spring XD looks for modules in the ${xd.home}/modules directory. The modules directory organizes module types in sub-directories. So you will see something like:
+[[install-the-source-module]]
+=== Install the source module
 
-      modules/processor
-      modules/sink
-      modules/source
+The sample feed module has a dependency on _spring-integration-feed_ and a couple of transitive dependencies from that. These library must be included with the installed module. As explained in link:Modules#module-packaging[module packaging], tooling and automation for packaging and installing Spring XD modules is a work in progress planned for a future release. Likely, the easiest thing to do in this case is to modify this https://github.com/spring-projects/spring-xd-modules/blob/master/analytics-ml-pmml/build.gradle[PMML sample build file] to handle the packaging, or simply copy the required files for this module manually into an expanded directory tree. 
 
-Simply drop _feed.xml_ into the _modules/source_ directory and add the dependencies to the lib directory by copying the following jars from your gradle cache to `${xd.home}/lib`:
+The module should be installed in _<xd-install-home>/xd/modules_, where  _<xd-install-home>_ is the root path of your Spring XD installation.
 
-    spring-integration-feed-4.0.2.RELEASE.jar
-    jdom-1.0.jar
-    rome-1.0.0.jar
-    rome-fetcher-1.0.0.jar
+[source,bash]
+-----
+$cd <xd-install-home>/xd/modules
+$mkdir -p source/feed/config
+$mkdir -p source/feed/lib
+$cp <module-project-home>/src/main/resources/feed.xml source/feed/config
+$cp <module-project-home>/src/main/resources/feed.properties source/feed/config
+$cp <location-of>/spring-integration-feed-4.0.2.RELEASE.jar source/feed/lib
+$cp <location-of>/jdom-1.0.jar source/feed/lib
+$cp <location-of>/rome-1.0.0.jar source/feed/lib
+$cp <location-of>/rome-fetcher-1.0.0.jar source/feed/lib
+-----
 
-Now fire up the server. See link:Getting-Started#getting-started[Getting Started] to learn how to start the Spring XD server. 
+Also See link:Modules#registering-a-module[registering a module] for more details. 
 
-=== Test the deployed module
-Once the XD server is running, create a stream to test it out. This stream will write SyndEntry objects to the XD log:
 
-    xd:> stream create --name feedtest --definition "feed | log" --deploy
+Now link:Getting-Started#getting-started[fire up the Spring XD runtime] if it is not already running.
+
+=== Test the source module
+Once Spring XD is running, create a stream to test it the module. This stream will write SyndEntry objects to the XD log:
+
+    xd:> stream create --name feedtest --definition "feed --url='http://feeds.bbci.co.uk/news/rss.xml' | log" --deploy
 
 You should start seeing messages like the following in the container console window:
 
@@ -196,10 +213,3 @@ SyndEntryImpl.titleEx.value=VIDEO: Queen visits Prince Philip in hospital
 ...
 
 As you can see, the _SyndEntryImpl_ toString is fairly verbose. To make the output more concise, create a link:Creating-a-Processor-Module#creating-a-processor-module[processor] module to further transform the SyndEntry or consider converting the entry to JSON and send a single attribute value to the output channel.
-
-[[install-module-source-subdir]]
-=== Installing the module in a sub-directory
-Modules can also reside in a sub-directory named after the module itself, e.g. `modules/source/feed`.  This sub-directory in turn contains `config` and `lib` sub-directories.  If you install a module following this convention then the module will run in an isolated classpath, a child of the parent classpath created from the contents of `xd/lib`. See https://github.com/spring-projects/spring-xd/wiki/Modules#modules-with-isolated-classpath[Modules with isolated classpath] for more information.
-
-[NOTE] To help you better package up a module for installation in a sub-directory the https://github.com/spring-projects/spring-xd-modules/blob/master/analytics-ml-pmml/build.gradle[sample build file] form the JPMML module can be used as a starting point.
-
