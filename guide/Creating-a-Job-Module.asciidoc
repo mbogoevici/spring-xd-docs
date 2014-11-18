@@ -4,7 +4,7 @@ ifndef::env-github[]
 endif::[]
 
 === Introduction
-As outlined in the link:Modules#modules[modules] document, XD currently supports 4 types of modules: source, sink, and processor for stream processing and job for batch procesing.  This document walks through creation of a custom job module.
+As outlined in the link:Modules#modules[modules] document, XD currently supports four types of modules: source, sink, and processor for stream processing and job for batch procesing.  This document walks through creation of a custom job module.
 
 === Developing your Job
 
@@ -30,7 +30,7 @@ To create a job in the XD shell, execute the job create command composed of:
 * name - the "name" that will be associated with the Job
 * definition - the name of the context file that describes the tasklet.
 
-The job defintion file _myjob.xml_ is directory $XD_HOME/modules/jobs/myjob/myjob.xml and looks like:
+The job defintion file _myjob.xml_ is in a directory $XD_HOME/modules/jobs/myjob/config/myjob.xml and looks like:
 [source,xml]
 ----
 <?xml version="1.0" encoding="UTF-8"?>
@@ -90,10 +90,8 @@ There are several tasklet implementation that will run various types of Hadoop J
 
 The https://github.com/spring-projects/spring-hadoop-samples[Spring Hadoop Samples] project provides examples of how to create batch jobs that orchestate various hadoop jobs at each step.  You can also mix and match steps related to work that is executed on the Hadoop cluster and work that is executed on the Spring XD cluster.
 
-=== Installing the module in a sub-directory
-Modules can also reside in a sub-directory named after the module itself, e.g. `modules/job/myjob`.  This sub-directory in turn contains `config` and `lib` sub-directories.  If you install a module following this convention then the module will run in an isolated classpath, a child of the parent classpath created from the contents of `xd/lib`. See https://github.com/spring-projects/spring-xd/wiki/Modules#modules-with-isolated-classpath[Modules with isolated classpath] for more information.
-
-[NOTE] To help you better package up a module for installation in a sub-directory the https://github.com/spring-projects/spring-xd-modules/blob/master/analytics-ml-pmml/build.gradle[sample build file] form the JPMML module can be used as a starting point.
+=== Installing the module
+Modules can reside in an expanded directory named after the module, e.g. `modules/job/myjob`. See link:Modules#module-packaging[module packaging] and link:Modules#registering-a-module[registering a module] for more details.
 
 
 
