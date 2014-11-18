@@ -113,6 +113,14 @@ If the provided schemas are customized, other values may need to be customized. 
 
 Currently XD does not ship with ZooKeeper. At the time of this writing, the compliant  version is 3.4.6 and you can download it from http://zookeeper.apache.org/releases.html[here]. Please refer to the http://zookeeper.apache.org/doc/trunk/zookeeperStarted.html[ZooKeeper Getting Started Guide] for more information. A ZooKeeper ensemble consisting of at least three members is recommended for production installations, but a single server is all that is needed to have XD up and running.
 
+You can configure the root path in Zookeeper where an XD cluster's top level nodes will be created.  This allows you to run multiple independent clusters of XD that share a single ZK instance.  Add the following to servers.yml to configure.  You can also set as an environment variable, system property in the standard manner.
+----
+zk:
+  namespace: xd
+  client:
+     connect: localhost:2181
+----
+
 ==== Setting up Redis
 
 *Redis* is the default transport when running in distributed mode.
