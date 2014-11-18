@@ -14,13 +14,6 @@ $$Configure the XD admin server to use$$.
 *$$username$$*:: $$the username for authenticated access to the Admin REST endpoint$$. *(default: ``)*
 *$$password$$*:: $$the password for authenticated access to the Admin REST endpoint (valid only with a username)$$.
 
-==== $$admin config timezone set$$
-$$Set the timezone of the Spring XD Shell (Not persisted)$$.
-
-    admin config timezone set [--timeZone] <timeZone>
-
-*$$timeZone$$*:: $$the id of the timezone, You can obtain a list of timezone ids using 'admin config timezone list', If an invalid timezone id is provided, then 'Greenwich Mean Time' is being used$$. *(required)*
-
 ==== $$admin config info$$
 $$Show the XD admin server being used$$.
 
@@ -32,6 +25,13 @@ $$List all timezones$$.
 
     admin config timezone list
 
+
+==== $$admin config timezone set$$
+$$Set the timezone of the Spring XD Shell (Not persisted)$$.
+
+    admin config timezone set [--timeZone] <timeZone>
+
+*$$timeZone$$*:: $$the id of the timezone, You can obtain a list of timezone ids using 'admin config timezone list', If an invalid timezone id is provided, then 'Greenwich Mean Time' is being used$$. *(required)*
 
 
 === Runtime Commands
@@ -410,11 +410,12 @@ $$Returns the value of the given Hadoop property$$.
 
 *$$key$$*:: $$property name$$. *(required)*
 
-==== $$hadoop config info$$
-$$Returns basic info about the Hadoop configuration$$.
+==== $$hadoop config fs$$
+$$Sets the Hadoop namenode$$.
 
-    hadoop config info
+    hadoop config fs [--namenode] <namenode>
 
+*$$namenode$$*:: $$namenode URL - can be file:///|hdfs://<namenode>:<port>|webhdfs://<namenode>:<port>$$. *(required)*
 
 ==== $$hadoop config load$$
 $$Loads the Hadoop configuration from the given resource$$.
@@ -429,12 +430,11 @@ $$Returns (all) the Hadoop properties$$.
     hadoop config props list
 
 
-==== $$hadoop config fs$$
-$$Sets the Hadoop namenode$$.
+==== $$hadoop config info$$
+$$Returns basic info about the Hadoop configuration$$.
 
-    hadoop config fs [--namenode] <namenode>
+    hadoop config info
 
-*$$namenode$$*:: $$namenode URL - can be file:///|hdfs://<namenode>:<port>|webhdfs://<namenode>:<port>$$. *(required)*
 
 
 === Hadoop FileSystem Commands
