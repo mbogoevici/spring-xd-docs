@@ -28,7 +28,7 @@ The Sources covered are
 * <<mqtt, MQTT>>
 * <<stdout, Stdout Capture>>
 * <<kafka, Kafka>>
-* <<source_jdbc, JDBC>>
+* <<jdbc-source, JDBC>>
 
 
 Future releases will provide support for other currently available Spring Integration Adapters.  For information on how to adapt an existing Spring Integration Adapter for use in Spring XD see the section link:Creating-a-Source-Module#creating-a-source-module[Creating a Source Module].
@@ -999,8 +999,8 @@ Configure a stream:
 xd:> stream create myKafkaSource --definition "kafka --zkconnect=localhost:2181 --topic=mytopic | log" --deploy
 ----
 
-[[source_jdbc]]
-=== JDBC
+[[jdbc-source]]
+=== JDBC Source
 
 This source module supports the ability to ingest data directly from various databases.  
 It does this by querying the database and sending the results as messages to the stream.
