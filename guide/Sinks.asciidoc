@@ -610,7 +610,7 @@ $ netcat -l 1234 &
 
 Now, configure a stream
 
-     xd:> stream create --name tcptest --definition "time --interval=3 | tcp" --deploy
+     xd:> stream create --name tcptest --definition "time --fixedDelay=3 | tcp" --deploy
 
 This sends the time, every 3 seconds to the default tcp Sink, which connects to port `1234` on `localhost`.
 
