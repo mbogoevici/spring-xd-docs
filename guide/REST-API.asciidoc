@@ -300,11 +300,6 @@ For both the GET endpoints **only** 'application/json' accept header is supporte
 |DELETE
 |delete a composed module
 
-|/modules/\{type\}/\{name\}/definition
-|GET
-|display the module bean definition file (NOTE: currently only XML response supported)
-|===
-
 [[deployed-modules]]
 === Deployed Modules
 
