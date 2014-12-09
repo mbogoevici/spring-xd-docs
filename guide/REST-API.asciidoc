@@ -308,7 +308,7 @@ For both the GET endpoints **only** 'application/json' accept header is supporte
 |===
 |Resource URL | Request Method | Description
 
-|/cluster/modules
+|/runtime/modules
 |GET
 |display runtime module option values and deployment information for deployed modules, optional parameters are `moduleId` (<stream>.<type>.<moduleName>,`containerId`,`jobname` 
 |===
@@ -321,7 +321,7 @@ For both the GET endpoints **only** 'application/json' accept header is supporte
 |===
 |Resource URL | Request Method | Description
 
-|/cluster/containers
+|/runtime/containers
 |GET
 |display all available containers along with runtime and user-defined container attributes
 |===
