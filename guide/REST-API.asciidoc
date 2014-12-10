@@ -299,6 +299,7 @@ For both the GET endpoints **only** 'application/json' accept header is supporte
 |/modules/\{type\}/\{name\}
 |DELETE
 |delete a composed module
+|===
 
 [[deployed-modules]]
 === Deployed Modules
