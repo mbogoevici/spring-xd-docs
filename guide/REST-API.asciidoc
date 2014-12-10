@@ -290,7 +290,11 @@ For both the GET endpoints **only** 'application/json' accept header is supporte
 
 |/modules
 |POST
-|create a composite module, where The request body is application/x-www-form-urlencoded and requires two parameters, `name` and `definition` (DSL)
+|create a composite module, where The request body is application/x-www-form-urlencoded and requires two parameters, `name` and `definition` (DSL). The module type is derived from the definition.
+
+|/modules/\{type\}/\{name\}
+|POST
+|upload a module archive (uber jar), where The content type is application/octect-stream and the request body contains the binary archive contents
 
 |/modules/\{type\}/\{name\}
 |GET
@@ -298,7 +302,7 @@ For both the GET endpoints **only** 'application/json' accept header is supporte
 
 |/modules/\{type\}/\{name\}
 |DELETE
-|delete a composed module
+|delete a composed or uploaded module
 |===
 
 [[deployed-modules]]
