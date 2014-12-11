@@ -245,6 +245,15 @@ $$Create a virtual module$$.
 *$$name$$*:: $$the name to give to the module$$. *(required)*
 *$$definition$$*:: $$module definition using xd dsl$$. *(required)*
 
+==== $$module upload$$
+$$Upload a new module$$.
+
+    module upload --type <type> --name <name> [--file] <file>
+
+*$$type$$*:: $$the type for the uploaded module$$. *(required)*
+*$$name$$*:: $$the name for the uploaded module$$. *(required)*
+*$$file$$*:: $$path to the module archive$$. *(required)*
+
 ==== $$module delete$$
 $$Delete a virtual module$$.
 
@@ -410,12 +419,11 @@ $$Returns the value of the given Hadoop property$$.
 
 *$$key$$*:: $$property name$$. *(required)*
 
-==== $$hadoop config fs$$
-$$Sets the Hadoop namenode$$.
+==== $$hadoop config info$$
+$$Returns basic info about the Hadoop configuration$$.
 
-    hadoop config fs [--namenode] <namenode>
+    hadoop config info
 
-*$$namenode$$*:: $$namenode URL - can be file:///|hdfs://<namenode>:<port>|webhdfs://<namenode>:<port>$$. *(required)*
 
 ==== $$hadoop config load$$
 $$Loads the Hadoop configuration from the given resource$$.
@@ -430,11 +438,12 @@ $$Returns (all) the Hadoop properties$$.
     hadoop config props list
 
 
-==== $$hadoop config info$$
-$$Returns basic info about the Hadoop configuration$$.
+==== $$hadoop config fs$$
+$$Sets the Hadoop namenode$$.
 
-    hadoop config info
+    hadoop config fs [--namenode] <namenode>
 
+*$$namenode$$*:: $$namenode URL - can be file:///|hdfs://<namenode>:<port>|webhdfs://<namenode>:<port>$$. *(required)*
 
 
 === Hadoop FileSystem Commands

@@ -378,6 +378,7 @@ xd:>counter display tweetcount
 The **$$counter$$** $$sink$$ has the following options:
 
 $$name$$:: $$the name of the metric to contribute to (will be created if necessary)$$ *($$String$$, default: `<stream name>`)*
+$$nameExpression$$:: $$a SpEL expression to compute the name of the metric to contribute to$$ *($$String$$, no default)*
 //$sink.counter
 
 [[field-value-counter]]
@@ -427,6 +428,7 @@ The **$$field-value-counter$$** $$sink$$ has the following options:
 
 $$fieldName$$:: $$the name of the field for which values are counted$$ *($$String$$, no default)*
 $$name$$:: $$the name of the metric to contribute to (will be created if necessary)$$ *($$String$$, default: `<stream name>`)*
+$$nameExpression$$:: $$a SpEL expression to compute the name of the metric to contribute to$$ *($$String$$, no default)*
 //$sink.field-value-counter
 
 To try this out, create a stream to ingest twitter feeds containing the word _spring_ and output to a file:
@@ -471,7 +473,9 @@ Note: you can also use some criteria to filter out aggregate counter display val
 The **$$aggregate-counter$$** $$sink$$ has the following options:
 
 $$dateFormat$$:: $$a pattern (as in SimpleDateFormat) for parsing/formatting dates and timestamps$$ *($$String$$, default: `yyyy-MM-dd'T'HH:mm:ss.SSS'Z'`)*
+$$incrementExpression$$:: $$how much to increment each bucket, as a SpEL against the message$$ *($$String$$, default: `1`)*
 $$name$$:: $$the name of the metric to contribute to (will be created if necessary)$$ *($$String$$, default: `<stream name>`)*
+$$nameExpression$$:: $$a SpEL expression to compute the name of the metric to contribute to$$ *($$String$$, no default)*
 $$timeField$$:: $$name of a field in the message that contains the timestamp to contribute to$$ *($$String$$, default: `null`)*
 //$sink.aggregate-counter
 
@@ -488,6 +492,7 @@ The _gauge_ sink provided with XD stores expects a numeric value as a payload, t
 The **$$gauge$$** $$sink$$ has the following options:
 
 $$name$$:: $$the name of the metric to contribute to (will be created if necessary)$$ *($$String$$, default: `<stream name>`)*
+$$nameExpression$$:: $$a SpEL expression to compute the name of the metric to contribute to$$ *($$String$$, no default)*
 //$sink.gauge
 
 Here is an example of creating a tap for a gauge:
@@ -527,6 +532,7 @@ The **$$rich-gauge$$** $$sink$$ has the following options:
 
 $$alpha$$:: $$smoothing constant, or -1 to use arithmetic mean$$ *($$double$$, default: `-1.0`)*
 $$name$$:: $$the name of the metric to contribute to (will be created if necessary)$$ *($$String$$, default: `<stream name>`)*
+$$nameExpression$$:: $$a SpEL expression to compute the name of the metric to contribute to$$ *($$String$$, no default)*
 //$sink.rich-gauge
 
 NOTE: The smoothing factor behaves as an http://en.wikipedia.org/wiki/Exponential_smoothing[exponential moving average]. The default value does no smoothing.
