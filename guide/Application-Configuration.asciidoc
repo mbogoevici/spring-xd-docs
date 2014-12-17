@@ -154,14 +154,14 @@ In addition, the following default settings for the rabbit message bus can be mo
     rabbit:
       default:
         ackMode:                   AUTO  # <1>
-        autoBindDLQ                false # <2>
+        autoBindDLQ:               false # <2>
         backOffInitialInterval:    1000  # <3>
         backOffMaxInterval:        10000 # <4>
         backOffMultiplier:         2.0   # <5>
-        batchBufferLimit           10000 # <6>
-        batchingEnabled            false # <7>
-        batchSize                  100   # <8>
-        batchTimeout               5000  # <9>
+        batchBufferLimit:          10000 # <6>
+        batchingEnabled:           false # <7>
+        batchSize:                 100   # <8>
+        batchTimeout:              5000  # <9>
         concurrency:               1     # <10>
         maxAttempts:               3     # <11>
         maxConcurrency:            1     # <12>
