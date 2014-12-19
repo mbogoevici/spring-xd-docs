@@ -309,10 +309,12 @@ security:
 <3> (Optional) The realm for Basic authentication. Will default to `SpringXD` if not explicitly set.
 
 Additionally, you must specify an authentication method, out of the following that Spring XD supports:
-* single user mode (the default made available by Spring Boot);
-* integration with an existing LDAP server.
 
-The two options above are mutually exclusive, and they are described below.
+* single user mode (the default made available by Spring Boot)
+* integration with an existing LDAP server
+* file based configuration
+
+The options above are mutually exclusive, and they are described below.
 
 [[enabling-default-boot-authentication]]
 ====== Single user authentication
@@ -397,6 +399,144 @@ xd:
 <4> A password to authenticate to the LDAP server, if anonymous searches are not supported (optional, required together with previous option)
 <5> The base for searching the DN of the authenticating user (serves to restrict the scope of the search)
 <6> The search filter for the DN of the authenticating user
+
+[[enabling-filebased-authentication]]
+====== File based authentication
+Spring XD supports listing users in a configuration file, as described below. Each user must be assigned a password
+and one or more roles:
+
+[source,yaml]
+----
+spring:
+  profiles: admin
+security:
+  basic:
+    enabled: true
+    realm: SpringXD
+xd:
+  security:
+    authentication:
+      file:
+        enabled: true                    <1>
+        users:                           <2>
+          bob: bobspassword, ROLE_VIEW   <3>
+          alice: alicepwd, ROLE_ADMIN
+----
+
+<1> Enables file based integration
+<2> This is a yaml map of username to (password and roles)
+<3> Each map "value" is made of a password and one or more roles, comma separated
+
+[[customizing-authorization]]
+===== Customizing authorization
+All of the above deals with authentication, _i.e._ how to assess the identity of the user. Irrespective of the option chosen, you can
+also customize *authorization* _i.e._ who can do what.
+
+The default scheme uses three roles to protect the link:REST-API#REST-API[REST endpoints] that Spring XD exposes:
+
+* *ROLE_VIEW* for anything that relates to retrieving state
+* *ROLE_CREATE* for anything that involves creating, deleting or mutating the state of the system
+* *ROLE_ADMIN* for boot management endpoints.
+
+All of those defaults are written out in `application.yml`, which you can choose to override _via_ `servers.yml`. This takes the form
+of a YAML *list* (as some rules may have precedence over others) and so you'll need to copy/paste the whole list and tailor it to your needs (as there is no way to merge lists). Always refer to your version of `application.yml`, as the snippet reproduced below may be outdated. The default rules are as such:
+
+[source,yaml]
+----
+  security:
+    authorization:
+      rules:
+        # Streams
+        - GET    /streams/definitions            => hasRole('ROLE_VIEW')
+        - DELETE /streams/definitions            => hasRole('ROLE_CREATE')
+        - GET    /streams/definitions/*          => hasRole('ROLE_VIEW')
+        - POST   /streams/definitions            => hasRole('ROLE_CREATE')
+        - DELETE /streams/definitions/*          => hasRole('ROLE_CREATE')
+        # Stream Deployments
+        - GET    /streams/deployments/           => hasRole('ROLE_VIEW')
+        - DELETE /streams/deployments/           => hasRole('ROLE_CREATE')
+        - GET    /streams/deployments/*          => hasRole('ROLE_VIEW')
+        - POST   /streams/deployments/*          => hasRole('ROLE_CREATE')
+        - DELETE /streams/deployments/*          => hasRole('ROLE_CREATE')
+        # Job Definitions
+        - GET    /jobs/definitions               => hasRole('ROLE_VIEW')
+        - DELETE /jobs/definitions               => hasRole('ROLE_CREATE')
+        - GET    /jobs/definitions/*             => hasRole('ROLE_VIEW')
+        - POST   /jobs/definitions               => hasRole('ROLE_CREATE')
+        - DELETE /jobs/definitions/*             => hasRole('ROLE_CREATE')
+        # Job Deployments
+        - GET    /jobs/deployments/              => hasRole('ROLE_VIEW')
+        - DELETE /jobs/deployments/              => hasRole('ROLE_CREATE')
+        - GET    /jobs/deployments/*             => hasRole('ROLE_VIEW')
+        - POST   /jobs/deployments/*             => hasRole('ROLE_CREATE')
+        - DELETE /jobs/deployments/*             => hasRole('ROLE_CREATE')
+        # Batch Job Configurations
+        - GET    /jobs/configurations            => hasRole('ROLE_VIEW')
+        - GET    /jobs/configurations/*          => hasRole('ROLE_VIEW')
+        # Batch Job Executions
+        - GET    /jobs/executions                => hasRole('ROLE_VIEW')
+        - PUT    /jobs/executions?stop=true      => hasRole('ROLE_CREATE')
+        - GET    /jobs/executions?jobname=*      => hasRole('ROLE_VIEW')
+        - POST   /jobs/executions?jobname=*      => hasRole('ROLE_CREATE')
+        - GET    /jobs/executions/*              => hasRole('ROLE_VIEW')
+        - PUT    /jobs/executions/*?restart=true => hasRole('ROLE_CREATE')
+        - PUT    /jobs/executions/*?stop=true    => hasRole('ROLE_CREATE')
+        - GET    /jobs/executions/*/steps        => hasRole('ROLE_VIEW')
+        - GET    /jobs/executions/*/steps/*      => hasRole('ROLE_VIEW')
+        - GET    /jobs/executions/*/steps/*/progress => hasRole('ROLE_VIEW')
+        # Batch Job Instances
+        - GET    /jobs/instances?jobname=*       => hasRole('ROLE_VIEW')
+        - GET    /jobs/instances/*               => hasRole('ROLE_VIEW')
+        # Module Definitions
+        - GET    /modules                        => hasRole('ROLE_VIEW')
+        - POST   /modules                        => hasRole('ROLE_CREATE')
+        - GET    /modules/*/*                    => hasRole('ROLE_VIEW')
+        - DELETE /modules/*/*                    => hasRole('ROLE_CREATE')
+        # Deployed Modules
+        - GET    /runtime/modules                => hasRole('ROLE_VIEW')
+        # Containers
+        - GET    /runtime/containers             => hasRole('ROLE_VIEW')
+        # Counters
+        - GET    /metrics/counters               => hasRole('ROLE_VIEW')
+        - GET    /metrics/counters/*             => hasRole('ROLE_VIEW')
+        - DELETE /metrics/counters/*             => hasRole('ROLE_CREATE')
+        # Field Value Counters
+        - GET    /metrics/field-value-counters   => hasRole('ROLE_VIEW')
+        - GET    /metrics/field-value-counters/* => hasRole('ROLE_VIEW')
+        - DELETE /metrics/field-value-counters/* => hasRole('ROLE_CREATE')
+        # Aggregate Counters
+        - GET    /metrics/aggregate-counters     => hasRole('ROLE_VIEW')
+        - GET    /metrics/aggregate-counters/*   => hasRole('ROLE_VIEW')
+        - DELETE /metrics/aggregate-counters/*   => hasRole('ROLE_CREATE')
+        # Gauges
+        - GET    /metrics/gauges                 => hasRole('ROLE_VIEW')
+        - GET    /metrics/gauges/*               => hasRole('ROLE_VIEW')
+        - DELETE /metrics/gauges/*               => hasRole('ROLE_CREATE')
+        # Rich Gauges
+        - GET    /metrics/rich-gauges            => hasRole('ROLE_VIEW')
+        - GET    /metrics/rich-gauges/*          => hasRole('ROLE_VIEW')
+        - DELETE /metrics/rich-gauges/*          => hasRole('ROLE_CREATE')
+        # Tab Completions
+        - GET    /completions/stream?start=*     => hasRole('ROLE_VIEW')
+        - GET    /completions/job?start=*        => hasRole('ROLE_VIEW')
+        - GET    /completions/module?start=*     => hasRole('ROLE_VIEW')
+        # Boot Endpoints
+        - GET    /management/**                  => hasRole('ROLE_ADMIN')
+----
+
+The format of each line is the following:
+----
+HTTP_METHOD URL_PATTERN '=>' SECURITY_ATTRIBUTE
+----
+
+where 
+
+* HTTP_METHOD is one http method, capital case
+* URL_PATTERN is an Ant style URL pattern
+* SECURITY_ATTRIBUTE is a SpEL expression (see http://docs.spring.io/spring-security/site/docs/4.0.0.M2/reference/htmlsingle/#el-access)
+* each of those separated by one or several blank characters (spaces, tabs, _etc._)
+
+Be mindful that the above is indeed a YAML list, not a map (thus the use of '-' dashes at the start of each line) that lives under the `security.authorization.rules` key.
 
 ==== Local transport
 
