@@ -23,7 +23,7 @@ However, if you are interested in extending Spring XD with your own modules, som
 [[creating-a-module]]
 === Creating a Module
 
-This section provides some general details on implementing and packaging custom modules. For a quick start, dive into the examples of creating link:Creating-a-Source-Module#creating-a-source-module[source], link:Creating-a-Processor-Module#creating-a-processor-module[processor], link:Creating-a-Sink-Module#creating-a-sink-module[sink], and link:Creating-a-Job-Module#creating-a-job-module[job] modules.
+This section provides some general details on implementing and packaging custom modules. For a quick start, take a look at the https://github.com/spring-projects/spring-xd-samples/tree/master/si-dsl-module[si-dsl-module example] or dive into the examples of creating link:Creating-a-Source-Module#creating-a-source-module[source], link:Creating-a-Processor-Module#creating-a-processor-module[processor], link:Creating-a-Sink-Module#creating-a-sink-module[sink], and link:Creating-a-Job-Module#creating-a-job-module[job] modules.
 
 ==== Stream Modules
 
@@ -50,14 +50,14 @@ Conceptually, a Module is analogous to a _war_ file in Servlet container. The Sp
 <module_name>
       ├── <local class files and resources, e.g. com/acme/....>
       ├── config
-      │   ├── <module_name>.properties
-      │   └── <module_name>.xml (optional)
+      │   ├── ['spring-module' | <module-name>].properties
+      │   └── ['spring-module' | <module-name>].xml (optional)
       ├── lib
       │   ├── <dependent libraries not already in Spring XD class path (xd/lib)>
       │  
 ----
 
-For historical reasons, all modules included with Spring XD distribution are provided in expanded form and are commonly configured using XML bean definition files. This is subject to change, but meanwhile provides copious examples of module configuration and packaging. 
+For historical reasons, all modules included with Spring XD distribution are provided in expanded form and are commonly configured using XML bean definition files (`<module-name>.xml`) and property files (`<module-name>.properties`>. This is subject to change, meanwhile, the out-of-the-box modules provide copious examples of module configuration and packaging. 
 
 A module's contents typically includes:
 
@@ -68,19 +68,125 @@ Any root level _.class_ files packaged as in a typical jar file. This could incl
 * *Dependent jar files:* 
 Any required runtime dependencies that are not already in the Spring XD class path (_$XD_INSTALL_DIR/xd/lib_) must be provided in the module's _/lib_ directory.
 
-As mentioned previously, a Spring XD module can be installed as an expanded directory tree or an archive. If the module requires dependent jars, which is the common case, it may be packaged as an http://stackoverflow.com/questions/11947037/what-is-an-uber-jar[uberjar], compatible with Spring Boot, and conforming to the above structure. 
+As mentioned previously, a Spring XD module can be installed as an expanded directory tree or an archive. If the module requires dependent jars, which is the common case, it may be packaged as an http://stackoverflow.com/questions/11947037/what-is-an-uber-jar[uberjar], compatible with Spring Boot, and conforming to the above structure.  
+
+
+[[creating-a-module-project]]
+==== Creating a Module Project
+Spring XD 1.1.x provides support for creating a module project with Maven. Start by setting the parent to `spring-xd-module-parent` in your `pom.xml`:
+
+[source,xml]
+----
+<parent>
+  <groupId>org.springframework.xd</groupId>
+  <artifactId>spring-xd-module-parent</artifactId>
+  <version>1.1.0.BUILD-SNAPSHOT</version>
+</parent>
+----
 
 [NOTE]
 ====
-If your module has no internal dependencies, a plain old jar file conforming to the above structure will work.
+If your module has no internal dependencies, a plain old jar file conforming to the above structure will work. In this case, there is no need to use the parent pom, but you should add a dependency on `spring-xd-dirt` and a test dependency on `spring-xd-test`
 ====
+
+This provides the necessary Spring XD libraries to compile and test the module and provides support for packaging your module as an uber-jar, using the http://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html[Spring Boot Maven Plugin]. As described in the above sections, the module must include any dependencies that are not already provided by the Spring XD container. These are loaded at runtime by the module class loader. Additionally, the module should typically not include libraries that are already on the Spring XD class path, as this can result in version conflicts and other class loading issues. The parent pom configures the boot plugin with the `MODULE` layout and is configured to exclude `spring-xd-dirt` and all of its transitive dependencies, so you don't have to worry about it. There are two basic rules:
+
+* The `MODULE` layout ensures `provided` dependencies will not be included in the uber-jar. The parent pom declares `spring-xd-dirt` as a provided dependency, as some of it's classes are needed for module development.
+* Any compile dependencies, transitive or declared for the module will be excluded from the uber-jar if they are also `spring-xd-dirt` dependencies.
 
 [NOTE]
 ====
-Spring XD does not parse any embedded version in the jar name, a la Maven. `myModule-v1.jar` resolves to module named `myModule-v1` 
+In rare cases, it may be necessary to override the exclusions. For example, if your module requires a different version of library that is on the Spring XD class path, you can override the boot maven plugin configuration in your pom, like so:
 
-Currently, support for building a module uberjar is a work in progress planned for a future release. If your module requires dependent jars you must provide them in the _lib_ directory without compression in order to work with the Spring Boot class loader. In this case, we recommended you take a look at the https://github.com/spring-projects/spring-xd-modules/blob/master/analytics-ml-pmml/build.gradle[PMML sample build file], or use one of the available http://docs.spring.io/autorepo/docs/spring-boot/current/reference/html/build-tool-plugins.html[Spring Boot build plugins], the Maven http://maven.apache.org/plugins/maven-assembly-plugin/[assembly] plugin, or `jar -0` to build an uberjar. 
+[source, xml]
+----
+<parent>
+  <groupId>org.springframework.xd</groupId>
+  <artifactId>spring-xd-module-parent</artifactId>
+  <version>1.1.0.BUILD-SNAPSHOT</version>
+</parent>
+<build>
+  <plugins>
+    <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+<!-- this is required to force the includes to come after the excludes and override -->
+            <excludes>
+                <exclude/>
+            </excludes>
+<!-- specify exactly what is included; again transitive dependencies are not included -->
+            <includes>
+              <include>
+                <groupId>xmlpull</groupId> 
+                <artifactId>xmlpull</artifactId>
+              </include>
+            </includes>
+          </configuration>
+        </plugin>
+      </plugins>
+     </build>
+
+    <dependencies>
+        <dependency>
+          <groupId>xmlpull</groupId>
+          <artifactId>xmlpull</artifactId>
+          <version>1.1.3.4d_b4_min</version>
+        </dependency>
+    </dependencies>
+----
 ====
+
+The parent pom declares dependencies on `spring-xd-dirt` and `spring-xd-test` which provide some useful features for module development, including support for:
+
+* Java defined link:ModuleOptionsMetadata#module-options-metadata[Module Options Metadata]
+* In-container module testing - start an embedded single node container, deploy your module and validate the results.
+
+To build the module:
+----
+$mvn package
+----
+
+[NOTE]
+====
+Spring XD does not parse any embedded version in the jar name, a la Maven. `myModule-v1.jar` resolves to module named `myModule-v1`.  In addition, we strongly recommend that you name your module configuration files using the new convention, `spring-module` instead of the original `<module-name>` convention. This allows you to install the module under a different name.
+====  
+
+See at the https://github.com/spring-projects/spring-xd-samples/tree/master/si-dsl-module[si-dsl-module example] for a complete working example.
+
+
+[[registering-a-module]]
+=== Registering a Module
+
+Registering a module requires you to install to the Spring XD Module Registry. A Module must be registered before it may be deployed as part of a stream or job. Once you have packaged your module, following the instructions in the above section, you can register it using the Spring XD Shell `module upload` command:
+
+----
+xd:>module upload --file mymodule-1.0.0.BUILD-SNAPSHOT.jar --name mymodule --type processor
+---- 
+
+==== The Module Registry
+
+A http://docs.spring.io/spring-xd/docs/current/api/org/springframework/xd/module/ModuleDefinition.html[module definition] requires the following attributes to uniquely define a module:
+
+* name - the name of the component, normally a single word representing the purpose of the module. Examples are _file_, _http_, _syslog_.
+* type - the module type, current Spring XD module types include _source_, _sink_, _processor_, and _job_
+
+All modules included with Spring XD out-of-the-box are located in the  _xd/modules_ directory where Spring XD is installed. The Module Registry organizes modules by type in corresponding sub-directories, so a directory listing will look something like:
+
+      modules/job
+      modules/processor
+      modules/sink
+      modules/source
+
+Spring XD provides a strategy interface http://docs.spring.io/spring-xd/docs/current/api/org/springframework/xd/dirt/module/ModuleRegistry.html[ModuleRegistry] used to locate a module of a given name and type. Currently Spring XD provides a ResourceModuleRegistry which is configured to locate modules in the following locations in this order:
+
+* The file path given by `xd.module.home` (`${xd.home}/modules` by default)      
+* `classpath:/modules/`  (Spring XD does not provide any module definitions here)
+* The file path given by `xd.customModule.home` (`${xd.home}/custom-modules` by default)
+
+==== Custom Module Registry
+
+Custom modules are located separately from out-of-the-box modules. The location is given by `xd.customModule.home` in servers.yml. The location defaults to `${xd.home}/custom-modules` but we strongly recommend setting this to an external location on a network file system if you are using custom modules in production. There are two reasons for doing this. First, custom modules must be accessible to all nodes on the Spring XD cluster, including the XD Admin node. This allows any container instance to deploy the module. Second, if custom modules are registered within the Spring XD installation, they will not survive an upgrade to the Spring XD distribution and will need to be reinstalled. 
 
 === Module Class Loading
 
@@ -227,31 +333,6 @@ source:
 ----
 
 Note that options in the `.properties` files can reference values that appear in the `modules.yml` file (this makes sharing common configuration easy). Also, the values that are used to configure the server runtimes (in `servers.yml`) are visible to `modules.yml` and `.properties` file (but the inverse is _not_ true).
-
-[[registering-a-module]]
-=== Registering a Module
-
-A https://github.com/SpringSource/spring-xd/blob/master/spring-xd-module/src/main/java/org/springframework/xd/module/ModuleDefinition.java[ModuleDefinition] requires the following attributes to uniquely define the module:
-
-* name - the name of the component, normally a single word representing the purpose of the module. Examples are _file_, _http_, _syslog_.
-* type - the module type, current Spring XD module types include _source_, _sink_, _processor_, and _job_
-
-Out of the box all modules are located in the  _xd/modules_ directory where Spring XD is installed. The Module Registry organizes modules by type in corresponding sub-directories, so you will see something like:
-
-      modules/job
-      modules/processor
-      modules/sink
-      modules/source
-
-Spring XD provides a strategy interface https://github.com/SpringSource/spring-xd/blob/master/spring-xd-dirt/src/main/java/org/springframework/xd/dirt/module/ModuleRegistry.java[ModuleRegistry] used to locate a module of a given name and type. Currently Spring XD provides a ResourceModuleRegistry which is configured to locate modules in the following locations in this order:
-
-* The file path given by `xd.module.home` (`${xd.home}/modules` by default)      
-* `classpath:/modules/`  (Spring XD does not provide any module definitions here)
-* The file path given by `xd.customModule.home` (not defined by default)
-
-==== Custom Module Registry
-
-If you prefer to use a separate location to install custom modules, you can set the externalized property `xd.customModule.home` in servers.yml.
 
 [[composing-modules]]
 === Composing Modules
