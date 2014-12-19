@@ -152,7 +152,7 @@ $mvn package
 Spring XD does not parse any embedded version in the jar name, a la Maven. `myModule-v1.jar` resolves to module named `myModule-v1`.  In addition, we strongly recommend that you name your module configuration files using the new convention, `spring-module` instead of the original `<module-name>` convention. This allows you to install the module under a different name.
 ====  
 
-See at the https://github.com/spring-projects/spring-xd-samples/tree/master/si-dsl-module[si-dsl-module example] for a complete working example.
+See the https://github.com/spring-projects/spring-xd-samples/tree/master/si-dsl-module[si-dsl-module example] for a complete working example.
 
 
 [[registering-a-module]]
