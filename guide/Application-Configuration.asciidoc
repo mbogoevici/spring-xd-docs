@@ -217,6 +217,55 @@ In addition, the following default settings for the rabbit message bus can be mo
 
 <21> The number of messages to process between acks (when ack mode is AUTO).
 
+[[kafka-configuration]]
+==== Kafka
+[[kafkaConfig]]
+
+If you want to use Kafka as a data transport, the following connection settings, as well as defaults for the kafka
+message bus can be modified in `servers.yml`...
+
+[source,yaml]
+----
+  messagebus:
+    kafka:
+      brokers:                                localhost:9092  # <1>
+      zkAddress:                              localhost:2181  # <2>
+      numOfKafkaPartitionsForCountEqualsZero:  10             # <3>
+      default:
+        batchingEnabled:           false      # <4>
+        batchSize:                 200        # <5>
+        batchTimeout:              5000       # <6>
+        replicationFactor:         1          # <7>
+        concurrency:               1          # <8>
+        requiredAcks:              1          # <9>
+        compressionCodec:          default
+----
+
+<1> A list of Kafka broker addresses, for sending messages
+
+<2> A list of ZooKeeper addresses, for receiving messages
+
+<3> The number of Kafka partitions to use when module count can auto-grow. Should be bigger than the number of
+containers that will ever exist.
+
+<4> True to enable message batching by producers by default
+
+<5> The number of messages in a batch (may be preempted by _batchTimeout_)
+
+<6> The idle time to wait before sending a partial batch
+
+<7> The replication factor of the topics created by the message bus. At least as many brokers must be in the cluster
+when the topic is being created.
+
+<8> The maximum number of consumer threads receiving messages for a module. The total number of threads actively
+consuming partitions across all the instances of a specific module cannot be larger than the partition count of a
+transport topic - therefore, if such a situation occurs, some modules instances will, in fact, use less consumer
+threads.
+
+<9> The number of required acks when producing messages, i.e. how many brokers have committed data to the logs and
+acknowledged this to the leader. Special values are `-1`, meaning all in-sync replicas, and `0` indicating that no
+acks are necessary.
+
 ==== Admin Server HTTP Port
 
 The default HTTP port of the `xd-admin` server is 9393.  To change the value use the following configuration setting

@@ -13,7 +13,11 @@ The XD distributed runtime architecture consists of the following distributed co
 * ZooKeeper - Provides all runtime information for the XD cluster. Tracks running containers, in which containers modules and jobs are deployed, stream definitions, deployment manifests, and the like, see link:XD-Distributed-Runtime[XD Distributed Runtime] for an overview on how XD uses ZooKeeper.
 * Spring Batch Job Repository Database - An RDBMS is required for jobs. The XD distribution comes with HSQLDB, but this is not appropriate for a production installation. XD supports any JDBC compliant database.
 
-* A Message Broker - Used for data transport. XD data transport is designed to be pluggable. Currently XD supports Rabbit MQ and Redis for messaging during stream and job processing. A production installation must configure one of these transport options. Rabbit MQ is recommended as it is considered the more reliable of the two. In either case, a separate server must be running to provide the messaging middleware.
+* A Message Broker - Used for data transport. XD data transport is designed to be pluggable. Currently XD supports
+Rabbit MQ, Redis and Kafka for messaging during stream and job processing. A production installation must configure one
+ of these transport options. At this time, Rabbit MQ is recommended for production scenarios, as Redis support is not
+  intended to be used for production use, and Kafka support in XD is still under development and scheduled to be fully
+  available by Spring XD 1.1.0.RELEASE. In either case, a separate server must be running to provide the messaging middleware.
 
 * Analytics Repository - XD currently uses Redis to store the counters and gauges provided link:Analytics#analytics[Analytics]
 
