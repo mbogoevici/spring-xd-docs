@@ -100,6 +100,8 @@ module.[modulename].producer.batchSize:: The normal batch size, may be preempted
 module.[modulename].producer.batchBufferLimit:: If a batch will exceed this limit, the batch will be sent prematurely *(default 10000)*
 module.[modulename].producer.batchTimeout:: If no messages are received in this time (ms), the batch will be sent *(default 5000)*
 
+module.[modulename].producer.compress:: When _true_, compress the message before sending to rabbit; *(default false)* see link:Application-Configuration#rabbitBusProps[RabbitMQ Message Bus Properties] for information about the compression level
+
 [[stream-partitioning]]
 ===== Stream Partitioning
 

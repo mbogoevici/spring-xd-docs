@@ -108,3 +108,6 @@ trustStore.passPhrase=secret
 Where the +pkcs12+ keystore contains the client certificate and the truststore contains the server's certificate as described in the rabbit documentation. The key/trust store properties are Spring resources.
 
 NOTE: By default, the +rabbit+ source and sink modules inherit their default configuration from the container, but it can be overridden, either using +modules.yml+ or with specific module definitions.
+
+=== Rabbit Message Bus Batching and Compression
+See link:Application-Configuration#rabbitBusProps[RabbitMQ Message Bus Properties] for information about batching and compressing messages passing through the bus.
